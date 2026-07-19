@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #F4F1EA; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+</style>
+</helmet>
+
+<div style="background: #F4F1EA; font-family: 'Schibsted Grotesk', system-ui, sans-serif; color: #1C1A17;">
+
+  <!-- ===== NAV ===== -->
+  <div style="position: sticky; top: 0; z-index: 50; background: rgba(244,241,234,.86); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(28,26,23,.10);">
+    <div style="max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 20px 40px;">
+      <a href="Ana Sayfa.dc.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+        <div style="width: 9px; height: 9px; border-radius: 50%; background: #A87C4F;"></div>
+        <span style="font-size: 20px; font-weight: 800; letter-spacing: -0.01em;">MARKA</span>
+        <span style="font-family: 'DM Mono', monospace; font-size: 10px; color: #A87C4F; align-self: flex-start; margin-top: 2px;">®</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 36px; font-size: 14px; font-weight: 500; color: #3C372F;">
+        <span style="color: #1C1A17; font-weight: 700;">Ürünler</span><span>Koleksiyon</span><span>Sertifikalar</span><span>İhracat</span><span>İletişim</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 18px;">
+        <span style="font-family: 'DM Mono', monospace; font-size: 12px; color: #8a857c; white-space: nowrap;">TR / EN</span>
+        <span style="font-size: 13px; font-weight: 600; color: #F4F1EA; background: #1C1A17; padding: 11px 22px; border-radius: 2px; white-space: nowrap;">Teklif Al</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <div style="max-width: 1280px; margin: 0 auto; padding: 56px 40px 32px;">
+    <div style="font-family: 'DM Mono', monospace; font-size: 12px; color: #8a857c; letter-spacing: 0.08em; margin-bottom: 26px;">Ana Sayfa / <span style="color: #8A6638;">Katalog</span></div>
+    <div style="display: flex; align-items: flex-end; justify-content: space-between;">
+      <div>
+        <div style="font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #8A6638;">2025 KOLEKSİYONU</div>
+        <h1 style="font-size: 60px; font-weight: 800; letter-spacing: -0.03em; margin: 12px 0 0;">Ürün <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic;">kataloğu</span></h1>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 15px; color: #5C564C;"><span style="font-weight: 700; color: #1C1A17;">{{ count }}</span> / {{ total }} ürün</div>
+        <div style="font-family: 'DM Mono', monospace; font-size: 12px; color: #8a857c; margin-top: 6px;">SIRALA: SKU ↑</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CATEGORY TABS ===== -->
+  <div style="border-top: 1px solid rgba(28,26,23,.12); border-bottom: 1px solid rgba(28,26,23,.12); position: sticky; top: 65px; z-index: 40; background: rgba(244,241,234,.92); backdrop-filter: blur(14px);">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 16px 40px; display: flex; gap: 10px; flex-wrap: wrap;">
+      <sc-for list="{{ cats }}" as="c" hint-placeholder-count="7">
+        <span onClick="{{ c.on }}" style="font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.04em; padding: 9px 18px; cursor: pointer; user-select: none; background: {{ c.bg }}; color: {{ c.fg }}; border: 1px solid {{ c.bd }};">{{ c.name }}</span>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ===== PRODUCT GRID ===== -->
+  <div style="max-width: 1280px; margin: 0 auto; padding: 40px 40px 96px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(28,26,23,.14); border-left: 1px solid rgba(28,26,23,.14);">
+      <sc-for list="{{ products }}" as="p" hint-placeholder-count="9">
+        <div style="border-right: 1px solid rgba(28,26,23,.14); border-bottom: 1px solid rgba(28,26,23,.14); padding: 26px 26px 24px; cursor: pointer; background: #F4F1EA;" style-hover="background:#EFEBE1;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; min-height: 22px;">
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px; color: #8A6638; letter-spacing: 0.04em;">{{ p.sku }}</span>
+            <span style="font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #18120D; background: #C8A36A; padding: 3px 8px; visibility: {{ p.badgeVis }};">{{ p.badge }}</span>
+          </div>
+          <div style="aspect-ratio: 5/4; background: linear-gradient(135deg,#ECE7DC,#E0DACC); margin: 18px 0 20px; display: flex; align-items: center; justify-content: center; position: relative;">
+            <div style="width: 78px; height: 78px; border-radius: 50%; border: 1.5px solid rgba(28,26,23,.20); display: flex; align-items: center; justify-content: center;">
+              <div style="width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid rgba(28,26,23,.18);"></div>
+            </div>
+            <span style="position: absolute; bottom: 10px; right: 12px; font-family: 'DM Mono', monospace; font-size: 9px; color: #b1a896;">[ görsel ]</span>
+          </div>
+          <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+            <div style="font-size: 20px; font-weight: 700; letter-spacing: -0.01em;">{{ p.name }}</div>
+            <span style="color: #A87C4F; flex: none;">↗</span>
+          </div>
+          <div style="font-size: 13px; color: #6B6459; margin-top: 4px; min-height: 38px;">{{ p.desc }}</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(28,26,23,.10);">
+            <div style="display: flex; gap: 7px; align-items: center;">
+              <sc-for list="{{ p.finishes }}" as="f" hint-placeholder-count="3">
+                <div style="width: 14px; height: 14px; border-radius: 50%; background: {{ f }}; border: 1px solid rgba(0,0,0,.18);"></div>
+              </sc-for>
+            </div>
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px; color: #8a857c;">{{ p.spec }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- footer note -->
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 36px; padding-top: 24px; border-top: 1px solid rgba(28,26,23,.12);">
+      <span style="font-size: 14px; color: #6B6459;">Aradığınız ürünü bulamadınız mı? Özel üretim (OEM) için listenizi paylaşın.</span>
+      <span style="font-size: 14px; font-weight: 600; color: #1C1A17; border-bottom: 1.5px solid #A87C4F; padding-bottom: 3px;">Numune talep formu →</span>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div style="background: #18120D; color: #C9C0B2;">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 56px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="width: 9px; height: 9px; border-radius: 50%; background: #C8A36A;"></div>
+        <span style="font-size: 18px; font-weight: 800; color: #F4EEE2;">MARKA</span>
+        <span style="font-size: 14px; color: #8a8472; margin-left: 14px;">Kapı güvenlik donanımı · ihracat</span>
+      </div>
+      <span style="font-family: 'DM Mono', monospace; font-size: 11px; color: #6f6452; letter-spacing: 0.06em;">© 2025 · CE · TSE · ISO 9001</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { cat: 'Tümü' };
+
+  allProducts() {
+    const F = { brass: '#B08D57', nikel: '#C9C7C0', siyah: '#2A2724', satin: '#AEB2AD', antik: '#6E5A3E' };
+    return [
+      { sku: 'BRL-110', name: 'Anti-Snap Barel', cat: 'Bareller', desc: '6 pim, kırılma korumalı çelik takviye', spec: '60–100 mm', finishes: [F.brass, F.nikel, F.siyah], badge: 'ÇOK SATAN' },
+      { sku: 'BRL-120', name: 'Master Key Barel', cat: 'Bareller', desc: 'Sistem anahtarlama, ana anahtar hiyerarşisi', spec: '60–110 mm', finishes: [F.brass, F.nikel], badge: '' },
+      { sku: 'BRL-130', name: 'Yarım Silindir', cat: 'Bareller', desc: 'Tek taraflı, dolap ve panel uygulamaları', spec: '30–50 mm', finishes: [F.brass, F.nikel], badge: '' },
+      { sku: 'PAD-210', name: 'Pirinç Asma Kilit', cat: 'Asma Kilit', desc: 'Massif pirinç gövde, su geçirmez seçenek', spec: '20–60 mm', finishes: [F.brass, F.siyah], badge: '' },
+      { sku: 'PAD-220', name: 'Lamine Asma Kilit', cat: 'Asma Kilit', desc: 'Sertleştirilmiş kanca, dış mekân dayanımı', spec: '30–70 mm', finishes: [F.nikel, F.siyah], badge: 'YENİ' },
+      { sku: 'HNG-310', name: 'Rulmanlı Menteşe', cat: 'Menteşe', desc: '2BB paslanmaz, ağır kapı taşıma', spec: '100–120 mm', finishes: [F.satin, F.siyah], badge: '' },
+      { sku: 'HNG-320', name: 'Gizli Menteşe', cat: 'Menteşe', desc: 'Ayarlanabilir 3D, görünmez montaj', spec: 'Ø14 mm', finishes: [F.satin], badge: '' },
+      { sku: 'HDL-410', name: 'Aynalı Kol Takımı', cat: 'Kol', desc: 'Rozetli set — WC, anahtarlı, dilsiz', spec: 'Set', finishes: [F.brass, F.nikel, F.siyah], badge: '' },
+      { sku: 'HTL-510', name: 'RFID Otel Kilidi', cat: 'Otel', desc: 'Mifare kart, yönetim yazılımı dahil', spec: 'Sistem', finishes: [F.siyah, F.satin], badge: 'YENİ' },
+      { sku: 'ACC-610', name: 'Manyetik Kapı Stoperi', cat: 'Aksesuar', desc: 'Zemin & duvar tipi, paslanmaz', spec: 'Adet', finishes: [F.nikel, F.brass], badge: '' },
+    ];
+  }
+
+  renderVals() {
+    const cats = ['Tümü', 'Bareller', 'Asma Kilit', 'Menteşe', 'Kol', 'Otel', 'Aksesuar'];
+    const all = this.allProducts();
+    const sel = this.state.cat;
+    const list = sel === 'Tümü' ? all : all.filter(p => p.cat === sel);
+    return {
+      total: all.length,
+      count: list.length,
+      cats: cats.map(name => {
+        const active = name === sel;
+        return {
+          name,
+          on: () => this.setState({ cat: name }),
+          bg: active ? '#1C1A17' : 'transparent',
+          fg: active ? '#F4F1EA' : '#3C372F',
+          bd: active ? '#1C1A17' : 'rgba(28,26,23,.22)',
+        };
+      }),
+      products: list.map(p => ({
+        ...p,
+        badgeVis: p.badge ? 'visible' : 'hidden',
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FBF9F5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  input:focus, textarea:focus { outline: none; }
+  textarea { resize: vertical; }
+  .adm-scroll::-webkit-scrollbar { width: 8px; }
+  .adm-scroll::-webkit-scrollbar-thumb { background: rgba(26,23,20,.14); border-radius: 8px; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+</style>
+</helmet>
+
+<div style="display:flex; height:100vh; overflow:hidden; font-family:'Manrope', system-ui, sans-serif; color:#1A1714; background:#FBF9F5;">
+
+  <!-- ===== SIDEBAR ===== -->
+  <div style="width:238px; flex:none; background:#18120D; color:#C9C0B2; display:flex; flex-direction:column; padding:22px 16px;">
+    <div style="display:flex; align-items:center; gap:9px; padding:6px 10px 22px;">
+      <div style="width:8px; height:8px; border-radius:50%; background:#C2A06A;"></div>
+      <span style="font-size:18px; font-weight:700; letter-spacing:-0.02em; color:#F4EEE2;">MARKA</span>
+      <span style="font-family:'DM Mono',monospace; font-size:10px; color:#8a8472; margin-left:auto;">Admin</span>
+    </div>
+    <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.14em; color:#6f6452; padding:8px 10px 10px;">POSTA</div>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+      <div style="display:flex; align-items:center; gap:11px; padding:11px 12px; border-radius:10px; cursor:pointer; font-size:14px; font-weight:{{ n.fw }}; color:{{ n.fg }}; background:{{ n.bg }}; margin-bottom:2px;">
+        <span style="font-family:'DM Mono',monospace; font-size:11px; width:20px; color:{{ n.mc }};">{{ n.k }}</span>{{ n.label }}
+        <span style="margin-left:auto; font-size:11px; font-weight:600; color:{{ n.mc }}; visibility:{{ n.badgeVis }};">{{ n.badge }}</span>
+      </div>
+    </sc-for>
+    <div style="margin-top:auto; display:flex; align-items:center; gap:10px; padding:12px 10px; border-top:1px solid rgba(255,255,255,.08);">
+      <div style="width:32px; height:32px; border-radius:50%; background:#C2A06A; color:#18120D; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px;">EK</div>
+      <div style="line-height:1.3;"><div style="font-size:13px; font-weight:600; color:#F4EEE2;">Elif Kaya</div><div style="font-size:11px; color:#8a8472;">İhracat · Satış</div></div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <div style="flex:1; display:flex; flex-direction:column; overflow:hidden;">
+
+    <!-- TOPBAR -->
+    <div style="flex:none; display:flex; align-items:center; justify-content:space-between; padding:20px 28px; border-bottom:1px solid rgba(26,23,20,.08); background:rgba(251,249,245,.9); backdrop-filter:blur(12px);">
+      <div>
+        <div style="font-family:'DM Mono',monospace; font-size:12px; color:#8a857c; letter-spacing:0.06em;">Şablonlar / <span style="color:#8A6638;">Düzenle</span></div>
+        <div style="font-size:22px; font-weight:700; letter-spacing:-0.02em; margin-top:3px;">Şablon Düzenleyici</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-size:13px; color:#78726B;">{{ dirtyLabel }}</span>
+        <span style="font-size:13px; font-weight:600; color:#3C372F; background:#FFFFFF; border:1px solid rgba(26,23,20,.16); padding:10px 20px; border-radius:980px; cursor:pointer;">Vazgeç</span>
+        <span onClick="{{ onSave }}" style="font-size:13px; font-weight:600; color:#FBF9F5; background:#1A1714; padding:10px 22px; border-radius:980px; cursor:pointer; transition:background .2s;" style-hover="background:#33291f;">Kaydet</span>
+      </div>
+    </div>
+
+    <!-- TEMPLATE SWITCHER -->
+    <div style="flex:none; padding:14px 28px; border-bottom:1px solid rgba(26,23,20,.08); display:flex; align-items:center; gap:10px; overflow-x:auto;">
+      <span style="font-family:'DM Mono',monospace; font-size:11px; color:#b1a896; letter-spacing:0.08em; flex:none;">DÜZENLENEN:</span>
+      <sc-for list="{{ switcher }}" as="t" hint-placeholder-count="6">
+        <span onClick="{{ t.on }}" style="flex:none; display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; padding:8px 14px; border-radius:980px; cursor:pointer; background:{{ t.bg }}; color:{{ t.fg }}; border:1px solid {{ t.bd }};">
+          <span style="font-family:'DM Mono',monospace; font-size:10px; opacity:.7;">{{ t.code }}</span>{{ t.name }}
+        </span>
+      </sc-for>
+    </div>
+
+    <!-- CONTENT: editor + preview -->
+    <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; overflow:hidden;">
+
+      <!-- EDITOR -->
+      <div class="adm-scroll" style="overflow-y:auto; padding:26px 30px 44px; border-right:1px solid rgba(26,23,20,.08);">
+
+        <!-- meta -->
+        <div style="display:grid; grid-template-columns:1fr 96px; gap:12px; margin-bottom:16px;">
+          <label>
+            <div style="font-family:'DM Mono',monospace; font-size:11px; color:#b1a896; letter-spacing:0.08em; margin-bottom:7px;">ŞABLON ADI</div>
+            <input value="{{ name }}" onChange="{{ onName }}" style="width:100%; font-family:'Manrope',sans-serif; font-size:15px; font-weight:600; color:#1A1714; background:#FFFFFF; border:1px solid rgba(26,23,20,.14); border-radius:11px; padding:12px 14px;" />
+          </label>
+          <label>
+            <div style="font-family:'DM Mono',monospace; font-size:11px; color:#b1a896; letter-spacing:0.08em; margin-bottom:7px;">KOD</div>
+            <input value="{{ code }}" onChange="{{ onCode }}" maxlength="3" style="width:100%; font-family:'DM Mono',monospace; font-size:15px; text-align:center; color:#8A6638; background:#FFFFFF; border:1px solid rgba(26,23,20,.14); border-radius:11px; padding:12px 8px;" />
+          </label>
+        </div>
+
+        <!-- category -->
+        <div style="margin-bottom:20px;">
+          <div style="font-family:'DM Mono',monospace; font-size:11px; color:#b1a896; letter-spacing:0.08em; margin-bottom:9px;">KATEGORİ</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <sc-for list="{{ categories }}" as="c" hint-placeholder-count="4">
+              <span onClick="{{ c.on }}" style="font-size:13px; font-weight:600; padding:8px 16px; border-radius:980px; cursor:pointer; background:{{ c.bg }}; color:{{ c.fg }}; border:1px solid {{ c.bd }};">{{ c.name }}</span>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- subject -->
+        <label style="display:block; margin-bottom:18px;">
+          <div style="font-family:'DM Mono',monospace; font-size:11px; color:#b1a896; letter-spacing:0.08em; margin-bottom:7px;">KONU</div>
+          <input ref="{{ subjectRef }}" value="{{ subject }}" onChange="{{ onSubject }}" onSelect="{{ onSubjectSel }}" onFocus="{{ onSubjectSel }}" onKeyUp="{{ onSubjectSel }}" onClick="{{ onSubjectSel }}" style="width:100%; font-family:'Manrope',sans-serif; font-size:14px; color:#1A1714; background:#FFFFFF; border:1px solid {{ subjectBorder }}; border-radius:11px; padding:12px 14px;" />
+        </label>
+
+        <!-- body -->
+        <label style="display:block; margin-bottom:8px;">
+          <div style="font-family:'DM Mono',monospace; font-size:11px; color:#b1a896; letter-spacing:0.08em; margin-bottom:7px;">İÇERİK</div>
+          <textarea ref="{{ bodyRef }}" value="{{ body }}" onChange="{{ onBody }}" onSelect="{{ onBodySel }}" onFocus="{{ onBodySel }}" onKeyUp="{{ onBodySel }}" onClick="{{ onBodySel }}" style="width:100%; min-height:300px; font-family:'Manrope',sans-serif; font-size:14px; line-height:1.7; color:#1A1714; background:#FFFFFF; border:1px solid {{ bodyBorder }}; border-radius:11px; padding:14px 16px;"></textarea>
+        </label>
+
+        <!-- variable palette -->
+        <div style="background:#F0ECE3; border:1px solid rgba(26,23,20,.08); border-radius:16px; padding:16px 18px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+            <span style="font-family:'DM Mono',monospace; font-size:11px; color:#8A6638; letter-spacing:0.08em;">DEĞİŞKEN EKLE</span>
+            <span style="font-size:11.5px; color:#78726B;">imleç → <b style="color:#8A6638;">{{ focusLabel }}</b> alanına eklenir</span>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <sc-for list="{{ palette }}" as="p" hint-placeholder-count="6">
+              <span onClick="{{ p.on }}" style="display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:9px; cursor:pointer; background:#FFFFFF; border:1px solid rgba(26,23,20,.12);" style-hover="border-color:#A87C4F;">
+                <span style="font-family:'DM Mono',monospace; font-size:11px; color:#A87C4F;">{{ p.token }}</span>
+                <span style="color:#78726B; font-weight:500;">{{ p.label }}</span>
+              </span>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- attachments -->
+        <div style="margin-top:16px; background:#F0ECE3; border:1px solid rgba(26,23,20,.08); border-radius:16px; padding:16px 18px; position:relative;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+            <span style="font-family:'DM Mono',monospace; font-size:11px; color:#8A6638; letter-spacing:0.08em;">EKLER · şablonla gelir</span>
+            <span onClick="{{ toggleAttach }}" style="font-size:12.5px; font-weight:600; color:#A87C4F; cursor:pointer; padding:5px 12px; border-radius:980px; border:1px dashed rgba(168,124,79,.5);">+ Ek ekle</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <sc-for list="{{ attachmentChips }}" as="a" hint-placeholder-count="2">
+              <div style="display:flex; align-items:center; gap:12px; background:#FFFFFF; border:1px solid rgba(26,23,20,.10); border-radius:10px; padding:9px 12px;">
+                <div style="flex:none; width:34px; height:34px; border-radius:8px; background:{{ a.color }}; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-family:'DM Mono',monospace; font-size:10px; font-weight:500;">{{ a.type }}</div>
+                <div style="min-width:0; flex:1;">
+                  <div style="font-size:13.5px; font-weight:600; letter-spacing:-0.01em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ a.name }}</div>
+                  <div style="font-size:11.5px; color:#78726B; margin-top:1px;">{{ a.size }}</div>
+                </div>
+                <span onClick="{{ a.remove }}" style="flex:none; display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:rgba(26,23,20,.08); color:#5b5650; cursor:pointer; font-size:13px; line-height:1;">×</span>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noAttachments }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size:13px; color:#8a857c; padding:6px 2px;">Bu şablonda ek yok — “+ Ek ekle” ile dosya bağlayın.</div>
+            </sc-if>
+          </div>
+
+          <!-- attach picker -->
+          <sc-if value="{{ attachOpen }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ closeAttach }}" style="position:fixed; inset:0; z-index:40;"></div>
+            <div class="adm-scroll" style="position:absolute; z-index:41; top:52px; right:18px; width:346px; max-height:326px; overflow-y:auto; background:#FFFFFF; border:1px solid rgba(26,23,20,.12); border-radius:14px; box-shadow:0 24px 60px -24px rgba(0,0,0,.4); padding:8px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 10px;"><span style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.1em; color:#b1a896;">DOSYA KİTAPLIĞI</span><span onClick="{{ closeAttach }}" style="font-size:12px; font-weight:600; color:#A87C4F; cursor:pointer;">Tamam</span></div>
+              <sc-for list="{{ attachRows }}" as="f" hint-placeholder-count="6">
+                <div onClick="{{ f.on }}" style="display:flex; align-items:center; gap:11px; padding:9px 10px; border-radius:10px; cursor:pointer; background:{{ f.bg }};" style-hover="background:#F7F4ED;">
+                  <div style="flex:none; width:16px; height:16px; border-radius:5px; border:1.5px solid {{ f.boxBd }}; background:{{ f.boxBg }}; display:flex; align-items:center; justify-content:center; color:#FBF9F5; font-size:10px; line-height:1;">{{ f.check }}</div>
+                  <div style="flex:none; width:30px; height:30px; border-radius:7px; background:{{ f.color }}; color:#FFF; display:flex; align-items:center; justify-content:center; font-family:'DM Mono',monospace; font-size:9px;">{{ f.type }}</div>
+                  <div style="min-width:0; flex:1;"><div style="font-size:13px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ f.name }}</div><div style="font-size:11px; color:#78726B;">{{ f.size }}</div></div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+
+      </div>
+
+      <!-- PREVIEW -->
+      <div class="adm-scroll" style="overflow-y:auto; padding:26px 30px 44px; background:#F4F1EA;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+          <div style="font-family:'DM Mono',monospace; font-size:11px; color:#b1a896; letter-spacing:0.08em;">ÖNİZLEME</div>
+          <div style="display:flex; gap:6px; background:#E7E2D8; border-radius:980px; padding:3px;">
+            <span onClick="{{ onRaw }}" style="font-size:12px; font-weight:600; padding:6px 14px; border-radius:980px; cursor:pointer; background:{{ rawBg }}; color:{{ rawFg }};">Ham</span>
+            <span onClick="{{ onFilled }}" style="font-size:12px; font-weight:600; padding:6px 14px; border-radius:980px; cursor:pointer; background:{{ filledBg }}; color:{{ filledFg }};">Örnek verilerle</span>
+          </div>
+        </div>
+
+        <!-- email sheet -->
+        <div style="background:#FFFFFF; border:1px solid rgba(26,23,20,.10); border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,.04), 0 24px 50px -34px rgba(0,0,0,.3);">
+          <div style="padding:14px 24px; border-bottom:1px solid rgba(26,23,20,.08); background:#FBF9F5; display:flex; align-items:center; justify-content:space-between;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:30px; height:30px; border-radius:9px; background:#1A1714; color:#C2A06A; display:flex; align-items:center; justify-content:center; font-family:'DM Mono',monospace; font-size:12px;">{{ code }}</div>
+              <div style="font-size:13px; font-weight:600;">{{ name }}</div>
+            </div>
+            <span style="font-size:11px; font-weight:700; letter-spacing:0.06em; color:#8A6638; background:#F0ECE3; padding:5px 11px; border-radius:980px;">KAYNAK: TÜRKÇE</span>
+          </div>
+          <div style="padding:28px 30px 36px; min-height:300px;">
+            <div style="font-size:20px; font-weight:700; letter-spacing:-0.015em; margin-bottom:18px; white-space:pre-wrap;">{{ subjectRender }}</div>
+            <div style="font-size:15px; line-height:1.72; color:#2A2620; white-space:pre-wrap;">{{ bodyRender }}</div>
+          </div>
+          <sc-if value="{{ hasAttachments }}" hint-placeholder-val="{{ true }}">
+            <div style="border-top:1px solid rgba(26,23,20,.08); padding:16px 30px 22px; background:#FBF9F5;">
+              <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.1em; color:#b1a896; margin-bottom:10px;">{{ attachCount }} EK · dosyalar</div>
+              <div style="display:flex; flex-wrap:wrap; gap:10px;">
+                <sc-for list="{{ attachmentChips }}" as="a" hint-placeholder-count="2">
+                  <div style="display:inline-flex; align-items:center; gap:10px; background:#FFFFFF; border:1px solid rgba(26,23,20,.12); border-radius:10px; padding:8px 12px;">
+                    <div style="flex:none; width:30px; height:30px; border-radius:7px; background:{{ a.color }}; color:#FFF; display:flex; align-items:center; justify-content:center; font-family:'DM Mono',monospace; font-size:9px;">{{ a.type }}</div>
+                    <div><div style="font-size:12.5px; font-weight:600;">{{ a.name }}</div><div style="font-size:11px; color:#78726B;">{{ a.size }}</div></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        <div style="font-size:12px; color:#8a857c; margin-top:14px; text-align:center;">Bu şablon 6 dile anlık çevrilebilir · değişkenler gönderimde doldurulur</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div style="position:fixed; bottom:26px; left:50%; transform:translateX(-50%); background:#18120D; color:#F4EEE2; padding:15px 26px; border-radius:14px; box-shadow:0 20px 50px -20px rgba(0,0,0,.5); display:{{ toastDisplay }}; align-items:center; gap:13px; animation:fadeUp .3s ease; z-index:100;">
+    <div style="width:22px; height:22px; border-radius:50%; background:#2E7D5B; display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px;">✓</div>
+    <span style="font-size:14px; font-weight:500;">{{ toastText }}</span>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:820}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.subjectRef = React.createRef();
+    this.bodyRef = React.createRef();
+    this._caret = { field: 'body', pos: 0 };
+    const first = this.templates()[0];
+    this.state = {
+      active: first.id,
+      name: first.name, code: first.code, category: first.category,
+      subject: first.subject, body: first.body,
+      attachments: this.defaultAttach(first.id), attachOpen: false,
+      focusField: 'body', view: 'filled', dirty: false, toast: '',
+    };
+  }
+
+  templates() {
+    return [
+      { id:'quote', code:'TK', name:'Fiyat Teklifi', category:'Teklif',
+        subject:'{{firma}} — Fiyat Teklifiniz Hazır',
+        body:'Sayın {{ilgili}},\n\n{{firma}} için hazırladığımız fiyat teklifini ekte paylaşıyoruz. Teklif; silindir bareller, asma kilitler ve menteşe kalemlerini kapsamakta olup tüm fiyatlar FOB İzmir bazındadır.\n\nTeklifimiz 30 gün geçerlidir. Minimum sipariş adetleri ve tahmini teslim süreleri belgede belirtilmiştir.\n\nİş birliğimizi görüşmek üzere bir toplantı ayarlamaktan memnuniyet duyarız.\n\nSaygılarımızla,\nMARKA İhracat Ekibi\nexport@claviscor.com' },
+      { id:'sample', code:'NM', name:'Numune Gönderimi', category:'Lojistik',
+        subject:'Numuneleriniz Yola Çıktı — {{takip}}',
+        body:'Sayın {{ilgili}},\n\nTalep ettiğiniz ürün numuneleri bugün {{firma}} adresine kargoya verilmiştir. Gönderinizi aşağıdaki numarayla takip edebilirsiniz:\n\nKargo takip no: {{takip}}\n\nNumuneler; anti-snap barel, pirinç asma kilit ve rulmanlı menteşe örneklerini içermektedir. İncelemenizin ardından görüşlerinizi bizimle paylaşırsanız memnun oluruz.\n\nSaygılarımızla,\nMARKA İhracat Ekibi' },
+      { id:'order', code:'SP', name:'Sipariş Onayı', category:'Sipariş',
+        subject:'Siparişiniz Onaylandı — {{siparisNo}}',
+        body:'Sayın {{ilgili}},\n\n{{siparisNo}} numaralı siparişiniz tarafımıza ulaşmış ve onaylanmıştır. Üretim planlaması tamamlanmış olup ürünleriniz teslim programına alınmıştır.\n\nSipariş detaylarını ve proforma faturayı ekte bulabilirsiniz. Değişiklik talebiniz olması halinde 48 saat içinde bizimle iletişime geçmenizi rica ederiz.\n\nBizi tercih ettiğiniz için teşekkür ederiz.\n\nSaygılarımızla,\nMARKA İhracat Ekibi' },
+      { id:'shipment', code:'SV', name:'Sevkiyat Bildirimi', category:'Lojistik',
+        subject:'Siparişiniz Sevk Edildi — {{konteyner}}',
+        body:'Sayın {{ilgili}},\n\nSiparişiniz sevk edilmiştir. {{konteyner}} numaralı konteyner {{firma}} adına yola çıkmıştır.\n\nTahmini varış tarihi: {{eta}}\n\nKonşimento, çeki listesi ve gümrük belgeleri ekte yer almaktadır. Varışta destek gerekmesi halinde lojistik ekibimiz hizmetinizdedir.\n\nSaygılarımızla,\nMARKA İhracat Ekibi' },
+      { id:'catalog', code:'KT', name:'Yeni Katalog', category:'Pazarlama',
+        subject:'{{yil}} Ürün Kataloğumuz Yayında',
+        body:'Sayın {{ilgili}},\n\n{{yil}} ürün kataloğumuz yayında. Bu yıl koleksiyonumuza yeni anti-snap barel serisini, RFID otel kilit sistemlerini ve genişletilmiş kaplama seçeneklerini ekledik.\n\nDijital kataloğa ekteki bağlantıdan ulaşabilir, {{firma}} için özel toptan fiyat listesini talep edebilirsiniz.\n\nYeni sezonda birlikte çalışmayı dört gözle bekliyoruz.\n\nSaygılarımızla,\nMARKA İhracat Ekibi' },
+      { id:'fair', code:'FR', name:'Fuar Daveti', category:'Pazarlama',
+        subject:'{{fuar}} — Sizi Standımızda Ağırlamak İsteriz',
+        body:'Sayın {{ilgili}},\n\n{{fuar}} fuarında sizi standımızda ağırlamaktan mutluluk duyarız. Yeni ürün ailelerimizi ve bu yılın yeniliklerini yakından inceleme fırsatı bulacaksınız.\n\nStand no: {{stand}}\n\n{{firma}} ekibi için özel bir tanıtım randevusu ayarlamak isterseniz, size uygun bir zaman planlayalım.\n\nGörüşmek dileğiyle,\nMARKA İhracat Ekibi' },
+    ];
+  }
+
+  fileLib() {
+    return {
+      catalog:   { name:'Claviscor-Katalog-2026.pdf', type:'PDF', size:'12,4 MB', color:'#B4503F' },
+      finishes:  { name:'Kaplama-Kartelasi.pdf', type:'PDF', size:'3,1 MB', color:'#B4503F' },
+      pricelist: { name:'Fiyat-Listesi-2026.xlsx', type:'XLS', size:'248 KB', color:'#2E7D5B' },
+      quote:     { name:'Fiyat-Teklifi.pdf', type:'PDF', size:'210 KB', color:'#B4503F' },
+      proforma:  { name:'Proforma-Fatura.pdf', type:'PDF', size:'180 KB', color:'#B4503F' },
+      ce:        { name:'CE-Uygunluk-Belgesi.pdf', type:'PDF', size:'640 KB', color:'#B4503F' },
+      iso:       { name:'ISO-9001-Sertifikasi.pdf', type:'PDF', size:'520 KB', color:'#B4503F' },
+      bol:       { name:'Konsimento-BL.pdf', type:'PDF', size:'320 KB', color:'#B4503F' },
+      packing:   { name:'Ceki-Listesi.pdf', type:'PDF', size:'150 KB', color:'#B4503F' },
+      samples:   { name:'Numune-Icerik-Listesi.pdf', type:'PDF', size:'96 KB', color:'#B4503F' },
+      fair:      { name:'Fuar-Davetiye.pdf', type:'PDF', size:'1,2 MB', color:'#B4503F' },
+    };
+  }
+
+  defaultAttach(id) {
+    return ({
+      quote: ['quote', 'pricelist'],
+      sample: ['samples'],
+      order: ['proforma', 'pricelist'],
+      shipment: ['bol', 'packing'],
+      catalog: ['catalog', 'finishes'],
+      fair: ['fair'],
+    })[id] || [];
+  }
+
+  varMeta() {
+    return {
+      firma: { label:'Firma', sample:'Van der Berg Deuren B.V.' },
+      ilgili: { label:'İlgili kişi', sample:'Dhr. Jansen' },
+      takip: { label:'Takip no', sample:'TR4471902ES' },
+      siparisNo: { label:'Sipariş no', sample:'SO-2026-0418' },
+      konteyner: { label:'Konteyner', sample:'MSKU-7742013' },
+      eta: { label:'Varış', sample:'18 Temmuz 2026' },
+      yil: { label:'Yıl', sample:'2026' },
+      fuar: { label:'Fuar', sample:'R+T Stuttgart 2026' },
+      stand: { label:'Stand', sample:'Salon 4 · B12' },
+    };
+  }
+
+  _load(id) {
+    const t = this.templates().find(x => x.id === id);
+    if (!t) return;
+    this.setState({ active:id, name:t.name, code:t.code, category:t.category, subject:t.subject, body:t.body, attachments:this.defaultAttach(id), attachOpen:false, dirty:false });
+  }
+
+  _track(field, e) {
+    this._caret = { field, pos: e.target.selectionStart };
+    if (this.state.focusField !== field) this.setState({ focusField: field });
+  }
+
+  _insert(token) {
+    const subjEl = this.subjectRef.current, bodyEl = this.bodyRef.current;
+    // clicking a non-focusable chip keeps the field focused — read the live caret straight from the DOM
+    let field, el;
+    if (document.activeElement === subjEl) { field = 'subject'; el = subjEl; }
+    else if (document.activeElement === bodyEl) { field = 'body'; el = bodyEl; }
+    else { field = (this._caret && this._caret.field === 'subject') ? 'subject' : 'body'; el = field === 'subject' ? subjEl : bodyEl; }
+    const val = String(this.state[field] || '');
+    let pos = (el && typeof el.selectionStart === 'number') ? el.selectionStart : (this._caret ? this._caret.pos : val.length);
+    pos = Math.min(Math.max(0, pos), val.length);
+    const ins = '{{' + token + '}}';
+    const next = val.slice(0, pos) + ins + val.slice(pos);
+    this.setState({ [field]: next, dirty:true }, () => {
+      const ref = field === 'subject' ? this.subjectRef : this.bodyRef;
+      const e = ref && ref.current;
+      if (e) { const np = pos + ins.length; e.focus(); try { e.setSelectionRange(np, np); } catch (x) {} this._caret = { field, pos: np }; }
+    });
+  }
+
+  _segments(str) {
+    const meta = this.varMeta();
+    const raw = this.state.view === 'raw';
+    const out = [];
+    const re = /\{\{(\w+)\}\}/g;
+    let last = 0, m;
+    const s = String(str || '');
+    while ((m = re.exec(s))) {
+      if (m.index > last) out.push({ isVar:false, text: s.slice(last, m.index) });
+      const k = m[1];
+      const md = meta[k] || { label:k, sample:'' };
+      if (raw) {
+        out.push({ isVar:true, text:'{{' + k + '}}', style:{ background:'rgba(168,124,79,.16)', color:'#8A6638', padding:'2px 6px', borderRadius:'6px', fontFamily:"'DM Mono', monospace", fontWeight:500, fontSize:'0.9em' } });
+      } else {
+        out.push({ isVar:true, text: md.sample || ('{{' + k + '}}'), style:{ background:'rgba(168,124,79,.15)', color:'#6b5326', padding:'1px 5px', borderRadius:'5px', fontWeight:600 } });
+      }
+      last = m.index + m[0].length;
+    }
+    if (last < s.length) out.push({ isVar:false, text: s.slice(last) });
+    return out;
+  }
+
+  _render(str) {
+    const segs = this._segments(str);
+    return React.createElement(
+      React.Fragment, null,
+      segs.map((g, i) => g.isVar ? React.createElement('span', { key: i, style: g.style }, g.text) : g.text)
+    );
+  }
+
+  _toggleAttachment(fid) {
+    this.setState(s => {
+      const has = s.attachments.includes(fid);
+      return { attachments: has ? s.attachments.filter(x => x !== fid) : [...s.attachments, fid], dirty: true };
+    });
+  }
+
+  _flashToast(msg) {
+    this.setState({ toast: msg });
+    if (this._toastT) clearTimeout(this._toastT);
+    this._toastT = setTimeout(() => this.setState({ toast: '' }), 2800);
+  }
+
+  componentWillUnmount() { if (this._toastT) clearTimeout(this._toastT); }
+
+  renderVals() {
+    const s = this.state;
+    const nav = [
+      { k:'✉', label:'Şablonlar', active:true, badge:'6', hasBadge:true },
+      { k:'↗', label:'Gönderilenler', active:false, badge:'128', hasBadge:true },
+      { k:'◷', label:'Zamanlanmış', active:false, badge:'3', hasBadge:true },
+      { k:'☰', label:'Kişiler', active:false, badge:'', hasBadge:false },
+      { k:'⚙', label:'Ayarlar', active:false, badge:'', hasBadge:false },
+    ];
+    const cats = ['Teklif', 'Sipariş', 'Lojistik', 'Pazarlama'];
+    const meta = this.varMeta();
+    const lib = this.fileLib();
+    const palKeys = ['firma','ilgili','takip','siparisNo','konteyner','eta','yil','fuar','stand'];
+
+    return {
+      nav: nav.map(n => ({
+        k:n.k, label:n.label,
+        bg: n.active ? 'rgba(194,160,106,.16)' : 'transparent',
+        fg: n.active ? '#F4EEE2' : '#C9C0B2',
+        fw: n.active ? 700 : 500,
+        mc: n.active ? '#C2A06A' : '#6f6452',
+        badge: n.badge, badgeVis: n.hasBadge ? 'visible' : 'hidden',
+      })),
+      switcher: this.templates().map(t => {
+        const a = t.id === s.active;
+        return { name:t.name, code:t.code, on:()=>this._load(t.id),
+          bg: a ? '#1A1714' : '#FFFFFF', fg: a ? '#FBF9F5' : '#3C372F', bd: a ? '#1A1714' : 'rgba(26,23,20,.14)' };
+      }),
+      name: s.name, code: s.code,
+      onName: (e)=>this.setState({ name:e.target.value, dirty:true }),
+      onCode: (e)=>this.setState({ code:e.target.value.toUpperCase(), dirty:true }),
+      categories: cats.map(c => {
+        const a = c === s.category;
+        return { name:c, on:()=>this.setState({ category:c, dirty:true }),
+          bg: a ? '#1A1714' : 'transparent', fg: a ? '#FBF9F5' : '#3C372F', bd: a ? '#1A1714' : 'rgba(26,23,20,.16)' };
+      }),
+      subject: s.subject, body: s.body,
+      onSubject: (e)=>{ this._caret={field:'subject',pos:e.target.selectionStart}; this.setState({ subject:e.target.value, dirty:true }); },
+      onBody: (e)=>{ this._caret={field:'body',pos:e.target.selectionStart}; this.setState({ body:e.target.value, dirty:true }); },
+      onSubjectSel: (e)=>this._track('subject', e),
+      onBodySel: (e)=>this._track('body', e),
+      subjectRef: this.subjectRef, bodyRef: this.bodyRef,
+      subjectBorder: s.focusField==='subject' ? '#A87C4F' : 'rgba(26,23,20,.14)',
+      bodyBorder: s.focusField==='body' ? '#A87C4F' : 'rgba(26,23,20,.14)',
+      focusLabel: s.focusField==='subject' ? 'Konu' : 'İçerik',
+      palette: palKeys.map(k => ({ token:'{{'+k+'}}', label:(meta[k]||{}).label||k, on:()=>this._insert(k) })),
+      attachmentChips: s.attachments.map(fid => { const f = lib[fid]; return f ? { name:f.name, size:f.size, type:f.type, color:f.color, remove:()=>this._toggleAttachment(fid) } : null; }).filter(Boolean),
+      noAttachments: s.attachments.length === 0,
+      hasAttachments: s.attachments.length > 0,
+      attachCount: s.attachments.length,
+      attachOpen: s.attachOpen,
+      toggleAttach: ()=>this.setState(st => ({ attachOpen: !st.attachOpen })),
+      closeAttach: ()=>this.setState({ attachOpen: false }),
+      attachRows: Object.keys(lib).map(fid => {
+        const f = lib[fid]; const sel = s.attachments.includes(fid);
+        return { name:f.name, size:f.size, type:f.type, color:f.color, on:()=>this._toggleAttachment(fid),
+          bg: sel ? '#F7F4ED' : 'transparent', boxBg: sel ? '#1A1714' : 'transparent', boxBd: sel ? '#1A1714' : 'rgba(26,23,20,.28)', check: sel ? '✓' : '' };
+      }),
+      subjectRender: this._render(s.subject),
+      bodyRender: this._render(s.body),
+      onRaw: ()=>this.setState({ view:'raw' }),
+      onFilled: ()=>this.setState({ view:'filled' }),
+      rawBg: s.view==='raw' ? '#FFFFFF' : 'transparent',
+      rawFg: s.view==='raw' ? '#1A1714' : '#78726B',
+      filledBg: s.view==='filled' ? '#FFFFFF' : 'transparent',
+      filledFg: s.view==='filled' ? '#1A1714' : '#78726B',
+      dirtyLabel: s.dirty ? 'Kaydedilmemiş değişiklikler' : 'Tüm değişiklikler kayıtlı',
+      onSave: ()=>{ this.setState({ dirty:false }); this._flashToast('“' + s.name + '” şablonu kaydedildi'); },
+      toastText: s.toast, toastDisplay: s.toast ? 'flex' : 'none',
+    };
+  }
+}
+</script>
+</body>
+</html>

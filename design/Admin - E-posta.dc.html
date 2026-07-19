@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FBF9F5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes pulse { 0%,100% { opacity: .35; } 50% { opacity: 1; } }
+  input:focus, textarea:focus { outline: none; }
+  .adm-scroll::-webkit-scrollbar { width: 8px; }
+  .adm-scroll::-webkit-scrollbar-thumb { background: rgba(26,23,20,.14); border-radius: 8px; }
+</style>
+</helmet>
+
+<div style="display:flex; height:100vh; overflow:hidden; font-family:'Manrope', system-ui, sans-serif; color:#1A1714; background:#FBF9F5;">
+
+  <!-- ===== SIDEBAR ===== -->
+  <div style="width:238px; flex:none; background:#18120D; color:#C9C0B2; display:flex; flex-direction:column; padding:22px 16px;">
+    <div style="display:flex; align-items:center; gap:9px; padding:6px 10px 22px;">
+      <div style="width:8px; height:8px; border-radius:50%; background:#C2A06A;"></div>
+      <span style="font-size:18px; font-weight:700; letter-spacing:-0.02em; color:#F4EEE2;">MARKA</span>
+      <span style="font-family:'DM Mono',monospace; font-size:10px; color:#8a8472; margin-left:auto;">Admin</span>
+    </div>
+    <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.14em; color:#6f6452; padding:8px 10px 10px;">POSTA</div>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+      <div onClick="{{ n.on }}" style="display:flex; align-items:center; gap:11px; padding:11px 12px; border-radius:10px; cursor:pointer; font-size:14px; font-weight:{{ n.fw }}; color:{{ n.fg }}; background:{{ n.bg }}; margin-bottom:2px; transition:background .2s;">
+        <span style="font-family:'DM Mono',monospace; font-size:11px; width:20px; color:{{ n.mc }};">{{ n.k }}</span>{{ n.label }}
+        <span style="margin-left:auto; font-size:11px; font-weight:600; color:{{ n.mc }}; visibility:{{ n.badgeVis }};">{{ n.badge }}</span>
+      </div>
+    </sc-for>
+    <div style="margin-top:auto; display:flex; align-items:center; gap:10px; padding:12px 10px; border-top:1px solid rgba(255,255,255,.08);">
+      <div style="width:32px; height:32px; border-radius:50%; background:#C2A06A; color:#18120D; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px;">EK</div>
+      <div style="line-height:1.3;"><div style="font-size:13px; font-weight:600; color:#F4EEE2;">Elif Kaya</div><div style="font-size:11px; color:#8a8472;">İhracat · Satış</div></div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <div style="flex:1; display:flex; flex-direction:column; overflow:hidden;">
+
+    <!-- TOPBAR -->
+    <div style="flex:none; display:flex; align-items:center; justify-content:space-between; padding:20px 28px; border-bottom:1px solid rgba(26,23,20,.08); background:rgba(251,249,245,.9); backdrop-filter:blur(12px);">
+      <div>
+        <div style="font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#A87C4F;">Şablonlar</div>
+        <div style="font-size:22px; font-weight:700; letter-spacing:-0.02em; margin-top:3px;">E-posta Şablonları</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div style="display:flex; align-items:center; gap:8px; background:#FFFFFF; border:1px solid rgba(26,23,20,.12); border-radius:980px; padding:9px 16px; font-size:13px; color:#8a857c; width:220px;">
+          <span style="font-family:'DM Mono',monospace;">⌕</span><span>Şablon ara…</span>
+        </div>
+        <span style="font-size:13px; font-weight:600; color:#FBF9F5; background:#1A1714; padding:10px 18px; border-radius:980px; cursor:pointer;">+ Yeni şablon</span>
+      </div>
+    </div>
+
+    <!-- CONTENT: two panes -->
+    <div style="flex:1; display:grid; grid-template-columns:320px 1fr; overflow:hidden;">
+
+      <!-- TEMPLATE LIST -->
+      <div class="adm-scroll" style="overflow-y:auto; border-right:1px solid rgba(26,23,20,.08); padding:18px;">
+        <div style="font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.1em; color:#b1a896; padding:4px 8px 12px;">{{ tmplCount }} ŞABLON</div>
+        <sc-for list="{{ tmplList }}" as="t" hint-placeholder-count="6">
+          <div onClick="{{ t.on }}" style="display:flex; gap:13px; padding:14px; border-radius:14px; cursor:pointer; margin-bottom:8px; background:{{ t.bg }}; border:1px solid {{ t.bd }}; transition:background .2s, border-color .2s;">
+            <div style="flex:none; width:40px; height:40px; border-radius:11px; background:{{ t.iconBg }}; display:flex; align-items:center; justify-content:center; font-family:'DM Mono',monospace; font-size:13px; font-weight:500; color:{{ t.iconFg }};">{{ t.code }}</div>
+            <div style="min-width:0;">
+              <div style="font-size:14.5px; font-weight:700; letter-spacing:-0.01em;">{{ t.name }}</div>
+              <div style="font-size:12.5px; color:#78726B; margin-top:2px; line-height:1.4;">{{ t.desc }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- COMPOSER -->
+      <div class="adm-scroll" style="overflow-y:auto; padding:28px 32px 40px;">
+        <div style="max-width:760px; margin:0 auto;">
+
+          <!-- header -->
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:22px;">
+            <div>
+              <div style="font-family:'DM Mono',monospace; font-size:11px; color:#A87C4F; letter-spacing:0.06em;">{{ activeCode }} · KAYNAK: TÜRKÇE</div>
+              <h2 style="font-size:28px; font-weight:700; letter-spacing:-0.025em; margin:6px 0 0;">{{ activeName }}</h2>
+            </div>
+          </div>
+
+          <!-- sender (from) -->
+          <div style="margin-bottom:16px; position:relative;">
+            <div style="font-family:'DM Mono',monospace; font-size:11px; color:#b1a896; letter-spacing:0.08em; margin-bottom:7px;">KİMDEN</div>
+            <div onClick="{{ toggleSender }}" style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:#FFFFFF; border:1px solid rgba(26,23,20,.14); border-radius:11px; padding:12px 14px; cursor:pointer;">
+              <div style="display:flex; align-items:center; gap:11px; min-width:0;">
+                <span style="flex:none; width:10px; height:10px; border-radius:50%; background:{{ senderDot }};"></span>
+                <span style="font-size:14px; font-weight:600;">{{ senderEmail }}</span>
+                <span style="font-size:11.5px; font-weight:600; color:#8A6638; background:#F0ECE3; padding:3px 10px; border-radius:980px;">{{ senderLabel }}</span>
+              </div>
+              <span style="flex:none; font-size:11px; color:#8a857c; transform:{{ senderChevron }}; transition:transform .2s;">▾</span>
+            </div>
+            <sc-if value="{{ senderOpen }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ closeSender }}" style="position:fixed; inset:0; z-index:40;"></div>
+              <div class="adm-scroll" style="position:absolute; z-index:41; top:100%; left:0; right:0; margin-top:8px; max-height:330px; overflow-y:auto; background:#FFFFFF; border:1px solid rgba(26,23,20,.12); border-radius:14px; box-shadow:0 24px 60px -24px rgba(0,0,0,.4); padding:8px;">
+                <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.1em; color:#b1a896; padding:8px 10px 6px;">GÖNDEREN HESAP · birini seç</div>
+                <sc-for list="{{ senderRows }}" as="m" hint-placeholder-count="6">
+                  <div onClick="{{ m.on }}" style="display:flex; align-items:center; gap:12px; padding:11px 10px; border-radius:10px; cursor:pointer; background:{{ m.bg }};" style-hover="background:#F7F4ED;">
+                    <span style="flex:none; width:10px; height:10px; border-radius:50%; background:{{ m.dot }};"></span>
+                    <div style="min-width:0; flex:1;">
+                      <div style="font-size:13.5px; font-weight:600; letter-spacing:-0.01em;">{{ m.email }}</div>
+                      <div style="font-size:12px; color:#78726B; margin-top:1px;">{{ m.label }} · {{ m.desc }}</div>
+                    </div>
+                    <span style="flex:none; color:#1A1714; font-size:13px; visibility:{{ m.checkVis }};">✓</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+
+          <!-- recipient -->
+          <div style="margin-bottom:16px; position:relative;">
+            <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:7px;">
+              <div style="font-family:'DM Mono',monospace; font-size:11px; color:#b1a896; letter-spacing:0.08em;">KİME</div>
+              <div style="font-size:11px; color:#b1a896;">{{ recipientCount }} alıcı seçili</div>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; background:#FFFFFF; border:1px solid rgba(26,23,20,.14); border-radius:11px; padding:9px 10px; min-height:46px;">
+              <sc-for list="{{ recipientChips }}" as="c" hint-placeholder-count="1">
+                <span style="display:inline-flex; align-items:center; gap:8px; background:#F0ECE3; border:1px solid rgba(26,23,20,.10); border-radius:980px; padding:6px 8px 6px 13px; font-size:13px; font-weight:600;">
+                  {{ c.email }}
+                  <span onClick="{{ c.remove }}" style="display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:50%; background:rgba(26,23,20,.10); color:#5b5650; cursor:pointer; font-size:12px; line-height:1;">×</span>
+                </span>
+              </sc-for>
+              <span onClick="{{ togglePicker }}" style="display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; color:#A87C4F; cursor:pointer; padding:6px 12px; border-radius:980px; border:1px dashed rgba(168,124,79,.5);">+ Kişi seç</span>
+            </div>
+
+            <!-- contact picker -->
+            <sc-if value="{{ pickerOpen }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ closePicker }}" style="position:fixed; inset:0; z-index:40;"></div>
+              <div class="adm-scroll" style="position:absolute; z-index:41; top:100%; left:0; right:0; margin-top:8px; max-height:328px; overflow-y:auto; background:#FFFFFF; border:1px solid rgba(26,23,20,.12); border-radius:14px; box-shadow:0 24px 60px -24px rgba(0,0,0,.4); padding:8px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 10px 8px;"><span style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.1em; color:#b1a896;">KİŞİLER · tek tek seç</span><span onClick="{{ closePicker }}" style="font-size:12px; font-weight:600; color:#A87C4F; cursor:pointer;">Tamam</span></div>
+                <sc-for list="{{ contactRows }}" as="c" hint-placeholder-count="6">
+                  <div onClick="{{ c.on }}" style="display:flex; align-items:center; gap:12px; padding:10px; border-radius:10px; cursor:pointer; background:{{ c.bg }};" style-hover="background:#F7F4ED;">
+                    <div style="flex:none; width:18px; height:18px; border-radius:6px; border:1.5px solid {{ c.boxBd }}; background:{{ c.boxBg }}; display:flex; align-items:center; justify-content:center; color:#FBF9F5; font-size:11px; line-height:1;">{{ c.check }}</div>
+                    <div style="flex:none; width:30px; height:30px; border-radius:50%; background:#F0ECE3; color:#8A6638; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;">{{ c.initials }}</div>
+                    <div style="min-width:0; flex:1;">
+                      <div style="font-size:13.5px; font-weight:600; letter-spacing:-0.01em;">{{ c.name }} <span style="color:#b1a896; font-weight:500;">· {{ c.company }}</span></div>
+                      <div style="font-family:'DM Mono',monospace; font-size:11px; color:#78726B; margin-top:1px;">{{ c.email }}</div>
+                    </div>
+                    <span style="flex:none; font-family:'DM Mono',monospace; font-size:10px; color:#A87C4F; background:#F0ECE3; padding:3px 8px; border-radius:980px;">{{ c.region }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+
+          <!-- variables -->
+          <div style="background:#F0ECE3; border:1px solid rgba(26,23,20,.08); border-radius:16px; padding:18px 20px; margin-bottom:22px;">
+            <div style="font-family:'DM Mono',monospace; font-size:11px; color:#8A6638; letter-spacing:0.08em; margin-bottom:14px;">DEĞİŞKENLER — otomatik yerleşir</div>
+            <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;">
+              <sc-for list="{{ varFields }}" as="v" hint-placeholder-count="2">
+                <label>
+                  <div style="font-size:12px; color:#78726B; margin-bottom:6px; font-weight:500;">{{ v.label }} <span style="font-family:'DM Mono',monospace; color:#b1a896;">{{ v.token }}</span></div>
+                  <input value="{{ v.value }}" onChange="{{ v.on }}" style="width:100%; font-family:'Manrope',sans-serif; font-size:13.5px; color:#1A1714; background:#FFFFFF; border:1px solid rgba(26,23,20,.14); border-radius:10px; padding:10px 12px;" />
+                </label>
+              </sc-for>
+            </div>
+          </div>
+
+          <!-- language pills -->
+          <div style="margin-bottom:18px;">
+            <div style="font-family:'DM Mono',monospace; font-size:11px; color:#b1a896; letter-spacing:0.08em; margin-bottom:10px;">GÖNDERİM DİLİ</div>
+            <div style="display:flex; gap:9px; flex-wrap:wrap;">
+              <sc-for list="{{ langPills }}" as="l" hint-placeholder-count="6">
+                <span onClick="{{ l.on }}" style="display:flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600; padding:10px 16px; border-radius:980px; cursor:pointer; background:{{ l.bg }}; color:{{ l.fg }}; border:1px solid {{ l.bd }}; transition:all .2s;">
+                  <span style="font-family:'DM Mono',monospace; font-size:11px; opacity:.7;">{{ l.code }}</span>{{ l.name }}
+                  <span style="width:6px; height:6px; border-radius:50%; background:{{ l.dotColor }}; animation:pulse 1s ease-in-out infinite; display:{{ l.dotDisplay }};"></span>
+                </span>
+              </sc-for>
+            </div>
+          </div>
+
+          <!-- EMAIL PREVIEW CARD -->
+          <div style="position:relative; background:#FFFFFF; border:1px solid rgba(26,23,20,.10); border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,.04), 0 24px 50px -34px rgba(0,0,0,.3);">
+            <!-- mail header strip -->
+            <div style="padding:16px 24px; border-bottom:1px solid rgba(26,23,20,.08); background:#FBF9F5;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div style="font-size:12.5px; color:#78726B; display:flex; align-items:center; gap:8px; min-width:0;"><span style="color:#b1a896;">Kimden</span><span style="flex:none; width:8px; height:8px; border-radius:50%; background:{{ senderDot }};"></span><span style="font-weight:600; color:#3C372F;">{{ senderEmail }}</span></div>
+                <span style="font-size:11px; font-weight:700; letter-spacing:0.06em; color:#8A6638; background:#F0ECE3; padding:5px 11px; border-radius:980px;">{{ activeLangName }}</span>
+              </div>
+              <div style="font-size:12.5px; color:#78726B; margin-top:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"><span style="color:#b1a896;">Kime</span> &nbsp;{{ recipientSummary }}</div>
+            </div>
+            <!-- subject + body -->
+            <div dir="{{ dirAttr }}" style="padding:28px 30px 34px; min-height:280px;">
+              <div style="font-size:20px; font-weight:700; letter-spacing:-0.015em; margin-bottom:18px;">{{ subjectText }}</div>
+              <div style="font-size:15px; line-height:1.72; color:#2A2620; white-space:pre-wrap;">{{ bodyText }}</div>
+            </div>
+            <!-- translating overlay -->
+            <div style="position:absolute; inset:0; background:rgba(251,249,245,.72); backdrop-filter:blur(3px); display:{{ overlayDisplay }}; align-items:center; justify-content:center; flex-direction:column; gap:16px;">
+              <div style="width:34px; height:34px; border-radius:50%; border:3px solid rgba(168,124,79,.25); border-top-color:#A87C4F; animation:spin .8s linear infinite;"></div>
+              <div style="font-size:14px; font-weight:600; color:#8A6638;">{{ overlayText }}</div>
+            </div>
+          </div>
+
+          <!-- actions -->
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:20px; gap:16px; flex-wrap:wrap;">
+            <div style="font-size:13px; color:#78726B;">{{ statusText }}</div>
+            <div style="display:flex; gap:10px;">
+              <span style="font-size:14px; font-weight:600; color:#3C372F; background:#FFFFFF; border:1px solid rgba(26,23,20,.16); padding:12px 22px; border-radius:980px; cursor:pointer;">Taslak kaydet</span>
+              <span onClick="{{ onSend }}" style="font-size:14px; font-weight:600; color:#FBF9F5; background:#1A1714; padding:12px 28px; border-radius:980px; cursor:pointer; transition:background .2s;" style-hover="background:#33291f;">Gönder →</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div style="position:fixed; bottom:26px; left:50%; transform:translateX(-50%); background:#18120D; color:#F4EEE2; padding:15px 26px; border-radius:14px; box-shadow:0 20px 50px -20px rgba(0,0,0,.5); display:{{ toastDisplay }}; align-items:center; gap:13px; animation:fadeUp .3s ease; z-index:100;">
+    <div style="width:22px; height:22px; border-radius:50%; background:#2E7D5B; display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px;">✓</div>
+    <span style="font-size:14px; font-weight:500;">{{ toastText }}</span>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:820}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const defs = {
+      firma: 'Van der Berg Deuren B.V.', ilgili: 'Dhr. Jansen',
+      takip: 'TR4471902ES', siparisNo: 'SO-2026-0418',
+      konteyner: 'MSKU-7742013', eta: '18 Temmuz 2026',
+      yil: '2026', fuar: 'R+T Stuttgart 2026', stand: 'Salon 4 · Stand B12',
+    };
+    this.state = {
+      active: 'quote', lang: 'tr', translating: null,
+      recipients: ['c1'], pickerOpen: false, fields: defs,
+      sender: 'export', senderOpen: false,
+      toast: '',
+    };
+    this._cache = {};
+    this._toastT = null;
+  }
+
+  langs() {
+    return [
+      { code: 'TR', key: 'tr', name: 'Türkçe', en: 'Turkish', rtl: false },
+      { code: 'EN', key: 'en', name: 'English', en: 'English', rtl: false },
+      { code: 'NL', key: 'nl', name: 'Nederlands', en: 'Dutch', rtl: false },
+      { code: 'DE', key: 'de', name: 'Deutsch', en: 'German', rtl: false },
+      { code: 'FR', key: 'fr', name: 'Français', en: 'French', rtl: false },
+      { code: 'AR', key: 'ar', name: 'العربية', en: 'Arabic', rtl: true },
+    ];
+  }
+
+  templates() {
+    return [
+      { id:'quote', code:'TK', name:'Fiyat Teklifi', desc:'FOB fiyat teklifi gönderimi', vars:['firma','ilgili'],
+        subject:'{{firma}} — Fiyat Teklifiniz Hazır',
+        body:'Sayın {{ilgili}},\n\n{{firma}} için hazırladığımız fiyat teklifini ekte paylaşıyoruz. Teklif; silindir bareller, asma kilitler ve menteşe kalemlerini kapsamakta olup tüm fiyatlar FOB İzmir bazındadır.\n\nTeklifimiz 30 gün geçerlidir. Minimum sipariş adetleri ve tahmini teslim süreleri belgede belirtilmiştir.\n\nİş birliğimizi görüşmek üzere bir toplantı ayarlamaktan memnuniyet duyarız.\n\nSaygılarımızla,\nMARKA İhracat Ekibi\nexport@marka.com' },
+      { id:'sample', code:'NM', name:'Numune Gönderimi', desc:'Numune kargo & takip bilgisi', vars:['firma','ilgili','takip'],
+        subject:'Numuneleriniz Yola Çıktı — {{takip}}',
+        body:'Sayın {{ilgili}},\n\nTalep ettiğiniz ürün numuneleri bugün {{firma}} adresine kargoya verilmiştir. Gönderinizi aşağıdaki numarayla takip edebilirsiniz:\n\nKargo takip no: {{takip}}\n\nNumuneler; anti-snap barel, pirinç asma kilit ve rulmanlı menteşe örneklerini içermektedir. İncelemenizin ardından görüşlerinizi bizimle paylaşırsanız memnun oluruz.\n\nSaygılarımızla,\nMARKA İhracat Ekibi' },
+      { id:'order', code:'SP', name:'Sipariş Onayı', desc:'Sipariş & proforma teyidi', vars:['firma','ilgili','siparisNo'],
+        subject:'Siparişiniz Onaylandı — {{siparisNo}}',
+        body:'Sayın {{ilgili}},\n\n{{siparisNo}} numaralı siparişiniz tarafımıza ulaşmış ve onaylanmıştır. Üretim planlaması tamamlanmış olup ürünleriniz teslim programına alınmıştır.\n\nSipariş detaylarını ve proforma faturayı ekte bulabilirsiniz. Değişiklik talebiniz olması halinde 48 saat içinde bizimle iletişime geçmenizi rica ederiz.\n\nBizi tercih ettiğiniz için teşekkür ederiz.\n\nSaygılarımızla,\nMARKA İhracat Ekibi' },
+      { id:'shipment', code:'SV', name:'Sevkiyat Bildirimi', desc:'Konteyner & ETA bilgisi', vars:['firma','ilgili','konteyner','eta'],
+        subject:'Siparişiniz Sevk Edildi — {{konteyner}}',
+        body:'Sayın {{ilgili}},\n\nSiparişiniz sevk edilmiştir. {{konteyner}} numaralı konteyner {{firma}} adına yola çıkmıştır.\n\nTahmini varış tarihi: {{eta}}\n\nKonşimento, çeki listesi ve gümrük belgeleri ekte yer almaktadır. Varışta destek gerekmesi halinde lojistik ekibimiz hizmetinizdedir.\n\nSaygılarımızla,\nMARKA İhracat Ekibi' },
+      { id:'catalog', code:'KT', name:'Yeni Katalog', desc:'Sezon kataloğu duyurusu', vars:['firma','ilgili','yil'],
+        subject:'{{yil}} Ürün Kataloğumuz Yayında',
+        body:'Sayın {{ilgili}},\n\n{{yil}} ürün kataloğumuz yayında. Bu yıl koleksiyonumuza yeni anti-snap barel serisini, RFID otel kilit sistemlerini ve genişletilmiş kaplama seçeneklerini ekledik.\n\nDijital kataloğa ekteki bağlantıdan ulaşabilir, {{firma}} için özel toptan fiyat listesini talep edebilirsiniz.\n\nYeni sezonda birlikte çalışmayı dört gözle bekliyoruz.\n\nSaygılarımızla,\nMARKA İhracat Ekibi' },
+      { id:'fair', code:'FR', name:'Fuar Daveti', desc:'Fuar standı daveti', vars:['firma','ilgili','fuar','stand'],
+        subject:'{{fuar}} — Sizi Standımızda Ağırlamak İsteriz',
+        body:'Sayın {{ilgili}},\n\n{{fuar}} fuarında sizi standımızda ağırlamaktan mutluluk duyarız. Yeni ürün ailelerimizi ve bu yılın yeniliklerini yakından inceleme fırsatı bulacaksınız.\n\nStand no: {{stand}}\n\n{{firma}} ekibi için özel bir tanıtım randevusu ayarlamak isterseniz, size uygun bir zaman planlayalım.\n\nGörüşmek dileğiyle,\nMARKA İhracat Ekibi' },
+    ];
+  }
+
+  varMeta() {
+    return {
+      firma: { label:'Alıcı firma', token:'{{firma}}' },
+      ilgili: { label:'İlgili kişi', token:'{{ilgili}}' },
+      takip: { label:'Kargo takip no', token:'{{takip}}' },
+      siparisNo: { label:'Sipariş no', token:'{{siparisNo}}' },
+      konteyner: { label:'Konteyner no', token:'{{konteyner}}' },
+      eta: { label:'Tahmini varış', token:'{{eta}}' },
+      yil: { label:'Yıl', token:'{{yil}}' },
+      fuar: { label:'Fuar', token:'{{fuar}}' },
+      stand: { label:'Stand', token:'{{stand}}' },
+    };
+  }
+
+  mailboxes() {
+    return [
+      { id:'export', email:'export@claviscor.com', label:'İhracat', desc:'Global ihracat operasyonu', dot:'#A87C4F' },
+      { id:'import', email:'import@claviscor.com', label:'İthalat', desc:'Tedarik & satın alma', dot:'#5F7A6E' },
+      { id:'latam', email:'latam@claviscor.com', label:'Latin Amerika', desc:'LATAM bölge satışı', dot:'#B26B4A' },
+      { id:'emea', email:'emea@claviscor.com', label:'Avrupa & Orta Doğu', desc:'EMEA bölge satışı', dot:'#6B7A8F' },
+      { id:'sales', email:'sales@claviscor.com', label:'Satış', desc:'Genel satış & teklif', dot:'#9A7B4F' },
+      { id:'info', email:'info@claviscor.com', label:'Bilgi', desc:'Genel iletişim', dot:'#8a857c' },
+    ];
+  }
+
+  _curSender() { return this.mailboxes().find(m => m.id === this.state.sender) || this.mailboxes()[0]; }
+
+  contacts() {
+    return [
+      { id:'c1', name:'Dhr. Jansen', company:'Van der Berg Deuren B.V.', email:'inkoop@vanderberg.nl', region:'NL' },
+      { id:'c2', name:'Mevr. de Vries', company:'De Haan Hardware', email:'sales@dehaan.nl', region:'NL' },
+      { id:'c3', name:'Herr Müller', company:'Stahlmann GmbH', email:'einkauf@stahlmann.de', region:'DE' },
+      { id:'c4', name:'M. Dubois', company:'Portes Dubois SARL', email:'achats@portes-dubois.fr', region:'FR' },
+      { id:'c5', name:'Mr. Smith', company:'BritLock Ltd', email:'procurement@britlock.co.uk', region:'UK' },
+      { id:'c6', name:'Al-Rawi', company:'Al Rawi Trading LLC', email:'info@alrawi.ae', region:'AE' },
+    ];
+  }
+
+  _initials(name) {
+    const parts = String(name).replace(/[.,]/g,'').split(/\s+/).filter(Boolean);
+    const letters = parts.filter(p => !/^(dhr|mevr|herr|frau|mr|mrs|m|mme)$/i.test(p));
+    const use = (letters.length ? letters : parts).slice(0, 2);
+    return use.map(w => w[0]).join('').toUpperCase();
+  }
+
+  _toggleRecipient(id) {
+    this.setState(s => {
+      const has = s.recipients.includes(id);
+      return { recipients: has ? s.recipients.filter(x => x !== id) : [...s.recipients, id] };
+    });
+  }
+
+  _cur() { return this.templates().find(t => t.id === this.state.active) || this.templates()[0]; }
+
+  _pick(lang) {
+    const id = this.state.active;
+    if (lang === 'tr') { this.setState({ lang }); return; }
+    const key = id + ':' + lang;
+    if (this._cache[key]) { this.setState({ lang }); return; }
+    this._translate(id, lang);
+  }
+
+  async _translate(id, lang) {
+    const key = id + ':' + lang;
+    this.setState({ lang, translating: lang });
+    const t = this.templates().find(x => x.id === id);
+    const meta = this.langs().find(l => l.key === lang);
+    try {
+      if (!window.claude || !window.claude.complete) throw new Error('no-api');
+      const raw = await window.claude.complete({
+        max_tokens: 1400,
+        system: 'You are a professional B2B translator for a door-hardware export company (cylinder locks, padlocks, hinges, handles). Translate faithfully into a formal, natural commercial-correspondence register.',
+        messages: [{ role: 'user', content:
+          'Translate the following business email from Turkish into ' + meta.en + ' (' + meta.name + ').\n' +
+          'Rules:\n- Preserve every {{placeholder}} token EXACTLY as written; never translate or reformat them.\n- Keep all line breaks and paragraph structure identical.\n- Natural, formal business tone.\n- Return ONLY valid JSON, no markdown fences: {"subject":"...","body":"..."}\n\n' +
+          'SUBJECT: ' + t.subject + '\nBODY:\n' + t.body }],
+      });
+      const parsed = this._parse(raw);
+      if (parsed) this._cache[key] = parsed;
+      else throw new Error('parse');
+      if (this.state.translating === lang) this.setState({ translating: null });
+      else this.forceUpdate();
+    } catch (e) {
+      this._cache[key] = null;
+      if (this.state.translating === lang) this.setState({ translating: null, lang: 'tr' });
+      this._flashToast('Çeviri şu an yapılamadı — kaynak (Türkçe) gösteriliyor.');
+    }
+  }
+
+  _parse(raw) {
+    if (!raw) return null;
+    let s = String(raw).trim().replace(/^```json/i, '').replace(/^```/, '').replace(/```$/, '').trim();
+    try { const o = JSON.parse(s); if (o && o.subject != null && o.body != null) return { subject: String(o.subject), body: String(o.body) }; } catch (e) {}
+    const m = s.match(/\{[\s\S]*\}/);
+    if (m) { try { const o = JSON.parse(m[0]); if (o.subject != null && o.body != null) return { subject: String(o.subject), body: String(o.body) }; } catch (e) {} }
+    return null;
+  }
+
+  _sub(str) {
+    const f = this.state.fields;
+    return String(str).replace(/\{\{(\w+)\}\}/g, (m, k) => (f[k] != null && f[k] !== '') ? f[k] : m);
+  }
+
+  _flashToast(msg) {
+    this.setState({ toast: msg });
+    if (this._toastT) clearTimeout(this._toastT);
+    this._toastT = setTimeout(() => this.setState({ toast: '' }), 3000);
+  }
+
+  _setField(k, v) { this.setState(s => ({ fields: { ...s.fields, [k]: v } })); }
+
+  componentWillUnmount() { if (this._toastT) clearTimeout(this._toastT); }
+
+  renderVals() {
+    const s = this.state;
+    const cur = this._cur();
+    const langs = this.langs();
+    const meta = this.varMeta();
+    const curLang = langs.find(l => l.key === s.lang) || langs[0];
+
+    // resolve subject/body for current lang
+    let subj = cur.subject, body = cur.body;
+    const key = cur.id + ':' + s.lang;
+    if (s.lang !== 'tr' && this._cache[key]) { subj = this._cache[key].subject; body = this._cache[key].body; }
+
+    const nav = [
+      { k:'✉', label:'Şablonlar', active:true, badge:'6', hasBadge:true },
+      { k:'↗', label:'Gönderilenler', active:false, badge:'128', hasBadge:true },
+      { k:'◷', label:'Zamanlanmış', active:false, badge:'3', hasBadge:true },
+      { k:'☰', label:'Kişiler', active:false, badge:'', hasBadge:false },
+      { k:'⚙', label:'Ayarlar', active:false, badge:'', hasBadge:false },
+    ];
+
+    return {
+      nav: nav.map(n => ({
+        k:n.k, label:n.label, on:()=>{},
+        bg: n.active ? 'rgba(194,160,106,.16)' : 'transparent',
+        fg: n.active ? '#F4EEE2' : '#C9C0B2',
+        fw: n.active ? 700 : 500,
+        mc: n.active ? '#C2A06A' : '#6f6452',
+        badge: n.badge, badgeVis: n.hasBadge ? 'visible' : 'hidden',
+      })),
+      tmplCount: this.templates().length,
+      tmplList: this.templates().map(t => {
+        const a = t.id === s.active;
+        return {
+          name:t.name, desc:t.desc, code:t.code, on:()=>this.setState({ active:t.id }),
+          bg: a ? '#FFFFFF' : 'transparent',
+          bd: a ? 'rgba(26,23,20,.12)' : 'transparent',
+          iconBg: a ? '#1A1714' : '#F0ECE3',
+          iconFg: a ? '#C2A06A' : '#8A6638',
+        };
+      }),
+      activeName: cur.name, activeCode: cur.code, activeLangName: curLang.name,
+      recipientChips: this.contacts().filter(c => s.recipients.includes(c.id)).map(c => ({
+        email: c.email, remove: () => this._toggleRecipient(c.id),
+      })),
+      recipientCount: s.recipients.length,
+      recipientSummary: (() => {
+        const em = this.contacts().filter(c => s.recipients.includes(c.id)).map(c => c.email);
+        if (!em.length) return '—';
+        if (em.length <= 2) return em.join(', ');
+        return em.slice(0, 2).join(', ') + ' +' + (em.length - 2);
+      })(),
+      senderEmail: this._curSender().email,
+      senderLabel: this._curSender().label,
+      senderDot: this._curSender().dot,
+      senderOpen: s.senderOpen,
+      senderChevron: s.senderOpen ? 'rotate(180deg)' : 'none',
+      toggleSender: () => this.setState(st => ({ senderOpen: !st.senderOpen, pickerOpen: false })),
+      closeSender: () => this.setState({ senderOpen: false }),
+      senderRows: this.mailboxes().map(m => {
+        const sel = m.id === s.sender;
+        return {
+          email: m.email, label: m.label, desc: m.desc, dot: m.dot,
+          on: () => this.setState({ sender: m.id, senderOpen: false }),
+          bg: sel ? '#F7F4ED' : 'transparent',
+          checkVis: sel ? 'visible' : 'hidden',
+        };
+      }),
+      pickerOpen: s.pickerOpen,
+      togglePicker: () => this.setState(st => ({ pickerOpen: !st.pickerOpen, senderOpen: false })),
+      closePicker: () => this.setState({ pickerOpen: false }),
+      contactRows: this.contacts().map(c => {
+        const sel = s.recipients.includes(c.id);
+        return {
+          name: c.name, company: c.company, email: c.email, region: c.region,
+          initials: this._initials(c.name),
+          on: () => this._toggleRecipient(c.id),
+          bg: sel ? '#F7F4ED' : 'transparent',
+          boxBg: sel ? '#1A1714' : 'transparent',
+          boxBd: sel ? '#1A1714' : 'rgba(26,23,20,.28)',
+          check: sel ? '✓' : '',
+        };
+      }),
+      varFields: cur.vars.map(k => ({
+        label: (meta[k]||{}).label || k, token: (meta[k]||{}).token || '',
+        value: s.fields[k] || '', on: (e)=>this._setField(k, e.target.value),
+      })),
+      langPills: langs.map(l => {
+        const active = l.key === s.lang;
+        const busy = s.translating === l.key;
+        return {
+          code:l.code, name:l.name, on:()=>this._pick(l.key),
+          bg: active ? '#1A1714' : '#FFFFFF',
+          fg: active ? '#FBF9F5' : '#3C372F',
+          bd: active ? '#1A1714' : 'rgba(26,23,20,.14)',
+          dotColor: active ? '#C2A06A' : '#A87C4F',
+          dotDisplay: busy ? 'inline-block' : 'none',
+        };
+      }),
+      dirAttr: curLang.rtl ? 'rtl' : 'ltr',
+      subjectText: this._sub(subj),
+      bodyText: this._sub(body),
+      overlayDisplay: s.translating ? 'flex' : 'none',
+      overlayText: s.translating ? ((langs.find(l=>l.key===s.translating)||{}).name + ' diline çevriliyor…') : '',
+      statusText: s.lang === 'tr' ? 'Kaynak dil — çeviri gerekmez' : (this._cache[key] ? (curLang.name + ' çevirisi hazır · göndermeye hazır') : 'Çeviri bekleniyor…'),
+      onSend: ()=> {
+        const em = this.contacts().filter(c => s.recipients.includes(c.id)).map(c => c.email);
+        if (!em.length) { this._flashToast('Önce en az bir alıcı seçin'); return; }
+        const dest = em.length === 1 ? (em[0] + ' adresine') : (em.length + ' alıcıya');
+        this._flashToast(this._curSender().email + ' · ' + curLang.name + ' → ' + dest + ' gönderildi');
+      },
+      toastText: s.toast,
+      toastDisplay: s.toast ? 'flex' : 'none',
+    };
+  }
+}
+</script>
+</body>
+</html>

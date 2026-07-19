@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FBF9F5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+  @keyframes spinSlow { to { transform: rotate(360deg); } }
+  @keyframes breathe { 0%, 100% { transform: scale(1); opacity: .82; } 50% { transform: scale(1.09); opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    [data-rise] { animation: none !important; opacity: 1 !important; transform: none !important; }
+    [data-spin], [data-breathe] { animation: none !important; }
+  }
+</style>
+</helmet>
+
+<div style="background: #FBF9F5; font-family: 'Manrope', system-ui, sans-serif; color: #1A1714; overflow-x: hidden;">
+
+  <!-- ===== NAV ===== -->
+  <div style="position: sticky; top: 0; z-index: 50; background: rgba(251,249,245,.82); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(26,23,20,.07);">
+    <div style="max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px 32px;">
+      <div style="display: flex; align-items: center; gap: 9px;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: #A87C4F;"></div>
+        <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 34px; font-size: 14px; font-weight: 500; color: #4A453E;">
+        <span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">Ürünler</span><span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">Koleksiyon</span><span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">Sertifikalar</span><span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">İhracat</span><span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">İletişim</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <span style="font-size: 13px; font-weight: 500; color: #8a857c; white-space: nowrap;">TR / EN</span>
+        <span style="font-size: 14px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 9px 20px; border-radius: 980px; white-space: nowrap; cursor: pointer; transition: background .25s, transform .25s;" style-hover="background:#33291f; transform:translateY(-1px);">Teklif Al</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HERO (centered) ===== -->
+  <div style="max-width: 920px; margin: 0 auto; padding: 100px 32px 56px; text-align: center;">
+    <div data-reveal data-reveal-delay="60" style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #A87C4F; margin-bottom: 26px;">Kapı donanımı & tavan sistemleri · 40+ ülke</div>
+    <h1 data-reveal data-reveal-delay="150" style="font-size: 84px; line-height: 1.02; letter-spacing: -0.04em; font-weight: 700; margin: 0;">Mekanizmanın<br><span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic; letter-spacing: -0.01em;">kusursuz</span> dili.</h1>
+    <p data-reveal data-reveal-delay="250" style="font-size: 21px; line-height: 1.5; color: #78726B; max-width: 640px; margin: 28px auto 0; font-weight: 500;">Kapı güvenlik donanımından tavan sistemlerine — kilit, menteşe, kol ve asma/alçı tavan çözümleri. Milimetrik tolerans, sertifikalı dayanım.</p>
+    <div data-reveal data-reveal-delay="350" style="display: flex; align-items: center; justify-content: center; gap: 28px; margin-top: 38px;">
+      <span style="font-size: 15px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 14px 30px; border-radius: 980px; cursor: pointer; transition: background .25s, transform .25s;" style-hover="background:#33291f; transform:translateY(-2px);">Kataloğu indir</span>
+      <span style="font-size: 16px; font-weight: 600; color: #A87C4F; cursor: pointer; transition: opacity .25s;" style-hover="opacity:.65;">İhracat ekibiyle görüş&nbsp;›</span>
+    </div>
+  </div>
+
+  <!-- ===== HERO IMAGE WELL ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 0 32px 16px;">
+    <div data-reveal data-reveal-delay="240" style="position: relative; background: linear-gradient(160deg,#F1ECE2,#E6DFD1); border-radius: 28px; height: 540px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+      <div data-spin style="animation: spinSlow 70s linear infinite; width: 280px; height: 280px; border-radius: 50%; border: 1.5px solid rgba(26,23,20,.22); display: flex; align-items: center; justify-content: center;">
+        <div style="width: 168px; height: 168px; border-radius: 50%; border: 1.5px solid rgba(26,23,20,.18); display: flex; align-items: center; justify-content: center;">
+          <div data-breathe style="animation: breathe 5s ease-in-out infinite; width: 60px; height: 60px; border-radius: 50%; background: rgba(168,124,79,.26); border: 1px solid rgba(168,124,79,.55);"></div>
+        </div>
+      </div>
+      <div style="position: absolute; bottom: 28px; left: 32px; font-family: 'DM Mono', monospace; font-size: 11px; color: #9A917F; letter-spacing: 0.06em;">[ ÜRÜN GÖRSELİ — silindir barel ]</div>
+      <div style="position: absolute; top: 32px; right: 32px; font-family: 'DM Mono', monospace; font-size: 11px; color: #8A6638; text-align: right; line-height: 1.9;">Ø17 mm<br>pirinç gövde<br>5 pim · 15 kombinasyon</div>
+    </div>
+  </div>
+
+  <!-- ===== STAT STRIP ===== -->
+  <sc-if value="{{ showStats }}" hint-placeholder-val="{{ true }}">
+  <div data-reveal style="max-width: 1120px; margin: 0 auto; padding: 56px 32px;">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); text-align: center;">
+      <div style="padding: 8px 16px;"><div data-count="40" data-suffix="+" style="font-size: 46px; font-weight: 700; letter-spacing: -0.03em;">40+</div><div style="font-size: 13px; color: #8a857c; margin-top: 6px; font-weight: 500;">ülkeye ihracat</div></div>
+      <div style="padding: 8px 16px; border-left: 1px solid rgba(26,23,20,.10);"><div data-count="1200" data-suffix="+" style="font-size: 46px; font-weight: 700; letter-spacing: -0.03em;">1.200+</div><div style="font-size: 13px; color: #8a857c; margin-top: 6px; font-weight: 500;">aktif SKU</div></div>
+      <div style="padding: 8px 16px; border-left: 1px solid rgba(26,23,20,.10);"><div style="font-size: 46px; font-weight: 700; letter-spacing: -0.03em;">CE·TSE</div><div style="font-size: 13px; color: #8a857c; margin-top: 6px; font-weight: 500;">sertifikalı üretim</div></div>
+      <div style="padding: 8px 16px; border-left: 1px solid rgba(26,23,20,.10);"><div data-count="1976" data-group="no" style="font-size: 46px; font-weight: 700; letter-spacing: -0.03em;">1976</div><div style="font-size: 13px; color: #8a857c; margin-top: 6px; font-weight: 500;">kuruluş yılı</div></div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===== PRODUCT FAMILIES ===== -->
+  <div data-reveal style="max-width: 1120px; margin: 0 auto; padding: 64px 32px 40px; text-align: center;">
+    <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #A87C4F;">Ürün aileleri</div>
+    <h2 style="font-size: 52px; font-weight: 700; letter-spacing: -0.03em; margin: 14px 0 0;">Tek dilden, <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic;">altı</span> aile.</h2>
+  </div>
+  <div style="max-width: 1120px; margin: 0 auto; padding: 24px 32px 0;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+      <div data-reveal data-reveal-delay="0" style="background: #FFFFFF; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 16px 40px -26px rgba(0,0,0,.22); transition: transform .45s cubic-bezier(.16,.84,.44,1), box-shadow .45s cubic-bezier(.16,.84,.44,1);" style-hover="transform:translateY(-6px); box-shadow:0 1px 2px rgba(0,0,0,.04), 0 28px 56px -26px rgba(0,0,0,.3);">
+        <div style="aspect-ratio: 16/11; background: linear-gradient(160deg,#F1ECE2,#E6DFD1); display: flex; align-items: center; justify-content: center;"><div style="width: 80px; height: 80px; border-radius: 50%; border: 1.5px solid rgba(26,23,20,.20);"></div></div>
+        <div style="padding: 24px 26px 28px;"><div style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em;">Silindir Bareller</div><div style="font-size: 15px; color: #78726B; margin-top: 6px; line-height: 1.5;">Tek/çift taraf, anti-snap, master key sistemleri</div></div>
+      </div>
+      <div data-reveal data-reveal-delay="80" style="background: #FFFFFF; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 16px 40px -26px rgba(0,0,0,.22); transition: transform .45s cubic-bezier(.16,.84,.44,1), box-shadow .45s cubic-bezier(.16,.84,.44,1);" style-hover="transform:translateY(-6px); box-shadow:0 1px 2px rgba(0,0,0,.04), 0 28px 56px -26px rgba(0,0,0,.3);">
+        <div style="aspect-ratio: 16/11; background: linear-gradient(160deg,#F1ECE2,#E6DFD1); display: flex; align-items: center; justify-content: center;"><div style="width: 60px; height: 74px; border-radius: 8px 8px 5px 5px; border: 1.5px solid rgba(26,23,20,.20); position: relative;"><div style="position:absolute; top:-18px; left:11px; right:11px; height:26px; border:1.5px solid rgba(26,23,20,.20); border-bottom:none; border-radius: 13px 13px 0 0;"></div></div></div>
+        <div style="padding: 24px 26px 28px;"><div style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em;">Asma Kilitler</div><div style="font-size: 15px; color: #78726B; margin-top: 6px; line-height: 1.5;">Pirinç & lamine gövde, 20–80 mm</div></div>
+      </div>
+      <div data-reveal data-reveal-delay="160" style="background: #FFFFFF; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 16px 40px -26px rgba(0,0,0,.22); transition: transform .45s cubic-bezier(.16,.84,.44,1), box-shadow .45s cubic-bezier(.16,.84,.44,1);" style-hover="transform:translateY(-6px); box-shadow:0 1px 2px rgba(0,0,0,.04), 0 28px 56px -26px rgba(0,0,0,.3);">
+        <div style="aspect-ratio: 16/11; background: linear-gradient(160deg,#F1ECE2,#E6DFD1); display: flex; align-items: center; justify-content: center;"><div style="width: 92px; height: 62px; border: 1.5px solid rgba(26,23,20,.20);"></div></div>
+        <div style="padding: 24px 26px 28px;"><div style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em;">Menteşeler</div><div style="font-size: 15px; color: #78726B; margin-top: 6px; line-height: 1.5;">Rulmanlı, gizli & ayarlanabilir tipler</div></div>
+      </div>
+      <div data-reveal data-reveal-delay="0" style="background: #FFFFFF; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 16px 40px -26px rgba(0,0,0,.22); transition: transform .45s cubic-bezier(.16,.84,.44,1), box-shadow .45s cubic-bezier(.16,.84,.44,1);" style-hover="transform:translateY(-6px); box-shadow:0 1px 2px rgba(0,0,0,.04), 0 28px 56px -26px rgba(0,0,0,.3);">
+        <div style="aspect-ratio: 16/11; background: linear-gradient(160deg,#F1ECE2,#E6DFD1); display: flex; align-items: center; justify-content: center;"><div style="width: 100px; height: 28px; border-radius: 14px; border: 1.5px solid rgba(26,23,20,.20);"></div></div>
+        <div style="padding: 24px 26px 28px;"><div style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em;">Kapı Kolları</div><div style="font-size: 15px; color: #78726B; margin-top: 6px; line-height: 1.5;">Rozet & aynalı, mat/parlak kaplama</div></div>
+      </div>
+      <div data-reveal data-reveal-delay="80" style="background: #FFFFFF; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 16px 40px -26px rgba(0,0,0,.22); transition: transform .45s cubic-bezier(.16,.84,.44,1), box-shadow .45s cubic-bezier(.16,.84,.44,1);" style-hover="transform:translateY(-6px); box-shadow:0 1px 2px rgba(0,0,0,.04), 0 28px 56px -26px rgba(0,0,0,.3);">
+        <div style="aspect-ratio: 16/11; background: linear-gradient(160deg,#F1ECE2,#E6DFD1); display: flex; align-items: center; justify-content: center;"><div style="width: 60px; height: 84px; border-radius: 6px; border: 1.5px solid rgba(26,23,20,.20); display:flex; align-items:flex-start; justify-content:center;"><div style="width:28px; height:7px; background:rgba(168,124,79,.4); margin-top:18px; border-radius:2px;"></div></div></div>
+        <div style="padding: 24px 26px 28px;"><div style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em;">Otel Kilit Sistemleri</div><div style="font-size: 15px; color: #78726B; margin-top: 6px; line-height: 1.5;">RFID & şifreli, yönetim yazılımı dahil</div></div>
+      </div>
+      <div data-reveal data-reveal-delay="160" style="background: #1A1714; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 16px 40px -26px rgba(0,0,0,.3); transition: transform .45s cubic-bezier(.16,.84,.44,1), box-shadow .45s cubic-bezier(.16,.84,.44,1);" style-hover="transform:translateY(-6px); box-shadow:0 1px 2px rgba(0,0,0,.04), 0 28px 56px -24px rgba(0,0,0,.45);">
+        <div style="padding: 26px 26px 0; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: #C2A06A;">ACC-600</div>
+        <div style="padding: 0 26px 28px;"><div style="font-size: 22px; font-weight: 700; color: #F4EEE2; letter-spacing: -0.01em;">Aksesuar & Yedek</div><div style="font-size: 15px; color: #A09A8E; margin-top: 6px; line-height: 1.5;">Anahtar kütükleri, kapı stoperleri, montaj kitleri</div><div style="font-size: 15px; font-weight: 600; color: #C2A06A; margin-top: 18px;">Tüm aileyi gör&nbsp;›</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CEILING SYSTEMS ===== -->
+  <div data-reveal style="max-width: 1120px; margin: 0 auto; padding: 72px 32px 0; text-align: center;">
+    <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #A87C4F;">Tavan sistemleri</div>
+    <h2 style="font-size: 52px; font-weight: 700; letter-spacing: -0.03em; margin: 14px 0 0;">Kapıdan <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic;">tavana.</span></h2>
+    <p style="font-size: 19px; color: #78726B; max-width: 560px; margin: 16px auto 0; font-weight: 500;">Aynı mühendislik disiplini artık başınızın üstünde — asma tavan, aydınlatma ve alçı tavan sistemleriyle mekânı baştan sona donatıyoruz.</p>
+  </div>
+  <div style="max-width: 1120px; margin: 0 auto; padding: 40px 32px 0;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+      <!-- Asma Tavan -->
+      <div data-reveal data-reveal-delay="0" style="background: #FFFFFF; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 16px 40px -26px rgba(0,0,0,.22); transition: transform .45s cubic-bezier(.16,.84,.44,1), box-shadow .45s cubic-bezier(.16,.84,.44,1);" style-hover="transform:translateY(-6px); box-shadow:0 1px 2px rgba(0,0,0,.04), 0 28px 56px -26px rgba(0,0,0,.3);">
+        <div style="aspect-ratio: 16/11; background: linear-gradient(160deg,#F1ECE2,#E6DFD1); display: flex; align-items: center; justify-content: center;">
+          <div style="width: 118px; height: 84px; display: grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(2,1fr); border: 1.5px solid rgba(26,23,20,.22); background: rgba(255,255,255,.35);">
+            <div style="border-right: 1px solid rgba(26,23,20,.16); border-bottom: 1px solid rgba(26,23,20,.16);"></div><div style="border-right: 1px solid rgba(26,23,20,.16); border-bottom: 1px solid rgba(26,23,20,.16);"></div><div style="border-bottom: 1px solid rgba(26,23,20,.16);"></div><div style="border-right: 1px solid rgba(26,23,20,.16);"></div><div style="border-right: 1px solid rgba(26,23,20,.16);"></div><div></div>
+          </div>
+        </div>
+        <div style="padding: 24px 26px 28px;"><div style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em;">Asma Tavan</div><div style="font-size: 15px; color: #78726B; margin-top: 6px; line-height: 1.5;">Taşıyıcı T-profil, mineral & metal tavan panelleri</div></div>
+      </div>
+      <!-- Tavan Aydınlatma -->
+      <div data-reveal data-reveal-delay="80" style="background: #FFFFFF; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 16px 40px -26px rgba(0,0,0,.22); transition: transform .45s cubic-bezier(.16,.84,.44,1), box-shadow .45s cubic-bezier(.16,.84,.44,1);" style-hover="transform:translateY(-6px); box-shadow:0 1px 2px rgba(0,0,0,.04), 0 28px 56px -26px rgba(0,0,0,.3);">
+        <div style="aspect-ratio: 16/11; background: linear-gradient(160deg,#F1ECE2,#E6DFD1); display: flex; align-items: center; justify-content: center;">
+          <div style="width: 134px; height: 58px; border: 1.5px solid rgba(26,23,20,.22); border-radius: 10px; display: flex; align-items: center; justify-content: space-around; padding: 0 16px;">
+            <div style="width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 50% 42%, rgba(200,163,106,.9), rgba(168,124,79,.12)); box-shadow: 0 0 14px rgba(200,163,106,.55);"></div><div style="width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 50% 42%, rgba(200,163,106,.9), rgba(168,124,79,.12)); box-shadow: 0 0 14px rgba(200,163,106,.55);"></div><div style="width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 50% 42%, rgba(200,163,106,.9), rgba(168,124,79,.12)); box-shadow: 0 0 14px rgba(200,163,106,.55);"></div>
+          </div>
+        </div>
+        <div style="padding: 24px 26px 28px;"><div style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em;">Tavan Aydınlatma</div><div style="font-size: 15px; color: #78726B; margin-top: 6px; line-height: 1.5;">Sıva altı spot, lineer LED ve armatür sistemleri</div></div>
+      </div>
+      <!-- Alçı Tavan -->
+      <div data-reveal data-reveal-delay="160" style="background: #FFFFFF; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 16px 40px -26px rgba(0,0,0,.22); transition: transform .45s cubic-bezier(.16,.84,.44,1), box-shadow .45s cubic-bezier(.16,.84,.44,1);" style-hover="transform:translateY(-6px); box-shadow:0 1px 2px rgba(0,0,0,.04), 0 28px 56px -26px rgba(0,0,0,.3);">
+        <div style="aspect-ratio: 16/11; background: linear-gradient(160deg,#F1ECE2,#E6DFD1); display: flex; align-items: center; justify-content: center;">
+          <div style="width: 120px; height: 84px; border: 1.5px solid rgba(26,23,20,.22); border-radius: 8px; padding: 11px;">
+            <div style="width: 100%; height: 100%; border: 1.5px solid rgba(26,23,20,.17); border-radius: 6px; padding: 10px;">
+              <div style="width: 100%; height: 100%; border: 1.5px solid rgba(26,23,20,.12); border-radius: 4px;"></div>
+            </div>
+          </div>
+        </div>
+        <div style="padding: 24px 26px 28px;"><div style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em;">Alçı Tavan</div><div style="font-size: 15px; color: #78726B; margin-top: 6px; line-height: 1.5;">Alçıpan kartonpiyer, dekoratif kademe ve bordür</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ENGINEERING PANEL ===== -->
+  <div data-reveal style="max-width: 1120px; margin: 0 auto; padding: 56px 32px;">
+    <div style="background: #F0ECE3; border-radius: 28px; display: grid; grid-template-columns: 0.92fr 1.08fr; overflow: hidden;">
+      <div style="position: relative; min-height: 460px; margin: 24px; background: linear-gradient(160deg,#E9E2D5,#DCD3C2); border-radius: 18px; display: flex; align-items: center; justify-content: center;">
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: #9A917F; letter-spacing: 0.08em;">[ KESİT GÖRSELİ — pim & yay ]</div>
+        <div style="position: absolute; top: 24px; left: 24px; font-family: 'DM Mono', monospace; font-size: 11px; color: #8A6638; line-height: 1.9;">tol. ±0,02 mm<br>nikel kaplama<br>200.000 çevrim</div>
+      </div>
+      <div style="padding: 64px 56px; display: flex; flex-direction: column; justify-content: center;">
+        <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #A87C4F; margin-bottom: 20px;">Mühendislik</div>
+        <h2 style="font-size: 44px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin: 0;">Güven, <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic;">milimetrenin</span> içinde başlar.</h2>
+        <p style="font-size: 17px; line-height: 1.6; color: #6E6860; max-width: 440px; margin: 22px 0 0;">Her barel kendi tezgâhımızda işlenir; her pim, her yay aynı tolerans disipliniyle. Tuzlu sis testinden çevrim ömrüne kadar laboratuvardan geçer.</p>
+        <div style="display: flex; gap: 44px; margin-top: 36px;">
+          <div><div style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">%100</div><div style="font-size: 12px; color: #8a857c; margin-top: 4px; font-weight: 500;">yerli üretim</div></div>
+          <div><div style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap;">14 gün</div><div style="font-size: 12px; color: #8a857c; margin-top: 4px; font-weight: 500;">numune teslim</div></div>
+          <div><div style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">OEM</div><div style="font-size: 12px; color: #8a857c; margin-top: 4px; font-weight: 500;">özel üretim</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== EXPORT DARK CARD ===== -->
+  <div data-reveal style="max-width: 1120px; margin: 0 auto; padding: 32px;">
+    <div style="background: #1A1714; border-radius: 28px; color: #F4EEE2; padding: 80px 64px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;">
+        <div>
+          <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #C2A06A; margin-bottom: 24px;">İhracat</div>
+          <h2 style="font-size: 54px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.02; margin: 0;">Altı kıtada<br>açılan <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic;">kapılar.</span></h2>
+          <p style="font-size: 17px; line-height: 1.6; color: #ABA398; max-width: 400px; margin: 24px 0 0;">Gümrük dokümantasyonu, etiketleme ve paletleme dahil — anahtar teslim ihracat operasyonu. Distribütör ve proje bazlı fiyatlandırma.</p>
+          <div style="display: flex; align-items: center; gap: 26px; margin-top: 36px;">
+            <span style="font-size: 15px; font-weight: 600; color: #1A1714; background: #C2A06A; padding: 14px 28px; border-radius: 980px; cursor: pointer; transition: transform .25s, filter .25s;" style-hover="transform:translateY(-2px); filter:brightness(1.06);">İhracat kataloğu (PDF)</span>
+            <span style="font-size: 15px; font-weight: 600; color: #D8CDBB; cursor: pointer; transition: opacity .25s;" style-hover="opacity:.65;">Distribütör başvurusu&nbsp;›</span>
+          </div>
+        </div>
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.10);"><span style="font-size: 16px; font-weight: 600;">Avrupa</span><span style="font-family: 'DM Mono', monospace; font-size: 12px; color: #8a8472;">DE · FR · NL · UK · PL</span></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.10);"><span style="font-size: 16px; font-weight: 600;">Orta Doğu</span><span style="font-family: 'DM Mono', monospace; font-size: 12px; color: #8a8472;">SA · AE · QA · IQ · JO</span></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.10);"><span style="font-size: 16px; font-weight: 600;">Afrika</span><span style="font-family: 'DM Mono', monospace; font-size: 12px; color: #8a8472;">EG · MA · DZ · NG · KE</span></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.10);"><span style="font-size: 16px; font-weight: 600;">Asya & Pasifik</span><span style="font-family: 'DM Mono', monospace; font-size: 12px; color: #8a8472;">IN · ID · MY · AU · VN</span></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 18px 0;"><span style="font-size: 16px; font-weight: 600;">Amerika</span><span style="font-family: 'DM Mono', monospace; font-size: 12px; color: #8a8472;">US · MX · BR · CL · CA</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CERTIFICATES ===== -->
+  <sc-if value="{{ showCertificates }}" hint-placeholder-val="{{ true }}">
+  <div data-reveal style="max-width: 1120px; margin: 0 auto; padding: 64px 32px 24px; text-align: center;">
+    <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #A87C4F; margin-bottom: 28px;">Sertifika & standart</div>
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 12px;">
+      <div style="padding: 16px 30px; border-radius: 980px; border: 1px solid rgba(26,23,20,.16); font-size: 17px; font-weight: 700; transition: border-color .25s, color .25s;" style-hover="border-color:#A87C4F; color:#A87C4F;">CE</div>
+      <div style="padding: 16px 30px; border-radius: 980px; border: 1px solid rgba(26,23,20,.16); font-size: 17px; font-weight: 700; transition: border-color .25s, color .25s;" style-hover="border-color:#A87C4F; color:#A87C4F;">TSE</div>
+      <div style="padding: 16px 30px; border-radius: 980px; border: 1px solid rgba(26,23,20,.16); font-size: 17px; font-weight: 700; transition: border-color .25s, color .25s;" style-hover="border-color:#A87C4F; color:#A87C4F;">ISO 9001</div>
+      <div style="padding: 16px 30px; border-radius: 980px; border: 1px solid rgba(26,23,20,.16); font-size: 17px; font-weight: 700; transition: border-color .25s, color .25s;" style-hover="border-color:#A87C4F; color:#A87C4F;">EN 1303</div>
+      <div style="padding: 16px 30px; border-radius: 980px; border: 1px solid rgba(26,23,20,.16); font-size: 17px; font-weight: 700; transition: border-color .25s, color .25s;" style-hover="border-color:#A87C4F; color:#A87C4F;">Anti-Snap ★</div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===== CLOSING CTA ===== -->
+  <div data-reveal style="max-width: 1120px; margin: 0 auto; padding: 80px 32px 96px; text-align: center;">
+    <h2 style="font-size: 54px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.04; margin: 0;">Numune ve fiyat<br>teklifinizi <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic;">alın.</span></h2>
+    <p style="font-size: 19px; color: #78726B; margin: 22px auto 0; max-width: 460px; font-weight: 500;">SKU listenizi paylaşın, 48 saat içinde fiyat ve numune planıyla dönelim.</p>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 26px; margin-top: 36px;">
+      <span style="font-size: 16px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 16px 38px; border-radius: 980px; cursor: pointer; transition: background .25s, transform .25s;" style-hover="background:#33291f; transform:translateY(-2px);">Teklif iste</span>
+      <span style="font-size: 16px; font-weight: 600; color: #A87C4F; cursor: pointer; transition: opacity .25s;" style-hover="opacity:.65;">export@marka.com</span>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER (light) ===== -->
+  <div style="background: #F0ECE3; border-top: 1px solid rgba(26,23,20,.08);">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 56px 32px 28px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #A87C4F;"></div>
+          <span style="font-size: 18px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
+        </div>
+        <p style="font-size: 14px; line-height: 1.6; color: #8a857c; max-width: 280px; margin: 16px 0 0;">Kapı güvenlik donanımı ve tavan sistemleri üreticisi. 1976'dan beri tasarlıyor, işliyor ve dünyaya ihraç ediyoruz.</p>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">Ürünler</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>Silindir Bareller</span><span>Asma Kilitler</span><span>Menteşeler</span><span>Kapı Kolları</span><span>Otel Sistemleri</span><span>Tavan Sistemleri</span></div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">Kurumsal</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>Hakkımızda</span><span>Üretim</span><span>Sertifikalar</span><span>İhracat</span><span>İletişim</span></div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">İletişim</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>export@marka.com</span><span>+90 232 000 00 00</span><span>İAOSB, İzmir</span></div>
+      </div>
+    </div>
+    <div style="max-width: 1120px; margin: 0 auto; padding: 22px 32px; border-top: 1px solid rgba(26,23,20,.08); display: flex; justify-content: space-between; font-size: 12px; color: #9a948a;">
+      <span>© 2025 MARKA DONANIM SAN. TİC. A.Ş.</span>
+      <span>CE · TSE · ISO 9001</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1120,&quot;height&quot;:900},&quot;showStats&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showCertificates&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() { this._initMotion(); }
+  componentDidUpdate() { this._initMotion(); }
+  componentWillUnmount() {
+    this._polling = false;
+    if (this._pollT) clearTimeout(this._pollT);
+  }
+
+  renderVals() {
+    return {
+      showStats: this.props?.showStats ?? true,
+      showCertificates: this.props?.showCertificates ?? true,
+    };
+  }
+
+  _reduced() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  _initMotion() {
+    const reduce = this._reduced();
+    const ease = 'cubic-bezier(.16,.84,.44,1)';
+
+    const revs = Array.from(document.querySelectorAll('[data-reveal]')).filter(el => el.dataset.revInit !== '1');
+    revs.forEach(el => {
+      el.dataset.revInit = '1';
+      if (reduce) { el.style.opacity = '1'; el._revealed = true; return; }
+      const y = el.dataset.revealY || 28;
+      const d = el.dataset.revealDelay || 0;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(' + y + 'px)';
+      el.style.transition = 'opacity .85s ' + ease + ', transform .85s ' + ease;
+      el.style.transitionDelay = d + 'ms';
+    });
+
+    const counts = Array.from(document.querySelectorAll('[data-count]')).filter(el => el.dataset.cntInit !== '1');
+    counts.forEach(el => { el.dataset.cntInit = '1'; if (reduce) el._counted = true; });
+
+    if (reduce) return;
+    this._ensurePoll();
+  }
+
+  _ensurePoll() {
+    if (this._polling) return;
+    this._polling = true;
+    const tick = () => {
+      this._scan();
+      if (this._pending()) { this._pollT = setTimeout(tick, 150); }
+      else { this._polling = false; }
+    };
+    tick();
+  }
+
+  _pending() {
+    const revs = document.querySelectorAll('[data-reveal]');
+    for (const el of revs) if (!el._revealed) return true;
+    const cnts = document.querySelectorAll('[data-count]');
+    for (const el of cnts) if (!el._counted) return true;
+    return false;
+  }
+
+  _scan() {
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const trigger = vh * 0.92;
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      if (el._revealed) return;
+      const r = el.getBoundingClientRect();
+      if (r.top < trigger && r.bottom > -40) {
+        el._revealed = true;
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+    document.querySelectorAll('[data-count]').forEach(el => {
+      if (el._counted) return;
+      const r = el.getBoundingClientRect();
+      if (r.top < trigger && r.bottom > -40) {
+        el._counted = true;
+        this._runCount(el);
+      }
+    });
+  }
+
+  _runCount(el) {
+    const target = parseFloat(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const group = el.dataset.group !== 'no';
+    const dur = 1100;
+    const start = performance.now();
+    const easeOut = t => 1 - Math.pow(1 - t, 3);
+    const fmt = v => {
+      const n = Math.round(v);
+      return (group && target >= 1000) ? n.toLocaleString('tr-TR') : String(n);
+    };
+    const tick = (now) => {
+      const t = Math.min(1, (now - start) / dur);
+      el.textContent = fmt(target * easeOut(t)) + suffix;
+      if (t < 1) requestAnimationFrame(tick);
+      else el.textContent = fmt(target) + suffix;
+    };
+    requestAnimationFrame(tick);
+  }
+}
+</script>
+</body>
+</html>

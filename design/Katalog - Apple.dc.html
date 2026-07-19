@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FBF9F5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+</style>
+</helmet>
+
+<div style="background: #FBF9F5; font-family: 'Manrope', system-ui, sans-serif; color: #1A1714;">
+
+  <!-- ===== NAV ===== -->
+  <div style="position: sticky; top: 0; z-index: 50; background: rgba(251,249,245,.82); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(26,23,20,.07);">
+    <div style="max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px 32px;">
+      <a href="Ana Sayfa — Apple.dc.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 9px;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: #A87C4F;"></div>
+        <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 34px; font-size: 14px; font-weight: 500; color: #4A453E;">
+        <span style="color: #1A1714; font-weight: 700;">Ürünler</span><span>Koleksiyon</span><span>Sertifikalar</span><span>İhracat</span><span>İletişim</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <span style="font-size: 13px; font-weight: 500; color: #8a857c; white-space: nowrap;">TR / EN</span>
+        <span style="font-size: 14px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 9px 20px; border-radius: 980px; white-space: nowrap;">Teklif Al</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <div data-reveal style="max-width: 1120px; margin: 0 auto; padding: 64px 32px 36px; text-align: center;">
+    <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #A87C4F;">2025 koleksiyonu</div>
+    <h1 style="font-size: 64px; font-weight: 700; letter-spacing: -0.035em; margin: 14px 0 0;">Ürün <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic;">kataloğu</span></h1>
+    <p style="font-size: 19px; color: #78726B; margin: 18px auto 0; max-width: 480px; font-weight: 500;">Tüm aileler, tek bir donanım dili. <span style="color: #1A1714; font-weight: 600;">{{ count }}</span> / {{ total }} ürün gösteriliyor.</p>
+  </div>
+
+  <!-- ===== CATEGORY TABS ===== -->
+  <div style="position: sticky; top: 65px; z-index: 40; background: rgba(251,249,245,.9); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(26,23,20,.07);">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 16px 32px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+      <sc-for list="{{ cats }}" as="c" hint-placeholder-count="7">
+        <span onClick="{{ c.on }}" style="font-size: 14px; font-weight: 600; padding: 9px 20px; border-radius: 980px; cursor: pointer; user-select: none; background: {{ c.bg }}; color: {{ c.fg }}; border: 1px solid {{ c.bd }};">{{ c.name }}</span>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ===== PRODUCT GRID ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 36px 32px 80px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+      <sc-for list="{{ products }}" as="p" hint-placeholder-count="9">
+        <div data-reveal data-reveal-delay="{{ p.delay }}" style="background: #FFFFFF; border-radius: 22px; overflow: hidden; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 16px 40px -26px rgba(0,0,0,.22); transition: transform .45s cubic-bezier(.16,.84,.44,1), box-shadow .45s cubic-bezier(.16,.84,.44,1);" style-hover="transform:translateY(-6px); box-shadow:0 1px 2px rgba(0,0,0,.04), 0 28px 56px -24px rgba(0,0,0,.32);">
+          <div style="position: relative; aspect-ratio: 5/4; background: linear-gradient(160deg,#F1ECE2,#E6DFD1); display: flex; align-items: center; justify-content: center;">
+            <div style="width: 86px; height: 86px; border-radius: 50%; border: 1.5px solid rgba(26,23,20,.18); display: flex; align-items: center; justify-content: center;">
+              <div style="width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid rgba(26,23,20,.16);"></div>
+            </div>
+            <span style="position: absolute; top: 16px; left: 18px; font-family: 'DM Mono', monospace; font-size: 11px; color: #A87C4F; letter-spacing: 0.04em;">{{ p.sku }}</span>
+            <span style="position: absolute; top: 14px; right: 16px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: #1A1714; background: #C2A06A; padding: 4px 10px; border-radius: 980px; visibility: {{ p.badgeVis }};">{{ p.badge }}</span>
+          </div>
+          <div style="padding: 22px 24px 24px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+              <div style="font-size: 21px; font-weight: 700; letter-spacing: -0.01em;">{{ p.name }}</div>
+              <span style="color: #A87C4F; flex: none; font-size: 18px;">›</span>
+            </div>
+            <div style="font-size: 14px; color: #78726B; margin-top: 5px; line-height: 1.5; min-height: 42px;">{{ p.desc }}</div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(26,23,20,.08);">
+              <div style="display: flex; gap: 7px; align-items: center;">
+                <sc-for list="{{ p.finishes }}" as="f" hint-placeholder-count="3">
+                  <div style="width: 15px; height: 15px; border-radius: 50%; background: {{ f }}; border: 1px solid rgba(0,0,0,.16);"></div>
+                </sc-for>
+              </div>
+              <span style="font-family: 'DM Mono', monospace; font-size: 11px; color: #9a948a;">{{ p.spec }}</span>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- footer note -->
+    <div data-reveal style="background: #F0ECE3; border-radius: 22px; margin-top: 36px; padding: 36px 44px; display: flex; align-items: center; justify-content: space-between; gap: 24px;">
+      <span style="font-size: 16px; color: #6E6860; font-weight: 500;">Aradığınız ürünü bulamadınız mı? Özel üretim (OEM) için listenizi paylaşın.</span>
+      <span style="font-size: 15px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 13px 28px; border-radius: 980px; flex: none;">Numune talep formu</span>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER (light) ===== -->
+  <div style="background: #F0ECE3; border-top: 1px solid rgba(26,23,20,.08);">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 44px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+      <div style="display: flex; align-items: center; gap: 9px;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: #A87C4F;"></div>
+        <span style="font-size: 17px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
+        <span style="font-size: 14px; color: #8a857c; margin-left: 12px;">Kapı donanımı & tavan sistemleri · ihracat</span>
+      </div>
+      <span style="font-size: 12px; color: #9a948a;">© 2025 · CE · TSE · ISO 9001</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1120,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { cat: 'Tümü' };
+
+  componentDidMount() { this._initMotion(); }
+  componentDidUpdate() { this._initMotion(); }
+  componentWillUnmount() { this._polling = false; if (this._pollT) clearTimeout(this._pollT); }
+
+  _initMotion() {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ease = 'cubic-bezier(.16,.84,.44,1)';
+    const revs = Array.from(document.querySelectorAll('[data-reveal]')).filter(el => el.dataset.revInit !== '1');
+    revs.forEach(el => {
+      el.dataset.revInit = '1';
+      if (reduce) { el.style.opacity = '1'; el._revealed = true; return; }
+      const d = el.dataset.revealDelay || 0;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity .8s ' + ease + ', transform .8s ' + ease;
+      el.style.transitionDelay = d + 'ms';
+    });
+    if (reduce) return;
+    this._ensurePoll();
+  }
+
+  _ensurePoll() {
+    if (this._polling) return;
+    this._polling = true;
+    const tick = () => {
+      this._scan();
+      const revs = document.querySelectorAll('[data-reveal]');
+      let pending = false;
+      for (const el of revs) if (!el._revealed) { pending = true; break; }
+      if (pending) { this._pollT = setTimeout(tick, 150); }
+      else { this._polling = false; }
+    };
+    tick();
+  }
+
+  _scan() {
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const trigger = vh * 0.94;
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      if (el._revealed) return;
+      const r = el.getBoundingClientRect();
+      if (r.top < trigger && r.bottom > -40) {
+        el._revealed = true;
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }
+    });
+  }
+
+  allProducts() {
+    const F = { brass: '#B08D57', nikel: '#C9C7C0', siyah: '#2A2724', satin: '#AEB2AD', antik: '#6E5A3E' };
+    return [
+      { sku: 'BRL-110', name: 'Anti-Snap Barel', cat: 'Bareller', desc: '6 pim, kırılma korumalı çelik takviye', spec: '60–100 mm', finishes: [F.brass, F.nikel, F.siyah], badge: 'ÇOK SATAN' },
+      { sku: 'BRL-120', name: 'Master Key Barel', cat: 'Bareller', desc: 'Sistem anahtarlama, ana anahtar hiyerarşisi', spec: '60–110 mm', finishes: [F.brass, F.nikel], badge: '' },
+      { sku: 'BRL-130', name: 'Yarım Silindir', cat: 'Bareller', desc: 'Tek taraflı, dolap ve panel uygulamaları', spec: '30–50 mm', finishes: [F.brass, F.nikel], badge: '' },
+      { sku: 'PAD-210', name: 'Pirinç Asma Kilit', cat: 'Asma Kilit', desc: 'Massif pirinç gövde, su geçirmez seçenek', spec: '20–60 mm', finishes: [F.brass, F.siyah], badge: '' },
+      { sku: 'PAD-220', name: 'Lamine Asma Kilit', cat: 'Asma Kilit', desc: 'Sertleştirilmiş kanca, dış mekân dayanımı', spec: '30–70 mm', finishes: [F.nikel, F.siyah], badge: 'YENİ' },
+      { sku: 'HNG-310', name: 'Rulmanlı Menteşe', cat: 'Menteşe', desc: '2BB paslanmaz, ağır kapı taşıma', spec: '100–120 mm', finishes: [F.satin, F.siyah], badge: '' },
+      { sku: 'HNG-320', name: 'Gizli Menteşe', cat: 'Menteşe', desc: 'Ayarlanabilir 3D, görünmez montaj', spec: 'Ø14 mm', finishes: [F.satin], badge: '' },
+      { sku: 'HDL-410', name: 'Aynalı Kol Takımı', cat: 'Kol', desc: 'Rozetli set — WC, anahtarlı, dilsiz', spec: 'Set', finishes: [F.brass, F.nikel, F.siyah], badge: '' },
+      { sku: 'HTL-510', name: 'RFID Otel Kilidi', cat: 'Otel', desc: 'Mifare kart, yönetim yazılımı dahil', spec: 'Sistem', finishes: [F.siyah, F.satin], badge: 'YENİ' },
+      { sku: 'ACC-610', name: 'Manyetik Kapı Stoperi', cat: 'Aksesuar', desc: 'Zemin & duvar tipi, paslanmaz', spec: 'Adet', finishes: [F.nikel, F.brass], badge: '' },
+      { sku: 'CLG-710', name: 'Asma Tavan Sistemi', cat: 'Tavan', desc: 'Taşıyıcı T-profil + mineral/metal panel, 600×600', spec: '600×600 mm', finishes: ['#EFEBE3', '#C9C7C0', '#AEB2AD'], badge: 'YENİ' },
+      { sku: 'CLG-720', name: 'Metal Baffle Tavan', cat: 'Tavan', desc: 'Lineer alüminyum baffle, akustik dolgulu', spec: 'Lineer', finishes: ['#AEB2AD', '#2A2724', '#EFEBE3'], badge: '' },
+      { sku: 'LGT-730', name: 'Sıva Altı Downlight', cat: 'Tavan', desc: 'Yüksek verimli LED spot, ayarlanabilir açı', spec: 'Ø90–150 mm', finishes: ['#EFEBE3', '#2A2724'], badge: '' },
+      { sku: 'LGT-740', name: 'Lineer LED Profil', cat: 'Tavan', desc: 'Magnetik ray, kesintisiz ışık hattı', spec: '1–3 m', finishes: ['#EFEBE3', '#2A2724', '#AEB2AD'], badge: 'ÇOK SATAN' },
+      { sku: 'GYP-750', name: 'Alçıpan Tavan Plakası', cat: 'Tavan', desc: 'Standart / neme dayanıklı / yangın, 12.5 mm', spec: '1200×2000 mm', finishes: ['#EFEBE3'], badge: '' },
+      { sku: 'GYP-760', name: 'Kartonpiyer & Bordür', cat: 'Tavan', desc: 'Dekoratif kademe, kaşe ve köşe profilleri', spec: 'Profil', finishes: ['#EFEBE3', '#8A6A45'], badge: '' },
+    ];
+  }
+
+  renderVals() {
+    const cats = ['Tümü', 'Bareller', 'Asma Kilit', 'Menteşe', 'Kol', 'Otel', 'Aksesuar', 'Tavan'];
+    const all = this.allProducts();
+    const sel = this.state.cat;
+    const list = sel === 'Tümü' ? all : all.filter(p => p.cat === sel);
+    return {
+      total: all.length,
+      count: list.length,
+      cats: cats.map(name => {
+        const active = name === sel;
+        return {
+          name,
+          on: () => this.setState({ cat: name }),
+          bg: active ? '#1A1714' : 'transparent',
+          fg: active ? '#FBF9F5' : '#4A453E',
+          bd: active ? '#1A1714' : 'rgba(26,23,20,.16)',
+        };
+      }),
+      products: list.map((p, i) => ({ ...p, badgeVis: p.badge ? 'visible' : 'hidden', delay: (i % 3) * 70 })),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>* { box-sizing: border-box; } body { margin: 0; background: #FBF9F5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }</style>
+</helmet>
+
+<div style="background:#FBF9F5; font-family:'Manrope', system-ui, sans-serif; color:#1A1714; min-height:100vh;">
+
+  <!-- NAV -->
+  <div style="position:sticky; top:0; z-index:50; background:rgba(251,249,245,.82); backdrop-filter:blur(18px); border-bottom:1px solid rgba(26,23,20,.07);">
+    <div style="max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:16px 32px;">
+      <a href="Ana Sayfa — Apple.dc.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:9px;"><div style="width:8px;height:8px;border-radius:50%;background:#A87C4F;"></div><span style="font-size:19px;font-weight:700;letter-spacing:-0.02em;">MARKA</span></a>
+      <div style="display:flex; align-items:center; gap:34px; font-size:14px; font-weight:500; color:#4A453E;"><a href="Ürünler.dc.html" style="text-decoration:none;color:inherit;">Ürünler</a><span style="color:#1A1714;font-weight:700;">Koleksiyon</span><span>Sertifikalar</span><span>İhracat</span><span>İletişim</span></div>
+      <div style="display:flex; align-items:center; gap:16px;"><span style="font-size:13px;font-weight:500;color:#8a857c;white-space:nowrap;">TR / EN</span><span style="font-size:14px;font-weight:600;color:#FBF9F5;background:#1A1714;padding:9px 20px;border-radius:980px;white-space:nowrap;">Teklif Al</span></div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <div style="max-width:1180px; margin:0 auto; padding:56px 32px 28px;">
+    <div style="font-size:13px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#A87C4F;">Kaplama koleksiyonu</div>
+    <h1 style="font-size:60px;font-weight:700;letter-spacing:-0.035em;margin:14px 0 0;max-width:680px;">Aynı form, <span style="font-family:'Newsreader',serif;font-weight:500;font-style:italic;">dört karakter.</span></h1>
+    <p style="font-size:19px;color:#78726B;margin:16px 0 0;max-width:540px;font-weight:500;">Her ürün ailesi, dört kaplamada. Mekânın ruhunu donanım belirler — bir kaplama seçin, karakteri görün.</p>
+  </div>
+
+  <!-- FINISH PANELS -->
+  <div style="max-width:1180px; margin:0 auto; padding:20px 32px 0;">
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px;">
+      <sc-for list="{{ finishPanels }}" as="f" hint-placeholder-count="4">
+        <div onClick="{{ f.on }}" style="aspect-ratio:3/5; background:{{ f.grad }}; border-radius:18px; padding:24px; cursor:pointer; opacity:{{ f.op }}; outline:{{ f.ring }}; outline-offset:-3px; transition:opacity .3s, transform .3s; display:flex; flex-direction:column; justify-content:space-between; position:relative;" style-hover="transform:translateY(-4px);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div style="width:58px;height:58px;border-radius:50%;border:1.5px solid {{ f.ringColor }};"></div>
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.08em;padding:5px 10px;border-radius:980px;background:rgba(255,255,255,.9);color:#1A1714;visibility:{{ f.tagVis }};">SEÇİLİ</span>
+          </div>
+          <div>
+            <div style="font-size:21px;font-weight:700;color:{{ f.fg }};letter-spacing:-0.01em;">{{ f.label }}</div>
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:{{ f.subColor }};margin-top:5px;">{{ f.code }} · {{ f.sub }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- SELECTED DETAIL BAND -->
+  <div style="max-width:1180px; margin:0 auto; padding:36px 32px 24px;">
+    <div style="display:grid; grid-template-columns:0.85fr 1.15fr; gap:0; border-radius:24px; overflow:hidden; border:1px solid rgba(26,23,20,.08);">
+      <!-- left: big finish word -->
+      <div style="background:{{ selGrad }}; padding:48px 44px; min-height:360px; display:flex; flex-direction:column; justify-content:space-between;">
+        <div style="font-family:'DM Mono',monospace; font-size:12px; letter-spacing:0.12em; color:{{ selSubColor }};">KAPLAMA · {{ selCode }}</div>
+        <div>
+          <div style="width:88px;height:88px;border-radius:50%;border:1.5px solid {{ selRingColor }}; display:flex;align-items:center;justify-content:center; margin-bottom:24px;"><div style="width:34px;height:34px;border-radius:50%;background:{{ selCore }};box-shadow:inset 0 0 0 1px rgba(0,0,0,.18);"></div></div>
+          <h2 style="font-size:40px;font-weight:700;letter-spacing:-0.03em;color:{{ selFg }};margin:0;">{{ selLabel }}</h2>
+        </div>
+      </div>
+      <!-- right: description + uses + products -->
+      <div style="padding:44px 44px;">
+        <p style="font-size:20px;line-height:1.55;color:#3C372F;margin:0;font-weight:500;">{{ selDesc }}</p>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#b1a896;letter-spacing:0.08em;margin:28px 0 14px;">KULLANIM ALANLARI</div>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <sc-for list="{{ uses }}" as="u" hint-placeholder-count="3">
+            <span style="font-size:13px;font-weight:600;padding:8px 16px;border-radius:980px;border:1px solid rgba(26,23,20,.16);">{{ u.u }}</span>
+          </sc-for>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#b1a896;letter-spacing:0.08em;margin:28px 0 14px;">BU KAPLAMADA</div>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
+          <div style="border:1px solid rgba(26,23,20,.10); border-radius:14px; overflow:hidden;"><div style="aspect-ratio:1/1; background:linear-gradient(160deg,#F1ECE2,#E6DFD1); display:flex;align-items:center;justify-content:center;"><div style="width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(26,23,20,.2);display:flex;align-items:center;justify-content:center;"><div style="width:18px;height:18px;border-radius:50%;background:{{ selCore }};"></div></div></div><div style="padding:11px 13px;"><div style="font-size:13px;font-weight:700;">Anti-Snap Barel</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:#78726B;margin-top:2px;">BRL-110 · {{ selCode }}</div></div></div>
+          <div style="border:1px solid rgba(26,23,20,.10); border-radius:14px; overflow:hidden;"><div style="aspect-ratio:1/1; background:linear-gradient(160deg,#F1ECE2,#E6DFD1); display:flex;align-items:center;justify-content:center;"><div style="width:34px;height:44px;border-radius:7px 7px 3px 3px;border:1.5px solid rgba(26,23,20,.2);position:relative;"><div style="position:absolute;top:-11px;left:6px;right:6px;height:16px;border:1.5px solid rgba(26,23,20,.2);border-bottom:none;border-radius:8px 8px 0 0;"></div></div></div><div style="padding:11px 13px;"><div style="font-size:13px;font-weight:700;">Asma Kilit</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:#78726B;margin-top:2px;">PAD-210 · {{ selCode }}</div></div></div>
+          <div style="border:1px solid rgba(26,23,20,.10); border-radius:14px; overflow:hidden;"><div style="aspect-ratio:1/1; background:linear-gradient(160deg,#F1ECE2,#E6DFD1); display:flex;align-items:center;justify-content:center;"><div style="width:60px;height:18px;border-radius:9px;border:1.5px solid rgba(26,23,20,.2);"></div></div><div style="padding:11px 13px;"><div style="font-size:13px;font-weight:700;">Kapı Kolu</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:#78726B;margin-top:2px;">HDL-410 · {{ selCode }}</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KARTELA CTA -->
+  <div style="max-width:1180px; margin:0 auto; padding:24px 32px 80px;">
+    <div style="background:#1A1714; border-radius:24px; padding:56px 56px; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap; color:#F4EEE2;">
+      <div>
+        <h2 style="font-size:36px;font-weight:700;letter-spacing:-0.03em;margin:0;">Fiziksel kaplama <span style="font-family:'Newsreader',serif;font-weight:500;font-style:italic;">kartelası</span> isteyin.</h2>
+        <p style="font-size:16px;color:#ABA398;margin:14px 0 0;max-width:460px;">Dört kaplamanın gerçek örneklerini ofisinize gönderelim — dokunarak karar verin.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px; flex:none;">
+        <span style="font-size:15px;font-weight:600;color:#1A1714;background:#C2A06A;padding:15px 34px;border-radius:980px;text-align:center;">Kartela iste</span>
+        <span style="font-size:13px;font-weight:600;color:#D8CDBB;text-align:center;">export@marka.com</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="background:#F0ECE3; border-top:1px solid rgba(26,23,20,.08);">
+    <div style="max-width:1180px; margin:0 auto; padding:44px 32px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+      <div style="display:flex; align-items:center; gap:9px;"><div style="width:8px;height:8px;border-radius:50%;background:#A87C4F;"></div><span style="font-size:17px;font-weight:700;letter-spacing:-0.02em;">MARKA</span><span style="font-size:14px;color:#8a857c;margin-left:12px;">Kapı güvenlik donanımı · ihracat</span></div>
+      <span style="font-size:12px;color:#9a948a;">© 2025 · CE · TSE · ISO 9001</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { sel: 'brass' };
+
+  data() {
+    return [
+      { key: 'brass', label: 'Parlak Pirinç', code: 'PB', grad: 'linear-gradient(155deg,#C8A572,#A07B45)', fg: '#FFFFFF', light: true, sub: 'sıcak, klasik', core: '#B08D57', desc: 'Zamansız sıcaklık. Yıllandıkça karakter kazanan, canlı bir yüzey.', uses: ['Tarihi yapılar', 'Butik oteller', 'Klasik konut'] },
+      { key: 'nikel', label: 'Fırça Nikel', code: 'NK', grad: 'linear-gradient(155deg,#D6D5D0,#B6B6B0)', fg: '#2A2724', light: false, sub: 'nötr, modern', core: '#C9C7C0', desc: 'Parmak izi tutmayan mat doku. Her paletle uyumlu, nötr bir zemin.', uses: ['Ofis', 'Çağdaş konut', 'Perakende'] },
+      { key: 'siyah', label: 'Mat Siyah', code: 'SY', grad: 'linear-gradient(155deg,#34302B,#1C1916)', fg: '#FFFFFF', light: true, sub: 'keskin, minimal', core: '#2A2724', desc: 'Grafik ve keskin. Minimal mimaride güçlü bir kontrast aksanı.', uses: ['Loft', 'Mimari proje', 'Showroom'] },
+      { key: 'antik', label: 'Antik Bronz', code: 'AN', grad: 'linear-gradient(155deg,#7C6648,#574630)', fg: '#FFFFFF', light: true, sub: 'patine, butik', core: '#6E5A3E', desc: 'Elde patine edilmiş derinlik. Restorasyon ve butik dokunuşlar için.', uses: ['Restorasyon', 'Butik otel', 'Villa'] },
+    ];
+  }
+
+  renderVals() {
+    const all = this.data();
+    const sel = this.state.sel;
+    const cur = all.find(f => f.key === sel) || all[0];
+    const subC = (light) => light ? 'rgba(255,255,255,.7)' : '#5b5650';
+    const ringC = (light) => light ? 'rgba(255,255,255,.5)' : 'rgba(0,0,0,.25)';
+    return {
+      finishPanels: all.map(f => {
+        const a = f.key === sel;
+        return {
+          label: f.label, code: f.code, grad: f.grad, fg: f.fg, sub: f.sub,
+          subColor: subC(f.light), ringColor: ringC(f.light),
+          on: () => this.setState({ sel: f.key }),
+          op: a ? '1' : '0.78',
+          ring: a ? '3px solid #FBF9F5' : '0px solid transparent',
+          tagVis: a ? 'visible' : 'hidden',
+        };
+      }),
+      selLabel: cur.label, selCode: cur.code, selSub: cur.sub, selDesc: cur.desc,
+      selCore: cur.core, selGrad: cur.grad, selFg: cur.fg,
+      selSubColor: subC(cur.light), selRingColor: ringC(cur.light),
+      uses: cur.uses.map(u => ({ u })),
+    };
+  }
+}
+</script>
+</body>
+</html>

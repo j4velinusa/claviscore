@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme {
+  /* Claviscor "sıcak metal" paleti — bkz. design/Marka Kılavuzu.dc.html */
+  --color-cream: #fbf9f5; /* zemin */
+  --color-ink: #1a1714; /* ana metin */
+  --color-ink-2: #3c372f;
+  --color-ink-3: #4a453e;
+  --color-night: #18120d; /* koyu paneller / admin sidebar */
+  --color-bronze: #a87c4f; /* aksan */
+  --color-bronze-2: #8a6638;
+  --color-brass: #c2a06a; /* koyu zeminde aksan */
+  --color-paper: #f0ece3; /* açık panel / footer */
+  --color-linen: #f7f4ed;
+  /* İkincil metin — WCAG AA (4.5:1) için paper zeminde bile geçerli tonlar.
+     Not: mockup daha açık griler kullanıyordu; erişilebilirlik için koyulaştırıldı. */
+  --color-muted: #6d6860; /* ikincil metin (paper üzerinde ~4.5:1) */
+  --color-label: #6f6656; /* küçük büyük-harf etiketler (footer sütun başlıkları) */
+
+  --font-sans: var(--font-manrope);
+  --font-mono: var(--font-dm-mono);
+  --font-serif: var(--font-newsreader);
+
+  --ease-swift: cubic-bezier(0.16, 0.84, 0.44, 1);
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.82;
+  }
+  50% {
+    transform: scale(1.09);
+    opacity: 1;
+  }
+}
+
+.anim-spin-slow {
+  animation: spin-slow 70s linear infinite;
+}
+
+.anim-breathe {
+  animation: breathe 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .anim-spin-slow,
+  .anim-breathe {
+    animation: none;
+  }
+}

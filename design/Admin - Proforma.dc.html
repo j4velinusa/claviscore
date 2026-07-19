@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FBF9F5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  input:focus, textarea:focus { outline: none; border-bottom-color: #A87C4F !important; }
+  a { color: #A87C4F; } a:hover { color: #8A6638; }
+  .adm-scroll::-webkit-scrollbar { width: 9px; }
+  .adm-scroll::-webkit-scrollbar-thumb { background: rgba(26,23,20,.14); border-radius: 8px; }
+  .adm-scroll::-webkit-scrollbar-track { background: transparent; }
+</style>
+</helmet>
+
+<div data-screen-label="Proforma Hazırlayıcı" style="display:flex; height:100vh; overflow:hidden; font-family:'Manrope', system-ui, sans-serif; color:#1A1714; background:#FBF9F5;">
+
+  <!-- ===== SIDEBAR ===== -->
+  <div style="width:238px; flex:none; background:#18120D; color:#C9C0B2; display:flex; flex-direction:column; padding:22px 16px;">
+    <div style="display:flex; align-items:center; gap:9px; padding:6px 10px 22px;">
+      <div style="width:8px; height:8px; border-radius:50%; background:#C2A06A;"></div>
+      <span style="font-size:18px; font-weight:700; letter-spacing:-0.02em; color:#F4EEE2;">MARKA</span>
+      <span style="font-family:'DM Mono',monospace; font-size:10px; color:#8a8472; margin-left:auto;">Admin</span>
+    </div>
+    <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.14em; color:#6f6452; padding:8px 10px 10px;">POSTA</div>
+    <sc-for list="{{ navPosta }}" as="n" hint-placeholder-count="6">
+      <div style="display:flex; align-items:center; gap:11px; padding:11px 12px; border-radius:10px; cursor:pointer; font-size:14px; font-weight:{{ n.fw }}; color:{{ n.fg }}; background:{{ n.bg }}; margin-bottom:2px;">
+        <span style="font-family:'DM Mono',monospace; font-size:11px; width:20px; color:{{ n.mc }};">{{ n.k }}</span>{{ n.label }}
+        <span style="margin-left:auto; font-size:11px; font-weight:700; color:{{ n.mc }}; visibility:{{ n.badgeVis }};">{{ n.badge }}</span>
+      </div>
+    </sc-for>
+    <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.14em; color:#6f6452; padding:18px 10px 10px;">BELGELER</div>
+    <sc-for list="{{ navBelge }}" as="n" hint-placeholder-count="2">
+      <div style="display:flex; align-items:center; gap:11px; padding:11px 12px; border-radius:10px; cursor:pointer; font-size:14px; font-weight:{{ n.fw }}; color:{{ n.fg }}; background:{{ n.bg }}; margin-bottom:2px;">
+        <span style="font-family:'DM Mono',monospace; font-size:11px; width:20px; color:{{ n.mc }};">{{ n.k }}</span>{{ n.label }}
+      </div>
+    </sc-for>
+    <div style="margin-top:auto; display:flex; align-items:center; gap:10px; padding:12px 10px; border-top:1px solid rgba(255,255,255,.08);">
+      <div style="width:32px; height:32px; border-radius:50%; background:#C2A06A; color:#18120D; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px;">EK</div>
+      <div style="line-height:1.3;"><div style="font-size:13px; font-weight:600; color:#F4EEE2;">Elif Kaya</div><div style="font-size:11px; color:#8a8472;">İhracat · Satış</div></div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <div style="flex:1; display:flex; flex-direction:column; overflow:hidden;">
+
+    <!-- TOPBAR -->
+    <div style="flex:none; display:flex; align-items:center; justify-content:space-between; padding:18px 28px; border-bottom:1px solid rgba(26,23,20,.08); background:rgba(251,249,245,.9); backdrop-filter:blur(12px);">
+      <div>
+        <div style="font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#A87C4F;">Belgeler</div>
+        <div style="font-size:22px; font-weight:700; letter-spacing:-0.02em; margin-top:3px;">Proforma Hazırlayıcı</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px;">
+        <!-- currency segmented -->
+        <div style="display:flex; background:#F0ECE3; border-radius:980px; padding:3px;">
+          <sc-for list="{{ currencies }}" as="c" hint-placeholder-count="3">
+            <span onClick="{{ c.on }}" style="font-family:'DM Mono',monospace; font-size:12px; font-weight:500; padding:7px 13px; border-radius:980px; cursor:pointer; background:{{ c.bg }}; color:{{ c.fg }}; box-shadow:{{ c.sh }};">{{ c.label }}</span>
+          </sc-for>
+        </div>
+        <span onClick="{{ onSave }}" style="font-size:13px; font-weight:600; color:#3C372F; background:#FFFFFF; border:1px solid rgba(26,23,20,.16); padding:10px 16px; border-radius:980px; cursor:pointer;">Taslağı kaydet</span>
+        <span onClick="{{ onPdf }}" style="font-size:13px; font-weight:600; color:#3C372F; background:#FFFFFF; border:1px solid rgba(26,23,20,.16); padding:10px 16px; border-radius:980px; cursor:pointer;">PDF indir</span>
+        <span onClick="{{ onEmail }}" style="font-size:13px; font-weight:600; color:#FBF9F5; background:#1A1714; padding:10px 18px; border-radius:980px; cursor:pointer; white-space:nowrap;">E-posta ile gönder →</span>
+      </div>
+    </div>
+
+    <!-- SPLIT -->
+    <div style="flex:1; display:flex; overflow:hidden;">
+
+      <!-- ========== EDITOR ========== -->
+      <div class="adm-scroll" style="width:400px; flex:none; overflow-y:auto; border-right:1px solid rgba(26,23,20,.08); padding:24px 24px 60px; background:#F7F4ED;">
+
+        <!-- buyer -->
+        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.12em; color:#b1a896; margin-bottom:11px;">ALICI</div>
+        <div style="background:#FFFFFF; border:1px solid rgba(26,23,20,.10); border-radius:14px; overflow:hidden;">
+          <div onClick="{{ toggleBuyer }}" style="display:flex; align-items:center; gap:12px; padding:14px 15px; cursor:pointer;">
+            <div style="flex:none; width:40px; height:40px; border-radius:50%; background:#F0ECE3; color:#8A6638; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700;">{{ buyerInitials }}</div>
+            <div style="min-width:0; flex:1;"><div style="font-size:14px; font-weight:700; letter-spacing:-0.01em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ buyerCompany }}</div><div style="font-size:12px; color:#78726B; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ buyerCity }}</div></div>
+            <span style="flex:none; font-size:12px; font-weight:600; color:#A87C4F;">{{ buyerToggleLabel }}</span>
+          </div>
+          <sc-if value="{{ buyerOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="border-top:1px solid rgba(26,23,20,.08); max-height:250px; overflow-y:auto;" class="adm-scroll">
+              <sc-for list="{{ buyerList }}" as="b" hint-placeholder-count="6">
+                <div onClick="{{ b.on }}" style="display:flex; align-items:center; gap:11px; padding:11px 15px; cursor:pointer; background:{{ b.bg }};" style-hover="background:#F7F4ED;">
+                  <div style="flex:none; width:15px; height:15px; border-radius:50%; border:1.5px solid {{ b.dotBd }}; background:{{ b.dotBg }};"></div>
+                  <div style="min-width:0;"><div style="font-size:13px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ b.company }}</div><div style="font-size:11px; color:#9a948a;">{{ b.city }}</div></div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+
+        <!-- proforma meta -->
+        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.12em; color:#b1a896; margin:24px 0 11px;">PROFORMA BİLGİLERİ</div>
+        <div style="display:flex; gap:12px;">
+          <div style="flex:1;">
+            <div style="font-size:11.5px; color:#78726B; margin-bottom:3px;">Proforma No</div>
+            <input value="{{ proformaNo }}" onChange="{{ onNo }}" style="width:100%; border:none; border-bottom:1.5px solid rgba(26,23,20,.16); background:transparent; font-family:'DM Mono',monospace; font-size:13.5px; font-weight:500; color:#1A1714; padding:6px 2px;" />
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:11.5px; color:#78726B; margin-bottom:3px;">Tarih</div>
+            <input value="{{ pfDate }}" onChange="{{ onDate }}" style="width:100%; border:none; border-bottom:1.5px solid rgba(26,23,20,.16); background:transparent; font-family:'DM Mono',monospace; font-size:13.5px; font-weight:500; color:#1A1714; padding:6px 2px;" />
+          </div>
+          <div style="width:92px;">
+            <div style="font-size:11.5px; color:#78726B; margin-bottom:3px;">Geçerlilik</div>
+            <div style="display:flex; align-items:baseline; gap:5px; border-bottom:1.5px solid rgba(26,23,20,.16);">
+              <input value="{{ validity }}" onChange="{{ onValidity }}" style="width:100%; border:none; background:transparent; font-family:'DM Mono',monospace; font-size:13.5px; font-weight:500; color:#1A1714; padding:6px 2px;" />
+              <span style="font-size:11px; color:#9a948a;">gün</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- line items -->
+        <div style="display:flex; align-items:center; justify-content:space-between; margin:26px 0 11px;">
+          <span style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.12em; color:#b1a896;">KALEMLER</span>
+          <span style="font-family:'DM Mono',monospace; font-size:10px; color:#9a948a;">{{ itemCountLabel }}</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <sc-for list="{{ items }}" as="it" hint-placeholder-count="3">
+            <div style="background:#FFFFFF; border:1px solid rgba(26,23,20,.10); border-radius:13px; padding:13px 14px;">
+              <div style="display:flex; align-items:flex-start; gap:9px; margin-bottom:11px;">
+                <span style="flex:none; font-family:'DM Mono',monospace; font-size:10px; color:#8A6638; background:#F0ECE3; padding:3px 7px; border-radius:5px;">{{ it.code }}</span>
+                <span style="flex:1; font-size:13.5px; font-weight:600; letter-spacing:-0.01em; line-height:1.3;">{{ it.name }}</span>
+                <span onClick="{{ it.remove }}" style="flex:none; display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:rgba(26,23,20,.06); color:#9a948a; cursor:pointer; font-size:13px; line-height:1;">×</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="display:flex; align-items:baseline; gap:6px;">
+                  <span style="font-size:11px; color:#9a948a;">Adet</span>
+                  <input value="{{ it.qty }}" onChange="{{ it.onQty }}" style="width:64px; border:none; border-bottom:1.5px solid rgba(26,23,20,.16); background:transparent; font-family:'DM Mono',monospace; font-size:13px; font-weight:500; color:#1A1714; padding:4px 2px; text-align:right;" />
+                </div>
+                <div style="display:flex; align-items:baseline; gap:6px;">
+                  <span style="font-size:11px; color:#9a948a;">Birim</span>
+                  <span style="font-family:'DM Mono',monospace; font-size:12px; color:#8A6638;">{{ curSym }}</span>
+                  <input value="{{ it.price }}" onChange="{{ it.onPrice }}" style="width:62px; border:none; border-bottom:1.5px solid rgba(26,23,20,.16); background:transparent; font-family:'DM Mono',monospace; font-size:13px; font-weight:500; color:#1A1714; padding:4px 2px; text-align:right;" />
+                </div>
+                <span style="margin-left:auto; font-family:'DM Mono',monospace; font-size:13px; font-weight:500; color:#1A1714;">{{ curSym }} {{ it.amount }}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <!-- add item -->
+        <div onClick="{{ toggleProd }}" style="margin-top:11px; display:flex; align-items:center; justify-content:center; gap:8px; font-size:13px; font-weight:600; color:#A87C4F; padding:11px; border-radius:11px; border:1px dashed rgba(168,124,79,.5); cursor:pointer; background:{{ prodBtnBg }};">+ Kalem ekle</div>
+        <sc-if value="{{ prodOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:8px; background:#FFFFFF; border:1px solid rgba(26,23,20,.12); border-radius:13px; overflow:hidden;">
+            <div style="padding:9px 14px; font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.1em; color:#b1a896; border-bottom:1px solid rgba(26,23,20,.07);">ÜRÜN KATALOĞU</div>
+            <sc-for list="{{ productRows }}" as="p" hint-placeholder-count="6">
+              <div onClick="{{ p.on }}" style="display:flex; align-items:center; gap:11px; padding:10px 14px; cursor:pointer; border-bottom:1px solid rgba(26,23,20,.05);" style-hover="background:#F7F4ED;">
+                <span style="flex:none; font-family:'DM Mono',monospace; font-size:10px; color:#8A6638; background:#F0ECE3; padding:3px 7px; border-radius:5px;">{{ p.code }}</span>
+                <div style="flex:1; min-width:0;"><div style="font-size:13px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ p.name }}</div><div style="font-size:11px; color:#9a948a;">HS {{ p.hs }}</div></div>
+                <span style="flex:none; font-family:'DM Mono',monospace; font-size:12px; color:#3C372F;">{{ curSym }} {{ p.price }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <!-- discount & freight -->
+        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.12em; color:#b1a896; margin:26px 0 11px;">İNDİRİM & NAVLUN</div>
+        <div style="display:flex; gap:12px;">
+          <div style="flex:1;">
+            <div style="font-size:11.5px; color:#78726B; margin-bottom:3px;">İndirim</div>
+            <div style="display:flex; align-items:baseline; gap:5px; border-bottom:1.5px solid rgba(26,23,20,.16);">
+              <input value="{{ discountPct }}" onChange="{{ onDisc }}" style="width:100%; border:none; background:transparent; font-family:'DM Mono',monospace; font-size:13.5px; font-weight:500; color:#1A1714; padding:6px 2px;" />
+              <span style="font-size:12px; color:#9a948a;">%</span>
+            </div>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:11.5px; color:#78726B; margin-bottom:3px;">Navlun ({{ incotermCode }})</div>
+            <div style="display:flex; align-items:baseline; gap:5px; border-bottom:1.5px solid rgba(26,23,20,.16);">
+              <span style="font-family:'DM Mono',monospace; font-size:12px; color:#8A6638;">{{ curSym }}</span>
+              <input value="{{ freight }}" onChange="{{ onFreight }}" style="width:100%; border:none; background:transparent; font-family:'DM Mono',monospace; font-size:13.5px; font-weight:500; color:#1A1714; padding:6px 2px;" />
+            </div>
+          </div>
+        </div>
+
+        <!-- delivery & payment -->
+        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.12em; color:#b1a896; margin:26px 0 11px;">TESLİM & ÖDEME</div>
+        <div style="font-size:11.5px; color:#78726B; margin-bottom:7px;">Teslim şekli (Incoterms® 2020)</div>
+        <div style="display:flex; flex-wrap:wrap; gap:7px;">
+          <sc-for list="{{ incoterms }}" as="i" hint-placeholder-count="6">
+            <span onClick="{{ i.on }}" style="font-family:'DM Mono',monospace; font-size:12px; font-weight:500; padding:7px 13px; border-radius:980px; cursor:pointer; background:{{ i.bg }}; color:{{ i.fg }}; border:1px solid {{ i.bd }};">{{ i.code }}</span>
+          </sc-for>
+        </div>
+        <div style="display:flex; gap:12px; margin-top:15px;">
+          <div style="flex:1;">
+            <div style="font-size:11.5px; color:#78726B; margin-bottom:3px;">Yükleme limanı</div>
+            <input value="{{ portLoad }}" onChange="{{ onPortLoad }}" style="width:100%; border:none; border-bottom:1.5px solid rgba(26,23,20,.16); background:transparent; font-family:'Manrope',sans-serif; font-size:13px; font-weight:600; color:#1A1714; padding:6px 2px;" />
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:11.5px; color:#78726B; margin-bottom:3px;">Varış limanı</div>
+            <input value="{{ portDisch }}" onChange="{{ onPortDisch }}" style="width:100%; border:none; border-bottom:1.5px solid rgba(26,23,20,.16); background:transparent; font-family:'Manrope',sans-serif; font-size:13px; font-weight:600; color:#1A1714; padding:6px 2px;" />
+          </div>
+        </div>
+        <div style="font-size:11.5px; color:#78726B; margin:16px 0 7px;">Ödeme şekli</div>
+        <div style="display:flex; flex-direction:column; gap:7px;">
+          <sc-for list="{{ payments }}" as="p" hint-placeholder-count="4">
+            <div onClick="{{ p.on }}" style="display:flex; align-items:center; gap:11px; padding:11px 13px; border-radius:11px; cursor:pointer; background:{{ p.bg }}; border:1px solid {{ p.bd }};">
+              <div style="flex:none; width:16px; height:16px; border-radius:50%; border:1.5px solid {{ p.dotBd }}; display:flex; align-items:center; justify-content:center;"><div style="width:8px; height:8px; border-radius:50%; background:{{ p.dotBg }};"></div></div>
+              <span style="font-size:13px; font-weight:{{ p.fw }}; color:#2A2620;">{{ p.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- notes -->
+        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.12em; color:#b1a896; margin:26px 0 11px;">NOTLAR</div>
+        <textarea value="{{ notes }}" onChange="{{ onNotes }}" rows="3" style="width:100%; border:1px solid rgba(26,23,20,.14); border-radius:11px; background:#FFFFFF; font-family:'Manrope',sans-serif; font-size:13px; line-height:1.55; color:#3C372F; padding:11px 13px; resize:vertical;"></textarea>
+
+      </div>
+
+      <!-- ========== DOCUMENT PREVIEW ========== -->
+      <div class="adm-scroll" style="flex:1; overflow-y:auto; background:#EDE9E0; padding:30px 28px 60px;">
+        <div data-pf="panel" style="max-width:760px; margin:0 auto;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+            <span style="font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.1em; color:#9a948a;">BELGE ÖNİZLEME · A4</span>
+            <span style="font-family:'DM Mono',monospace; font-size:11px; color:#9a948a;">{{ proformaNo }} · {{ pfDate }}</span>
+          </div>
+
+          <!-- THE SHEET (fixed 680px design width, scaled to fit panel) -->
+          <div style="width:{{ scaledW }}px; height:{{ scaledH }}px; margin:0 auto;">
+          <div style="width:680px; transform:scale({{ scale }}); transform-origin:top left;">
+          <div data-pf="sheet" style="background:#FFFFFF; box-shadow:0 1px 2px rgba(0,0,0,.06), 0 30px 60px -34px rgba(0,0,0,.4); padding:52px 54px 46px;">
+
+            <!-- header -->
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; padding-bottom:22px; border-bottom:2px solid #1A1714;">
+              <div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div style="width:9px; height:9px; border-radius:50%; background:#C2A06A;"></div>
+                  <span style="font-size:23px; font-weight:800; letter-spacing:-0.02em; color:#1A1714;">CLAVISCOR</span>
+                </div>
+                <div style="font-size:11.5px; color:#5C564C; line-height:1.65; margin-top:10px;">
+                  Kilit ve Kapı Donanımı San. Tic. A.Ş.<br>
+                  A.O.S.B. 10018 Sk. No:12, Çiğli 35620 İzmir / Türkiye<br>
+                  Vergi No: 2140583910 · Mersis: 0214-0583-9100001<br>
+                  export@claviscor.com · +90 232 555 01 40
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-family:'Newsreader',serif; font-size:27px; font-weight:500; letter-spacing:-0.01em; color:#1A1714; line-height:1;">Proforma</div>
+                <div style="font-family:'DM Mono',monospace; font-size:12px; letter-spacing:0.24em; color:#A87C4F; margin-top:5px;">INVOICE</div>
+                <div style="margin-top:16px; font-size:11.5px; color:#5C564C; line-height:1.9; text-align:right;">
+                  <div><span style="color:#9a948a;">No</span> &nbsp;<span style="font-family:'DM Mono',monospace; color:#1A1714;">{{ proformaNo }}</span></div>
+                  <div><span style="color:#9a948a;">Date</span> &nbsp;<span style="font-family:'DM Mono',monospace; color:#1A1714;">{{ pfDate }}</span></div>
+                  <div><span style="color:#9a948a;">Valid</span> &nbsp;<span style="font-family:'DM Mono',monospace; color:#1A1714;">{{ validity }} days</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- seller / buyer -->
+            <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:32px; padding:22px 0; border-bottom:1px solid rgba(26,23,20,.12);">
+              <div>
+                <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.14em; color:#A87C4F; margin-bottom:8px;">SELLER / EXPORTER</div>
+                <div style="font-size:14px; font-weight:700; letter-spacing:-0.01em;">Claviscor A.Ş.</div>
+                <div style="font-size:11.5px; color:#5C564C; line-height:1.65; margin-top:4px;">A.O.S.B. 10018 Sk. No:12<br>Çiğli 35620 İzmir, Türkiye</div>
+              </div>
+              <div>
+                <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.14em; color:#A87C4F; margin-bottom:8px;">BUYER / IMPORTER</div>
+                <div style="font-size:14px; font-weight:700; letter-spacing:-0.01em;">{{ buyerCompany }}</div>
+                <div style="font-size:11.5px; color:#5C564C; line-height:1.65; margin-top:4px;">{{ buyerAttn }}<br>{{ buyerAddress }}<br>{{ buyerCountry }}</div>
+              </div>
+            </div>
+
+            <!-- shipment strip -->
+            <div style="display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:1px; background:rgba(26,23,20,.10); border:1px solid rgba(26,23,20,.10); border-radius:9px; overflow:hidden; margin:22px 0;">
+              <div style="background:#FBF9F5; padding:11px 13px;"><div style="font-size:9.5px; letter-spacing:0.08em; color:#9a948a; font-family:'DM Mono',monospace;">INCOTERMS® 2020</div><div style="font-size:12.5px; font-weight:700; margin-top:3px;">{{ incotermCode }}</div></div>
+              <div style="background:#FBF9F5; padding:11px 13px;"><div style="font-size:9.5px; letter-spacing:0.08em; color:#9a948a; font-family:'DM Mono',monospace;">PORT OF LOADING</div><div style="font-size:12.5px; font-weight:700; margin-top:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ portLoad }}</div></div>
+              <div style="background:#FBF9F5; padding:11px 13px;"><div style="font-size:9.5px; letter-spacing:0.08em; color:#9a948a; font-family:'DM Mono',monospace;">PORT OF DISCHARGE</div><div style="font-size:12.5px; font-weight:700; margin-top:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ portDisch }}</div></div>
+              <div style="background:#FBF9F5; padding:11px 13px;"><div style="font-size:9.5px; letter-spacing:0.08em; color:#9a948a; font-family:'DM Mono',monospace;">ORIGIN</div><div style="font-size:12.5px; font-weight:700; margin-top:3px;">Türkiye</div></div>
+            </div>
+
+            <!-- items table -->
+            <div style="display:grid; grid-template-columns:26px minmax(0,1fr) 66px 52px 74px 88px; gap:10px; padding:0 0 9px; border-bottom:1.5px solid #1A1714; font-family:'DM Mono',monospace; font-size:9.5px; letter-spacing:0.06em; color:#9a948a;">
+              <div>#</div><div>DESCRIPTION</div><div>HS CODE</div><div style="text-align:right;">QTY</div><div style="text-align:right;">UNIT</div><div style="text-align:right;">AMOUNT</div>
+            </div>
+            <sc-for list="{{ docItems }}" as="d" hint-placeholder-count="3">
+              <div style="display:grid; grid-template-columns:26px minmax(0,1fr) 66px 52px 74px 88px; gap:10px; padding:11px 0; border-bottom:1px solid rgba(26,23,20,.08); align-items:baseline;">
+                <div style="font-family:'DM Mono',monospace; font-size:12px; color:#9a948a;">{{ d.no }}</div>
+                <div style="min-width:0;"><div style="font-size:12.5px; font-weight:600; letter-spacing:-0.01em;">{{ d.name }}</div><div style="font-family:'DM Mono',monospace; font-size:10.5px; color:#9a948a; margin-top:1px;">{{ d.code }}</div></div>
+                <div style="font-family:'DM Mono',monospace; font-size:11px; color:#5C564C;">{{ d.hs }}</div>
+                <div style="text-align:right; font-family:'DM Mono',monospace; font-size:11.5px;">{{ d.qty }}</div>
+                <div style="text-align:right; font-family:'DM Mono',monospace; font-size:11.5px;">{{ d.unitPrice }}</div>
+                <div style="text-align:right; font-family:'DM Mono',monospace; font-size:11.5px; font-weight:500;">{{ d.amount }}</div>
+              </div>
+            </sc-for>
+
+            <!-- totals -->
+            <div style="display:flex; justify-content:flex-end; margin-top:20px;">
+              <div style="width:290px;">
+                <div style="display:flex; justify-content:space-between; padding:7px 0; font-size:12.5px; color:#5C564C;"><span>Subtotal</span><span style="font-family:'DM Mono',monospace; color:#1A1714;">{{ curSym }} {{ subtotal }}</span></div>
+                <sc-if value="{{ hasDiscount }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex; justify-content:space-between; padding:7px 0; font-size:12.5px; color:#5C564C;"><span>Discount ({{ discountPct }}%)</span><span style="font-family:'DM Mono',monospace; color:#B4503F;">− {{ curSym }} {{ discountAmt }}</span></div>
+                </sc-if>
+                <div style="display:flex; justify-content:space-between; padding:7px 0; font-size:12.5px; color:#5C564C; border-bottom:1px solid rgba(26,23,20,.12);"><span>Freight ({{ incotermCode }})</span><span style="font-family:'DM Mono',monospace; color:#1A1714;">+ {{ curSym }} {{ freightFmt }}</span></div>
+                <div style="display:flex; align-items:baseline; justify-content:space-between; padding:14px 0 0;"><span style="font-size:13px; font-weight:700; letter-spacing:0.02em;">TOTAL</span><span style="font-family:'DM Mono',monospace; font-size:20px; font-weight:500; letter-spacing:-0.01em; color:#1A1714;">{{ curSym }} {{ total }}</span></div>
+                <div style="text-align:right; font-size:10.5px; color:#9a948a; margin-top:3px;">{{ currencyName }}</div>
+              </div>
+            </div>
+
+            <!-- terms + bank -->
+            <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:28px; margin-top:30px; padding-top:22px; border-top:1px solid rgba(26,23,20,.12);">
+              <div>
+                <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.12em; color:#A87C4F; margin-bottom:9px;">TERMS</div>
+                <div style="font-size:11.5px; line-height:1.85; color:#3C372F;">
+                  <div><span style="color:#9a948a;">Payment</span> — {{ paymentLabelEn }}</div>
+                  <div><span style="color:#9a948a;">Delivery</span> — {{ incotermFull }} ({{ incotermCode }})</div>
+                  <div><span style="color:#9a948a;">Lead time</span> — 25–30 days after order confirmation</div>
+                  <div><span style="color:#9a948a;">Validity</span> — {{ validity }} days from issue date</div>
+                </div>
+              </div>
+              <div>
+                <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.12em; color:#A87C4F; margin-bottom:9px;">BANK DETAILS</div>
+                <div style="font-size:11.5px; line-height:1.85; color:#3C372F;">
+                  <div>Türkiye İş Bankası — İzmir Ticari Şb.</div>
+                  <div><span style="color:#9a948a;">IBAN</span> <span style="font-family:'DM Mono',monospace;">{{ iban }}</span></div>
+                  <div><span style="color:#9a948a;">SWIFT</span> <span style="font-family:'DM Mono',monospace;">ISBKTRISXXX</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- notes + signature -->
+            <sc-if value="{{ hasNotes }}" hint-placeholder-val="{{ true }}">
+              <div style="margin-top:24px; background:#FBF9F5; border-radius:9px; padding:13px 15px;">
+                <div style="font-family:'DM Mono',monospace; font-size:9.5px; letter-spacing:0.1em; color:#9a948a; margin-bottom:5px;">NOTES</div>
+                <div style="font-size:11.5px; line-height:1.6; color:#3C372F; white-space:pre-wrap;">{{ notes }}</div>
+              </div>
+            </sc-if>
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:38px;">
+              <div style="font-size:10.5px; color:#9a948a; line-height:1.6; max-width:320px;">This is a proforma invoice for customs and payment reference only. It is not a demand for payment. Prices in {{ currencyName }}.</div>
+              <div style="text-align:center;">
+                <div style="width:180px; border-bottom:1px solid #1A1714; padding-bottom:34px;"></div>
+                <div style="font-size:11.5px; font-weight:700; margin-top:8px;">Claviscor Export</div>
+                <div style="font-size:10.5px; color:#9a948a;">Authorized Signature</div>
+              </div>
+            </div>
+
+          </div>
+          </div>
+          </div>
+          <div style="height:20px;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div style="position:fixed; bottom:26px; left:50%; transform:translateX(-50%); background:#18120D; color:#F4EEE2; padding:15px 26px; border-radius:14px; box-shadow:0 20px 50px -20px rgba(0,0,0,.5); display:{{ toastDisplay }}; align-items:center; gap:13px; z-index:100;">
+    <div style="width:22px; height:22px; border-radius:50%; background:#2E7D5B; display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px;">✓</div>
+    <span style="font-size:14px; font-weight:500;">{{ toastText }}</span>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860}}">
+class Component extends DCLogic {
+  state = {
+    buyerId: 'c1',
+    proformaNo: 'PI-2026-0042',
+    pfDate: '09.07.2026',
+    validity: '30',
+    currency: 'EUR',
+    items: [
+      { id:'i1', pid:'BRL-100', qty:'2000', price:'8.50' },
+      { id:'i2', pid:'PAD-200', qty:'1000', price:'6.20' },
+      { id:'i3', pid:'HNG-300', qty:'3000', price:'3.80' },
+    ],
+    discountPct: '0',
+    freight: '1200',
+    incoterm: 'FOB',
+    portLoad: 'İzmir, Türkiye',
+    portDisch: 'Rotterdam, Hollanda',
+    payment: 'tt3070',
+    notes: 'Fiyatlar palet başına min. sipariş adedine göredir. Özel RAL kaplama talep üzerine.',
+    buyerOpen: false, prodOpen: false, toast: '',
+    panelW: 700, sheetH: 920,
+  };
+
+  catalog() {
+    return [
+      { pid:'BRL-100', code:'BRL-100', name:'Anti-Snap Silindir Barel', nameEn:'Anti-Snap Cylinder', hs:'8301.40', price:'8.50' },
+      { pid:'BRL-140', code:'BRL-140', name:'Master Key Silindir', nameEn:'Master-Key Cylinder', hs:'8301.40', price:'12.00' },
+      { pid:'PAD-200', code:'PAD-200', name:'Pirinç Asma Kilit 50mm', nameEn:'Brass Padlock 50mm', hs:'8301.10', price:'6.20' },
+      { pid:'PAD-260', code:'PAD-260', name:'Lamine Asma Kilit 60mm', nameEn:'Laminated Padlock 60mm', hs:'8301.10', price:'5.40' },
+      { pid:'HNG-300', code:'HNG-300', name:'Rulmanlı Menteşe', nameEn:'Ball-Bearing Hinge', hs:'8302.10', price:'3.80' },
+      { pid:'HDL-400', code:'HDL-400', name:'Rozetli Kapı Kolu', nameEn:'Rose Door Handle', hs:'8302.41', price:'9.90' },
+      { pid:'HTL-500', code:'HTL-500', name:'RFID Otel Kilidi', nameEn:'RFID Hotel Lock', hs:'8301.40', price:'48.00' },
+      { pid:'ACC-600', code:'ACC-600', name:'Montaj Kiti', nameEn:'Mounting Kit', hs:'8302.42', price:'2.10' },
+    ];
+  }
+
+  buyers() {
+    return [
+      { id:'c1', company:'Van der Berg Deuren B.V.', attn:'Attn: Dhr. Jansen', city:'Amsterdam, Hollanda', address:'Havenstraat 24, 1013 AA Amsterdam', country:'Hollanda', initials:'VB' },
+      { id:'c3', company:'Stahlmann GmbH', attn:'Attn: Herr Müller', city:'Düsseldorf, Almanya', address:'Industriestraße 8, 40210 Düsseldorf', country:'Almanya', initials:'SG' },
+      { id:'c4', company:'Portes Dubois SARL', attn:'Attn: M. Dubois', city:'Lyon, Fransa', address:"15 Rue de l'Industrie, 69007 Lyon", country:'Fransa', initials:'PD' },
+      { id:'c5', company:'BritLock Ltd', attn:'Attn: Mr. Smith', city:'Birmingham, UK', address:'42 Commerce Road, Birmingham B12 0AA', country:'Birleşik Krallık', initials:'BL' },
+      { id:'c6', company:'Al Rawi Trading LLC', attn:'Attn: Al Rawi', city:'Dubai, BAE', address:'Sheikh Zayed Road, PO Box 5521, Dubai', country:'BAE', initials:'AR' },
+      { id:'c7', company:'Cerrajería Gómez', attn:'Attn: Sr. Gómez', city:'Ciudad de México, Meksika', address:'Av. Insurgentes 1201, CDMX', country:'Meksika', initials:'CG' },
+    ];
+  }
+
+  incotermMeta() {
+    return {
+      EXW:{ full:'Ex Works' }, FOB:{ full:'Free On Board' }, CFR:{ full:'Cost and Freight' },
+      CIF:{ full:'Cost, Insurance and Freight' }, DAP:{ full:'Delivered at Place' }, DDP:{ full:'Delivered Duty Paid' },
+    };
+  }
+
+  paymentMeta() {
+    return {
+      tt100:  { tr:'%100 Peşin (T/T)', en:'100% Advance Payment (T/T)' },
+      tt3070: { tr:'%30 Avans + %70 Sevkiyat Öncesi (T/T)', en:'30% Advance, 70% Before Shipment (T/T)' },
+      lc:     { tr:'Akreditif — L/C Görüldüğünde', en:'Irrevocable L/C at Sight' },
+      lc60:   { tr:'Vadeli Akreditif — L/C 60 Gün', en:'Deferred L/C — 60 Days' },
+    };
+  }
+
+  curMeta() {
+    return { EUR:{ sym:'€', name:'EUR — Euro', iban:'TR68 0006 4000 0023 4120 5839 10' },
+             USD:{ sym:'$', name:'USD — US Dollar', iban:'TR41 0006 4000 0021 4120 5840 22' },
+             GBP:{ sym:'£', name:'GBP — Pound Sterling', iban:'TR15 0006 4000 0024 4120 5841 33' } };
+  }
+
+  _fmt(n) { return (Number(n) || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  _qfmt(n) { return (Number(n) || 0).toLocaleString('en-US'); }
+
+  _setItem(id, field, val) {
+    this.setState(s => ({ items: s.items.map(it => it.id === id ? Object.assign({}, it, { [field]: val }) : it) }));
+  }
+  _removeItem(id) { this.setState(s => ({ items: s.items.filter(it => it.id !== id) })); }
+  _addItem(pid) {
+    const p = this.catalog().find(c => c.pid === pid);
+    this.setState(s => ({ items: [...s.items, { id:'i' + Date.now(), pid, qty:'1000', price:p.price }], prodOpen:false }));
+  }
+
+  _flashToast(msg) {
+    this.setState({ toast: msg });
+    if (this._t) clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ toast: '' }), 2800);
+  }
+  _measure = () => {
+    if (!this._panel || !this._panel.isConnected) this._panel = document.querySelector('[data-pf="panel"]');
+    if (!this._sheet || !this._sheet.isConnected) this._sheet = document.querySelector('[data-pf="sheet"]');
+    const w = this._panel ? this._panel.clientWidth : 0;
+    const h = this._sheet ? this._sheet.offsetHeight : 0;
+    const patch = {};
+    if (w && Math.abs(w - this.state.panelW) > 0.5) patch.panelW = w;
+    if (h && Math.abs(h - this.state.sheetH) > 0.5) patch.sheetH = h;
+    if (Object.keys(patch).length) this.setState(patch);
+  };
+  componentDidMount() {
+    this._ro = new ResizeObserver(() => this._measure());
+    this._panel = document.querySelector('[data-pf="panel"]');
+    this._sheet = document.querySelector('[data-pf="sheet"]');
+    if (this._panel) this._ro.observe(this._panel);
+    if (this._sheet) this._ro.observe(this._sheet);
+    window.addEventListener('resize', this._measure);
+    this._measure();
+  }
+  componentWillUnmount() {
+    if (this._t) clearTimeout(this._t);
+    if (this._ro) this._ro.disconnect();
+    window.removeEventListener('resize', this._measure);
+  }
+
+  renderVals() {
+    const s = this.state;
+    const cat = this.catalog();
+    const byPid = (pid) => cat.find(c => c.pid === pid) || {};
+    const cm = this.curMeta()[s.currency];
+    const sym = cm.sym;
+    const im = this.incotermMeta();
+    const pm = this.paymentMeta();
+    const buyer = this.buyers().find(b => b.id === s.buyerId) || this.buyers()[0];
+
+    // document scales to fit the preview panel (fixed 680px design width)
+    const designW = 680;
+    const availW = Math.max(140, s.panelW || 700);
+    const scale = Math.min(1, availW / designW);
+
+    // totals
+    const lineAmt = (it) => (parseFloat(it.qty) || 0) * (parseFloat(it.price) || 0);
+    const subtotalNum = s.items.reduce((a, it) => a + lineAmt(it), 0);
+    const discNum = subtotalNum * (parseFloat(s.discountPct) || 0) / 100;
+    const freightNum = parseFloat(s.freight) || 0;
+    const totalNum = subtotalNum - discNum + freightNum;
+
+    const navPosta = [
+      { k:'◧', label:'Panel', badge:'', hasBadge:false },
+      { k:'✉', label:'Gelen Kutusu', badge:'3', hasBadge:true },
+      { k:'≣', label:'Şablonlar', badge:'6', hasBadge:true },
+      { k:'↗', label:'Gönderilenler', badge:'128', hasBadge:true },
+      { k:'☰', label:'Kişiler', badge:'', hasBadge:false },
+      { k:'⚙', label:'Ayarlar', badge:'', hasBadge:false },
+    ].map(n => ({ k:n.k, label:n.label, bg:'transparent', fg:'#C9C0B2', fw:500, mc:'#6f6452', badge:n.badge, badgeVis:n.hasBadge?'visible':'hidden' }));
+
+    const navBelge = [
+      { k:'⎘', label:'Proforma', active:true },
+      { k:'▤', label:'Sipariş Formları', active:false },
+    ].map(n => ({ k:n.k, label:n.label,
+      bg:n.active?'rgba(194,160,106,.16)':'transparent', fg:n.active?'#F4EEE2':'#C9C0B2', fw:n.active?700:500, mc:n.active?'#C2A06A':'#6f6452' }));
+
+    return {
+      navPosta, navBelge,
+      scale: scale, scaledW: Math.round(designW * scale), scaledH: Math.round((s.sheetH || 920) * scale),
+
+      // currency
+      currencies: ['EUR','USD','GBP'].map(c => ({ label:c, on:()=>this.setState({ currency:c }),
+        bg: c===s.currency?'#FFFFFF':'transparent', fg: c===s.currency?'#1A1714':'#8a857c', sh: c===s.currency?'0 1px 3px rgba(0,0,0,.12)':'none' })),
+      onSave: ()=>this._flashToast('Taslak kaydedildi · ' + s.proformaNo),
+      onPdf: ()=>this._flashToast('PDF hazırlandı · ' + s.proformaNo + '.pdf'),
+      onEmail: ()=>this._flashToast(buyer.company + ' için e-posta oluşturucuya eklendi (Sipariş Onayı şablonu · ek: ' + s.proformaNo + '.pdf)'),
+
+      // buyer
+      buyerInitials: buyer.initials, buyerCompany: buyer.company, buyerCity: buyer.city,
+      buyerAttn: buyer.attn, buyerAddress: buyer.address, buyerCountry: buyer.country,
+      buyerOpen: s.buyerOpen, toggleBuyer: ()=>this.setState(st=>({ buyerOpen:!st.buyerOpen })),
+      buyerToggleLabel: s.buyerOpen ? 'Kapat' : 'Değiştir',
+      buyerList: this.buyers().map(b => { const sel=b.id===s.buyerId; return {
+        company:b.company, city:b.city, on:()=>this.setState({ buyerId:b.id, buyerOpen:false }),
+        bg: sel?'#F7F4ED':'transparent', dotBd: sel?'#1A1714':'rgba(26,23,20,.3)', dotBg: sel?'#1A1714':'transparent' }; }),
+
+      // meta
+      proformaNo: s.proformaNo, onNo:(e)=>this.setState({ proformaNo:e.target.value }),
+      pfDate: s.pfDate, onDate:(e)=>this.setState({ pfDate:e.target.value }),
+      validity: s.validity, onValidity:(e)=>this.setState({ validity:e.target.value }),
+
+      // items (editor)
+      curSym: sym,
+      itemCountLabel: s.items.length + ' kalem',
+      items: s.items.map(it => { const p=byPid(it.pid); return {
+        code:p.code, name:p.name, qty:it.qty, price:it.price, amount:this._fmt(lineAmt(it)),
+        onQty:(e)=>this._setItem(it.id,'qty',e.target.value), onPrice:(e)=>this._setItem(it.id,'price',e.target.value),
+        remove:()=>this._removeItem(it.id) }; }),
+      prodOpen: s.prodOpen, toggleProd: ()=>this.setState(st=>({ prodOpen:!st.prodOpen })),
+      prodBtnBg: s.prodOpen ? 'rgba(168,124,79,.08)' : 'transparent',
+      productRows: cat.map(p => ({ code:p.code, name:p.name, hs:p.hs, price:this._fmt(p.price), on:()=>this._addItem(p.pid) })),
+
+      // discount / freight
+      discountPct: s.discountPct, onDisc:(e)=>this.setState({ discountPct:e.target.value }),
+      freight: s.freight, onFreight:(e)=>this.setState({ freight:e.target.value }),
+
+      // incoterm / ports / payment
+      incotermCode: s.incoterm, incotermFull: im[s.incoterm].full,
+      incoterms: Object.keys(im).map(code => { const sel=code===s.incoterm; return {
+        code, on:()=>this.setState({ incoterm:code }),
+        bg: sel?'#1A1714':'#FFFFFF', fg: sel?'#FBF9F5':'#3C372F', bd: sel?'#1A1714':'rgba(26,23,20,.14)' }; }),
+      portLoad: s.portLoad, onPortLoad:(e)=>this.setState({ portLoad:e.target.value }),
+      portDisch: s.portDisch, onPortDisch:(e)=>this.setState({ portDisch:e.target.value }),
+      payments: Object.keys(pm).map(key => { const sel=key===s.payment; return {
+        label:pm[key].tr, on:()=>this.setState({ payment:key }),
+        bg: sel?'#FFFFFF':'transparent', bd: sel?'rgba(168,124,79,.5)':'rgba(26,23,20,.12)',
+        dotBd: sel?'#A87C4F':'rgba(26,23,20,.3)', dotBg: sel?'#A87C4F':'transparent', fw: sel?700:500 }; }),
+      paymentLabelEn: pm[s.payment].en,
+
+      // notes
+      notes: s.notes, onNotes:(e)=>this.setState({ notes:e.target.value }),
+      hasNotes: s.notes.trim().length > 0,
+
+      // document
+      docItems: s.items.map((it, i) => { const p=byPid(it.pid); return {
+        no:String(i+1), name:p.nameEn, code:p.code, hs:p.hs,
+        qty:this._qfmt(it.qty), unitPrice:sym+' '+this._fmt(it.price), amount:sym+' '+this._fmt(lineAmt(it)) }; }),
+      subtotal: this._fmt(subtotalNum),
+      hasDiscount: discNum > 0.005, discountAmt: this._fmt(discNum),
+      freightFmt: this._fmt(freightNum),
+      total: this._fmt(totalNum),
+      currencyName: cm.name, iban: cm.iban,
+
+      toastText: s.toast, toastDisplay: s.toast ? 'flex' : 'none',
+    };
+  }
+}
+</script>
+</body>
+</html>
