@@ -21,10 +21,15 @@ export function localePath(locale: Locale, path: string): string {
   return clean === "/" ? `/${locale}` : `/${locale}${clean}`;
 }
 
-/** Bir yoldaki dil önekini (varsa) söker; öntanımlı dilde zaten prefix yoktur. */
+/**
+ * Bir yoldaki dil önekini söker — ÖNTANIMLI dil dahil.
+ * Öntanımlı dilin dış URL'i prefix'sizdir, ama proxy öneksiz istekleri dahili olarak
+ * `/tr/...`e yazdığından, tr rotasının prerender'ında usePathname() `/tr` döndürür.
+ * Bu öneki de soymazsak dil değiştirici `/en/tr` gibi bozuk link üretir (404 + hydration
+ * uyuşmazlığı). Soyunca fonksiyon hem `/tr/katalog` hem temiz `/katalog` için aynı sonucu verir.
+ */
 export function stripLocale(pathname: string): string {
   for (const l of locales) {
-    if (l === defaultLocale) continue;
     if (pathname === `/${l}`) return "/";
     if (pathname.startsWith(`/${l}/`)) return pathname.slice(l.length + 1);
   }

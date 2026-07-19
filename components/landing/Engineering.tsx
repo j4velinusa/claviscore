@@ -9,7 +9,7 @@ export function Engineering({ dict }: { dict: Dictionary }) {
       <Reveal>
         <div className="bg-paper rounded-[28px] grid lg:grid-cols-[0.92fr_1.08fr] overflow-hidden">
           <div className="relative min-h-[300px] lg:min-h-[460px] m-6 [background:linear-gradient(160deg,#E9E2D5,#DCD3C2)] rounded-[18px] flex items-center justify-center">
-            <div className="font-mono text-[11px] text-[#8A7F6B] tracking-[0.08em]">{t.imageCaption}</div>
+            <div className="font-mono text-[11px] text-[#5F5647] tracking-[0.08em]">{t.imageCaption}</div>
             <div className="absolute top-6 left-6 font-mono text-[11px] text-bronze-2 leading-[1.9]">
               {t.specLines.map((line) => (
                 <div key={line}>{line}</div>

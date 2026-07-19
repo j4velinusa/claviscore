@@ -49,7 +49,7 @@ export function Hero({ dict, locale }: { dict: Dictionary; locale: Locale }) {
                 <div className="anim-breathe size-[60px] rounded-full bg-bronze/25 border border-bronze/55" />
               </div>
             </div>
-            <div className="absolute bottom-7 left-8 font-mono text-[11px] text-[#8A7F6B] tracking-[0.06em]">
+            <div className="absolute bottom-7 left-8 font-mono text-[11px] text-[#5F5647] tracking-[0.06em]">
               {t.imageCaption}
             </div>
             <div className="absolute top-8 right-8 font-mono text-[11px] text-bronze-2 text-right leading-[1.9]">
