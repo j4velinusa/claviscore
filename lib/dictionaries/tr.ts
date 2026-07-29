@@ -99,6 +99,27 @@ export const tr = {
     corporateLinks: ["Hakkımızda", "Üretim", "Sertifikalar", "İhracat", "İletişim"],
     rights: "CE · TSE · ISO 9001",
   },
+  exportPage: {
+    kicker: "İhracat",
+    title: { pre: "Tezgâhtan", em: "limana", post: "kadar tek elden." },
+    subtitle:
+      "Gümrük dokümantasyonu, etiketleme ve paletleme dahil anahtar teslim ihracat operasyonu. Teslim şeklini ve ödeme koşulunu birlikte belirliyoruz.",
+    regionsTitle: "Sevk ettiğimiz bölgeler",
+    packagingTitle: "Paketleme zinciri",
+    packaging: [
+      { title: "Birim kutu", desc: "Ürün, anahtar ve montaj vidası bir arada; kutu üzerinde barkod ve SKU etiketi." },
+      { title: "Koli", desc: "Nem bariyerli oluklu mukavva; koli içi adet ve brüt ağırlık dış yüzeyde yazılı." },
+      { title: "Palet", desc: "ISPM 15 damgalı ahşap palet, streç ve köşebent; 1200 × 800 mm standart ölçü." },
+      { title: "Konteyner", desc: "Ağırlık dağılımı dengelenir, yük kayışla sabitlenir; mühür numarası dosyaya işlenir." },
+    ],
+    incotermsTitle: "Çalıştığımız teslim şekilleri",
+    incotermsNote: "Incoterms® 2020. Hangisinin size uygun olduğundan emin değilseniz Bilgi Merkezi'ndeki karşılaştırmaya bakabilirsiniz.",
+    paymentTitle: "Ödeme koşulları",
+    ctaTitle: { pre: "Teslim şeklinizi", em: "birlikte", post: "belirleyelim." },
+    ctaBody: "SKU listenizi ve varış limanınızı paylaşın; proformayı teslim şekli ve ödeme koşuluyla birlikte çıkaralım.",
+    ctaQuote: "Teklif iste",
+    ctaDistributor: "Distribütör başvurusu",
+  },
   certificatesPage: {
     kicker: "Sertifika & standart",
     title: { pre: "Belge,", em: "iddianın", post: "kanıtıdır." },
@@ -277,6 +298,11 @@ export const tr = {
       title: "Bilgi Merkezi — CLAVISCOR",
       description:
         "Kapı donanımı ve tavan sistemlerinde teknik notlar, standart okumaları ve ihracat pratiği. Satın alma ve proje ekipleri için Claviscor Bilgi Merkezi.",
+    },
+    ihracat: {
+      title: "İhracat — CLAVISCOR",
+      description:
+        "Gümrük dokümantasyonu, etiketleme ve paletleme dahil anahtar teslim ihracat. Incoterms 2020 teslim şekilleri ve ödeme koşullarıyla Claviscor ihracat operasyonu.",
     },
     sertifikalar: {
       title: "Sertifikalar — CLAVISCOR",

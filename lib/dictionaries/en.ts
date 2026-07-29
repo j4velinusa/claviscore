@@ -99,6 +99,27 @@ export const en: Dictionary = {
     corporateLinks: ["About", "Manufacturing", "Certificates", "Export", "Contact"],
     rights: "CE · TSE · ISO 9001",
   },
+  exportPage: {
+    kicker: "Export",
+    title: { pre: "From the lathe to the", em: "port", post: "— one operation." },
+    subtitle:
+      "A turnkey export operation including customs documentation, labeling and palletizing. We set the delivery term and payment condition together.",
+    regionsTitle: "Regions we ship to",
+    packagingTitle: "Packaging chain",
+    packaging: [
+      { title: "Unit box", desc: "Product, keys and mounting screws together; barcode and SKU label on the box." },
+      { title: "Carton", desc: "Moisture-barrier corrugated board; unit count and gross weight printed on the outside." },
+      { title: "Pallet", desc: "ISPM 15 stamped wooden pallet, stretch wrap and edge guards; 1200 × 800 mm standard." },
+      { title: "Container", desc: "Weight distribution balanced, load strapped; seal number recorded in the file." },
+    ],
+    incotermsTitle: "Delivery terms we work with",
+    incotermsNote: "Incoterms® 2020. If you are unsure which one suits you, see the comparison in the Knowledge Center.",
+    paymentTitle: "Payment terms",
+    ctaTitle: { pre: "Let's set your delivery term", em: "together.", post: "" },
+    ctaBody: "Share your SKU list and port of discharge; we will issue the proforma with the delivery term and payment condition.",
+    ctaQuote: "Request a quote",
+    ctaDistributor: "Become a distributor",
+  },
   certificatesPage: {
     kicker: "Certification & standards",
     title: { pre: "A certificate is the", em: "proof", post: "behind the claim." },
@@ -275,6 +296,11 @@ export const en: Dictionary = {
       title: "Knowledge Center — CLAVISCOR",
       description:
         "Technical notes, standards explained and export practice in door hardware and ceiling systems. The Claviscor Knowledge Center for purchasing and project teams.",
+    },
+    ihracat: {
+      title: "Export — CLAVISCOR",
+      description:
+        "Turnkey export including customs documentation, labeling and palletizing. The Claviscor export operation with Incoterms 2020 delivery terms and payment conditions.",
     },
     sertifikalar: {
       title: "Certificates — CLAVISCOR",

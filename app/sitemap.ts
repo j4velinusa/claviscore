@@ -9,7 +9,7 @@ const absEn = (path: string) => new URL(localePath("en", path), base).toString()
 
 // Yalnızca indekslenebilir sayfalar. Koleksiyon hâlâ coming-soon stub'ı (noindex),
 // bu yüzden içerik yayınlanana dek sitemap'e dahil edilmez.
-const staticPaths = ["/", "/katalog", "/blog", "/sertifikalar", "/iletisim"];
+const staticPaths = ["/", "/katalog", "/blog", "/sertifikalar", "/ihracat", "/iletisim"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Yazılar iki dilde ayrı dosyalar; yalnız her iki dilde de yayında olanlar
