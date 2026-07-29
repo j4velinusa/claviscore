@@ -9,6 +9,7 @@ import { SiteNav } from "@/components/site/SiteNav";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { Reveal } from "@/components/motion/Reveal";
 import { Emphasis } from "@/components/site/Emphasis";
+import { GrowthSketch } from "@/components/site/Illustrations";
 
 export async function generateMetadata({
   params,
@@ -71,9 +72,13 @@ export default async function HakkimizdaPage({ params }: { params: Promise<{ loc
         <section className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-16">
           <Reveal>
             <div className="grid lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)] gap-10 lg:gap-14 items-start">
-              <h2 className="text-[clamp(28px,4.4vw,42px)] leading-[1.1] tracking-[-0.035em] font-bold text-pretty">
-                <Emphasis parts={t.storyTitle} />
-              </h2>
+              <div>
+                <h2 className="text-[clamp(28px,4.4vw,42px)] leading-[1.1] tracking-[-0.035em] font-bold text-pretty">
+                  <Emphasis parts={t.storyTitle} />
+                </h2>
+                {/* Atölye → tesis → fabrika: tasarımdaki büyüme çizimi. */}
+                <GrowthSketch className="mt-8 max-w-[340px]" />
+              </div>
               <div className="flex flex-col gap-5">
                 {t.story.map((p, i) => (
                   <p key={i} className="text-[clamp(16px,2.1vw,18px)] leading-[1.75] text-ink-2 text-pretty">

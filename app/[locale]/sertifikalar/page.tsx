@@ -9,6 +9,7 @@ import { SiteNav } from "@/components/site/SiteNav";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { Reveal } from "@/components/motion/Reveal";
 import { Emphasis } from "@/components/site/Emphasis";
+import { CertificateSketch } from "@/components/site/Illustrations";
 
 export async function generateMetadata({
   params,
@@ -110,13 +111,16 @@ export default async function SertifikalarPage({ params }: { params: Promise<{ l
           </Reveal>
 
           <Reveal>
-            <div className="bg-paper rounded-[26px] px-8 py-10 sm:px-12">
+            <div className="bg-paper rounded-[26px] px-8 py-10 sm:px-12 grid lg:grid-cols-[minmax(0,1fr)_minmax(0,300px)] gap-10 items-center">
+              <div>
               <h2 className="text-[clamp(24px,3.6vw,32px)] leading-[1.15] tracking-[-0.03em] font-bold max-w-[640px] text-pretty">
                 <Emphasis parts={t.explainer.title} />
               </h2>
               <p className="text-[16px] leading-[1.7] text-muted mt-4 max-w-[680px] text-pretty">
                 {t.explainer.body}
               </p>
+              </div>
+              <CertificateSketch className="max-w-[280px] mx-auto lg:mx-0" />
             </div>
           </Reveal>
         </div>
