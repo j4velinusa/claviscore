@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FBF9F5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  a { color: #A87C4F; text-decoration: none; } a:hover { color: #8A6638; }
+  input::placeholder { color: #b1a896; }
+</style>
+</helmet>
+
+<div style="background: #FBF9F5; font-family: 'Manrope', system-ui, sans-serif; color: #1A1714; overflow-x: clip;">
+
+  <!-- ===== NAV ===== -->
+  <div style="position: sticky; top: 0; z-index: 50; background: rgba(251,249,245,.82); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(26,23,20,.07);">
+    <div style="max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px 32px;">
+      <a href="Ana Sayfa - Apple.dc.html" style="display: flex; align-items: center; gap: 9px; color: inherit;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: #A87C4F;"></div>
+        <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 28px; font-size: 14px; font-weight: 500; color: #4A453E;">
+        <a href="Katalog - Apple.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Ürünler</a><a href="Koleksiyon.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Koleksiyon</a><a href="Üretim.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Üretim</a><a href="Sertifikalar.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Sertifikalar</a><a href="İhracat.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">İhracat</a><span style="color: #1A1714; font-weight: 600; cursor: pointer;">SSS</span><a href="İletişim.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">İletişim</a>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <span style="font-size: 13px; font-weight: 500; color: #8a857c; white-space: nowrap;">TR / EN</span>
+        <span style="font-size: 14px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 9px 20px; border-radius: 980px; white-space: nowrap; cursor: pointer; transition: background .25s, transform .25s;" style-hover="background:#33291f; transform:translateY(-1px);">Teklif Al</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 78px 32px 0;">
+    <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #A87C4F;">Sıkça Sorulan Sorular</div>
+    <h1 style="font-size: 62px; line-height: 1.03; letter-spacing: -0.04em; font-weight: 700; margin: 16px 0 0; max-width: 800px;">Alıcıların en çok <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic; letter-spacing: -0.01em;">sorduğu</span> otuz şey.</h1>
+    <p style="font-size: 19px; line-height: 1.6; color: #78726B; margin: 20px 0 0; max-width: 560px; font-weight: 500;">Sipariş, üretim, ödeme, sevkiyat ve teknik konular. Cevabı burada bulamazsanız bölge masamız 4 saat içinde yanıtlıyor.</p>
+
+    <!-- search + filters -->
+    <div style="display: flex; align-items: center; gap: 12px; margin-top: 34px; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 10px; background: #FFFFFF; border: 1px solid rgba(26,23,20,.14); border-radius: 980px; padding: 12px 20px; flex: 1 1 320px; max-width: 460px;">
+        <span style="font-family: 'DM Mono', monospace; font-size: 13px; color: #b1a896;">⌕</span>
+        <input value="{{ query }}" onInput="{{ onQuery }}" placeholder="Soru ara — ör. numune, MOQ, ödeme" style="border: none; outline: none; background: transparent; font-family: 'Manrope', sans-serif; font-size: 14.5px; color: #1A1714; width: 100%;">
+      </div>
+      <span style="font-family: 'DM Mono', monospace; font-size: 12px; color: #9a948a;">{{ countLabel }}</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 8px; margin-top: 16px; flex-wrap: wrap;">
+      <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
+        <span onClick="{{ c.on }}" style="font-family: 'DM Mono', monospace; font-size: 11.5px; padding: 9px 16px; border-radius: 980px; cursor: pointer; white-space: nowrap; background: {{ c.bg }}; color: {{ c.fg }}; border: 1px solid {{ c.bd }}; transition: background .25s, color .25s;">{{ c.label }}</span>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ===== FAQ LIST ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 34px 32px 0;">
+    <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+      <sc-for list="{{ items }}" as="q" hint-placeholder-count="8">
+        <div style="background: #FFFFFF; border: 1px solid {{ q.bd }}; border-radius: 18px; overflow: hidden; transition: border-color .3s;">
+          <div onClick="{{ q.on }}" style="display: flex; align-items: flex-start; gap: 18px; padding: 20px 26px; cursor: pointer;">
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px; color: #A87C4F; flex: none; padding-top: 4px;">{{ q.tag }}</span>
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-size: 17.5px; font-weight: 600; letter-spacing: -0.015em; text-wrap: pretty;">{{ q.question }}</div>
+              <sc-if value="{{ q.open }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size: 15.5px; line-height: 1.75; color: #5C564C; margin-top: 12px; white-space: pre-line; text-wrap: pretty;">{{ q.answer }}</div>
+                <sc-if value="{{ q.hasLink }}" hint-placeholder-val="{{ false }}">
+                  <a href="{{ q.href }}" style="display: inline-block; font-size: 14px; font-weight: 600; margin-top: 12px;">{{ q.linkLabel }}&nbsp;›</a>
+                </sc-if>
+              </sc-if>
+            </div>
+            <span style="flex: none; width: 26px; height: 26px; border-radius: 50%; background: {{ q.iconBg }}; color: {{ q.iconFg }}; display: flex; align-items: center; justify-content: center; font-size: 15px; line-height: 1; transition: background .3s;">{{ q.icon }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+      <div style="padding: 56px 0; text-align: center; font-size: 15px; color: #8a857c;">Bu aramayla eşleşen soru yok — bölge masamıza yazın, 4 saat içinde yanıtlıyoruz.</div>
+    </sc-if>
+  </div>
+
+  <!-- ===== STILL ASKING ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 72px 32px 0;">
+    <div style="background: #18120D; border-radius: 28px; padding: 46px 48px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center;">
+      <div>
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #C2A06A;">CEVABI YOK MU?</div>
+        <div style="font-size: 32px; font-weight: 700; letter-spacing: -0.03em; color: #F6F0E4; margin-top: 12px; line-height: 1.12;">Sorunuzu yazın — bölge masanız yanıtlar.</div>
+        <div style="font-size: 16px; color: #B4AC9E; margin-top: 10px; line-height: 1.6; max-width: 460px;">Teknik sorular Ar-Ge ekibine, ticari sorular ihracat masasına yönlendirilir. Mesai içinde ortalama ilk dönüş 4 saat.</div>
+        <div style="display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap;">
+          <a href="İletişim.dc.html" style="font-size: 14px; font-weight: 600; color: #18120D; background: #C2A06A; padding: 13px 26px; border-radius: 980px; white-space: nowrap;">Soru gönderin&nbsp;›</a>
+          <a href="Blog.dc.html" style="font-size: 14px; font-weight: 600; color: #C2A06A; padding: 13px 6px;">Teknik yazılar</a>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <sc-for list="{{ promises }}" as="p" hint-placeholder-count="3">
+          <div style="display: flex; align-items: baseline; gap: 14px; background: rgba(244,238,226,.05); border: 1px solid rgba(244,238,226,.13); border-radius: 14px; padding: 16px 20px;">
+            <span style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #C2A06A; flex: none;">{{ p.time }}</span>
+            <div>
+              <div style="font-size: 15px; font-weight: 600; color: #F6F0E4;">{{ p.what }}</div>
+              <div style="font-size: 13px; color: #B4AC9E; margin-top: 2px; line-height: 1.5;">{{ p.desc }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div style="background: #F0ECE3; border-top: 1px solid rgba(26,23,20,.08); margin-top: 80px;">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 56px 32px 28px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #A87C4F;"></div>
+          <span style="font-size: 18px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
+        </div>
+        <p style="font-size: 14px; line-height: 1.6; color: #8a857c; max-width: 280px; margin: 16px 0 0;">Kapı güvenlik donanımı ve tavan sistemleri üreticisi. 1976'dan beri tasarlıyor, işliyor ve dünyaya ihraç ediyoruz.</p>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">Ürünler</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>Silindir Bareller</span><span>Asma Kilitler</span><span>Menteşeler</span><span>Çelik Kapı</span><span>Duvar Kaplama</span><span>Tavan Sistemleri</span></div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">Kurumsal</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><a href="Hakkımızda.dc.html" style="color: inherit;">Hakkımızda</a><a href="Üretim.dc.html" style="color: inherit;">Üretim</a><a href="Sertifikalar.dc.html" style="color: inherit;">Sertifikalar</a><a href="İhracat.dc.html" style="color: inherit;">İhracat</a><span style="color: #1A1714; font-weight: 600;">SSS</span></div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">İletişim</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>export@marka.com</span><span>+90 232 000 00 00</span><span>İAOSB, İzmir</span></div>
+      </div>
+    </div>
+    <div style="max-width: 1120px; margin: 0 auto; padding: 22px 32px; border-top: 1px solid rgba(26,23,20,.08); display: flex; justify-content: space-between; font-size: 12px; color: #9a948a;">
+      <span>© 2025 MARKA DONANIM SAN. TİC. A.Ş.</span>
+      <span>CE · TSE · ISO 9001</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1120,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { cat: 'all', query: '', open: 'q1' };
+
+  catList() {
+    return [
+      { id: 'all', label: 'Tümü' },
+      { id: 'siparis', label: 'Sipariş & MOQ' },
+      { id: 'uretim', label: 'Üretim & Süre' },
+      { id: 'odeme', label: 'Ödeme' },
+      { id: 'sevkiyat', label: 'Sevkiyat & Gümrük' },
+      { id: 'teknik', label: 'Teknik' },
+      { id: 'satis', label: 'Satış Sonrası' },
+    ];
+  }
+
+  faqs() {
+    return [
+      { id: 'q1', cat: 'siparis', q: 'Minimum sipariş miktarı (MOQ) nedir?',
+        a: 'Kilit ve donanımda MOQ kalem başına 200 adettir; karma siparişte toplam 1.000 adet yeterlidir.\nÇelik kapıda MOQ 20 kanat, duvar kaplama ve tavan sistemlerinde 300 m². İlk siparişlerde MOQ’nun yarısına kadar esneklik tanıyoruz — deneme siparişi için yazın.' },
+      { id: 'q2', cat: 'siparis', q: 'Numune gönderiyor musunuz, ücretli mi?',
+        a: 'Üç kaleme kadar standart katalog numunesi ücretsiz; kargo bedeli alıcıya ait (kendi kurye hesabınızı kullanabilirsiniz). Özel üretim veya logolu numune ücretlidir, ilk siparişte faturadan düşülür.',
+        link: { href: 'Blog Yazısı - Numune Süreci.dc.html', label: 'Numune süreci — 7 günün dökümü' } },
+      { id: 'q3', cat: 'siparis', q: 'Kendi markamızla (OEM/private label) üretim yapıyor musunuz?',
+        a: 'Evet. Lazer markalama, gömme logo ve özel ambalaj yapıyoruz. OEM için tipik ek süre 5–7 gün; kalıp gerektiren logo çalışmalarında kalıp bedeli bir kez alınır ve 5.000 adedi aşan siparişlerde iade edilir.' },
+      { id: 'q4', cat: 'siparis', q: 'Distribütörlük veriyor musunuz?',
+        a: 'Bölge bazlı münhasır distribütörlük mümkün. Beklentimiz: yıllık minimum hacim taahhüdü, stok tutma kapasitesi ve satış sonrası servis altyapısı. Görüşme için faaliyet bölgenizi ve mevcut ürün gruplarınızı paylaşın.',
+        link: { href: 'İletişim.dc.html', label: 'Distribütörlük başvurusu' } },
+      { id: 'q27', cat: 'siparis', q: 'Siparişi nasıl veriyoruz, hangi bilgiler gerekiyor?',
+        a: 'Ürün kodu (ya da kullanım yeri), adet, kaplama tercihi, hedef ülke ve teslim şeklinizi yazmanız yeterli. Aynı gün proforma çıkarıyoruz; proformayı kaşe-imzayla dönmeniz sipariş teyidi sayılıyor ve üretim slotu o an rezerve ediliyor.',
+        link: { href: 'İletişim.dc.html', label: 'Teklif isteyin' } },
+      { id: 'q28', cat: 'siparis', q: 'Karma sipariş verebilir miyiz — farklı hatlardan tek konteyner?',
+        a: 'Evet, en sık yapılan sipariş biçimi bu. Kilit donanımı, çelik kapı ve tavan sistemini tek konteynerde birleştiriyoruz; ağırlık ve hacim dengesini biz planlıyoruz. Tek fark: teslim süresi hatların en uzun olanına göre belirlenir.' },
+      { id: 'q5', cat: 'uretim', q: 'Sipariş sonrası teslim süresi ne kadar?',
+        a: 'Kilit ve donanım: üretim 15 gün, toplam kapıdan kapıya yaklaşık 34 gün (Avrupa, deniz).\nÇelik kapı: 40 gün. Duvar kaplama: 42 gün (proje bazlı).\nStokta olan kalemlerde 5–7 günde yükleme yapılabilir.',
+        link: { href: 'İhracat.dc.html', label: 'İhracat süreci ve teslim şeridi' } },
+      { id: 'q6', cat: 'uretim', q: 'Üretim kapasiteniz ne?',
+        a: 'Aylık 180.000 adet kilit/donanım, 4.200 çelik kapı, 14.000 m² duvar kaplama ve 22.000 m² tavan sistemi. Üç vardiya çalışıyoruz; hat doluluk oranımız %92 olduğu için büyük siparişlerde slot rezervasyonu öneriyoruz.',
+        link: { href: 'Üretim.dc.html', label: 'Üretim hatları ve makine parkı' } },
+      { id: 'q7', cat: 'uretim', q: 'Fabrikayı ziyaret edebilir miyiz?',
+        a: 'Evet — 30 dakikalık altı duraklı fabrika turumuz var. İzmir Adnan Menderes’ten 25 dakika; havalimanı transferi ve tercüman (EN/AR/DE) tarafımızdan. Gelemiyorsanız 45 dakikalık canlı video turu düzenliyoruz.',
+        link: { href: 'İhracat.dc.html#tur', label: 'Fabrika turu' } },
+      { id: 'q8', cat: 'uretim', q: 'Kalite kontrol nasıl işliyor?',
+        a: 'Üç kapı: girişte hammadde (IQC), hat üzerinde süreç (IPQC) ve sevkiyat öncesi çıkış (OQC). Kritik ölçüler her vardiyada örneklenir; OQC raporu sevkiyat dosyasına eklenir. Kendi laboratuvarımızda tuz püskürtme, tork ve çevrim testleri yapılır.',
+        link: { href: 'Sertifikalar.dc.html', label: 'Sertifikalar ve test altyapısı' } },
+      { id: 'q9', cat: 'odeme', q: 'Hangi ödeme şekillerini kabul ediyorsunuz?',
+        a: 'İlk siparişte %30 avans + %70 yükleme öncesi (TT) ya da görülür akreditif (LC at sight). Düzenli çalışılan alıcılarda 30–60 gün vadeli açık hesap veya CAD mümkün. Akreditifte masraflar alıcıya ait olacak şekilde açılmasını rica ediyoruz.' },
+      { id: 'q10', cat: 'odeme', q: 'Hangi para biriminde çalışıyorsunuz?',
+        a: 'EUR ve USD. Fiyat geçerlilik süresi teklifte yazılıdır (tipik 30 gün); hammadde (pirinç, alüminyum) borsa hareketi %5’i aşarsa yeniden fiyatlandırma hakkımızı saklı tutuyoruz.' },
+      { id: 'q11', cat: 'odeme', q: 'Fiyatlar hangi teslim şekline göre?',
+        a: 'Standart teklifimiz FOB İzmir. Talep hâlinde CIF, CFR, DAP ve EXW veriyoruz. Kara yolu sevkiyatlarında DAP daha yaygın; navlun ve sigorta kalemleri proformada ayrı satır olarak görünür.',
+        link: { href: 'Blog.dc.html', label: 'FOB, CIF, EXW karşılaştırması' } },
+      { id: 'q29', cat: 'odeme', q: 'Fiyat teklifi ne kadar sürede geliyor?',
+        a: 'Ürün listesi netse 24 saat içinde kalem bazlı HS kodlu proforma gönderiyoruz. Proje bazlı işlerde (çelik kapı ölçü listesi, cephe panel kesim planı) teknik hesap gerektiği için 2–3 iş günü sürüyor.' },
+      { id: 'q30', cat: 'odeme', q: 'Numune ve kalıp bedelleri iade ediliyor mu?',
+        a: 'Özel üretim numune bedeli ilk seri siparişin faturasından düşülüyor. Logo veya özel form kalıbı bir kez faturalanıyor; 5.000 adedi aşan kümülatif siparişte kalıp bedeli iade ediliyor. Standart katalog numuneleri zaten ücretsiz.' },
+      { id: 'q12', cat: 'sevkiyat', q: 'Bir konteynere ne kadar ürün sığar?',
+        a: '40′ HC konteynere yaklaşık 90–110 çelik kapı (dikey, sırt sırta) ya da 1.800 m² duvar kaplama paneli yükleniyor. Kilit ve donanım yoğun olduğu için genelde ağırlık sınırı hacimden önce doluyor; karma yüklemede dengeleme planı çıkarıyoruz.' },
+      { id: 'q13', cat: 'sevkiyat', q: 'Hangi belgeler sevkiyatla birlikte geliyor?',
+        a: 'Ticari fatura (kalem bazlı HS kodlu), çeki listesi, konşimento/CMR/AWB, CE performans beyanı (DoP), A.TR veya EUR.1, menşe şahadetnamesi ve OQC kalite raporu. Talep hâlinde SGS/BV yükleme öncesi denetim raporu ekleniyor.',
+        link: { href: 'Blog Yazısı - HS Kodları.dc.html', label: 'HS kodu ve gümrük dosyası' } },
+      { id: 'q14', cat: 'sevkiyat', q: 'Ambalaj standardınız nedir?',
+        a: 'Birim kutu (barkod + SKU) → nem bariyerli koli → ISPM 15 damgalı ahşap palet → konteyner. Çelik kapılarda soyulabilir yüzey filmi ve EPS köşebent, ahşap kafes sandık; kaplama panellerinde köpük ara katman ve tam boy uzun palet kullanılıyor.' },
+      { id: 'q15', cat: 'sevkiyat', q: 'Hava yoluyla gönderim yapıyor musunuz?',
+        a: 'Evet — numune, yedek parça ve acil proje kalemleri için. Transit 2–5 gün. Kilit gövdeleri yoğun olduğundan havada avantajlı; tavan panelleri hacim nedeniyle genelde denizde kalıyor.' },
+      { id: 'q16', cat: 'teknik', q: '"Anti-snap" tam olarak ne anlama geliyor?',
+        a: 'Silindirin kontrollü bir kesitten kopmasını sağlayan tasarım. Amaç kırılmayı önlemek değil, nerede kırılacağını seçmek: ön parça koptuğunda kilitleme mekanizması korunur ve kapı anahtarla çalışmaya devam eder. Bizim serimiz ≥ 25 Nm kopma torku ve EN 1303 saldırı sınıfı 2 ile beyan edilir.',
+        link: { href: 'Blog Yazısı.dc.html', label: 'Anti-snap barel gerçekte neyi durdurur?' } },
+      { id: 'q17', cat: 'teknik', q: 'Master key sistemi kurabiliyor musunuz?',
+        a: 'Evet — dört seviyeye kadar hiyerarşi (grand master → master → kat → oda). Kodlama montaj hattında uygulanır ve proje bazlı anahtar planı dosyalanır. Otel projelerinde RFID sistemiyle mekanik yedek anahtar birlikte planlanıyor.' },
+      { id: 'q18', cat: 'teknik', q: 'Kaplama ne kadar dayanıklı, kıyı iklimine uygun mu?',
+        a: 'Kaplama kalınlığı 8–12 µm (XRF ile 5 noktadan ölçülür) ve 240 saat tuz püskürtme testinden geçer; çelik kapı kasalarında bu süre 480 saattir. Kıyı ve yüksek nem bölgeleri için paslanmaz veya kalın kaplamalı alternatif öneriyoruz.' },
+      { id: 'q19', cat: 'teknik', q: 'Yangın sertifikalı kapı ve tavan verebiliyor musunuz?',
+        a: 'Çelik kapıda EI₂ 30 ve EI₂ 60 sınıfı sertifikalı setler (EN 1634-1) mevcut — kasa, kanat ve donanım birlikte test edilmiştir; set dışında donanım değişikliği sertifikayı geçersiz kılar. Tavan panellerinde A2-s1,d0 ve B-s1,d0 sınıfları var.',
+        link: { href: 'Sertifikalar.dc.html', label: 'Sertifika listesi' } },
+      { id: 'q20', cat: 'teknik', q: 'Akustik değerleri nasıl seçmeliyiz?',
+        a: 'İki ayrı değer var: NRC odanın içindeki yankıyı (emilim), CAC odalar arası ses geçişini (mahremiyet) anlatır ve birbirine ters çalışır. Açık ofiste NRC ≥ 0,85, toplantı odasında CAC ≥ 35 hedeflenir.',
+        link: { href: 'Blog Yazısı - Akustik Tavan.dc.html', label: 'NRC ve CAC rehberi' } },
+      { id: 'q21', cat: 'teknik', q: 'LED ömrü beyanlarınız hangi koşula göre?',
+        a: 'L70 değerlerimiz Ta (ortam sıcaklığı) belirtilerek verilir: 25 °C’de 50.000 saat, 45 °C’de 21.000 saat. Tavan boşluğu sıcaklığını 40–45 °C kabul edip profil kesiti ve ayrık sürücü öneriyoruz.',
+        link: { href: 'Blog Yazısı - Lineer LED.dc.html', label: 'Isı yönetimi ve L70' } },
+      { id: 'q22', cat: 'teknik', q: 'Özel ölçü ve özel renk yapıyor musunuz?',
+        a: 'Çelik kapıda ölçü tamamen projeye göre üretilir. Kaplama ve tavan panellerinde RAL bazlı özel renk mümkün (minimum miktar geçerli). Kilit ve donanımda kartela dışı renk için 3.000 adet üzeri sipariş gerekir.' },
+      { id: 'q23', cat: 'satis', q: 'Garanti süresi ne kadar?',
+        a: 'Kilit ve donanımda 2 yıl, çelik kapıda 3 yıl (mekanizma), elektronik otel kilitlerinde 2 yıl. Garanti üretim hatalarını kapsar; hatalı montaj, darbe ve aşındırıcı kimyasal kaynaklı hasarlar kapsam dışıdır.' },
+      { id: 'q24', cat: 'satis', q: 'Yedek parça temini nasıl işliyor?',
+        a: 'Aktif ürünlerde yedek parça (pim seti, yay, kam, kart okuyucu modülü) sürekli stokta. Üretimden çıkan modellerde 7 yıl boyunca yedek parça garantisi veriyoruz. Küçük parçalar hava kargoyla 2–5 günde gönderiliyor.' },
+      { id: 'q25', cat: 'satis', q: 'Montaj desteği veriyor musunuz?',
+        a: 'Her sevkiyatta hedef pazarın dilinde montaj kılavuzu ve video bağlantısı gönderiyoruz. Büyük projelerde ilk montaj için teknik ekibimiz sahada eğitim veriyor; uzaktan canlı destek de mümkün.' },
+      { id: 'q26', cat: 'satis', q: 'Hasarlı ürün gelirse ne oluyor?',
+        a: 'Fotoğraflı bildirim ve çeki listesi referansıyla 7 gün içinde bize ulaşın. Üretim veya ambalaj kaynaklı hasarda eksik kalem bir sonraki sevkiyatla ücretsiz tamamlanır; taşıma kaynaklı hasarda sigorta dosyası için gereken belgeleri biz hazırlıyoruz.' },
+    ];
+  }
+
+  renderVals() {
+    const s = this.state;
+    const all = this.faqs();
+    const cats = this.catList();
+    const q = s.query.trim().toLowerCase();
+
+    const list = all.filter(f => {
+      const okC = s.cat === 'all' || f.cat === s.cat;
+      const okQ = !q || f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q);
+      return okC && okQ;
+    });
+
+    const labelOf = id => (cats.find(c => c.id === id) || {}).label || '';
+
+    return {
+      cats: cats.map(c => {
+        const on = c.id === s.cat;
+        const n = c.id === 'all' ? all.length : all.filter(f => f.cat === c.id).length;
+        return { label: c.label + ' · ' + n, on: () => this.setState({ cat: c.id }),
+          bg: on ? '#1A1714' : '#FFFFFF', fg: on ? '#FBF9F5' : '#4A453E', bd: on ? '#1A1714' : 'rgba(26,23,20,.14)' };
+      }),
+      query: s.query,
+      onQuery: (e) => this.setState({ query: e.target.value }),
+      countLabel: list.length + ' SORU',
+      empty: list.length === 0,
+
+      items: list.map(f => {
+        const open = f.id === s.open;
+        return {
+          question: f.q, answer: f.a, open: open,
+          tag: labelOf(f.cat).toLocaleUpperCase('tr-TR').split(' ')[0],
+          on: () => this.setState({ open: open ? '' : f.id }),
+          icon: open ? '−' : '+',
+          iconBg: open ? '#1A1714' : 'rgba(26,23,20,.06)',
+          iconFg: open ? '#FBF9F5' : '#5b5650',
+          bd: open ? 'rgba(168,124,79,.5)' : 'rgba(26,23,20,.08)',
+          hasLink: !!f.link,
+          href: f.link ? f.link.href : '#',
+          linkLabel: f.link ? f.link.label : '',
+        };
+      }),
+
+      promises: [
+        { time: '4 sa', what: 'İlk yanıt', desc: 'Mesai içinde bölge masasından dönüş.' },
+        { time: '24 sa', what: 'Teknik cevap', desc: 'Ar-Ge ekibinden ölçülü, belgeli yanıt.' },
+        { time: '24 sa', what: 'Proforma', desc: 'Ürün listesi netse HS kodlu teklif.' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

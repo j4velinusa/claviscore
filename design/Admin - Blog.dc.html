@@ -163,6 +163,16 @@
         <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.1em; color:#b1a896; margin-top:22px;">ÖZET</div>
         <textarea value="{{ fExcerpt }}" onInput="{{ onExcerpt }}" placeholder="Liste ve arama sonuçlarında görünen kısa açıklama" style="width:100%; margin-top:8px; min-height:88px; resize:vertical; border:1px solid rgba(26,23,20,.14); border-radius:12px; background:#FFFFFF; outline:none; font-family:'Manrope',sans-serif; font-size:13.5px; line-height:1.6; color:#2A2620; padding:12px 14px;"></textarea>
 
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:22px;">
+          <span style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.1em; color:#b1a896;">GÖVDE METNİ · {{ bodyChars }}</span>
+          <div style="display:flex; gap:6px;">
+            <span onClick="{{ copyBody }}" style="font-family:'DM Mono',monospace; font-size:10.5px; color:#8A6638; background:#F4EEE2; padding:5px 10px; border-radius:980px; cursor:pointer;" style-hover="background:#EADFC9;">⧉ GÖVDE</span>
+            <span onClick="{{ copyTitle }}" style="font-family:'DM Mono',monospace; font-size:10.5px; color:#8A6638; background:#F4EEE2; padding:5px 10px; border-radius:980px; cursor:pointer;" style-hover="background:#EADFC9;">⧉ BAŞLIK</span>
+            <span onClick="{{ copyAll }}" style="font-family:'DM Mono',monospace; font-size:10.5px; color:#FBF9F5; background:#1A1714; padding:5px 10px; border-radius:980px; cursor:pointer;" style-hover="background:#33291f;">⧉ TÜMÜ</span>
+          </div>
+        </div>
+        <textarea value="{{ fBody }}" onInput="{{ onBody }}" placeholder="Yazının tam metni — başlıklar, listeler ve alıntılar düz metin olarak" spellcheck="false" style="width:100%; margin-top:8px; min-height:300px; resize:vertical; border:1px solid rgba(26,23,20,.14); border-radius:12px; background:#FFFFFF; outline:none; font-family:'DM Mono',monospace; font-size:12.5px; line-height:1.75; color:#2A2620; padding:14px 16px; white-space:pre-wrap;"></textarea>
+
         <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.1em; color:#b1a896; margin-top:22px;">KAPAK GÖRSELİ</div>
         <div style="margin-top:9px; height:112px; border-radius:14px; border:1px dashed rgba(168,124,79,.5); background:linear-gradient(160deg,#F1ECE2,#E6DFD1); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; cursor:pointer;">
           <span style="font-size:13px; font-weight:600; color:#8A6638;">Görsel yükle</span>
@@ -192,7 +202,7 @@
 class Component extends DCLogic {
   state = {
     filter: 'all', query: '', selected: null, drawerOpen: false, isNew: false,
-    fTitle: '', fExcerpt: '', fCat: 'teknik', fStatus: 'draft', fLangs: ['tr'],
+    fTitle: '', fExcerpt: '', fBody: '', fCat: 'teknik', fStatus: 'draft', fLangs: ['tr'],
     toast: '', posts: null,
   };
 
@@ -205,8 +215,25 @@ class Component extends DCLogic {
     if (sc && a) sc.scrollTop = Math.max(0, a.offsetTop - 48);
   }
 
+  bodies() {
+    return {
+      'hs-kodu-rehberi': `HS kodu: gümrükteki gerçek ürün adınız\n\nGümrük sizin ürün adınızı okumaz; tarife pozisyonunu okur. Aynı kutuda giden bir asma kilit ile bir silindir barel farklı alt pozisyonlara girer ve farklı vergi oranlarıyla karşılaşır. Bu yüzden HS kodu bir formalite değil, teklifin fiyat bileşenidir.\n\n1. KODUN ANATOMİSİ: 6 + 4\n\nİlk altı hane dünya genelinde aynıdır (Harmonize Sistem). Sonraki haneler ülkelerin kendi açılımıdır: Türkiye'de GTİP 12 haneye, AB'de TARIC 10 haneye çıkar. Fatura ve beyannamede ilk altı hane uyuşuyorsa çoğu sorun çözülür; alıcının ülkesindeki son haneleri ise alıcı belirler.\n\nPratikte en sık yapılan hata, tüm sevkiyatı tek koda toplamaktır. Karma bir konteynerde her kalem kendi pozisyonuyla, kendi ağırlığı ve değeriyle beyan edilmelidir.\n\n2. ÜRÜN AİLELERİNE GÖRE POZİSYONLAR\n\n- Asma kilitler — 8301.10 — Pirinç ve lamine gövde, anahtarlı/şifreli\n- Silindir bareller & kapı kilitleri — 8301.40 — Diğer kilitler (mobilya ve taşıt kilitleri hariç)\n- Anahtarlar & kilit parçaları — 8301.60 / 8301.70 — Kütükler, kam, pim setleri ayrı beyan edilir\n- Menteşeler — 8302.10 — Rulmanlı, gizli ve ayarlanabilir tipler dâhil\n- Kapı kolları & rozetler — 8302.41 — Binalara mahsus diğer donanım\n- Tavan taşıyıcı profil (alüminyum) — 7610.90 — T-profil, askı ve baffle taşıyıcıları\n- Alçı tavan plakası — 6809.11 — Kâğıt/karton kaplı alçı esaslı plakalar\n- Lineer LED armatür — 9405.11 / 9405.40 — LED ışık kaynaklı armatürler; sürücü ayrı olabilir\n\nReferans amaçlıdır; nihai beyan gümrük müşaviriyle teyit edilmelidir.\n\n3. YANLIŞ KODUN BEDELİ\n\nYanlış beyan üç şekilde geri döner: ceza ve fark vergi (alıcıya kesilir, ilişkiyi yakar), bekleme süresi (konteyner limanda, demuraj işler) ve tercihli rejim kaybı — A.TR veya EUR.1 belgeniz doğru pozisyona dayanmıyorsa muafiyet uygulanmaz.\n\n"Doğru kod, teklifin gizli bir kalemidir: alıcının toplam maliyetini siz belirlersiniz."\n\n4. TEKLİF ÖNCESİ KONTROL LİSTESİ\n\n1) Her kalem kendi pozisyonuyla mı beyan edildi — karma sevkiyat tek koda toplanmadı mı?\n2) İlk altı hane alıcının beyanıyla birebir aynı mı? Son haneleri alıcı teyit etti mi?\n3) Tercihli rejim (A.TR / EUR.1) doğru pozisyona ve menşe kuralına dayanıyor mu?\n4) Kalem bazlı net ve brüt ağırlık ile birim değer proformada yazılı mı?\n5) Sürücü, montaj kiti ve yedek parça gibi yardımcı kalemler ayrı satır mı?\n\nBizden gelen her proforma faturada kalem başına HS kodu, net/brüt ağırlık ve menşe bilgisi yazılıdır. Alıcının müşaviri dosyayı açtığında ek soru sormasına gerek kalmaz — sevkiyat bu yüzden hızlanır.`,
+
+      'numune-sureci': `Numune süreci: yedi günde kapınızda\n\nKatalog fotoğrafı bir barelin tornalama kalitesini göstermez. Kaplama tonu, anahtar hissi, menteşe rulmanının sesi — hepsi elde anlaşılır. Numune, satın alma kararının en ucuz aşamasıdır. Bir konteyner sipariş etmeden önce elde tutulan üç barel, aylar sonra çıkacak bir uyuşmazlığı baştan önler.\n\n1. NE ÜCRETSİZ, NE DEĞİL\n\n- Standart katalog numunesi (3 kaleme kadar) — Ücretsiz — Barel, menteşe, kol veya asma kilit\n- Kaplama kartelası & teknik föy — Ücretsiz — Her numune kutusunda yer alır\n- Kargo bedeli — Alıcıya ait — Kendi kurye hesabınızı da kullanabilirsiniz\n- Özel üretim / logolu numune — Ücretli — Kalıp ve işçilik bedeli; ilk siparişte iade edilir\n- Tavan paneli & profil kesiti — Ücretsiz — 30×30 cm kesit örneği olarak gönderilir\n\nİlk siparişte numune bedeli faturadan düşülür.\n\n2. YEDİ GÜNÜN DÖKÜMÜ\n\nGÜN 0 — Talep ve teyit: Formu ya da e-postayı alırız; SKU, kaplama ve adet teyidi aynı gün içinde döner.\nGÜN 1 — Stok ve hazırlık: Kalemler depodan toplanır; stokta olmayan kaplama varsa alternatif önerilir.\nGÜN 2 — Kontrol ve paketleme: Her kalem tek tek kontrol edilir, içerik listesi ve HS kodlarıyla paketlenir.\nGÜN 2–3 — Kurye teslimi: Takip numarası e-posta ile paylaşılır; gümrük evrakı kutuya eklenir.\nGÜN 5–7 — Kapınızda: Avrupa için tipik süre 3–5 gün, Orta Doğu ve Kuzey Afrika için 5–7 gün.\n\n3. KARGO VE GÜMRÜK TARAFI\n\nNumuneler kurye ile gönderilir ve ticari değeri düşük beyan edilmez — gerçek değer üzerinden, "sample, not for resale" ibaresiyle beyan edilir. Bu, alıcının gümrüğünde en hızlı yoldur; yanlış beyan ise numunenin haftalarca beklemesine yol açar.\n\nKutuya her zaman kalem bazlı içerik listesi, HS kodları ve teknik föy koyarız. Alıcı numuneyi açtığında hangi SKU'yu tuttuğunu ve hangi kaplama kodunun karşılığı olduğunu tereddütsüz görür.\n\n4. TALEP EDERKEN BUNLARI YAZIN\n\n1) İlgilendiğiniz SKU kodları (ör. BRL-100, HNG-300) — bilmiyorsanız kullanım yerini yazın.\n2) Kaplama tercihi: mat nikel, parlak pirinç, siyah — ya da kartela isteyin.\n3) Proje tipi ve tahmini yıllık adet — doğru seriyi önerebilmemiz için.\n4) Teslim adresi, vergi numarası ve kurye hesabınız (varsa).\n5) Test edilecek özellik: anti-snap, tuz püskürtme, yangın sınıfı — ilgili raporu ekleriz.`,
+
+      'akustik-tavan-nrc-cac': `Akustik tavan: emmek mi, engellemek mi?\n\nProje toplantılarında en sık duyduğumuz cümle: "akustik panel istiyoruz". Ama akustik tek bir özellik değil; iki ayrı işten oluşur. Ses odanın içinde mi fazla (yankı, gürültü birikmesi), yoksa odalar arasında mı sızıyor (mahremiyet)? Doğru panel bu ayrımdan sonra seçilir.\n\n1. NRC: ODANIN İÇİNDEKİ SES\n\nNRC (Noise Reduction Coefficient), panelin üzerine gelen sesin ne kadarını emdiğini 0–1 aralığında anlatır. NRC 0,70 demek, gelen ses enerjisinin kabaca %70'inin panel tarafından yutulduğu anlamına gelir. Yüksek NRC yankıyı düşürür, konuşmayı anlaşılır kılar, açık ofiste gürültü birikmesini keser.\n\nEmici paneller gözenekli ya da delikli olur — sesin içine girip enerjisini kaybetmesi gerekir. Bu yüzden yüksek NRC'li bir panel, tanımı gereği sese geçirgendir.\n\n2. CAC: ODALAR ARASINDAKİ SES\n\nCAC (Ceiling Attenuation Class), sesin tavan boşluğu üzerinden komşu odaya geçişine ne kadar direnç gösterildiğini dB cinsinden ifade eder. Bölme duvarı tavana kadar çıkmıyorsa ses, asma tavanın üstünden dolanarak yan odaya ulaşır. Toplantı odası, doktor muayenesi, İK görüşmesi — mahremiyet gerektiren her yerde CAC belirleyicidir.\n\nSorun şu ki iki özellik birbirine ters çalışır: emici panel geçirgen, engelleyici panel yansıtıcıdır. Çözüm ya yüksek performanslı çift işlevli paneldir, ya da bölme duvarını döşemeye kadar yükseltip tavandan yalnızca emilim beklemektir.\n\n"Emici panel sese geçirgendir; engelleyici panel yankı yapar. Mekân hangisine ihtiyaç duyuyor?"\n\n3. MEKÂNA GÖRE HEDEF DEĞERLER\n\n- Açık plan ofis — NRC ≥ 0,85 — CAC 25–30 — Yüksek emilim; mahremiyet bölme ve maskeleme ile\n- Toplantı / görüşme odası — NRC 0,70 — CAC ≥ 35 — Çift işlevli panel veya döşemeye kadar bölme\n- Otel koridoru — NRC 0,60–0,70 — CAC ≥ 35 — Oda geçişini kesmek için CAC öncelikli\n- Hastane / muayene — NRC ≥ 0,75 — CAC ≥ 35 — Silinebilir yüzey + mahremiyet şartı birlikte\n- Okul sınıfı — NRC ≥ 0,80 — CAC 25–30 — Konuşma anlaşılırlığı esas; darbeye dayanım\n- Lobi / atriyum — NRC 0,50–0,65 — Baffle ile seçmeli emilim, mimari etki öncelikli\n\nASTM C423 (NRC) / ASTM E1414 (CAC) · proje akustik raporu esas alınmalıdır.\n\n4. ŞARTNAMEYE YAZILMASI GEREKENLER\n\n1) Her mekân için NRC ve CAC hedefi ayrı ayrı yazılmalı — tek bir "akustik panel" ifadesi yeterli değil.\n2) Bölme duvarının tavan boşluğuna kadar mı, döşemeye kadar mı çıktığı belirtilmeli.\n3) Test standardı referansı verilmeli (ASTM C423 / E1414 ya da EN ISO 354 / 11654).\n4) Yangın sınıfı ve nem dayanımı, akustik değerlerle aynı panelde sağlanabiliyor mu?\n5) Armatür, difüzör ve sprinkler delikleri panelin akustik değerini düşürüyor mu — hesaba katıldı mı?\n\nAkustik, tavan seçilirken değil plan çizilirken başlar.`,
+
+      'anti-snap-barel': `Anti-snap barel gerçekte neyi durdurur?\n\nKırma saldırısı, adından beklenenden çok daha basittir: silindirin dışarıda kalan bölümü kavranır, tork uygulanır ve gövde en ince kesitinden — genelde vida deliği hizasından — koparılır. Kopan parça mekanizmayı açığa çıkarırsa kilit saniyeler içinde devre dışı kalır.\n\n1. ZAYIF KESİT NERESİDİR?\n\nStandart bir Avrupa profili silindirde gövde, bağlantı vidasının geçtiği noktada daralır. Bu daralma üretim gereğidir; kaldırılamaz. Anti-snap tasarımın mantığı da bu yüzden "kırılmayı önlemek" değil, kırılmanın nerede olacağını seçmektir.\n\n"Amaç kırılmayı önlemek değil, kırılmanın nerede olacağını tasarımla belirlemektir."\n\n2. KONTROLLÜ KOPMA KANALI\n\nGövdenin ön bölümüne açılan kanal, kopmayı kilitleme mekanizmasının önüne taşır. Saldırgan silindiri kırdığında elinde yalnızca ön parça kalır; pim yuvaları ve kam bağlantısı kapının içinde, korunmuş bölgede durur.\n\nKarşılaştırma (standart barel → anti-snap):\n- Kopma noktası: vida deliği hizası → ön kanal (kontrollü)\n- Kopma sonrası mekanizma: açığa çıkar → korunur, çalışır\n- Delme direnci: yok → sertleştirilmiş pim\n- Tork dayanımı: ~12 Nm → ≥ 25 Nm\n- EN 1303 saldırı sınıfı: 0 → 2\n\n3. SERTLEŞTİRİLMİŞ PİM VE DELME DİRENCİ\n\nKırma tek saldırı yöntemi değildir. Silindiri delmek, kam bağlantısını doğrudan hedefler. Gövdeye yerleştirilen sertleştirilmiş çelik pimler matkap ucunu saptırır. Pim sayısı değil, konumu belirleyicidir — kam hizasını ve pim yuvası hattını örtmelidir.\n\nÇekme (pulling) saldırısında ise rozetin ve bağlantı vidasının kalitesi silindir kadar kritiktir; zayıf bir rozet, en iyi bareli bile devre dışı bırakır.\n\n4. KATALOGDA NEYE BAKMALI?\n\n1) Kopma torkunun Nm cinsinden beyan edilmesi — "anti-snap" ibaresi tek başına ölçü değildir.\n2) Kopma sonrası kilidin çalışmaya devam ettiğini gösteren test raporu.\n3) Sertleştirilmiş pimlerin konumu: kam hizası ve pim yuvası hattını örtüyor mu?\n4) Rozet ve bağlantı vidası sınıfı — zayıf rozet en iyi bareli devre dışı bırakır.\n\nSONUÇ\n\nAnti-snap bir pazarlama etiketi değil, ölçülebilir bir tasarım kararıdır. Doğru soru "anti-snap mi?" değil, "hangi kesitten, kaç Nm torkta kopuyor ve kopma sonrası mekanizma korunuyor mu?" olmalıdır.`,
+
+      'lineer-led-isi-yonetimi': `Lineer LED'de ısıyı yönetmek, ömrü yönetmektir\n\nLED bir ışık kaynağı olarak yanmaz; yavaşça söner. Işık akısı zamanla azalır ve bu azalmanın hızını belirleyen tek en güçlü değişken sıcaklıktır. Bu yüzden lineer bir aydınlatma hattı satın alırken sorulacak soru "kaç saat ömürlü?" değil, "hangi sıcaklıkta kaç saat?" olmalıdır.\n\n1. L70 GERÇEKTE NE SÖYLER?\n\nL70, ışık akısının başlangıç değerinin %70'ine düştüğü süredir. Ürün hâlâ çalışır durumdadır; ama ilk günkü aydınlığın üçte birini kaybetmiştir. Kritik ayrıntı, beyan edilen L70 değerinin hangi Ta (ortam sıcaklığı) koşulunda ölçüldüğüdür.\n\n"Ta değeri yazılmamış bir ömür beyanı, ölçüsüz bir vaattir."\n\n2. PROFİL BİR SOĞUTUCUDUR\n\nAlüminyum profilin işlevi şeridi taşımak değil, ürettiği ısıyı yüzeyine dağıtıp havaya vermektir. Pratik kural: watt/metre değeri arttıkça profil kesiti de artmalıdır. 20 W/m üzerindeki hatlarda gömme montajda ek soğutma payı bırakmak gerekir.\n\nTa değerine göre (24 V, 14 W/m şerit referanslı):\n- 25 °C → L70 50.000 saat → 5 yılda %6 kayıp → sıva üstü/askılı montaj sorunsuz\n- 35 °C → L70 34.000 saat → %11 kayıp → gömme, üstü açık kalmalı\n- 45 °C → L70 21.000 saat → %19 kayıp → kalın kesit + ayrık sürücü şart\n\n3. TAVAN BOŞLUĞU LABORATUVAR DEĞİLDİR\n\nAsma tavanın üstü binanın en sıcak hacimlerinden biridir: havalandırma kanalları, sıcak su boruları ve yalıtım aynı boşlukta yer alır. Yaz aylarında 40–45 °C ölçmek istisna değildir. Basit bir önlem, sürücüyü ışık hattından ayırmak ve revizyon kapağı hizasına almaktır.\n\n4. UZUN HATLARDA GERİLİM DÜŞÜMÜ\n\n24 V bir sistemde tek noktadan beslenen uzun hatların sonunda ışık gözle görülür biçimde zayıflar. Çözüm üç yönlüdür: besleme noktasını hattın ortasına almak, iletken kesitini büyütmek veya 48 V sistemi tercih etmek. Renk tutarlılığı için birleştirilen profillerin aynı binning (SDCM ≤ 3) grubundan gelmesi istenmelidir.\n\nSATIN ALIRKEN SORULACAKLAR\n\n1) L70 değeri hangi Ta sıcaklığında beyan edilmiş? LM-80 / TM-21 raporu var mı?\n2) Profil kesiti seçilen watt/metre değerine uygun mu — gömme montajda soğutma payı bırakılmış mı?\n3) Sürücü ışık hattından ayrı ve revizyon kapağından erişilebilir mi?\n4) Uzun hatlarda besleme noktası ortada mı, kesit hesabı yapılmış mı? 48 V seçeneği var mı?\n5) Birleşen profiller aynı binning grubundan mı (SDCM ≤ 3)?`,
+    };
+  }
+
   seed() {
     return [
+      { id:10, title:'HS kodu: gümrükteki gerçek ürün adınız', slug:'hs-kodu-rehberi', cat:'ihracat', status:'live', author:'E. Kaya', date:'29 Tem 2026', views:120, langs:['tr','en'] },
+      { id:11, title:'Numune süreci: 7 günde kapınızda', slug:'numune-sureci', cat:'ihracat', status:'live', author:'E. Kaya', date:'29 Tem 2026', views:96, langs:['tr','en','de'] },
+      { id:12, title:'Akustik tavan: emmek mi, engellemek mi?', slug:'akustik-tavan-nrc-cac', cat:'tavan', status:'live', author:'S. Demir', date:'29 Tem 2026', views:74, langs:['tr','en'] },
       { id:1, title:'Anti-snap barel gerçekte neyi durdurur?', slug:'anti-snap-barel', cat:'teknik', status:'live', author:'M. Karaca', date:'14 Tem 2026', views:4820, langs:['tr','en','de'] },
       { id:2, title:'EN 1303 sınıf kodunu okumak', slug:'en-1303-sinif-kodu', cat:'standart', status:'live', author:'M. Karaca', date:'9 Tem 2026', views:3110, langs:['tr','en'] },
       { id:3, title:'FOB, CIF, EXW: hangisi sizin için doğru?', slug:'incoterms-secimi', cat:'ihracat', status:'live', author:'E. Kaya', date:'2 Tem 2026', views:5640, langs:['tr','en','nl'] },
@@ -251,12 +278,28 @@ class Component extends DCLogic {
 
   _open(p) {
     this.setState({ selected: p.id, drawerOpen: true, isNew: false, toast: '',
-      fTitle: p.title, fExcerpt: p.excerpt || '', fCat: p.cat, fStatus: p.status, fLangs: p.langs.slice() });
+      fTitle: p.title, fExcerpt: p.excerpt || '', fBody: p.body || this.bodies()[p.slug] || '', fCat: p.cat, fStatus: p.status, fLangs: p.langs.slice() });
   }
 
   _openNew() {
     this.setState({ selected: null, drawerOpen: true, isNew: true, toast: '',
-      fTitle: '', fExcerpt: '', fCat: 'teknik', fStatus: 'draft', fLangs: ['tr'] });
+      fTitle: '', fExcerpt: '', fBody: '', fCat: 'teknik', fStatus: 'draft', fLangs: ['tr'] });
+  }
+
+  _copy(text, label) {
+    if (!text) { this._flash('Kopyalanacak metin yok'); return; }
+    const done = () => this._flash(label + ' kopyalandı');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, () => this._fallbackCopy(text, done));
+    } else this._fallbackCopy(text, done);
+  }
+
+  _fallbackCopy(text, done) {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) { this._flash('Kopyalanamadı'); }
+    document.body.removeChild(ta);
   }
 
   _save() {
@@ -265,7 +308,7 @@ class Component extends DCLogic {
     if (s.isNew) {
       const title = s.fTitle.trim() || 'Adsız yazı';
       list.unshift({ id: Date.now(), title, slug: this._slugify(title), cat: s.fCat, status: s.fStatus,
-        author:'E. Kaya', date: s.fStatus === 'live' ? '29 Tem 2026' : '—', views: 0, langs: s.fLangs.slice(), excerpt: s.fExcerpt });
+        author:'E. Kaya', date: s.fStatus === 'live' ? '29 Tem 2026' : '—', views: 0, langs: s.fLangs.slice(), excerpt: s.fExcerpt, body: s.fBody });
       this.setState({ posts: list, isNew: false, selected: list[0].id });
       this._flash('Yazı oluşturuldu');
     } else {
@@ -273,7 +316,7 @@ class Component extends DCLogic {
       if (i >= 0) {
         const title = s.fTitle.trim() || list[i].title;
         list[i] = Object.assign({}, list[i], { title, slug: this._slugify(title), cat: s.fCat,
-          status: s.fStatus, langs: s.fLangs.slice(), excerpt: s.fExcerpt,
+          status: s.fStatus, langs: s.fLangs.slice(), excerpt: s.fExcerpt, body: s.fBody,
           date: s.fStatus === 'live' && list[i].date === '—' ? '29 Tem 2026' : list[i].date });
         this.setState({ posts: list });
         this._flash('Değişiklikler kaydedildi');
@@ -367,6 +410,13 @@ class Component extends DCLogic {
       fSlug: this._slugify(s.fTitle) ,
       fExcerpt: s.fExcerpt,
       onExcerpt: (e) => this.setState({ fExcerpt: e.target.value }),
+      fBody: s.fBody,
+      onBody: (e) => this.setState({ fBody: e.target.value, dirty: true }),
+      bodyChars: s.fBody ? s.fBody.length.toLocaleString('tr-TR') + ' KARAKTER' : 'BOŞ',
+      copyBody: () => this._copy(s.fBody, 'Gövde metni'),
+      copyTitle: () => this._copy(s.fTitle, 'Başlık'),
+      copyAll: () => this._copy(
+        s.fTitle + '\n\n' + (s.fExcerpt ? s.fExcerpt + '\n\n' : '') + s.fBody, 'Tüm içerik'),
 
       catOpts: Object.keys(cats).map(id => {
         const on = id === s.fCat;

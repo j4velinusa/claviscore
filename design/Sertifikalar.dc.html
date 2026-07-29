@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FBF9F5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  a { color: #A87C4F; text-decoration: none; } a:hover { color: #8A6638; }
+</style>
+</helmet>
+
+<div style="background: #FBF9F5; font-family: 'Manrope', system-ui, sans-serif; color: #1A1714; overflow-x: clip;">
+
+  <!-- ===== NAV ===== -->
+  <div style="position: sticky; top: 0; z-index: 50; background: rgba(251,249,245,.82); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(26,23,20,.07);">
+    <div style="max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px 32px;">
+      <a href="Ana Sayfa - Apple.dc.html" style="display: flex; align-items: center; gap: 9px; color: inherit;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: #A87C4F;"></div>
+        <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 34px; font-size: 14px; font-weight: 500; color: #4A453E;">
+        <a href="Katalog - Apple.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Ürünler</a><a href="Koleksiyon.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Koleksiyon</a><a href="Hakkımızda.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Hakkımızda</a><a href="Üretim.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Üretim</a><span style="color: #1A1714; font-weight: 600; cursor: pointer;">Sertifikalar</span><a href="İhracat.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">İhracat</a><a href="SSS.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">SSS</a><a href="Blog.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Bilgi Merkezi</a><a href="İletişim.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">İletişim</a>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <span style="font-size: 13px; font-weight: 500; color: #8a857c; white-space: nowrap;">TR / EN</span>
+        <span style="font-size: 14px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 9px 20px; border-radius: 980px; white-space: nowrap; cursor: pointer; transition: background .25s, transform .25s;" style-hover="background:#33291f; transform:translateY(-1px);">Teklif Al</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 76px 32px 0;">
+    <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center;">
+      <div>
+        <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #A87C4F;">Sertifikalar & Uygunluk</div>
+        <h1 style="font-size: 64px; line-height: 1.02; letter-spacing: -0.04em; font-weight: 700; margin: 16px 0 0;">Belge, <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic; letter-spacing: -0.01em;">iddianın</span> kanıtıdır.</h1>
+        <p style="font-size: 19px; line-height: 1.6; color: #78726B; margin: 22px 0 0; max-width: 480px; font-weight: 500;">Hangi ürün ailesi hangi standarda göre test edildi, belge kim tarafından verildi, ne zamana kadar geçerli. Tümü indirilebilir — gümrük dosyanıza doğrudan eklenir.</p>
+        <div style="display: flex; align-items: center; gap: 14px; margin-top: 32px;">
+          <span onClick="{{ downloadAll }}" style="font-size: 15px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 14px 28px; border-radius: 980px; cursor: pointer; transition: background .25s, transform .25s;" style-hover="background:#33291f; transform:translateY(-2px);">Tüm belgeleri indir (ZIP)</span>
+          <span style="font-family: 'DM Mono', monospace; font-size: 12px; color: #8A6638;">{{ downloadNote }}</span>
+        </div>
+      </div>
+
+      <!-- hand-drawn certificate / seal sketch -->
+      <div style="background: linear-gradient(160deg,#F4F0E6,#EDE7DA); border-radius: 28px; padding: 34px; display: flex; align-items: center; justify-content: center;">
+        <svg viewBox="0 0 340 300" width="100%" fill="none" stroke="#1A1714" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- back sheet -->
+          <path d="M52 34 H228 C234 34, 238 38, 238 44 V236 C238 242, 234 246, 228 246 H52 C46 246, 42 242, 42 236 V44 C42 38, 46 34, 52 34 Z" opacity=".35"/>
+          <!-- front sheet -->
+          <path d="M30 20 H206 C212 20, 216 24, 216 30 V222 C216 228, 212 232, 206 232 H30 C24 232, 20 228, 20 222 V30 C20 24, 24 20, 30 20 Z"/>
+          <!-- header lines -->
+          <path d="M40 48 H120" stroke-width="3"/>
+          <path d="M40 66 H88" stroke="#A87C4F" stroke-width="2"/>
+          <!-- body lines -->
+          <path d="M40 100 H196 M40 118 H196 M40 136 H170 M40 154 H196 M40 172 H150" stroke-width="1.4" opacity=".45"/>
+          <!-- signature -->
+          <path d="M40 206 C52 196, 62 214, 76 202 C86 194, 94 208, 108 200" stroke-width="1.7" opacity=".7"/>
+          <!-- seal -->
+          <g transform="translate(196 158)" stroke="#A87C4F">
+            <circle cx="52" cy="52" r="40" stroke-width="2.2"/>
+            <circle cx="52" cy="52" r="30" stroke-width="1.4" opacity=".7"/>
+            <path d="M38 52 L48 62 L68 42" stroke-width="3"/>
+            <path d="M40 90 L34 116 L52 106 L70 116 L64 90" stroke-width="2"/>
+          </g>
+          <!-- CE-ish mark sketch -->
+          <g transform="translate(238 40)" stroke="#1A1714" stroke-width="2.2">
+            <path d="M40 14 C24 14, 14 26, 14 40 C14 54, 24 66, 40 66"/>
+            <path d="M74 14 C58 14, 48 26, 48 40 C48 54, 58 66, 74 66 M48 40 H68"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCOPE STRIP ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 56px 32px 0;">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(26,23,20,.12); border-bottom: 1px solid rgba(26,23,20,.12);">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+        <div style="padding: 24px 26px; border-right: 1px solid rgba(26,23,20,.08);">
+          <div style="font-size: 28px; font-weight: 800; letter-spacing: -0.025em;">{{ s.value }}</div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: #9a948a; margin-top: 5px; letter-spacing: 0.08em;">{{ s.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ===== FILTER + LIST ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 46px 32px 0;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+          <span onClick="{{ f.on }}" style="font-family: 'DM Mono', monospace; font-size: 12px; padding: 9px 17px; border-radius: 980px; cursor: pointer; white-space: nowrap; background: {{ f.bg }}; color: {{ f.fg }}; border: 1px solid {{ f.bd }}; transition: background .25s, color .25s;">{{ f.label }}</span>
+        </sc-for>
+      </div>
+      <span style="font-family: 'DM Mono', monospace; font-size: 12px; color: #9a948a;">{{ countLabel }}</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 28px;">
+      <sc-for list="{{ certs }}" as="c" hint-placeholder-count="8">
+        <div style="background: #FFFFFF; border: 1px solid rgba(26,23,20,.08); border-radius: 22px; padding: 26px 28px 24px; display: flex; flex-direction: column; gap: 14px; transition: transform .4s cubic-bezier(.16,.84,.44,1), box-shadow .4s;" style-hover="transform:translateY(-4px); box-shadow:0 20px 46px -30px rgba(0,0,0,.32);">
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;">
+            <div style="min-width: 0;">
+              <div style="font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #A87C4F;">{{ c.standard }}</div>
+              <div style="font-size: 21px; font-weight: 700; letter-spacing: -0.02em; margin-top: 8px; text-wrap: pretty;">{{ c.title }}</div>
+            </div>
+            <span style="flex: none; display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; padding: 5px 11px; border-radius: 980px; background: {{ c.stBg }}; color: {{ c.stFg }};"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{ c.stFg }};"></span>{{ c.status }}</span>
+          </div>
+          <div style="font-size: 14.5px; line-height: 1.6; color: #6B6459;">{{ c.desc }}</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding-top: 14px; border-top: 1px solid rgba(26,23,20,.08);">
+            <div>
+              <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: #b1a896; letter-spacing: 0.1em;">KAPSAM</div>
+              <div style="font-size: 13px; font-weight: 600; margin-top: 4px;">{{ c.scope }}</div>
+            </div>
+            <div>
+              <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: #b1a896; letter-spacing: 0.1em;">KURULUŞ</div>
+              <div style="font-size: 13px; font-weight: 600; margin-top: 4px;">{{ c.body }}</div>
+            </div>
+            <div>
+              <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: #b1a896; letter-spacing: 0.1em;">GEÇERLİLİK</div>
+              <div style="font-size: 13px; font-weight: 600; margin-top: 4px;">{{ c.valid }}</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px; margin-top: 2px;">
+            <span onClick="{{ c.download }}" style="font-size: 13.5px; font-weight: 600; color: #A87C4F; cursor: pointer;">PDF indir&nbsp;↓</span>
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px; color: #9a948a;">{{ c.file }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ===== DOSYA / DoP EXPLAINER ===== -->
+  <div style="background: #18120D; color: #F4EEE2; margin-top: 84px; padding: 76px 0 80px;">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 0 32px;">
+      <div style="display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 52px; align-items: start;">
+        <div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #C2A06A;">UYGUNLUK DOSYASI</div>
+          <h2 style="font-size: 38px; line-height: 1.1; letter-spacing: -0.03em; font-weight: 700; color: #F6F0E4; margin: 14px 0 0;">CE işareti bir logo değil, bir <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic;">dosyadır.</span></h2>
+          <p style="font-size: 16.5px; line-height: 1.7; color: #B4AC9E; margin: 18px 0 0;">Ürünün üzerindeki işaret, arkasındaki teknik dosya kadar geçerlidir. Sevkiyatla birlikte gönderdiğimiz dosya, alıcının gümrüğünde ve denetimde sorulan her belgeyi içerir.</p>
+          <a href="Blog Yazısı - HS Kodları.dc.html" style="display: inline-block; font-size: 14.5px; font-weight: 600; color: #C2A06A; margin-top: 22px;">İlgili yazı: HS kodu ve gümrük dosyası&nbsp;›</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <sc-for list="{{ dossier }}" as="d" hint-placeholder-count="6">
+            <div style="display: flex; align-items: baseline; gap: 16px; background: rgba(244,238,226,.05); border: 1px solid rgba(244,238,226,.13); border-radius: 14px; padding: 15px 20px;">
+              <span style="font-family: 'DM Mono', monospace; font-size: 11.5px; color: #C2A06A; flex: none;">{{ d.no }}</span>
+              <div style="flex: 1; min-width: 0;">
+                <div style="font-size: 16px; font-weight: 600; color: #F6F0E4;">{{ d.name }}</div>
+                <div style="font-size: 13.5px; line-height: 1.55; color: #B4AC9E; margin-top: 3px;">{{ d.desc }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TEST LAB ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 80px 32px 0;">
+    <div style="display: flex; align-items: baseline; gap: 16px; padding-bottom: 24px; border-bottom: 2px solid #1A1714;">
+      <h2 style="font-size: 34px; font-weight: 700; letter-spacing: -0.03em; margin: 0;">Test altyapısı</h2>
+      <span style="font-size: 15px; color: #78726B; margin-left: auto;">Kendi laboratuvarımız + akredite dış laboratuvar</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 32px;">
+      <sc-for list="{{ labs }}" as="l" hint-placeholder-count="6">
+        <div style="background: #F7F4ED; border-radius: 20px; padding: 24px 26px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+            <div style="font-size: 18px; font-weight: 700; letter-spacing: -0.015em;">{{ l.name }}</div>
+            <span style="font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: {{ l.whereFg }}; background: {{ l.whereBg }}; padding: 4px 9px; border-radius: 980px; flex: none;">{{ l.where }}</span>
+          </div>
+          <div style="font-size: 14px; line-height: 1.6; color: #6B6459; margin-top: 8px;">{{ l.desc }}</div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 11.5px; color: #A87C4F; margin-top: 12px; letter-spacing: 0.06em;">{{ l.spec }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ===== CTA ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 72px 32px 0;">
+    <div style="background: #F0ECE3; border-radius: 28px; padding: 44px 48px; display: flex; align-items: center; justify-content: space-between; gap: 34px; flex-wrap: wrap;">
+      <div>
+        <div style="font-size: 28px; font-weight: 700; letter-spacing: -0.03em;">Projeniz için özel belge mi gerekiyor?</div>
+        <div style="font-size: 16px; color: #6B6459; margin-top: 8px; max-width: 560px; line-height: 1.6;">Yangın sınıfı, akustik değer ya da hedef pazarın yerel onayı (SASO, GOST, SONCAP) — ihtiyacınızı yazın, mevcut kapsamı ve gerekiyorsa test takvimini paylaşırız.</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px; flex: none;">
+        <a href="İhracat.dc.html" style="font-size: 14px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 14px 28px; border-radius: 980px; text-align: center; white-space: nowrap;">İhracat süreci&nbsp;›</a>
+        <span style="font-family: 'DM Mono', monospace; font-size: 11.5px; color: #8A6638; text-align: center;">export@marka.com</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div style="background: #F0ECE3; border-top: 1px solid rgba(26,23,20,.08); margin-top: 80px;">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 56px 32px 28px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #A87C4F;"></div>
+          <span style="font-size: 18px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
+        </div>
+        <p style="font-size: 14px; line-height: 1.6; color: #8a857c; max-width: 280px; margin: 16px 0 0;">Kapı güvenlik donanımı ve tavan sistemleri üreticisi. 1976'dan beri tasarlıyor, işliyor ve dünyaya ihraç ediyoruz.</p>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">Ürünler</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>Silindir Bareller</span><span>Asma Kilitler</span><span>Menteşeler</span><span>Çelik Kapı</span><span>Duvar Kaplama</span><span>Tavan Sistemleri</span></div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">Kurumsal</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>Hakkımızda</span><span>Üretim</span><span style="color: #1A1714; font-weight: 600;">Sertifikalar</span><a href="İhracat.dc.html" style="color: inherit;">İhracat</a><span>İletişim</span></div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">İletişim</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>export@marka.com</span><span>+90 232 000 00 00</span><span>İAOSB, İzmir</span></div>
+      </div>
+    </div>
+    <div style="max-width: 1120px; margin: 0 auto; padding: 22px 32px; border-top: 1px solid rgba(26,23,20,.08); display: flex; justify-content: space-between; font-size: 12px; color: #9a948a;">
+      <span>© 2025 MARKA DONANIM SAN. TİC. A.Ş.</span>
+      <span>CE · TSE · ISO 9001</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1120,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { filter: 'all', note: '' };
+
+  componentWillUnmount() { if (this._t) clearTimeout(this._t); }
+
+  allCerts() {
+    return [
+      { group: 'sistem', standard: 'ISO 9001:2015', title: 'Kalite Yönetim Sistemi', status: 'Geçerli',
+        desc: 'Tasarım, üretim ve satış süreçlerinin tamamını kapsar. Yıllık gözetim denetimiyle sürdürülür.',
+        scope: 'Tüm tesis', body: 'TÜV', valid: '03.2028', file: 'ISO-9001.pdf' },
+      { group: 'sistem', standard: 'ISO 14001:2015', title: 'Çevre Yönetim Sistemi', status: 'Geçerli',
+        desc: 'Kaplama banyoları ve boya hattı atık yönetimi dâhil çevresel etki kontrolü.',
+        scope: 'Tüm tesis', body: 'TÜV', valid: '03.2028', file: 'ISO-14001.pdf' },
+      { group: 'kilit', standard: 'EN 1303:2015', title: 'Silindir Barel — Anahtarlı Kilit', status: 'Geçerli',
+        desc: 'Anahtar kombinasyonu, aşınma, korozyon ve saldırı direnci sınıfları; anti-snap serisi sınıf 2.',
+        scope: 'BRL-100 / 200 serisi', body: 'SGS', valid: '11.2027', file: 'EN-1303-BRL.pdf' },
+      { group: 'kilit', standard: 'EN 1935:2002', title: 'Menteşe — Tek Eksenli', status: 'Geçerli',
+        desc: '200.000 çevrim ve 80 kg kanat yükü altında dayanım; yangın kapısı uygulamasına uygunluk beyanı dâhil.',
+        scope: 'HNG-300 serisi', body: 'SGS', valid: '06.2027', file: 'EN-1935-HNG.pdf' },
+      { group: 'kapi', standard: 'EN 1627–1630', title: 'Çelik Kapı — Hırsızlığa Direnç', status: 'Geçerli',
+        desc: 'RC2 ve RC3 sınıflarında statik/dinamik yükleme ve manuel saldırı testleri.',
+        scope: 'STL-500 / 600 serisi', body: 'BV', valid: '09.2028', file: 'EN-1627-STL.pdf' },
+      { group: 'kapi', standard: 'EN 1634-1', title: 'Çelik Kapı — Yangın Dayanımı', status: 'Geçerli',
+        desc: 'EI₂ 30 ve EI₂ 60 sınıfı yangın kapısı setleri; kasa, kanat ve donanım birlikte test edilir.',
+        scope: 'STL-600 FR serisi', body: 'TÜV', valid: '01.2029', file: 'EN-1634-STL-FR.pdf' },
+      { group: 'kapi', standard: 'EN ISO 10140-2', title: 'Çelik Kapı — Ses Yalıtımı', status: 'Geçerli',
+        desc: 'Rw 32–38 dB aralığında laboratuvar ölçümü; poliüretan dolgu yoğunluğuna göre raporlanır.',
+        scope: 'STL-500 / 600 serisi', body: 'BV', valid: '04.2028', file: 'EN-10140-STL.pdf' },
+      { group: 'kaplama', standard: 'EN 13501-1', title: 'Duvar Kaplama — Yangın Sınıfı', status: 'Geçerli',
+        desc: 'A2-s1,d0 (mineral dolgulu) ve B-s1,d0 (kompozit) sınıflarında yanıcılık sınıflandırması.',
+        scope: 'CLD-800 serisi', body: 'TÜV', valid: '07.2028', file: 'EN-13501-CLD.pdf' },
+      { group: 'kaplama', standard: 'ASTM G154', title: 'Duvar Kaplama — QUV Yaşlandırma', status: 'Geçerli',
+        desc: '2.000 saat hızlandırılmış UV yaşlandırma; parlaklık kaybı ve renk sapması raporu.',
+        scope: 'PVDF kaplamalı paneller', body: 'SGS', valid: '02.2028', file: 'ASTM-G154-PVDF.pdf' },
+      { group: 'tavan', standard: 'EN ISO 354 / 11654', title: 'Tavan Paneli — Ses Yutumu', status: 'Geçerli',
+        desc: 'Çınlama odasında ses yutma katsayısı ölçümü; NRC 0,55–0,90 aralığı sınıflandırması.',
+        scope: 'CLG-710 / 720', body: 'BV', valid: '05.2028', file: 'EN-354-CLG.pdf' },
+      { group: 'sistem', standard: 'TSE — TS Belgesi', title: 'Türk Standardına Uygunluk', status: 'Geçerli',
+        desc: 'Yurt içi satış ve kamu ihalelerinde talep edilen TSE uygunluk belgesi.',
+        scope: 'Kilit & donanım', body: 'TSE', valid: '12.2027', file: 'TSE-Belgesi.pdf' },
+      { group: 'sistem', standard: 'CE / DoP', title: 'Performans Beyanı (DoP)', status: 'Ürün bazlı',
+        desc: 'Yapı Malzemeleri Yönetmeliği kapsamındaki ürünler için kalem bazlı performans beyanı.',
+        scope: 'İlgili tüm ürünler', body: 'Üretici beyanı', valid: 'Sürekli', file: 'DoP-paketi.zip' },
+    ];
+  }
+
+  groups() {
+    return [
+      { id: 'all', label: 'Tümü' },
+      { id: 'sistem', label: 'Sistem & Kurumsal' },
+      { id: 'kilit', label: 'Kilit & Donanım' },
+      { id: 'kapi', label: 'Çelik Kapı' },
+      { id: 'kaplama', label: 'Duvar Kaplama' },
+      { id: 'tavan', label: 'Tavan Sistemleri' },
+    ];
+  }
+
+  _flash(msg) {
+    this.setState({ note: msg });
+    if (this._t) clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ note: '' }), 2200);
+  }
+
+  renderVals() {
+    const s = this.state;
+    const all = this.allCerts();
+    const list = all.filter(c => s.filter === 'all' || c.group === s.filter);
+
+    return {
+      stats: [
+        { value: '12', label: 'AKTİF BELGE' },
+        { value: '4', label: 'AKREDİTE KURULUŞ' },
+        { value: '40+', label: 'ÜLKEDE KABUL' },
+        { value: '1976', label: 'ÜRETİM GEÇMİŞİ' },
+      ],
+      filters: this.groups().map(g => {
+        const on = g.id === s.filter;
+        const n = g.id === 'all' ? all.length : all.filter(c => c.group === g.id).length;
+        return { label: g.label + ' · ' + n, on: () => this.setState({ filter: g.id }),
+          bg: on ? '#1A1714' : '#FFFFFF', fg: on ? '#FBF9F5' : '#4A453E', bd: on ? '#1A1714' : 'rgba(26,23,20,.14)' };
+      }),
+      countLabel: list.length + ' BELGE',
+      certs: list.map(c => ({
+        standard: c.standard, title: c.title, desc: c.desc, scope: c.scope, body: c.body, valid: c.valid, file: c.file,
+        status: c.status,
+        stBg: c.status === 'Geçerli' ? 'rgba(46,125,91,.14)' : 'rgba(168,124,79,.16)',
+        stFg: c.status === 'Geçerli' ? '#2E7D5B' : '#8A6638',
+        download: () => this._flash(c.file + ' indiriliyor…'),
+      })),
+      downloadAll: () => this._flash('Sertifika paketi hazırlanıyor (12 belge)…'),
+      downloadNote: s.note || '12 belge · 18,4 MB',
+      dossier: [
+        { no: '01', name: 'Performans beyanı (DoP)', desc: 'Kalem bazlı, harmonize standart referanslı ve AoC sistemi belirtilmiş.' },
+        { no: '02', name: 'Test raporları', desc: 'Akredite laboratuvar raporlarının tam kopyası — özet değil.' },
+        { no: '03', name: 'Teknik föy & montaj kılavuzu', desc: 'Hedef pazarın dilinde; montaj koşulu sertifikanın geçerlilik şartıdır.' },
+        { no: '04', name: 'Etiket ve işaretleme örneği', desc: 'Ürün üzerindeki işaret, ambalaj etiketi ve parti izlenebilirlik kodu.' },
+        { no: '05', name: 'Kalite kontrol raporu (OQC)', desc: 'Sevkiyata özel; hangi partiden hangi numunenin test edildiği yazılı.' },
+        { no: '06', name: 'Menşe & tercihli rejim belgeleri', desc: 'A.TR / EUR.1 ve menşe şahadetnamesi — gerektiğinde.' },
+      ],
+      labs: [
+        { name: 'Tuz püskürtme kabini', where: 'BÜNYEMİZDE', desc: 'Kaplama ve kasa korozyon dayanımı için sürekli test.', spec: 'ISO 9227 · 240–480 h', whereFg: '#2E7D5B', whereBg: 'rgba(46,125,91,.12)' },
+        { name: 'Tork & kopma tezgâhı', where: 'BÜNYEMİZDE', desc: 'Anti-snap kopma torku ve kopma sonrası işlev kontrolü.', spec: '≥ 25 Nm', whereFg: '#2E7D5B', whereBg: 'rgba(46,125,91,.12)' },
+        { name: 'Çevrim makinesi', where: 'BÜNYEMİZDE', desc: 'Anahtar ve menteşe çevrim ömrü testleri.', spec: '100 000 / 200 000 çevrim', whereFg: '#2E7D5B', whereBg: 'rgba(46,125,91,.12)' },
+        { name: 'Yangın fırını', where: 'DIŞ LAB', desc: 'Kapı seti yangın dayanım testi; kasa-kanat-donanım birlikte.', spec: 'EN 1634-1 · EI₂ 30/60', whereFg: '#8A6638', whereBg: 'rgba(168,124,79,.14)' },
+        { name: 'Çınlama odası', where: 'DIŞ LAB', desc: 'Ses yutumu (NRC) ve kapı ses yalıtımı (Rw) ölçümleri.', spec: 'EN ISO 354 / 10140-2', whereFg: '#8A6638', whereBg: 'rgba(168,124,79,.14)' },
+        { name: 'QUV kabini', where: 'DIŞ LAB', desc: 'PVDF kaplamalı panellerde hızlandırılmış UV yaşlandırma.', spec: 'ASTM G154 · 2 000 h', whereFg: '#8A6638', whereBg: 'rgba(168,124,79,.14)' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

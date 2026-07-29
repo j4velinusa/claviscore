@@ -11,134 +11,389 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
-<style>* { box-sizing: border-box; } body { margin: 0; background: #FBF9F5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }</style>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FBF9F5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  a { color: #A87C4F; text-decoration: none; } a:hover { color: #8A6638; }
+</style>
 </helmet>
 
-<div style="background:#FBF9F5; font-family:'Manrope', system-ui, sans-serif; color:#1A1714; min-height:100vh;">
+<div style="background: #FBF9F5; font-family: 'Manrope', system-ui, sans-serif; color: #1A1714; overflow-x: clip;">
 
-  <!-- NAV -->
-  <div style="position:sticky; top:0; z-index:50; background:rgba(251,249,245,.82); backdrop-filter:blur(18px); border-bottom:1px solid rgba(26,23,20,.07);">
-    <div style="max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:16px 32px;">
-      <a href="Ana Sayfa — Apple.dc.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:9px;"><div style="width:8px;height:8px;border-radius:50%;background:#A87C4F;"></div><span style="font-size:19px;font-weight:700;letter-spacing:-0.02em;">MARKA</span></a>
-      <div style="display:flex; align-items:center; gap:34px; font-size:14px; font-weight:500; color:#4A453E;"><a href="Ürünler.dc.html" style="text-decoration:none;color:inherit;">Ürünler</a><span style="color:#1A1714;font-weight:700;">Koleksiyon</span><span>Sertifikalar</span><span>İhracat</span><span>İletişim</span></div>
-      <div style="display:flex; align-items:center; gap:16px;"><span style="font-size:13px;font-weight:500;color:#8a857c;white-space:nowrap;">TR / EN</span><span style="font-size:14px;font-weight:600;color:#FBF9F5;background:#1A1714;padding:9px 20px;border-radius:980px;white-space:nowrap;">Teklif Al</span></div>
+  <!-- ===== NAV ===== -->
+  <div style="position: sticky; top: 0; z-index: 50; background: rgba(251,249,245,.82); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(26,23,20,.07);">
+    <div style="max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px 32px;">
+      <a href="Ana Sayfa - Apple.dc.html" style="display: flex; align-items: center; gap: 9px; color: inherit;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: #A87C4F;"></div>
+        <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 30px; font-size: 14px; font-weight: 500; color: #4A453E;">
+        <a href="Katalog - Apple.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Ürünler</a><span style="color: #1A1714; font-weight: 600; cursor: pointer;">Koleksiyon</span><a href="Hakkımızda.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Hakkımızda</a><a href="Üretim.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Üretim</a><a href="Sertifikalar.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Sertifikalar</a><a href="İhracat.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">İhracat</a><a href="SSS.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">SSS</a><a href="İletişim.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">İletişim</a>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <span style="font-size: 13px; font-weight: 500; color: #8a857c; white-space: nowrap;">TR / EN</span>
+        <span style="font-size: 14px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 9px 20px; border-radius: 980px; white-space: nowrap; cursor: pointer; transition: background .25s, transform .25s;" style-hover="background:#33291f; transform:translateY(-1px);">Teklif Al</span>
+      </div>
     </div>
   </div>
 
-  <!-- HEADER -->
-  <div style="max-width:1180px; margin:0 auto; padding:56px 32px 28px;">
-    <div style="font-size:13px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#A87C4F;">Kaplama koleksiyonu</div>
-    <h1 style="font-size:60px;font-weight:700;letter-spacing:-0.035em;margin:14px 0 0;max-width:680px;">Aynı form, <span style="font-family:'Newsreader',serif;font-weight:500;font-style:italic;">dört karakter.</span></h1>
-    <p style="font-size:19px;color:#78726B;margin:16px 0 0;max-width:540px;font-weight:500;">Her ürün ailesi, dört kaplamada. Mekânın ruhunu donanım belirler — bir kaplama seçin, karakteri görün.</p>
+  <!-- ===== HERO ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 80px 32px 0;">
+    <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #A87C4F;">Koleksiyon 2026</div>
+    <h1 style="font-size: 70px; line-height: 1.0; letter-spacing: -0.04em; font-weight: 700; margin: 18px 0 0; max-width: 860px;">Bir mekânın <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic; letter-spacing: -0.01em;">bütün</span> dokunma yüzeyleri.</h1>
+    <p style="font-size: 20px; line-height: 1.65; color: #78726B; margin: 24px 0 0; max-width: 620px; font-weight: 500;">Koleksiyon, tek tek ürün değil; birlikte çalışan bir aile. Aynı kaplama tonu, aynı radius dili, aynı geometrik ritim — kilitten tavana kadar.</p>
   </div>
 
-  <!-- FINISH PANELS -->
-  <div style="max-width:1180px; margin:0 auto; padding:20px 32px 0;">
-    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px;">
-      <sc-for list="{{ finishPanels }}" as="f" hint-placeholder-count="4">
-        <div onClick="{{ f.on }}" style="aspect-ratio:3/5; background:{{ f.grad }}; border-radius:18px; padding:24px; cursor:pointer; opacity:{{ f.op }}; outline:{{ f.ring }}; outline-offset:-3px; transition:opacity .3s, transform .3s; display:flex; flex-direction:column; justify-content:space-between; position:relative;" style-hover="transform:translateY(-4px);">
-          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-            <div style="width:58px;height:58px;border-radius:50%;border:1.5px solid {{ f.ringColor }};"></div>
-            <span style="font-size:11px;font-weight:700;letter-spacing:0.08em;padding:5px 10px;border-radius:980px;background:rgba(255,255,255,.9);color:#1A1714;visibility:{{ f.tagVis }};">SEÇİLİ</span>
+  <!-- ===== COLLECTION TABS ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 44px 32px 0;">
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+        <span onClick="{{ t.on }}" style="font-size: 13.5px; font-weight: 600; padding: 11px 22px; border-radius: 980px; cursor: pointer; white-space: nowrap; background: {{ t.bg }}; color: {{ t.fg }}; border: 1px solid {{ t.bd }}; transition: background .25s, color .25s, transform .25s;" style-hover="transform:translateY(-1px);">{{ t.label }}</span>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ===== ACTIVE COLLECTION ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 30px 32px 0;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: #FFFFFF; border: 1px solid rgba(26,23,20,.08); border-radius: 28px; overflow: hidden;">
+      <div style="padding: 44px 46px; display: flex; flex-direction: column; justify-content: center;">
+        <div style="font-family: 'DM Mono', monospace; font-size: 11.5px; letter-spacing: 0.16em; color: #A87C4F;">{{ colCode }}</div>
+        <div style="font-size: 42px; font-weight: 700; letter-spacing: -0.035em; margin-top: 12px; line-height: 1.06;">{{ colName }}</div>
+        <p style="font-size: 17px; line-height: 1.7; color: #6B6459; margin: 16px 0 0;">{{ colDesc }}</p>
+
+        <div style="display: flex; align-items: center; gap: 10px; margin-top: 26px;">
+          <span style="font-family: 'DM Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; color: #b1a896;">KAPLAMALAR</span>
+          <div style="display: flex; gap: 8px;">
+            <sc-for list="{{ colFinishes }}" as="f" hint-placeholder-count="4">
+              <span title="{{ f.name }}" style="width: 26px; height: 26px; border-radius: 50%; background: {{ f.color }}; border: 1px solid rgba(26,23,20,.18);"></span>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; padding-top: 22px; border-top: 1px solid rgba(26,23,20,.08);">
+          <div>
+            <div style="font-size: 20px; font-weight: 800; letter-spacing: -0.02em;">{{ colItems }}</div>
+            <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: #9a948a; margin-top: 4px; letter-spacing: 0.08em;">ÜRÜN</div>
           </div>
           <div>
-            <div style="font-size:21px;font-weight:700;color:{{ f.fg }};letter-spacing:-0.01em;">{{ f.label }}</div>
-            <div style="font-family:'DM Mono',monospace;font-size:11px;color:{{ f.subColor }};margin-top:5px;">{{ f.code }} · {{ f.sub }}</div>
+            <div style="font-size: 20px; font-weight: 800; letter-spacing: -0.02em;">{{ colRadius }}</div>
+            <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: #9a948a; margin-top: 4px; letter-spacing: 0.08em;">RADIUS DİLİ</div>
           </div>
+          <div>
+            <div style="font-size: 20px; font-weight: 800; letter-spacing: -0.02em;">{{ colUse }}</div>
+            <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: #9a948a; margin-top: 4px; letter-spacing: 0.08em;">KULLANIM</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- hand-drawn family sketch -->
+      <div style="background: linear-gradient(160deg,#F1ECE2,#E4DCCB); padding: 34px; display: flex; align-items: center; justify-content: center; border-left: 1px solid rgba(26,23,20,.08);">
+        <sc-if value="{{ isLinea }}" hint-placeholder-val="{{ true }}">
+        <svg viewBox="0 0 320 300" width="100%" fill="none" stroke="#1A1714" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <g transform="translate(24 28)">
+            <path d="M8 26 H132 C140 26, 144 32, 138 40 L120 60" stroke-width="3"/>
+            <circle cx="20" cy="26" r="13" stroke="#A87C4F" stroke-width="2.2"/>
+            <path d="M8 74 H120" stroke-width="1.4" opacity=".35"/>
+          </g>
+          <g transform="translate(196 30)">
+            <rect x="6" y="10" width="34" height="88" rx="6" stroke="#A87C4F" stroke-width="2.2"/>
+            <circle cx="23" cy="34" r="7"/>
+            <path d="M23 58 V78" stroke-width="2.4"/>
+          </g>
+          <g transform="translate(30 132)">
+            <rect x="6" y="10" width="88" height="42" rx="4"/>
+            <path d="M20 26 H80 M20 36 H80" stroke-width="1.3" opacity=".4"/>
+            <circle cx="112" cy="30" r="16" stroke="#A87C4F" stroke-width="2.2"/>
+            <path d="M112 30 H126" stroke="#A87C4F" stroke-width="2"/>
+          </g>
+          <g transform="translate(196 148)">
+            <path d="M6 24 H86 V72 H6 Z"/>
+            <path d="M28 24 V72 M50 24 V72 M68 24 V72" stroke-width="1.3" opacity=".4"/>
+            <path d="M6 24 L20 12 H100 L86 24 M100 12 V60 L86 72" stroke-width="1.5" opacity=".55"/>
+          </g>
+          <g transform="translate(34 226)">
+            <path d="M4 30 H214" stroke-width="2.6"/>
+            <path d="M40 30 V16 M96 30 V16 M152 30 V16" stroke="#A87C4F" stroke-width="1.9"/>
+          </g>
+        </svg>
+        </sc-if>
+        <sc-if value="{{ isForte }}" hint-placeholder-val="{{ false }}">
+        <svg viewBox="0 0 320 300" width="100%" fill="none" stroke="#1A1714" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <g transform="translate(28 26)">
+            <path d="M6 10 H126 V184 H6 Z"/>
+            <path d="M18 22 H114 V172 H18 Z" stroke-width="1.6"/>
+            <path d="M30 46 H102 M30 96 H102" stroke-width="1.4" opacity=".4"/>
+            <path d="M92 118 H104 C110 118, 112 124, 108 128 H92" stroke="#A87C4F" stroke-width="2.6"/>
+            <rect x="2" y="52" width="10" height="26" rx="3" stroke="#A87C4F"/>
+            <rect x="2" y="120" width="10" height="26" rx="3" stroke="#A87C4F"/>
+          </g>
+          <g transform="translate(196 40)">
+            <rect x="6" y="10" width="90" height="46" rx="3"/>
+            <path d="M6 24 H96 M6 42 H96" stroke-width="1.3" opacity=".4"/>
+            <text x="8" y="78" font-family="DM Mono, monospace" font-size="10" fill="#8A6638" stroke="none" letter-spacing="1">RC2 / RC3</text>
+          </g>
+          <g transform="translate(196 130)">
+            <circle cx="44" cy="44" r="34" stroke="#A87C4F"/>
+            <path d="M30 44 L40 54 L60 34" stroke-width="3"/>
+            <text x="6" y="102" font-family="DM Mono, monospace" font-size="10" fill="#8A6638" stroke="none" letter-spacing="1">EI₂ 30 / 60</text>
+          </g>
+          <g transform="translate(34 232)">
+            <path d="M4 26 H140" stroke-width="2.6"/>
+            <path d="M4 26 C24 18, 44 34, 64 26 C84 18, 104 34, 124 26" stroke="#A87C4F" stroke-width="1.6" opacity=".7"/>
+          </g>
+        </svg>
+        </sc-if>
+        <sc-if value="{{ isVela }}" hint-placeholder-val="{{ false }}">
+        <svg viewBox="0 0 320 300" width="100%" fill="none" stroke="#1A1714" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <g transform="translate(26 26)">
+            <path d="M6 10 H150 V132 H6 Z"/>
+            <path d="M54 10 V132 M102 10 V132 M6 71 H150" stroke-width="1.4" opacity=".5"/>
+            <rect x="58" y="76" width="40" height="50" rx="2" stroke="#A87C4F" stroke-width="2.3"/>
+            <path d="M150 10 L172 -2 M150 132 L172 120 M172 -2 V120" stroke-width="1.4" opacity=".4"/>
+          </g>
+          <g transform="translate(206 34)">
+            <path d="M8 40 H72 L84 26" />
+            <path d="M8 40 V62 M72 40 V22"/>
+            <path d="M30 40 V28" stroke="#A87C4F" stroke-width="1.6"/>
+          </g>
+          <g transform="translate(30 182)">
+            <path d="M6 20 H150 V96 H6 Z" stroke-width="1.8"/>
+            <path d="M6 44 H150 M6 68 H150" stroke-width="1.3" opacity=".4"/>
+            <path d="M40 20 V96 M84 20 V96 M120 20 V96" stroke-width="1.3" opacity=".4"/>
+            <circle cx="62" cy="56" r="11" stroke="#A87C4F" stroke-width="2.2"/>
+          </g>
+          <g transform="translate(206 178)">
+            <path d="M10 10 V72 M10 26 H44 M44 26 V40 M10 56 H44" stroke="#A87C4F" stroke-width="2.2"/>
+            <text x="4" y="96" font-family="DM Mono, monospace" font-size="10" fill="#8A6638" stroke="none" letter-spacing="1">T-PROFİL</text>
+          </g>
+        </svg>
+        </sc-if>
+        <sc-if value="{{ isNotte }}" hint-placeholder-val="{{ false }}">
+        <svg viewBox="0 0 320 300" width="100%" fill="none" stroke="#1A1714" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <g transform="translate(28 30)">
+            <rect x="6" y="10" width="46" height="106" rx="8" stroke="#A87C4F" stroke-width="2.3"/>
+            <circle cx="29" cy="38" r="8"/>
+            <path d="M29 62 V88" stroke-width="2.6"/>
+            <path d="M20 100 H38" stroke-width="1.4" opacity=".5"/>
+          </g>
+          <g transform="translate(112 34)">
+            <path d="M6 30 H120 C128 30, 132 36, 126 44 L108 62" stroke-width="3"/>
+            <circle cx="18" cy="30" r="12" stroke="#A87C4F" stroke-width="2.2"/>
+          </g>
+          <g transform="translate(40 168)">
+            <path d="M6 26 H92 V78 H6 Z"/>
+            <path d="M22 44 H76 M22 58 H76" stroke-width="1.3" opacity=".4"/>
+            <path d="M46 26 V14 C46 6, 56 6, 56 14 V26" stroke="#A87C4F" stroke-width="2.2"/>
+          </g>
+          <g transform="translate(184 168)">
+            <circle cx="46" cy="46" r="36"/>
+            <circle cx="46" cy="46" r="12" stroke="#A87C4F" stroke-width="2.3"/>
+            <path d="M46 4 V16 M46 76 V88 M4 46 H16 M76 46 H88" stroke-width="1.6" opacity=".65"/>
+          </g>
+        </svg>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ITEMS IN COLLECTION ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 40px 32px 0;">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-bottom: 18px; border-bottom: 1px solid rgba(26,23,20,.1);">
+      <div style="font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: #b1a896;">KOLEKSİYON İÇERİĞİ</div>
+      <a href="Katalog - Apple.dc.html" style="font-size: 13.5px; font-weight: 600;">Tüm katalog&nbsp;›</a>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 22px;">
+      <sc-for list="{{ items }}" as="i" hint-placeholder-count="6">
+        <div style="background: #FFFFFF; border: 1px solid rgba(26,23,20,.08); border-radius: 20px; padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 6px; transition: transform .4s cubic-bezier(.16,.84,.44,1), box-shadow .4s;" style-hover="transform:translateY(-4px); box-shadow:0 18px 42px -30px rgba(0,0,0,.32);">
+          <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+            <span style="font-family: 'DM Mono', monospace; font-size: 11px; color: #A87C4F;">{{ i.sku }}</span>
+            <span style="font-family: 'DM Mono', monospace; font-size: 10.5px; color: #b1a896;">{{ i.spec }}</span>
+          </div>
+          <div style="font-size: 18px; font-weight: 700; letter-spacing: -0.015em; margin-top: 4px;">{{ i.name }}</div>
+          <div style="font-size: 13.5px; line-height: 1.55; color: #6B6459;">{{ i.desc }}</div>
         </div>
       </sc-for>
     </div>
   </div>
 
-  <!-- SELECTED DETAIL BAND -->
-  <div style="max-width:1180px; margin:0 auto; padding:36px 32px 24px;">
-    <div style="display:grid; grid-template-columns:0.85fr 1.15fr; gap:0; border-radius:24px; overflow:hidden; border:1px solid rgba(26,23,20,.08);">
-      <!-- left: big finish word -->
-      <div style="background:{{ selGrad }}; padding:48px 44px; min-height:360px; display:flex; flex-direction:column; justify-content:space-between;">
-        <div style="font-family:'DM Mono',monospace; font-size:12px; letter-spacing:0.12em; color:{{ selSubColor }};">KAPLAMA · {{ selCode }}</div>
+  <!-- ===== DESIGN LANGUAGE ===== -->
+  <div style="background: #18120D; color: #F4EEE2; margin-top: 84px; padding: 76px 0 80px;">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 0 32px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #C2A06A;">TASARIM DİLİ</div>
+      <h2 style="font-size: 38px; line-height: 1.1; letter-spacing: -0.035em; font-weight: 700; color: #F6F0E4; margin: 14px 0 0; max-width: 700px;">Dört koleksiyon, <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic;">tek</span> gramer.</h2>
+      <p style="font-size: 16.5px; line-height: 1.7; color: #B4AC9E; margin: 16px 0 0; max-width: 620px;">Bir projede farklı koleksiyonlardan ürün kullanıldığında bile kaplama tonu ve kenar dili birbirini tutar. Karıştırmak, uyumsuzluk anlamına gelmez.</p>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 40px;">
+        <sc-for list="{{ rules }}" as="r" hint-placeholder-count="4">
+          <div style="background: rgba(244,238,226,.05); border: 1px solid rgba(244,238,226,.14); border-radius: 20px; padding: 24px 26px 26px;">
+            <div style="font-family: 'DM Mono', monospace; font-size: 11.5px; letter-spacing: 0.14em; color: #C2A06A;">{{ r.no }}</div>
+            <div style="font-size: 19px; font-weight: 700; letter-spacing: -0.02em; color: #F6F0E4; margin-top: 10px;">{{ r.title }}</div>
+            <div style="font-size: 14px; line-height: 1.6; color: #B4AC9E; margin-top: 7px;">{{ r.desc }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FINISH MATRIX ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 80px 32px 0;">
+    <div style="display: flex; align-items: baseline; gap: 16px; padding-bottom: 22px; border-bottom: 2px solid #1A1714;">
+      <h2 style="font-size: 32px; font-weight: 700; letter-spacing: -0.03em; margin: 0;">Kaplama kartelası</h2>
+      <span style="font-size: 15px; color: #78726B; margin-left: auto;">Tüm koleksiyonlarda ortak</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 18px; margin-top: 28px;">
+      <sc-for list="{{ finishes }}" as="f" hint-placeholder-count="6">
         <div>
-          <div style="width:88px;height:88px;border-radius:50%;border:1.5px solid {{ selRingColor }}; display:flex;align-items:center;justify-content:center; margin-bottom:24px;"><div style="width:34px;height:34px;border-radius:50%;background:{{ selCore }};box-shadow:inset 0 0 0 1px rgba(0,0,0,.18);"></div></div>
-          <h2 style="font-size:40px;font-weight:700;letter-spacing:-0.03em;color:{{ selFg }};margin:0;">{{ selLabel }}</h2>
+          <div style="height: 96px; border-radius: 16px; background: {{ f.color }}; border: 1px solid rgba(26,23,20,.14);"></div>
+          <div style="font-size: 15px; font-weight: 700; margin-top: 12px; letter-spacing: -0.01em;">{{ f.name }}</div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: #8A6638; margin-top: 3px;">{{ f.code }}</div>
+          <div style="font-size: 13px; color: #6B6459; margin-top: 5px; line-height: 1.5;">{{ f.note }}</div>
         </div>
-      </div>
-      <!-- right: description + uses + products -->
-      <div style="padding:44px 44px;">
-        <p style="font-size:20px;line-height:1.55;color:#3C372F;margin:0;font-weight:500;">{{ selDesc }}</p>
-        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#b1a896;letter-spacing:0.08em;margin:28px 0 14px;">KULLANIM ALANLARI</div>
-        <div style="display:flex; flex-wrap:wrap; gap:8px;">
-          <sc-for list="{{ uses }}" as="u" hint-placeholder-count="3">
-            <span style="font-size:13px;font-weight:600;padding:8px 16px;border-radius:980px;border:1px solid rgba(26,23,20,.16);">{{ u.u }}</span>
-          </sc-for>
-        </div>
-        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#b1a896;letter-spacing:0.08em;margin:28px 0 14px;">BU KAPLAMADA</div>
-        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
-          <div style="border:1px solid rgba(26,23,20,.10); border-radius:14px; overflow:hidden;"><div style="aspect-ratio:1/1; background:linear-gradient(160deg,#F1ECE2,#E6DFD1); display:flex;align-items:center;justify-content:center;"><div style="width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(26,23,20,.2);display:flex;align-items:center;justify-content:center;"><div style="width:18px;height:18px;border-radius:50%;background:{{ selCore }};"></div></div></div><div style="padding:11px 13px;"><div style="font-size:13px;font-weight:700;">Anti-Snap Barel</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:#78726B;margin-top:2px;">BRL-110 · {{ selCode }}</div></div></div>
-          <div style="border:1px solid rgba(26,23,20,.10); border-radius:14px; overflow:hidden;"><div style="aspect-ratio:1/1; background:linear-gradient(160deg,#F1ECE2,#E6DFD1); display:flex;align-items:center;justify-content:center;"><div style="width:34px;height:44px;border-radius:7px 7px 3px 3px;border:1.5px solid rgba(26,23,20,.2);position:relative;"><div style="position:absolute;top:-11px;left:6px;right:6px;height:16px;border:1.5px solid rgba(26,23,20,.2);border-bottom:none;border-radius:8px 8px 0 0;"></div></div></div><div style="padding:11px 13px;"><div style="font-size:13px;font-weight:700;">Asma Kilit</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:#78726B;margin-top:2px;">PAD-210 · {{ selCode }}</div></div></div>
-          <div style="border:1px solid rgba(26,23,20,.10); border-radius:14px; overflow:hidden;"><div style="aspect-ratio:1/1; background:linear-gradient(160deg,#F1ECE2,#E6DFD1); display:flex;align-items:center;justify-content:center;"><div style="width:60px;height:18px;border-radius:9px;border:1.5px solid rgba(26,23,20,.2);"></div></div><div style="padding:11px 13px;"><div style="font-size:13px;font-weight:700;">Kapı Kolu</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:#78726B;margin-top:2px;">HDL-410 · {{ selCode }}</div></div></div>
-        </div>
-      </div>
+      </sc-for>
     </div>
   </div>
 
-  <!-- KARTELA CTA -->
-  <div style="max-width:1180px; margin:0 auto; padding:24px 32px 80px;">
-    <div style="background:#1A1714; border-radius:24px; padding:56px 56px; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap; color:#F4EEE2;">
+  <!-- ===== CTA ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 72px 32px 0;">
+    <div style="background: #F0ECE3; border-radius: 28px; padding: 44px 48px; display: flex; align-items: center; justify-content: space-between; gap: 34px; flex-wrap: wrap;">
       <div>
-        <h2 style="font-size:36px;font-weight:700;letter-spacing:-0.03em;margin:0;">Fiziksel kaplama <span style="font-family:'Newsreader',serif;font-weight:500;font-style:italic;">kartelası</span> isteyin.</h2>
-        <p style="font-size:16px;color:#ABA398;margin:14px 0 0;max-width:460px;">Dört kaplamanın gerçek örneklerini ofisinize gönderelim — dokunarak karar verin.</p>
+        <div style="font-size: 28px; font-weight: 700; letter-spacing: -0.03em;">Koleksiyon kartelasını isteyin.</div>
+        <div style="font-size: 16px; color: #6B6459; margin-top: 8px; max-width: 540px; line-height: 1.6;">Fiziksel kaplama kartelası ve seçtiğiniz koleksiyondan üç numune, kargo dâhil yedi günde adresinizde.</div>
       </div>
-      <div style="display:flex; flex-direction:column; gap:12px; flex:none;">
-        <span style="font-size:15px;font-weight:600;color:#1A1714;background:#C2A06A;padding:15px 34px;border-radius:980px;text-align:center;">Kartela iste</span>
-        <span style="font-size:13px;font-weight:600;color:#D8CDBB;text-align:center;">export@marka.com</span>
+      <div style="display: flex; gap: 10px; flex: none; flex-wrap: wrap;">
+        <a href="İletişim.dc.html" style="font-size: 14px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 14px 26px; border-radius: 980px; white-space: nowrap;">Numune isteyin&nbsp;›</a>
+        <a href="Blog Yazısı - Numune Süreci.dc.html" style="font-size: 14px; font-weight: 600; color: #1A1714; background: #FFFFFF; border: 1px solid rgba(26,23,20,.16); padding: 14px 26px; border-radius: 980px; white-space: nowrap;">Numune süreci</a>
       </div>
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <div style="background:#F0ECE3; border-top:1px solid rgba(26,23,20,.08);">
-    <div style="max-width:1180px; margin:0 auto; padding:44px 32px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
-      <div style="display:flex; align-items:center; gap:9px;"><div style="width:8px;height:8px;border-radius:50%;background:#A87C4F;"></div><span style="font-size:17px;font-weight:700;letter-spacing:-0.02em;">MARKA</span><span style="font-size:14px;color:#8a857c;margin-left:12px;">Kapı güvenlik donanımı · ihracat</span></div>
-      <span style="font-size:12px;color:#9a948a;">© 2025 · CE · TSE · ISO 9001</span>
+  <!-- ===== FOOTER ===== -->
+  <div style="background: #F0ECE3; border-top: 1px solid rgba(26,23,20,.08); margin-top: 80px;">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 56px 32px 28px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #A87C4F;"></div>
+          <span style="font-size: 18px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
+        </div>
+        <p style="font-size: 14px; line-height: 1.6; color: #8a857c; max-width: 280px; margin: 16px 0 0;">Kapı güvenlik donanımı ve tavan sistemleri üreticisi. 1976'dan beri tasarlıyor, işliyor ve dünyaya ihraç ediyoruz.</p>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">Ürünler</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>Silindir Bareller</span><span>Asma Kilitler</span><span>Menteşeler</span><span>Çelik Kapı</span><span>Duvar Kaplama</span><span>Tavan Sistemleri</span></div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">Kurumsal</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><a href="Hakkımızda.dc.html" style="color: inherit;">Hakkımızda</a><a href="Üretim.dc.html" style="color: inherit;">Üretim</a><a href="Sertifikalar.dc.html" style="color: inherit;">Sertifikalar</a><a href="İhracat.dc.html" style="color: inherit;">İhracat</a><a href="İletişim.dc.html" style="color: inherit;">İletişim</a></div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">İletişim</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>export@marka.com</span><span>+90 232 000 00 00</span><span>İAOSB, İzmir</span></div>
+      </div>
+    </div>
+    <div style="max-width: 1120px; margin: 0 auto; padding: 22px 32px; border-top: 1px solid rgba(26,23,20,.08); display: flex; justify-content: space-between; font-size: 12px; color: #9a948a;">
+      <span>© 2025 MARKA DONANIM SAN. TİC. A.Ş.</span>
+      <span>CE · TSE · ISO 9001</span>
     </div>
   </div>
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:900}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1120,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { sel: 'brass' };
+  state = { col: 'linea' };
 
-  data() {
-    return [
-      { key: 'brass', label: 'Parlak Pirinç', code: 'PB', grad: 'linear-gradient(155deg,#C8A572,#A07B45)', fg: '#FFFFFF', light: true, sub: 'sıcak, klasik', core: '#B08D57', desc: 'Zamansız sıcaklık. Yıllandıkça karakter kazanan, canlı bir yüzey.', uses: ['Tarihi yapılar', 'Butik oteller', 'Klasik konut'] },
-      { key: 'nikel', label: 'Fırça Nikel', code: 'NK', grad: 'linear-gradient(155deg,#D6D5D0,#B6B6B0)', fg: '#2A2724', light: false, sub: 'nötr, modern', core: '#C9C7C0', desc: 'Parmak izi tutmayan mat doku. Her paletle uyumlu, nötr bir zemin.', uses: ['Ofis', 'Çağdaş konut', 'Perakende'] },
-      { key: 'siyah', label: 'Mat Siyah', code: 'SY', grad: 'linear-gradient(155deg,#34302B,#1C1916)', fg: '#FFFFFF', light: true, sub: 'keskin, minimal', core: '#2A2724', desc: 'Grafik ve keskin. Minimal mimaride güçlü bir kontrast aksanı.', uses: ['Loft', 'Mimari proje', 'Showroom'] },
-      { key: 'antik', label: 'Antik Bronz', code: 'AN', grad: 'linear-gradient(155deg,#7C6648,#574630)', fg: '#FFFFFF', light: true, sub: 'patine, butik', core: '#6E5A3E', desc: 'Elde patine edilmiş derinlik. Restorasyon ve butik dokunuşlar için.', uses: ['Restorasyon', 'Butik otel', 'Villa'] },
-    ];
+  finishLib() {
+    return {
+      nikel: { name: 'Mat Nikel', color: '#B9B7B2', code: 'FN-04', note: 'En yaygın seçim; parmak izi göstermez.' },
+      brass: { name: 'Fırçalı Pirinç', color: '#B9975B', code: 'FN-11', note: 'Sıcak metal tonu; otel ve konut projeleri.' },
+      antik: { name: 'Antik Bronz', color: '#6E5237', code: 'FN-18', note: 'Yaşlandırılmış yüzey; restorasyon işleri.' },
+      siyah: { name: 'Mat Siyah', color: '#2A2724', code: 'FN-22', note: 'Toz boya; çelik kapı ve kaplama ile eşleşir.' },
+      krom: { name: 'Parlak Krom', color: '#D6D8DA', code: 'FN-02', note: 'Islak hacim ve ticari alanlar.' },
+      kemik: { name: 'Kemik Beyaz', color: '#EFEBE3', code: 'FN-30', note: 'Tavan panelleri ve alçı yüzeylerle sürekli.' },
+    };
+  }
+
+  colData() {
+    return {
+      linea: {
+        code: 'LINEA · 2026', name: 'Linea', items: '38', radius: '2 mm', use: 'Konut & ofis',
+        desc: 'Düz hatlar, keskin ama yumuşatılmış kenarlar. Kapı kolundan tavan profiline kadar 2 mm sabit radius ile tek bir çizgi hissi verir.',
+        finishes: ['nikel', 'brass', 'siyah', 'krom'],
+        products: [
+          { sku: 'BRL-100', name: 'Silindir Barel', spec: 'Ø17 mm', desc: 'Anti-snap, 5 pim, master key uyumlu' },
+          { sku: 'HDL-400', name: 'Kapı Kolu', spec: 'Rozetli', desc: 'İnce gövde, 2 mm radius, mat kaplama' },
+          { sku: 'HNG-300', name: 'Menteşe', spec: 'Rulmanlı', desc: 'Gizli tip, ayarlanabilir, 80 kg kanat' },
+          { sku: 'CLG-710', name: 'Asma Tavan Modülü', spec: '600×600', desc: 'Mineral panel, T-profil taşıyıcı' },
+          { sku: 'LGT-740', name: 'Lineer LED Profil', spec: '1–3 m', desc: 'Magnetik ray, kesintisiz ışık hattı' },
+          { sku: 'ACC-610', name: 'Kapı Stoperi', spec: 'Manyetik', desc: 'Zemin & duvar tipi, paslanmaz' },
+        ],
+      },
+      forte: {
+        code: 'FORTE · 2026', name: 'Forte', items: '24', radius: '4 mm', use: 'Güvenlik & proje',
+        desc: 'Ağır hizmet koleksiyonu. Kalın kesitler, sertifikalı güvenlik ve yangın performansı; çelik kapı setleriyle eksiksiz teslim edilir.',
+        finishes: ['siyah', 'antik', 'nikel'],
+        products: [
+          { sku: 'STL-500', name: 'Çelik Kapı — Daire', spec: 'RC2', desc: 'PU dolgu, Rw 34 dB, 3 menteşe' },
+          { sku: 'STL-600', name: 'Çelik Kapı — Yangın', spec: 'EI₂ 60', desc: 'Sertifikalı set, kapı kapatıcı dâhil' },
+          { sku: 'BRL-200', name: 'Yüksek Güvenlik Barel', spec: '≥ 25 Nm', desc: 'Anti-snap + delme koruması, sınıf 2' },
+          { sku: 'PAD-200', name: 'Asma Kilit', spec: '50–80 mm', desc: 'Lamine gövde, sertleştirilmiş kanca' },
+          { sku: 'HNG-350', name: 'Ağır Menteşe', spec: '120 kg', desc: 'Üç boyutlu ayarlı, yangın onaylı' },
+          { sku: 'ACC-620', name: 'Panik Bariyeri', spec: 'EN 1125', desc: 'Kaçış kapıları için itmeli kol' },
+        ],
+      },
+      vela: {
+        code: 'VELA · 2026', name: 'Vela', items: '31', radius: 'Kaset', use: 'Cephe & tavan',
+        desc: 'Yüzey koleksiyonu: duvar kaplama kasetleri, akustik tavan panelleri ve taşıyıcı sistemler. Modül ritmi tüm mekânda tekrar eder.',
+        finishes: ['kemik', 'nikel', 'siyah'],
+        products: [
+          { sku: 'CLD-800', name: 'Kompozit Kaset', spec: '4 mm', desc: 'PVDF kaplama, V kanal bükme' },
+          { sku: 'CLD-820', name: 'Alüminyum Kaset', spec: '3 mm', desc: 'Tam metal, gizli klips montaj' },
+          { sku: 'CLG-710', name: 'Mineral Tavan Paneli', spec: 'NRC 0,85', desc: 'Akustik, A2-s1,d0 yangın sınıfı' },
+          { sku: 'CLG-720', name: 'Metal Baffle', spec: 'Lineer', desc: 'Akustik dolgulu, 50–200 mm yükseklik' },
+          { sku: 'SUB-900', name: 'Taşıyıcı Konstrüksiyon', spec: 'Konsol', desc: 'Ayarlı konsol + klips, rüzgâr yükü hesaplı' },
+          { sku: 'GYP-750', name: 'Alçı Tavan Plakası', spec: '12,5 mm', desc: 'Standart / nem / yangın seçenekleri' },
+        ],
+      },
+      notte: {
+        code: 'NOTTE · 2026', name: 'Notte', items: '19', radius: '6 mm', use: 'Otel & ticari',
+        desc: 'Konaklama koleksiyonu. Kartlı geçiş, oda içi donanım ve servis kilitleri; personel hiyerarşisi tek sistemde yönetilir.',
+        finishes: ['brass', 'siyah', 'antik'],
+        products: [
+          { sku: 'HTL-500', name: 'RFID Oda Kilidi', spec: '13,56 MHz', desc: 'Kart & mobil anahtar, olay kaydı' },
+          { sku: 'HTL-520', name: 'Şifreli Kasa Kilidi', spec: 'Oda kasası', desc: 'Yönetici kodu, pil ömrü 2 yıl' },
+          { sku: 'HTL-540', name: 'Kapı Zili & DND', spec: 'Elektronik', desc: 'Rahatsız etmeyin / temizlik göstergesi' },
+          { sku: 'BRL-150', name: 'Master Key Bareli', spec: '4 seviye', desc: 'Grand master → kat → oda hiyerarşisi' },
+          { sku: 'HDL-440', name: 'Otel Kolu', spec: 'Aynalı', desc: 'Ağır kullanım, 6 mm radius' },
+          { sku: 'ACC-640', name: 'Bagaj Standı & Askı', spec: 'Oda seti', desc: 'Kaplama koleksiyonuyla eşleşir' },
+        ],
+      },
+    };
   }
 
   renderVals() {
-    const all = this.data();
-    const sel = this.state.sel;
-    const cur = all.find(f => f.key === sel) || all[0];
-    const subC = (light) => light ? 'rgba(255,255,255,.7)' : '#5b5650';
-    const ringC = (light) => light ? 'rgba(255,255,255,.5)' : 'rgba(0,0,0,.25)';
+    const s = this.state;
+    const C = this.colData()[s.col];
+    const lib = this.finishLib();
+
     return {
-      finishPanels: all.map(f => {
-        const a = f.key === sel;
-        return {
-          label: f.label, code: f.code, grad: f.grad, fg: f.fg, sub: f.sub,
-          subColor: subC(f.light), ringColor: ringC(f.light),
-          on: () => this.setState({ sel: f.key }),
-          op: a ? '1' : '0.78',
-          ring: a ? '3px solid #FBF9F5' : '0px solid transparent',
-          tagVis: a ? 'visible' : 'hidden',
-        };
+      tabs: ['linea', 'forte', 'vela', 'notte'].map(id => {
+        const on = id === s.col;
+        const c = this.colData()[id];
+        return { label: c.name, on: () => this.setState({ col: id }),
+          bg: on ? '#1A1714' : '#FFFFFF', fg: on ? '#FBF9F5' : '#4A453E', bd: on ? '#1A1714' : 'rgba(26,23,20,.16)' };
       }),
-      selLabel: cur.label, selCode: cur.code, selSub: cur.sub, selDesc: cur.desc,
-      selCore: cur.core, selGrad: cur.grad, selFg: cur.fg,
-      selSubColor: subC(cur.light), selRingColor: ringC(cur.light),
-      uses: cur.uses.map(u => ({ u })),
+      colCode: C.code, colName: C.name, colDesc: C.desc,
+      colItems: C.items, colRadius: C.radius, colUse: C.use,
+      colFinishes: C.finishes.map(f => ({ name: lib[f].name, color: lib[f].color })),
+      items: C.products,
+      isLinea: s.col === 'linea', isForte: s.col === 'forte',
+      isVela: s.col === 'vela', isNotte: s.col === 'notte',
+      rules: [
+        { no: '01', title: 'Tek radius ailesi', desc: 'Her koleksiyonun sabit bir kenar yarıçapı var; ürünler yan yana geldiğinde kenarlar aynı dili konuşur.' },
+        { no: '02', title: 'Ortak kartela', desc: 'Altı kaplama tüm koleksiyonlarda aynı kod ve aynı tonla üretilir — parti farkı ΔE ≤ 1,0.' },
+        { no: '03', title: 'Modül ritmi', desc: 'Tavan ve kaplama modülleri 600 mm katlarına oturur; kapı ve kol ölçüleri bu ritmi bozmaz.' },
+        { no: '04', title: 'Karıştırılabilir', desc: 'Forte güvenliği ile Linea kolu aynı projede kullanılabilir; kaplama ve kenar dili uyumludur.' },
+      ],
+      finishes: Object.keys(lib).map(k => lib[k]),
     };
   }
 }

@@ -18,7 +18,7 @@
 </style>
 </helmet>
 
-<div style="background: #FBF9F5; font-family: 'Manrope', system-ui, sans-serif; color: #1A1714; overflow-x: hidden;">
+<div style="background: #FBF9F5; font-family: 'Manrope', system-ui, sans-serif; color: #1A1714; overflow-x: clip;">
 
   <!-- ===== NAV ===== -->
   <div style="position: sticky; top: 0; z-index: 50; background: rgba(251,249,245,.82); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(26,23,20,.07);">
@@ -28,18 +28,16 @@
         <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
       </div>
       <div style="display: flex; align-items: center; gap: 34px; font-size: 14px; font-weight: 500; color: #4A453E;">
-        <span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">Ürünler</span><span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">Koleksiyon</span><span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">Sertifikalar</span><span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">İhracat</span><span style="color: #1A1714; font-weight: 600; cursor: pointer;">Bilgi Merkezi</span><span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">İletişim</span>
+        <span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">Ürünler</span><span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">Koleksiyon</span><a href="Sertifikalar.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Sertifikalar</a><a href="İhracat.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">İhracat</a><span style="color: #1A1714; font-weight: 600; cursor: pointer;">Bilgi Merkezi</span><a href="İletişim.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">İletişim</a>
       </div>
       <div style="display: flex; align-items: center; gap: 16px;">
         <span style="font-size: 13px; font-weight: 500; color: #8a857c; white-space: nowrap;">TR / EN</span>
         <span style="font-size: 14px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 9px 20px; border-radius: 980px; white-space: nowrap; cursor: pointer; transition: background .25s, transform .25s;" style-hover="background:#33291f; transform:translateY(-1px);">Teklif Al</span>
       </div>
     </div>
-  </div>
-
-  <!-- reading progress -->
-  <div style="position: sticky; top: 57px; z-index: 49; height: 2px; background: rgba(26,23,20,.07);">
-    <div style="height: 100%; width: {{ progress }}%; background: #A87C4F; transition: width .12s linear;"></div>
+    <div style="height: 2px; background: rgba(26,23,20,.07);">
+      <div style="height: 100%; width: {{ progress }}%; background: #A87C4F; transition: width .12s linear;"></div>
+    </div>
   </div>
 
   <!-- ===== ARTICLE HEADER ===== -->

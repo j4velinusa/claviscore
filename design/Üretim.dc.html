@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FBF9F5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  a { color: #A87C4F; text-decoration: none; } a:hover { color: #8A6638; }
+</style>
+</helmet>
+
+<div style="background: #FBF9F5; font-family: 'Manrope', system-ui, sans-serif; color: #1A1714; overflow-x: clip;">
+
+  <!-- ===== NAV ===== -->
+  <div style="position: sticky; top: 0; z-index: 50; background: rgba(251,249,245,.82); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(26,23,20,.07);">
+    <div style="max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px 32px;">
+      <a href="Ana Sayfa - Apple.dc.html" style="display: flex; align-items: center; gap: 9px; color: inherit;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: #A87C4F;"></div>
+        <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 34px; font-size: 14px; font-weight: 500; color: #4A453E;">
+        <a href="Katalog - Apple.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Ürünler</a><a href="Koleksiyon.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Koleksiyon</a><a href="Hakkımızda.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Hakkımızda</a><span style="color: #1A1714; font-weight: 600; cursor: pointer;">Üretim</span><a href="Sertifikalar.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Sertifikalar</a><a href="İhracat.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">İhracat</a><a href="SSS.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">SSS</a><a href="Blog.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">Bilgi Merkezi</a><a href="İletişim.dc.html" style="color: inherit; transition: color .25s;" style-hover="color:#A87C4F;">İletişim</a>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <span style="font-size: 13px; font-weight: 500; color: #8a857c; white-space: nowrap;">TR / EN</span>
+        <span style="font-size: 14px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 9px 20px; border-radius: 980px; white-space: nowrap; cursor: pointer; transition: background .25s, transform .25s;" style-hover="background:#33291f; transform:translateY(-1px);">Teklif Al</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 78px 32px 0;">
+    <div style="display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 52px; align-items: center;">
+      <div>
+        <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #A87C4F;">Üretim · İzmir İAOSB</div>
+        <h1 style="font-size: 62px; line-height: 1.03; letter-spacing: -0.04em; font-weight: 700; margin: 16px 0 0;">Dört hat,<br>tek <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic; letter-spacing: -0.01em;">ölçü</span> disiplini.</h1>
+        <p style="font-size: 19px; line-height: 1.6; color: #78726B; margin: 22px 0 0; max-width: 470px; font-weight: 500;">Kilit donanımı, çelik kapı, duvar kaplama ve tavan sistemleri aynı çatı altında, ayrı hatlarda üretilir. Kaplama, ısıl işlem ve test — hiçbiri dışarıya verilmez.</p>
+        <div style="display: flex; align-items: center; gap: 12px; margin-top: 32px; flex-wrap: wrap;">
+          <a href="İhracat.dc.html#tur" style="font-size: 15px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 14px 28px; border-radius: 980px;">Fabrika turu&nbsp;›</a>
+          <a href="Sertifikalar.dc.html" style="font-size: 15px; font-weight: 600; color: #1A1714; background: #FFFFFF; border: 1px solid rgba(26,23,20,.16); padding: 14px 26px; border-radius: 980px;">Sertifikalar</a>
+        </div>
+      </div>
+
+      <!-- hand-drawn factory floor plan -->
+      <div style="background: linear-gradient(160deg,#F4F0E6,#EDE7DA); border-radius: 28px; padding: 32px;">
+        <svg viewBox="0 0 400 300" width="100%" fill="none" stroke="#1A1714" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <!-- outer hall -->
+          <path d="M14 26 H386 V274 H14 Z"/>
+          <!-- internal bays -->
+          <path d="M112 26 V274 M232 26 V274 M14 156 H112 M232 156 H386" stroke-width="1.5" opacity=".55"/>
+          <!-- bay labels (hand feel) -->
+          <text x="26" y="52" font-family="DM Mono, monospace" font-size="11" fill="#8A6638" stroke="none" letter-spacing="1">CNC</text>
+          <text x="124" y="52" font-family="DM Mono, monospace" font-size="11" fill="#8A6638" stroke="none" letter-spacing="1">PRES / KAYNAK</text>
+          <text x="244" y="52" font-family="DM Mono, monospace" font-size="11" fill="#8A6638" stroke="none" letter-spacing="1">KAPLAMA</text>
+          <text x="26" y="182" font-family="DM Mono, monospace" font-size="11" fill="#8A6638" stroke="none" letter-spacing="1">MONTAJ</text>
+          <text x="244" y="182" font-family="DM Mono, monospace" font-size="11" fill="#8A6638" stroke="none" letter-spacing="1">LAB / OQC</text>
+          <!-- machines: CNC bay -->
+          <rect x="28" y="66" width="30" height="20" rx="2"/><rect x="66" y="66" width="30" height="20" rx="2"/>
+          <rect x="28" y="96" width="30" height="20" rx="2"/><rect x="66" y="96" width="30" height="20" rx="2"/>
+          <rect x="28" y="126" width="30" height="20" rx="2" stroke="#A87C4F"/><rect x="66" y="126" width="30" height="20" rx="2" stroke="#A87C4F"/>
+          <!-- press / weld bay -->
+          <path d="M126 70 H214 M126 100 H214" stroke-width="2.3"/>
+          <circle cx="150" cy="128" r="11" stroke="#A87C4F"/><circle cx="190" cy="128" r="11" stroke="#A87C4F"/>
+          <!-- coating line (snake) -->
+          <path d="M246 70 H366 V96 H246 V122 H366" stroke="#A87C4F" stroke-width="2.3"/>
+          <!-- assembly benches -->
+          <rect x="28" y="196" width="70" height="16" rx="2"/><rect x="28" y="222" width="70" height="16" rx="2"/><rect x="28" y="248" width="70" height="16" rx="2"/>
+          <!-- lab -->
+          <rect x="248" y="196" width="40" height="30" rx="3"/><rect x="300" y="196" width="40" height="30" rx="3" stroke="#A87C4F"/>
+          <path d="M248 244 H340" stroke-width="1.5" opacity=".5"/>
+          <!-- conveyor spine -->
+          <path d="M118 220 H228" stroke-dasharray="7 8" stroke-width="1.7" opacity=".6"/>
+          <path d="M222 214 L230 220 L222 226" stroke-width="1.7" opacity=".6"/>
+          <!-- dock -->
+          <path d="M340 274 V292 H386 V274" stroke-width="1.7"/>
+          <text x="330" y="290" font-family="DM Mono, monospace" font-size="10" fill="#78726B" stroke="none" letter-spacing="1">RAMPA</text>
+        </svg>
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: #9A917F; letter-spacing: 0.08em; margin-top: 12px; text-align: center;">6.400 m² · VAZİYET PLANI (ŞEMATİK)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CAPACITY STRIP ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 56px 32px 0;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border-top: 1px solid rgba(26,23,20,.12); border-bottom: 1px solid rgba(26,23,20,.12);">
+      <sc-for list="{{ capacity }}" as="c" hint-placeholder-count="5">
+        <div style="padding: 24px 18px; border-right: 1px solid rgba(26,23,20,.08);">
+          <div style="font-size: 28px; font-weight: 800; letter-spacing: -0.03em; white-space: nowrap;">{{ c.value }}</div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 10.5px; color: #9a948a; margin-top: 5px; letter-spacing: 0.08em;">{{ c.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ===== LINE SELECTOR ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 46px 32px 0;">
+    <div style="display: flex; align-items: baseline; gap: 16px; padding-bottom: 22px; border-bottom: 2px solid #1A1714;">
+      <h2 style="font-size: 34px; font-weight: 700; letter-spacing: -0.03em; margin: 0;">Üretim hatları</h2>
+      <span style="font-size: 15px; color: #78726B; margin-left: auto;">Hat seçin — makine parkı ve kapasite değişir</span>
+    </div>
+
+    <div style="display: flex; gap: 8px; margin-top: 24px; flex-wrap: wrap;">
+      <sc-for list="{{ lineTabs }}" as="l" hint-placeholder-count="4">
+        <span onClick="{{ l.on }}" style="font-size: 13.5px; font-weight: 600; padding: 11px 22px; border-radius: 980px; cursor: pointer; white-space: nowrap; background: {{ l.bg }}; color: {{ l.fg }}; border: 1px solid {{ l.bd }}; transition: background .25s, color .25s, transform .25s;" style-hover="transform:translateY(-1px);">{{ l.label }}</span>
+      </sc-for>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 0.85fr; gap: 40px; margin-top: 28px; align-items: start;">
+      <div>
+        <div style="background: #FFFFFF; border: 1px solid rgba(26,23,20,.08); border-radius: 22px; padding: 28px 30px;">
+          <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+            <div style="font-size: 26px; font-weight: 700; letter-spacing: -0.025em;">{{ lineTitle }}</div>
+            <span style="font-family: 'DM Mono', monospace; font-size: 12px; color: #A87C4F; letter-spacing: 0.08em;">{{ lineArea }}</span>
+          </div>
+          <p style="font-size: 15.5px; line-height: 1.7; color: #6B6459; margin: 12px 0 0;">{{ lineDesc }}</p>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(26,23,20,.08);">
+            <div>
+              <div style="font-size: 21px; font-weight: 800; letter-spacing: -0.02em;">{{ lineOut }}</div>
+              <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: #9a948a; margin-top: 4px; letter-spacing: 0.08em;">AYLIK KAPASİTE</div>
+            </div>
+            <div>
+              <div style="font-size: 21px; font-weight: 800; letter-spacing: -0.02em;">{{ lineTol }}</div>
+              <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: #9a948a; margin-top: 4px; letter-spacing: 0.08em;">KRİTİK TOLERANS</div>
+            </div>
+            <div>
+              <div style="font-size: 21px; font-weight: 800; letter-spacing: -0.02em;">{{ lineCrew }}</div>
+              <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: #9a948a; margin-top: 4px; letter-spacing: 0.08em;">EKİP</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- machine park -->
+        <div style="margin-top: 18px; border: 1px solid rgba(26,23,20,.1); border-radius: 20px; overflow: hidden; background: #FFFFFF;">
+          <div style="display: grid; grid-template-columns: minmax(0,1.5fr) minmax(70px,0.5fr) minmax(0,1.2fr); gap: 12px; padding: 13px 22px; background: #F7F4ED; border-bottom: 1px solid rgba(26,23,20,.08); font-family: 'DM Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; color: #b1a896;">
+            <div>MAKİNE / İSTASYON</div><div>ADET</div><div>KAPASİTE / NOT</div>
+          </div>
+          <sc-for list="{{ machines }}" as="m" hint-placeholder-count="5">
+            <div style="display: grid; grid-template-columns: minmax(0,1.5fr) minmax(70px,0.5fr) minmax(0,1.2fr); gap: 12px; padding: 13px 22px; border-bottom: 1px solid rgba(26,23,20,.06); font-size: 14.5px; align-items: baseline;">
+              <div style="font-weight: 600;">{{ m.name }}</div>
+              <div style="font-family: 'DM Mono', monospace; font-size: 13px; color: #8A6638;">{{ m.qty }}</div>
+              <div style="font-size: 13px; color: #6B6459; line-height: 1.5;">{{ m.note }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- line illustration -->
+      <div style="background: linear-gradient(160deg,#F4F0E6,#EDE7DA); border-radius: 24px; padding: 30px 28px; position: sticky; top: 100px;">
+        <sc-if value="{{ isKilit }}" hint-placeholder-val="{{ true }}">
+        <svg viewBox="0 0 300 260" width="100%" fill="none" stroke="#1A1714" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 190 H282 M30 190 V216 M270 190 V216 M18 216 H282"/>
+          <path d="M40 190 V132 H108 V190"/>
+          <path d="M108 160 H176" stroke-width="3"/>
+          <rect x="176" y="146" width="56" height="28" rx="4" stroke="#A87C4F" stroke-width="2.2"/>
+          <path d="M186 152 V168 M196 152 V168 M206 152 V168" stroke="#A87C4F" stroke-width="1.3" opacity=".7"/>
+          <path d="M232 160 H258 M246 160 V190"/>
+          <g stroke="#A87C4F" stroke-width="2.2"><path d="M204 112 V132 L198 140 H210 L204 132"/></g>
+          <g transform="translate(30 34)">
+            <circle cx="36" cy="36" r="24"/><circle cx="36" cy="36" r="8" stroke="#A87C4F"/>
+            <path d="M36 4 V12 M36 60 V68 M4 36 H12 M60 36 H68 M13 13 L19 19 M53 53 L59 59 M59 13 L53 19 M19 53 L13 59"/>
+          </g>
+          <g transform="translate(150 34)" stroke="#A87C4F" stroke-width="2">
+            <path d="M6 20 H120 M6 20 V40 M6 40 H26"/>
+            <path d="M86 20 V44 M86 44 H106 M106 44 V20"/>
+          </g>
+          <text x="150" y="86" font-family="DM Mono, monospace" font-size="11" fill="#8A6638" stroke="none" letter-spacing="1.3">± 0,05 mm</text>
+        </svg>
+        </sc-if>
+        <sc-if value="{{ isKapi }}" hint-placeholder-val="{{ false }}">
+        <svg viewBox="0 0 300 260" width="100%" fill="none" stroke="#1A1714" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <g transform="translate(22 16)">
+            <path d="M6 10 H120 V228 H6 Z"/>
+            <path d="M18 22 H108 V216 H18 Z" stroke-width="1.6"/>
+            <path d="M30 44 H96 M30 88 H96 M30 132 H96" stroke-width="1.3" opacity=".4"/>
+            <path d="M86 122 C94 122, 98 128, 94 134 L82 134" stroke="#A87C4F" stroke-width="2.4"/>
+            <rect x="2" y="56" width="10" height="24" rx="3" stroke="#A87C4F"/>
+            <rect x="2" y="118" width="10" height="24" rx="3" stroke="#A87C4F"/>
+            <rect x="2" y="180" width="10" height="24" rx="3" stroke="#A87C4F"/>
+          </g>
+          <g transform="translate(184 26)">
+            <path d="M6 10 H84 V58 H6 Z"/>
+            <path d="M6 20 H84 M6 48 H84" stroke-width="1.4"/>
+            <path d="M14 28 C22 34, 30 26, 38 32 C46 38, 54 28, 62 34 C70 40, 76 30, 82 36" stroke="#A87C4F" stroke-width="1.5" opacity=".8"/>
+            <text x="6" y="80" font-family="DM Mono, monospace" font-size="10" fill="#8A6638" stroke="none" letter-spacing="1">SAC · PU · SAC</text>
+          </g>
+          <g transform="translate(184 124)" stroke="#A87C4F">
+            <path d="M8 30 H40" stroke-width="2.6"/>
+            <path d="M44 20 L52 12 M48 30 L60 30 M44 40 L52 48" stroke-width="1.6" opacity=".8"/>
+            <text x="6" y="62" font-family="DM Mono, monospace" font-size="10" fill="#8A6638" stroke="none" letter-spacing="1">ROBOT KAYNAK</text>
+          </g>
+          <g transform="translate(184 200)">
+            <path d="M8 26 H36 L44 20 V36 L36 30 H8 Z"/>
+            <path d="M52 28 C60 22, 68 34, 76 26" stroke="#A87C4F" stroke-width="1.5" opacity=".75"/>
+            <text x="6" y="56" font-family="DM Mono, monospace" font-size="10" fill="#8A6638" stroke="none" letter-spacing="1">60–80 µm</text>
+          </g>
+        </svg>
+        </sc-if>
+        <sc-if value="{{ isKaplama }}" hint-placeholder-val="{{ false }}">
+        <svg viewBox="0 0 300 260" width="100%" fill="none" stroke="#1A1714" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <g transform="translate(20 20)">
+            <path d="M6 8 H140 V172 H6 Z"/>
+            <path d="M52 8 V172 M96 8 V172" stroke-width="1.5" opacity=".55"/>
+            <path d="M6 62 H140 M6 116 H140" stroke-width="1.5" opacity=".55"/>
+            <rect x="56" y="66" width="36" height="46" rx="1.5" stroke="#A87C4F" stroke-width="2.3"/>
+            <path d="M140 8 L160 -2 M140 172 L160 162 M160 -2 V162" stroke-width="1.4" opacity=".4"/>
+          </g>
+          <g transform="translate(190 26)">
+            <path d="M8 36 H76 L88 24"/>
+            <path d="M8 36 V56 M76 36 V20"/>
+            <path d="M30 36 V26" stroke="#A87C4F" stroke-width="1.6"/>
+            <text x="6" y="76" font-family="DM Mono, monospace" font-size="10" fill="#8A6638" stroke="none" letter-spacing="1">V KANAL · 90°</text>
+          </g>
+          <g transform="translate(190 116)">
+            <path d="M14 6 V80 M14 20 H42 M42 20 V32 M14 54 H42 M42 54 V66" stroke="#A87C4F" stroke-width="2.2"/>
+            <path d="M48 14 V38 M48 48 V72" stroke-width="1.8"/>
+            <text x="6" y="100" font-family="DM Mono, monospace" font-size="10" fill="#8A6638" stroke="none" letter-spacing="1">KONSOL + KLİPS</text>
+          </g>
+          <g transform="translate(28 210)">
+            <path d="M4 16 H132 M4 28 H132 M4 40 H132" stroke-width="2.4"/>
+            <path d="M4 22 H132 M4 34 H132" stroke="#A87C4F" stroke-width="1.3" stroke-dasharray="4 5" opacity=".8"/>
+          </g>
+        </svg>
+        </sc-if>
+        <sc-if value="{{ isTavan }}" hint-placeholder-val="{{ false }}">
+        <svg viewBox="0 0 300 260" width="100%" fill="none" stroke="#1A1714" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <g transform="translate(24 26)">
+            <path d="M6 10 H150 V120 H6 Z"/>
+            <path d="M54 10 V120 M102 10 V120 M6 65 H150" stroke-width="1.4" opacity=".5"/>
+            <circle cx="78" cy="38" r="14" stroke="#A87C4F" stroke-width="2.2"/>
+            <circle cx="126" cy="92" r="14" stroke="#A87C4F" stroke-width="2.2"/>
+            <path d="M6 10 L30 -8 H174 L150 10" stroke-width="1.5" opacity=".5"/>
+          </g>
+          <g transform="translate(190 30)" stroke="#A87C4F">
+            <path d="M10 10 V56 M10 24 H40 M40 24 V38" stroke-width="2.2"/>
+            <text x="4" y="78" font-family="DM Mono, monospace" font-size="10" fill="#8A6638" stroke="none" letter-spacing="1">T-PROFİL</text>
+          </g>
+          <g transform="translate(30 176)">
+            <path d="M6 30 H210" stroke-width="2.6"/>
+            <path d="M24 30 V14 M60 30 V14 M96 30 V14 M132 30 V14 M168 30 V14" stroke="#A87C4F" stroke-width="1.8"/>
+            <text x="6" y="58" font-family="DM Mono, monospace" font-size="10" fill="#8A6638" stroke="none" letter-spacing="1">LİNEER LED HATTI</text>
+          </g>
+        </svg>
+        </sc-if>
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: #9A917F; letter-spacing: 0.08em; margin-top: 12px; text-align: center;">{{ lineCaption }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== IN-HOUSE vs OUTSOURCED ===== -->
+  <div style="background: #18120D; color: #F4EEE2; margin-top: 84px; padding: 76px 0 80px;">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 0 32px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #C2A06A;">DİKEY ENTEGRASYON</div>
+      <h2 style="font-size: 38px; line-height: 1.1; letter-spacing: -0.035em; font-weight: 700; color: #F6F0E4; margin: 14px 0 0; max-width: 700px;">Kontrol edemediğimiz süreci <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic;">dışarıya</span> vermeyiz.</h2>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 40px;">
+        <div style="background: rgba(244,238,226,.05); border: 1px solid rgba(244,238,226,.14); border-radius: 20px; padding: 26px 28px;">
+          <div style="font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #2E7D5B;">BÜNYEMİZDE</div>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 16px;">
+            <sc-for list="{{ inHouse }}" as="i" hint-placeholder-count="6">
+              <div style="display: flex; align-items: baseline; gap: 12px; font-size: 15px;">
+                <span style="color: #2E7D5B; flex: none;">✓</span>
+                <span style="font-weight: 600; color: #F6F0E4;">{{ i.name }}</span>
+                <span style="font-size: 13px; color: #B4AC9E; margin-left: auto; text-align: right;">{{ i.note }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="background: rgba(244,238,226,.05); border: 1px solid rgba(244,238,226,.14); border-radius: 20px; padding: 26px 28px;">
+          <div style="font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #C2A06A;">DIŞ TEDARİK · DENETİMLİ</div>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 16px;">
+            <sc-for list="{{ outsourced }}" as="o" hint-placeholder-count="4">
+              <div style="display: flex; align-items: baseline; gap: 12px; font-size: 15px;">
+                <span style="color: #C2A06A; flex: none;">→</span>
+                <span style="font-weight: 600; color: #F6F0E4;">{{ o.name }}</span>
+                <span style="font-size: 13px; color: #B4AC9E; margin-left: auto; text-align: right;">{{ o.note }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SUSTAINABILITY ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 80px 32px 0;">
+    <div style="display: flex; align-items: baseline; gap: 16px; padding-bottom: 22px; border-bottom: 2px solid #1A1714;">
+      <h2 style="font-size: 32px; font-weight: 700; letter-spacing: -0.03em; margin: 0;">Kaynak & çevre</h2>
+      <span style="font-size: 15px; color: #78726B; margin-left: auto;">ISO 14001 kapsamında izlenir</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; margin-top: 28px;">
+      <sc-for list="{{ green }}" as="g" hint-placeholder-count="4">
+        <div style="background: #F7F4ED; border-radius: 20px; padding: 24px 26px;">
+          <div style="font-size: 26px; font-weight: 800; letter-spacing: -0.03em; white-space: nowrap;">{{ g.value }}</div>
+          <div style="font-size: 15px; font-weight: 700; margin-top: 8px; letter-spacing: -0.01em;">{{ g.title }}</div>
+          <div style="font-size: 13.5px; line-height: 1.6; color: #6B6459; margin-top: 5px;">{{ g.desc }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ===== CTA ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 72px 32px 0;">
+    <div style="background: #F0ECE3; border-radius: 28px; padding: 44px 48px; display: flex; align-items: center; justify-content: space-between; gap: 34px; flex-wrap: wrap;">
+      <div>
+        <div style="font-size: 28px; font-weight: 700; letter-spacing: -0.03em;">Kapasite planınızı birlikte çıkaralım.</div>
+        <div style="font-size: 16px; color: #6B6459; margin-top: 8px; max-width: 540px; line-height: 1.6;">Yıllık hacminizi ve ürün kırılımınızı paylaşın; hat müsaitliği, üretim slotu ve teslim takvimini birlikte planlarız.</div>
+      </div>
+      <div style="display: flex; gap: 10px; flex: none; flex-wrap: wrap;">
+        <a href="İletişim.dc.html" style="font-size: 14px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 14px 26px; border-radius: 980px; white-space: nowrap;">İletişime geçin&nbsp;›</a>
+        <a href="İhracat.dc.html" style="font-size: 14px; font-weight: 600; color: #1A1714; background: #FFFFFF; border: 1px solid rgba(26,23,20,.16); padding: 14px 26px; border-radius: 980px; white-space: nowrap;">İhracat süreci</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div style="background: #F0ECE3; border-top: 1px solid rgba(26,23,20,.08); margin-top: 80px;">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 56px 32px 28px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #A87C4F;"></div>
+          <span style="font-size: 18px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
+        </div>
+        <p style="font-size: 14px; line-height: 1.6; color: #8a857c; max-width: 280px; margin: 16px 0 0;">Kapı güvenlik donanımı ve tavan sistemleri üreticisi. 1976'dan beri tasarlıyor, işliyor ve dünyaya ihraç ediyoruz.</p>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">Ürünler</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>Silindir Bareller</span><span>Asma Kilitler</span><span>Menteşeler</span><span>Çelik Kapı</span><span>Duvar Kaplama</span><span>Tavan Sistemleri</span></div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">Kurumsal</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><a href="Hakkımızda.dc.html" style="color: inherit;">Hakkımızda</a><span style="color: #1A1714; font-weight: 600;">Üretim</span><a href="Sertifikalar.dc.html" style="color: inherit;">Sertifikalar</a><a href="İhracat.dc.html" style="color: inherit;">İhracat</a><a href="İletişim.dc.html" style="color: inherit;">İletişim</a></div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">İletişim</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>export@marka.com</span><span>+90 232 000 00 00</span><span>İAOSB, İzmir</span></div>
+      </div>
+    </div>
+    <div style="max-width: 1120px; margin: 0 auto; padding: 22px 32px; border-top: 1px solid rgba(26,23,20,.08); display: flex; justify-content: space-between; font-size: 12px; color: #9a948a;">
+      <span>© 2025 MARKA DONANIM SAN. TİC. A.Ş.</span>
+      <span>CE · TSE · ISO 9001</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1120,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { line: 'kilit' };
+
+  lineData() {
+    return {
+      kilit: {
+        label: 'Kilit & Donanım', title: 'Kilit ve kapı donanımı hattı', area: '1.900 m²',
+        caption: 'CNC → ISIL İŞLEM → KAPLAMA → MONTAJ',
+        desc: 'Pirinç ve çinko alaşımı gövdelerin tornalandığı, sertleştirilmiş pimlerin ısıl işlemden geçtiği ve kaplama banyolarının bulunduğu hat. En yüksek adet, en sıkı tolerans burada.',
+        out: '180.000 adet', tol: '± 0,05 mm', crew: '46 kişi',
+        machines: [
+          { name: 'CNC torna (çubuk beslemeli)', qty: '12', note: 'Ø4–32 mm çubuk, tek operasyonda gövde' },
+          { name: 'CNC işleme merkezi', qty: '6', note: 'Kam ve pim yuvası, menteşe gövdesi' },
+          { name: 'Isıl işlem fırını', qty: '2', note: 'Pim ve yay çeliği · ≥ 58 HRC' },
+          { name: 'Kaplama hattı (nikel/pirinç/siyah)', qty: '3', note: '8–12 µm · XRF kontrollü' },
+          { name: 'Montaj & kodlama masası', qty: '14', note: 'Master key hiyerarşisi dâhil' },
+        ],
+      },
+      kapi: {
+        label: 'Çelik Kapı', title: 'Çelik kapı hattı', area: '2.200 m²',
+        caption: 'LAZER → ABKANT → KAYNAK → TOZ BOYA',
+        desc: 'Galvanizli sacın lazerle kesildiği, abkantta büküldüğü, robot kaynakla birleştirildiği ve poliüretan dolgudan sonra elektrostatik toz boyaya girdiği hat. Kanat ve kasa aynı seri numarasıyla eşleşir.',
+        out: '4.200 kapı', tol: '± 0,5 mm', crew: '38 kişi',
+        machines: [
+          { name: 'Fiber lazer kesim', qty: '2', note: '4 kW · 3.000 × 1.500 mm tabla' },
+          { name: 'CNC abkant pres', qty: '3', note: '135 ton · otomatik köşe programı' },
+          { name: 'Robot kaynak hücresi', qty: '2', note: 'Sürekli dikiş, kritik köşeler' },
+          { name: 'Poliüretan dolgu presi', qty: '1', note: '38–42 kg/m³ yoğunluk' },
+          { name: 'Toz boya hattı + fırın', qty: '1', note: 'Fosfat banyo · 180–200 °C · 60–80 µm' },
+        ],
+      },
+      kaplama: {
+        label: 'Duvar Kaplama', title: 'Duvar kaplama hattı', area: '1.400 m²',
+        caption: 'EBATLAMA → FREZE → BÜKME → KASET',
+        desc: 'Alüminyum kompozit ve düz levhaların projeye göre ebatlandığı, V kanal frezelenip kaset formuna büküldüğü hat. Panel kodlaması üretimde başlar, pakete kadar aynı kalır.',
+        out: '14.000 m²', tol: '± 0,5 mm', crew: '24 kişi',
+        machines: [
+          { name: 'CNC panel freze (3 eksen)', qty: '3', note: 'V kanal ve tahliye deliği' },
+          { name: 'Panel ebatlama testeresi', qty: '2', note: 'Tam boy 6 m’ye kadar' },
+          { name: 'Kaset bükme tezgâhı', qty: '2', note: '90° ± 0,5° köşe dikliği' },
+          { name: 'PVDF / toz boya kabini', qty: '1', note: '25 ± 3 µm · ΔE ≤ 1,0' },
+          { name: 'Film çekme & paketleme', qty: '2', note: '6 ay UV dayanımlı koruyucu film' },
+        ],
+      },
+      tavan: {
+        label: 'Tavan Sistemleri', title: 'Tavan sistemleri hattı', area: '900 m²',
+        caption: 'T-PROFİL → PANEL → ARMATÜR MONTAJI',
+        desc: 'Taşıyıcı T-profil üretimi, mineral ve metal panel işleme ile lineer LED profil montajının yapıldığı hat. Akustik ve yangın performansı panel bazında izlenir.',
+        out: '22.000 m²', tol: '± 1,0 mm', crew: '18 kişi',
+        machines: [
+          { name: 'Rulo şekillendirme (T-profil)', qty: '2', note: '600 × 600 ve 1.200 modül' },
+          { name: 'Metal panel perfore presi', qty: '1', note: 'Akustik delik deseni' },
+          { name: 'Baffle bükme hattı', qty: '1', note: 'Lineer alüminyum, akustik dolgulu' },
+          { name: 'LED profil montaj bandı', qty: '2', note: 'Magnetik ray · 1–3 m modül' },
+          { name: 'Paketleme & etiketleme', qty: '2', note: 'Proje bazlı kitleme' },
+        ],
+      },
+    };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const L = this.lineData()[s.line];
+    return {
+      capacity: [
+        { value: '6.400 m²', label: 'KAPALI ALAN' },
+        { value: '4', label: 'ÜRETİM HATTI' },
+        { value: '3 vardiya', label: 'ÇALIŞMA DÜZENİ' },
+        { value: '126', label: 'ÜRETİM PERSONELİ' },
+        { value: '%92', label: 'HAT DOLULUK ORANI' },
+      ],
+      lineTabs: ['kilit', 'kapi', 'kaplama', 'tavan'].map(id => {
+        const on = id === s.line;
+        return { label: this.lineData()[id].label, on: () => this.setState({ line: id }),
+          bg: on ? '#1A1714' : '#FFFFFF', fg: on ? '#FBF9F5' : '#4A453E', bd: on ? '#1A1714' : 'rgba(26,23,20,.16)' };
+      }),
+      lineTitle: L.title, lineDesc: L.desc, lineArea: L.area, lineCaption: L.caption,
+      lineOut: L.out, lineTol: L.tol, lineCrew: L.crew,
+      machines: L.machines,
+      isKilit: s.line === 'kilit', isKapi: s.line === 'kapi',
+      isKaplama: s.line === 'kaplama', isTavan: s.line === 'tavan',
+      inHouse: [
+        { name: 'CNC işleme & tornalama', note: '18 istasyon' },
+        { name: 'Isıl işlem', note: '2 fırın' },
+        { name: 'Kaplama & toz boya', note: '4 hat' },
+        { name: 'Kalıp & takım atölyesi', note: 'kendi kalıplarımız' },
+        { name: 'Kalite laboratuvarı', note: 'tuz / tork / çevrim' },
+        { name: 'Montaj & paketleme', note: '%100 işlev testi' },
+      ],
+      outsourced: [
+        { name: 'Pirinç döküm (ham çubuk)', note: 'sertifikalı döküm, girişte analiz' },
+        { name: 'Galvanizli sac', note: 'Z140 kaplama, rulo bazlı rapor' },
+        { name: 'LED modül & sürücü', note: 'LM-80 raporlu tedarikçi' },
+        { name: 'Yangın & akustik testler', note: 'akredite dış laboratuvar' },
+      ],
+      green: [
+        { value: '%78', title: 'Geri kazanılan talaş', desc: 'Pirinç ve alüminyum talaş ayrı toplanıp dökümcüye geri gönderilir.' },
+        { value: 'Kapalı devre', title: 'Kaplama banyosu suyu', desc: 'Durulama suyu arıtılıp devrede tutulur; deşarj minimuma iner.' },
+        { value: '420 kWp', title: 'Çatı güneş enerjisi', desc: 'Yıllık elektrik tüketiminin yaklaşık üçte biri kendi üretimimizden.' },
+        { value: 'Kurşunsuz', title: 'Alaşım ve kaplama', desc: 'RoHS uyumlu alaşım; krom VI içermeyen pasivasyon.' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
