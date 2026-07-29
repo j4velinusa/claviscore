@@ -94,3 +94,95 @@ export function GrowthSketch({ className }: { className?: string }) {
     </svg>
   );
 }
+
+/**
+ * Fabrika konum krokisi. Tasarımdaki İzmir haritasının (Alsancak Limanı + ADB
+ * havalimanı + Ege kıyısı) Çerkezköy/Tekirdağ karşılığı — görsel dil aynı,
+ * coğrafya düzeltildi. Mesafe/süre etiketi bilinçli olarak yok: tasarımdaki
+ * "25 dk" gibi değerler doğrulanmadı.
+ * Liman etiketi teyide açık — yükleme limanı Ambarlı ise değişir.
+ */
+export function LocationSketch({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 300 170"
+      width="100%"
+      className={className}
+      fill="none"
+      stroke="#1A1714"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      {/* Marmara kıyı şeridi — güneyde, iki katman */}
+      <path
+        d="M6 136 C44 128, 74 142, 108 134 C140 126, 166 140, 198 132 C226 125, 252 134, 294 128"
+        strokeWidth={1.6}
+        opacity=".45"
+      />
+      <path
+        d="M6 150 C48 142, 80 155, 116 147 C150 140, 178 152, 210 145 C240 139, 264 147, 294 142"
+        strokeWidth={1.4}
+        opacity=".3"
+      />
+      {/* yollar: fabrikadan doğuya İstanbul, güneye limana */}
+      <path d="M150 66 H244 M150 66 V120" strokeWidth={2} />
+      <path d="M244 66 L276 44" strokeDasharray="6 8" strokeWidth={1.6} opacity=".6" />
+      {/* fabrika bloğu — Çerkezköy */}
+      <g transform="translate(120 48)" stroke="#A87C4F" strokeWidth={2.2}>
+        <path d="M4 30 V8 L18 0 L18 30 M18 8 L32 0 V30 M4 30 H40" />
+      </g>
+      <text
+        x="120"
+        y="96"
+        fontFamily="DM Mono, monospace"
+        fontSize="10"
+        fill="#8A6638"
+        stroke="none"
+        letterSpacing="1"
+      >
+        ÇERKEZKÖY
+      </text>
+      {/* havalimanı — doğuda, İstanbul */}
+      <g transform="translate(244 20)">
+        <path
+          d="M4 16 C14 12, 26 9, 40 8 C44 8, 46 11, 44 14 C42 17, 36 19, 30 19 L14 22 C8 23, 5 20, 4 16 Z"
+          stroke="#1A1714"
+          strokeWidth={1.7}
+        />
+      </g>
+      <text
+        x="228"
+        y="14"
+        fontFamily="DM Mono, monospace"
+        fontSize="10"
+        fill="#78726B"
+        stroke="none"
+        letterSpacing="1"
+      >
+        İSTANBUL
+      </text>
+      {/* liman — güneyde, Marmara kıyısında */}
+      <g transform="translate(128 118)">
+        <path
+          d="M6 22 C4 16, 6 14, 9 14 H40 C44 14, 45 17, 42 21 C38 25, 30 28, 22 28 H12 C8 27, 7 25, 6 22 Z"
+          stroke="#1A1714"
+          strokeWidth={1.7}
+        />
+        <path d="M22 14 V4" strokeWidth={1.5} />
+      </g>
+      <text
+        x="118"
+        y="164"
+        fontFamily="DM Mono, monospace"
+        fontSize="10"
+        fill="#78726B"
+        stroke="none"
+        letterSpacing="1"
+      >
+        TEKİRDAĞ LİMANI
+      </text>
+    </svg>
+  );
+}

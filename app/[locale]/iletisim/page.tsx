@@ -9,6 +9,7 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 import { Reveal } from "@/components/motion/Reveal";
 import { Emphasis } from "@/components/site/Emphasis";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { LocationSketch } from "@/components/site/Illustrations";
 
 export async function generateMetadata({
   params,
@@ -63,6 +64,7 @@ export default async function IletisimPage({ params }: { params: Promise<{ local
                 <address className="not-italic text-[14.5px] leading-[1.6] text-[#5C564C] mt-1.5">
                   {site.addressFull}
                 </address>
+                <LocationSketch className="mt-[18px]" />
               </div>
 
               <div className="bg-white border border-ink/[0.08] rounded-[22px] px-[26px] py-6">
