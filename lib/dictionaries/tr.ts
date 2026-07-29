@@ -99,6 +99,30 @@ export const tr = {
     corporateLinks: ["Hakkımızda", "Üretim", "Sertifikalar", "İhracat", "İletişim"],
     rights: "CE · TSE · ISO 9001",
   },
+  about: {
+    kicker: "Hakkımızda",
+    title: { pre: "Kapı donanımını", em: "ihracata", post: "göre kurduk." },
+    subtitle:
+      "2019'da tek bir işle kurulduk: Türkiye'de üretilen kapı donanımını ve tavan sistemlerini, dünyanın herhangi bir limanına sorunsuz teslim etmek. Üretim bizde, dokümantasyon bizde, sorumluluk bizde.",
+    statsLabel: "RAKAMLARLA",
+    stats: [
+      { value: "2019", label: "Kuruluş" },
+      { value: "6.400 m²", label: "Kapalı alan" },
+      { value: "50+", label: "Çalışan" },
+      { value: "40+", label: "Ülkeye ihracat" },
+      { value: "50+", label: "Aktif ürün" },
+    ],
+    storyTitle: { pre: "Söylediğimizi", em: "ölçeriz.", post: "" },
+    story: [
+      "Kapı donanımı, katalogda birbirine çok benzeyen bir üründür. Farkı yaratan, kesitteki milimetre ve raporda duran rakamdır. Bu yüzden ürettiğimiz her şeyi ölçer, ölçtüğümüzü belgeleriz.",
+      "İhracatı sonradan eklenen bir departman olarak değil, işin kurulduğu eksen olarak ele aldık. Teslim şekli, ödeme koşulu, paketleme ve gümrük evrakı ilk günden itibaren aynı masada çözülüyor.",
+      "Kapı donanımıyla başladık, tavan sistemleriyle devam ettik. Aynı mühendislik disiplinini bir mekânın hem kapısına hem tavanına taşımak, tek tedarikçiyle çalışmak isteyen projeler için fark yaratıyor.",
+    ],
+    ctaTitle: { pre: "Birlikte çalışmayı", em: "konuşalım.", post: "" },
+    ctaBody: "Distribütörlük, proje tedariki veya özel üretim — hangi başlıkta olursa olsun aynı masadan yanıt alırsınız.",
+    ctaContact: "İletişime geç",
+    ctaExport: "İhracat operasyonu",
+  },
   koleksiyonPage: {
     kicker: "Koleksiyon",
     title: { pre: "Bir mekânın", em: "tek", post: "yüzey dili." },
@@ -319,6 +343,11 @@ export const tr = {
       title: "Bilgi Merkezi — CLAVISCOR",
       description:
         "Kapı donanımı ve tavan sistemlerinde teknik notlar, standart okumaları ve ihracat pratiği. Satın alma ve proje ekipleri için Claviscor Bilgi Merkezi.",
+    },
+    hakkimizda: {
+      title: "Hakkımızda — CLAVISCOR",
+      description:
+        "2019'da kurulan Claviscor, kapı güvenlik donanımı ve tavan sistemlerini 40+ ülkeye ihraç ediyor. 6.400 m² kapalı alan, 50+ çalışan.",
     },
     ihracat: {
       title: "İhracat — CLAVISCOR",

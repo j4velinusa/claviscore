@@ -99,6 +99,30 @@ export const en: Dictionary = {
     corporateLinks: ["About", "Manufacturing", "Certificates", "Export", "Contact"],
     rights: "CE · TSE · ISO 9001",
   },
+  about: {
+    kicker: "About us",
+    title: { pre: "We built door hardware", em: "around", post: "export." },
+    subtitle:
+      "We were founded in 2019 with a single job: to deliver Turkish-made door hardware and ceiling systems to any port in the world without friction. Production is ours, documentation is ours, responsibility is ours.",
+    statsLabel: "IN NUMBERS",
+    stats: [
+      { value: "2019", label: "Founded" },
+      { value: "6,400 m²", label: "Covered area" },
+      { value: "50+", label: "Employees" },
+      { value: "40+", label: "Countries served" },
+      { value: "50+", label: "Active products" },
+    ],
+    storyTitle: { pre: "We measure what we", em: "claim.", post: "" },
+    story: [
+      "In a catalog, door hardware all looks alike. The difference is the millimetre in the cross-section and the figure in the report. That is why we measure everything we make, and document what we measure.",
+      "We treated export not as a department added later but as the axis the business was built on. Delivery term, payment condition, packaging and customs paperwork are settled at the same desk from day one.",
+      "We started with door hardware and continued with ceiling systems. Carrying the same engineering discipline to both the door and the ceiling of a space matters to projects that want a single supplier.",
+    ],
+    ctaTitle: { pre: "Let's talk about working", em: "together.", post: "" },
+    ctaBody: "Distribution, project supply or custom manufacturing — whichever it is, you get an answer from the same desk.",
+    ctaContact: "Get in touch",
+    ctaExport: "Export operation",
+  },
   koleksiyonPage: {
     kicker: "Collection",
     title: { pre: "One surface language for a", em: "whole", post: "space." },
@@ -317,6 +341,11 @@ export const en: Dictionary = {
       title: "Knowledge Center — CLAVISCOR",
       description:
         "Technical notes, standards explained and export practice in door hardware and ceiling systems. The Claviscor Knowledge Center for purchasing and project teams.",
+    },
+    hakkimizda: {
+      title: "About — CLAVISCOR",
+      description:
+        "Founded in 2019, Claviscor exports door security hardware and ceiling systems to 40+ countries. 6,400 m² covered area, 50+ employees.",
     },
     ihracat: {
       title: "Export — CLAVISCOR",
