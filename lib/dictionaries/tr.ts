@@ -108,10 +108,12 @@ export const tr = {
     stepsLabel: "KİLİT & DONANIM AKIŞI",
     qcLabel: "ÖLÇTÜĞÜMÜZ DEĞERLER",
     qcColumns: { name: "ÖLÇÜM", value: "DEĞER", method: "YÖNTEM" },
+    planCaption: "6.400 m² · VAZİYET PLANI (ŞEMATİK)",
     lines: [
       {
         name: "Kilit & Donanım",
         desc: "Silindir barel, asma kilit, menteşe, kol ve otel sistemleri.",
+        caption: "CNC → ISIL İŞLEM → KAPLAMA → MONTAJ",
         machines: [
           { name: "CNC torna (çubuk beslemeli)", qty: "12", note: "Ø4–32 mm çubuk, tek operasyonda gövde" },
           { name: "CNC işleme merkezi", qty: "6", note: "Kam ve pim yuvası, menteşe gövdesi" },
@@ -123,6 +125,7 @@ export const tr = {
       {
         name: "Tavan & Panel",
         desc: "Asma tavan modülleri, baffle profilleri ve alçı tavan plakaları.",
+        caption: "T-PROFİL → PANEL → ARMATÜR MONTAJI",
         machines: [
           { name: "CNC panel freze (3 eksen)", qty: "3", note: "V kanal ve tahliye deliği" },
           { name: "Panel ebatlama testeresi", qty: "2", note: "Tam boy 6 m'ye kadar" },
@@ -153,6 +156,30 @@ export const tr = {
       { days: "GÜN 22–24", title: "Gümrük & yükleme", desc: "Evrak, gümrükleme, konteyner yükleme." },
       { days: "GÜN 25–34", title: "Transit & teslim", desc: "Deniz transiti ve varış limanı teslimi." },
     ],
+  },
+  // El çizimi SVG'lerin içindeki etiketler. Çizimin kendisi dilden bağımsız,
+  // üzerindeki yazı değil — bu yüzden metinler burada duruyor.
+  // Kaynak: design/İhracat.dc.html, design/Üretim.dc.html, design/Koleksiyon.dc.html
+  illustrations: {
+    tolerance: "± 0,05 mm",
+    torque: "≥ 25 Nm",
+    saltSpray: "240 h tuz testi",
+    doorLayers: "SAC · PU · SAC",
+    robotWeld: "ROBOT KAYNAK",
+    powderCoat: "60–80 µm",
+    vGroove: "V KANAL · 90°",
+    bracketClip: "KONSOL + KLİPS",
+    foamLayer: "KÖPÜK ARA KATMAN",
+    tProfile: "T-PROFİL",
+    ledRun: "LİNEER LED HATTI",
+    plan: {
+      cnc: "CNC",
+      press: "PRES / KAYNAK",
+      coating: "KAPLAMA",
+      assembly: "MONTAJ",
+      lab: "LAB / OQC",
+      dock: "RAMPA",
+    },
   },
   about: {
     kicker: "Hakkımızda",
@@ -206,6 +233,7 @@ export const tr = {
       "Gümrük dokümantasyonu, etiketleme ve paletleme dahil anahtar teslim ihracat operasyonu. Teslim şeklini ve ödeme koşulunu birlikte belirliyoruz.",
     regionsTitle: "Sevk ettiğimiz bölgeler",
     packagingTitle: "Paketleme zinciri",
+    transportCaption: "PALETLEME → KONTEYNER → LİMAN",
     packaging: [
       { title: "Birim kutu", desc: "Ürün, anahtar ve montaj vidası bir arada; kutu üzerinde barkod ve SKU etiketi." },
       { title: "Koli", desc: "Nem bariyerli oluklu mukavva; koli içi adet ve brüt ağırlık dış yüzeyde yazılı." },

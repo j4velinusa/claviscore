@@ -11,6 +11,11 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 import { Reveal } from "@/components/motion/Reveal";
 import { Emphasis } from "@/components/site/Emphasis";
 import { QualityTable, DeliveryTimeline } from "@/components/production/ProductionSections";
+import {
+  ExportHeroSketch,
+  TransportSketch,
+  InspectionSketch,
+} from "@/components/site/Illustrations";
 
 export async function generateMetadata({
   params,
@@ -45,13 +50,22 @@ export default async function IhracatPage({ params }: { params: Promise<{ locale
       <main className="flex-1">
         <section className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-[76px]">
           <Reveal>
-            <p className="text-[13px] font-semibold tracking-[0.12em] uppercase text-bronze-2">{t.kicker}</p>
-            <h1 className="text-[clamp(38px,6.5vw,64px)] leading-[1.02] tracking-[-0.04em] font-bold mt-4 max-w-[820px] text-pretty">
-              <Emphasis parts={t.title} />
-            </h1>
-            <p className="text-[clamp(17px,2.3vw,19px)] leading-[1.6] text-muted font-medium mt-5 max-w-[600px]">
-              {t.subtitle}
-            </p>
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+              <div>
+                <p className="text-[13px] font-semibold tracking-[0.12em] uppercase text-bronze-2">{t.kicker}</p>
+                <h1 className="text-[clamp(38px,6.5vw,64px)] leading-[1.02] tracking-[-0.04em] font-bold mt-4 text-pretty">
+                  <Emphasis parts={t.title} />
+                </h1>
+                <p className="text-[clamp(17px,2.3vw,19px)] leading-[1.6] text-muted font-medium mt-5 max-w-[600px]">
+                  {t.subtitle}
+                </p>
+              </div>
+              {/* Gemi + uçak + vinç: tasarımdaki hero çizimi. Uçağın izi kutunun
+                  dışına taşar (overflow açık) — tasarımdaki davranış. */}
+              <div className="[background:linear-gradient(160deg,#F4F0E6,#EDE7DA)] rounded-[28px] px-7 py-9 sm:px-8 flex items-center justify-center">
+                <ExportHeroSketch className="max-w-[460px]" />
+              </div>
+            </div>
           </Reveal>
         </section>
 
@@ -76,22 +90,42 @@ export default async function IhracatPage({ params }: { params: Promise<{ locale
             <h2 className="text-[clamp(24px,3.4vw,30px)] font-bold tracking-[-0.03em] pb-4 border-b border-ink/10">
               {t.packagingTitle}
             </h2>
-            <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-              {t.packaging.map((p, i) => (
-                <li key={p.title} className="bg-paper rounded-[18px] px-5 py-5">
-                  <div className="font-mono text-[11px] tracking-[0.12em] text-bronze-2">
-                    {String(i + 1).padStart(2, "0")}
-                  </div>
-                  <div className="text-[17px] font-bold tracking-[-0.015em] mt-2">{p.title}</div>
-                  <p className="text-[13.5px] leading-[1.55] text-muted mt-1.5 text-pretty">{p.desc}</p>
-                </li>
-              ))}
-            </ol>
+            <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,290px)] gap-6 lg:gap-10 mt-6 items-start">
+              <ol className="grid sm:grid-cols-2 gap-4">
+                {t.packaging.map((p, i) => (
+                  <li key={p.title} className="bg-paper rounded-[18px] px-5 py-5">
+                    <div className="font-mono text-[11px] tracking-[0.12em] text-bronze-2">
+                      {String(i + 1).padStart(2, "0")}
+                    </div>
+                    <div className="text-[17px] font-bold tracking-[-0.015em] mt-2">{p.title}</div>
+                    <p className="text-[13.5px] leading-[1.55] text-muted mt-1.5 text-pretty">{p.desc}</p>
+                  </li>
+                ))}
+              </ol>
+              {/* Uçak · konteyner · tır · gemi — paletten limana giden zincir. */}
+              <div className="[background:linear-gradient(160deg,#F4F0E6,#EDE7DA)] rounded-[24px] px-6 py-8">
+                <TransportSketch />
+                <p className="font-mono text-[11px] tracking-[0.08em] text-label mt-3 text-center">
+                  {t.transportCaption}
+                </p>
+              </div>
+            </div>
           </Reveal>
         </section>
 
         <section className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-16">
-          <QualityTable dict={dict} />
+          {/* minmax(0,1fr): tablonun min-w-[520px]'i tek sütunlu (mobil) ızgarayı
+              taşırmasın — sütun içerikten değil, kapsayıcıdan ölçülsün. */}
+          <div className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,1fr)_minmax(0,300px)] gap-6 lg:gap-10 items-start">
+            <QualityTable dict={dict} />
+            {/* Kontrol çizimi koyu zemin için çizildi (stroke #F4EEE2); kartın
+                arkası bu yüzden bg-night. Kaynak: tasarımdaki koyu kalite bandı. */}
+            <Reveal delay={100}>
+              <div className="bg-night border border-[#F4EEE2]/[0.14] rounded-[24px] px-6 py-8">
+                <InspectionSketch dict={dict} />
+              </div>
+            </Reveal>
+          </div>
         </section>
 
         <section className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-16">

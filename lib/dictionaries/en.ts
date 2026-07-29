@@ -108,10 +108,12 @@ export const en: Dictionary = {
     stepsLabel: "LOCKS & HARDWARE FLOW",
     qcLabel: "WHAT WE MEASURE",
     qcColumns: { name: "MEASUREMENT", value: "VALUE", method: "METHOD" },
+    planCaption: "6,400 m² · SITE PLAN (SCHEMATIC)",
     lines: [
       {
         name: "Locks & Hardware",
         desc: "Cylinders, padlocks, hinges, handles and hotel systems.",
+        caption: "CNC → HEAT TREATMENT → PLATING → ASSEMBLY",
         machines: [
           { name: "CNC torna (çubuk beslemeli)", qty: "12", note: "Ø4–32 mm çubuk, tek operasyonda gövde" },
           { name: "CNC işleme merkezi", qty: "6", note: "Kam ve pim yuvası, menteşe gövdesi" },
@@ -123,6 +125,7 @@ export const en: Dictionary = {
       {
         name: "Ceiling & Panel",
         desc: "Suspended ceiling modules, baffle profiles and plasterboard panels.",
+        caption: "T-PROFILE → PANEL → FIXTURE ASSEMBLY",
         machines: [
           { name: "CNC panel freze (3 eksen)", qty: "3", note: "V kanal ve tahliye deliği" },
           { name: "Panel ebatlama testeresi", qty: "2", note: "Tam boy 6 m'ye kadar" },
@@ -153,6 +156,27 @@ export const en: Dictionary = {
       { days: "DAY 22–24", title: "Gümrük & yükleme", desc: "Evrak, gümrükleme, konteyner yükleme." },
       { days: "DAY 25–34", title: "Transit & teslim", desc: "Deniz transiti ve varış limanı teslimi." },
     ],
+  },
+  illustrations: {
+    tolerance: "± 0.05 mm",
+    torque: "≥ 25 Nm",
+    saltSpray: "240 h salt spray",
+    doorLayers: "SHEET · PU · SHEET",
+    robotWeld: "ROBOT WELDING",
+    powderCoat: "60–80 µm",
+    vGroove: "V GROOVE · 90°",
+    bracketClip: "BRACKET + CLIP",
+    foamLayer: "FOAM INTERLEAF",
+    tProfile: "T-PROFILE",
+    ledRun: "LINEAR LED RUN",
+    plan: {
+      cnc: "CNC",
+      press: "PRESS / WELD",
+      coating: "PLATING",
+      assembly: "ASSEMBLY",
+      lab: "LAB / OQC",
+      dock: "DOCK",
+    },
   },
   about: {
     kicker: "About us",
@@ -206,6 +230,7 @@ export const en: Dictionary = {
       "A turnkey export operation including customs documentation, labeling and palletizing. We set the delivery term and payment condition together.",
     regionsTitle: "Regions we ship to",
     packagingTitle: "Packaging chain",
+    transportCaption: "PALLETIZING → CONTAINER → PORT",
     packaging: [
       { title: "Unit box", desc: "Product, keys and mounting screws together; barcode and SKU label on the box." },
       { title: "Carton", desc: "Moisture-barrier corrugated board; unit count and gross weight printed on the outside." },
