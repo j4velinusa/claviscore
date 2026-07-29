@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Manrope, DM_Mono, Newsreader } from "next/font/google";
 import { locales, isLocale } from "@/lib/i18n";
 import { siteUrl } from "@/lib/site-url";
+import { OrganizationSchema } from "@/components/site/OrganizationSchema";
 import "../globals.css";
 
 const manrope = Manrope({
@@ -45,7 +46,10 @@ export default async function LocaleLayout({
       lang={locale}
       className={`${manrope.variable} ${dmMono.variable} ${newsreader.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <OrganizationSchema />
+        {children}
+      </body>
     </html>
   );
 }
