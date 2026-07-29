@@ -99,6 +99,27 @@ export const en: Dictionary = {
     corporateLinks: ["About", "Manufacturing", "Certificates", "Export", "Contact"],
     rights: "CE · TSE · ISO 9001",
   },
+  koleksiyonPage: {
+    kicker: "Collection",
+    title: { pre: "One surface language for a", em: "whole", post: "space." },
+    subtitle:
+      "The same finish family from door handle to ceiling panel. Pick a surface and see every product made in it.",
+    finishesLabel: "Choose a finish",
+    productsLabel: "Made in this finish",
+    countSuffix: "products",
+    swatchTitle: { pre: "See the swatch set in", em: "your hand.", post: "" },
+    swatchBody: "Screens misrepresent colour. Send us a swatch request and we will ship the sample set.",
+    swatchCta: "Request swatches",
+    catalogCta: "See the full catalog",
+    finishes: {
+      brass: { name: "Brushed Brass", note: "Warm metal tone; preferred in hotel and residential projects." },
+      nickel: { name: "Matte Nickel", note: "The most common choice; does not show fingerprints." },
+      black: { name: "Matte Black", note: "Dark hardware; pairs with steel doors and dark joinery." },
+      satin: { name: "Satin Stainless", note: "Neutral metal; hides scratches under heavy use." },
+      panel: { name: "Bone White", note: "Runs continuously with ceiling panels and plaster surfaces." },
+      wood: { name: "Wood Tone", note: "A warm transition on cornices and decorative profiles." },
+    },
+  },
   exportPage: {
     kicker: "Export",
     title: { pre: "From the lathe to the", em: "port", post: "— one operation." },
@@ -314,7 +335,7 @@ export const en: Dictionary = {
     },
     koleksiyon: {
       title: "Collection — CLAVISCOR",
-      description: "Claviscor finish and series collections are coming soon.",
+      description: "Brushed brass, matte nickel, matte black and satin stainless — the Claviscor finish collection. One surface language from door hardware to ceiling panel.",
     },
   },
   mailSubject: {

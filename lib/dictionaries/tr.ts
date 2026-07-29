@@ -99,6 +99,27 @@ export const tr = {
     corporateLinks: ["Hakkımızda", "Üretim", "Sertifikalar", "İhracat", "İletişim"],
     rights: "CE · TSE · ISO 9001",
   },
+  koleksiyonPage: {
+    kicker: "Koleksiyon",
+    title: { pre: "Bir mekânın", em: "tek", post: "yüzey dili." },
+    subtitle:
+      "Kapı kolundan tavan paneline kadar aynı kaplama ailesi. Bir yüzey seçin, o kaplamayla üretilen tüm ürünleri görün.",
+    finishesLabel: "Kaplamayı seçin",
+    productsLabel: "Bu kaplamayla üretilenler",
+    countSuffix: "ürün",
+    swatchTitle: { pre: "Kaplama kartelasını", em: "elinizde", post: "görün." },
+    swatchBody: "Ekranda renk yanıltır. Kartela talebinizi iletin, numune setini kargoyla gönderelim.",
+    swatchCta: "Kartela iste",
+    catalogCta: "Tüm kataloğu gör",
+    finishes: {
+      brass: { name: "Fırçalı Pirinç", note: "Sıcak metal tonu; otel ve konut projelerinde tercih edilir." },
+      nickel: { name: "Mat Nikel", note: "En yaygın seçim; parmak izi göstermez." },
+      black: { name: "Mat Siyah", note: "Koyu donanım; çelik kapı ve koyu doğramayla eşleşir." },
+      satin: { name: "Saten Paslanmaz", note: "Nötr metal; yoğun kullanımda çizik gizler." },
+      panel: { name: "Kemik Beyaz", note: "Tavan panelleri ve alçı yüzeylerle sürekli devam eder." },
+      wood: { name: "Ahşap Tonu", note: "Kartonpiyer ve dekoratif profillerde sıcak geçiş." },
+    },
+  },
   exportPage: {
     kicker: "İhracat",
     title: { pre: "Tezgâhtan", em: "limana", post: "kadar tek elden." },
@@ -316,7 +337,7 @@ export const tr = {
     },
     koleksiyon: {
       title: "Koleksiyon — CLAVISCOR",
-      description: "Claviscor kaplama ve seri koleksiyonları çok yakında.",
+      description: "Fırçalı pirinç, mat nikel, mat siyah ve saten paslanmaz — Claviscor kaplama koleksiyonu. Kapı donanımından tavan paneline tek yüzey dili.",
     },
   },
   mailSubject: {

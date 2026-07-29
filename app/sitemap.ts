@@ -7,9 +7,8 @@ const base = siteUrl();
 const abs = (path: string) => new URL(localePath("tr", path), base).toString();
 const absEn = (path: string) => new URL(localePath("en", path), base).toString();
 
-// Yalnızca indekslenebilir sayfalar. Koleksiyon hâlâ coming-soon stub'ı (noindex),
-// bu yüzden içerik yayınlanana dek sitemap'e dahil edilmez.
-const staticPaths = ["/", "/katalog", "/blog", "/sertifikalar", "/ihracat", "/iletisim"];
+// Yalnızca indekslenebilir sayfalar.
+const staticPaths = ["/", "/katalog", "/blog", "/koleksiyon", "/sertifikalar", "/ihracat", "/iletisim"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Yazılar iki dilde ayrı dosyalar; yalnız her iki dilde de yayında olanlar
