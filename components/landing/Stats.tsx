@@ -18,7 +18,7 @@ export function Stats({ dict, locale }: { dict: Dictionary; locale: Locale }) {
             <div className={labelClass}>{t.countries}</div>
           </div>
           <div className="px-4 py-2 border-l border-ink/10">
-            <CountUp value={1200} suffix="+" locale={locale} className={valueClass} />
+            <CountUp value={50} suffix="+" locale={locale} className={valueClass} />
             <div className={labelClass}>{t.sku}</div>
           </div>
           <div className="px-4 py-2 lg:border-l border-ink/10">
