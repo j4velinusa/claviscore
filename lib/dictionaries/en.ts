@@ -99,6 +99,61 @@ export const en: Dictionary = {
     corporateLinks: ["About", "Manufacturing", "Certificates", "Export", "Contact"],
     rights: "CE · TSE · ISO 9001",
   },
+  production: {
+    kicker: "Manufacturing",
+    title: { pre: "We do not sell a process we cannot", em: "control.", post: "" },
+    subtitle:
+      "From the cylinder body to the ceiling panel, production is in our own facility. Every step has a measured value and every batch a recorded result.",
+    linesLabel: "PRODUCTION LINES",
+    stepsLabel: "LOCKS & HARDWARE FLOW",
+    qcLabel: "WHAT WE MEASURE",
+    qcColumns: { name: "MEASUREMENT", value: "VALUE", method: "METHOD" },
+    lines: [
+      {
+        name: "Locks & Hardware",
+        desc: "Cylinders, padlocks, hinges, handles and hotel systems.",
+        machines: [
+          { name: "CNC torna (çubuk beslemeli)", qty: "12", note: "Ø4–32 mm çubuk, tek operasyonda gövde" },
+          { name: "CNC işleme merkezi", qty: "6", note: "Kam ve pim yuvası, menteşe gövdesi" },
+          { name: "Isıl işlem fırını", qty: "2", note: "Pim ve yay çeliği" },
+          { name: "Kaplama hattı (nikel / pirinç / siyah)", qty: "3", note: "XRF kontrollü kalınlık" },
+          { name: "Montaj & kodlama masası", qty: "14", note: "Master key hiyerarşisi dâhil" },
+        ],
+      },
+      {
+        name: "Ceiling & Panel",
+        desc: "Suspended ceiling modules, baffle profiles and plasterboard panels.",
+        machines: [
+          { name: "CNC panel freze (3 eksen)", qty: "3", note: "V kanal ve tahliye deliği" },
+          { name: "Panel ebatlama testeresi", qty: "2", note: "Tam boy 6 m'ye kadar" },
+        ],
+      },
+    ],
+    steps: [
+      { step: "01", title: "Hammadde kabulü", desc: "Pirinç çubuk, çinko alaşımı ve alüminyum profil partileri sertifikasıyla gelir; alaşım analizi ve sertlik ölçümü yapılmadan üretime girmez.", spec: "MALZEME SERTİFİKASI · SERTLİK HRB" },
+      { step: "02", title: "CNC tornalama & işleme", desc: "Barel gövdesi, pim yuvaları ve kam yuvası tek operasyonda işlenir. Takım aşınması vardiya içinde örneklenerek izlenir.", spec: "TOLERANS ± 0,05 mm" },
+      { step: "03", title: "Isıl işlem", desc: "Sertleştirilmiş delme pimleri ve yay çelikleri ısıl işlemden geçer; sertlik değeri parti bazında ölçülür.", spec: "PİM SERTLİĞİ ≥ 58 HRC" },
+      { step: "04", title: "Kaplama", desc: "Nikel, pirinç ve siyah kaplama hatları. Kalınlık XRF ile ölçülür; renk kartelaya karşı ışık kabininde kontrol edilir.", spec: "KAPLAMA 8–12 µm" },
+      { step: "05", title: "Montaj", desc: "Pim ve yay setleri kombinasyon planına göre dizilir; master key hiyerarşisi montaj hattında uygulanır.", spec: "5 PİM · 15.000 KOMBİNASYON" },
+      { step: "06", title: "İşlev testi & paketleme", desc: "Her ürün anahtarla çalıştırılır; kutu içi anahtar sayısı ve aksesuar barkodla teyit edilir.", spec: "%100 İŞLEV TESTİ" },
+    ],
+    qc: [
+      { name: "Kopma torku (anti-snap)", value: "≥ 25 Nm", method: "EN 1303 referanslı tork tezgâhı" },
+      { name: "Tuz püskürtme (korozyon)", value: "240 saat", method: "ISO 9227 NSS · kabin testi" },
+      { name: "Anahtar çevrim ömrü", value: "100.000 çevrim", method: "Otomatik çevrim tezgâhı" },
+      { name: "Menteşe yük & çevrim", value: "80 kg / 200.000", method: "EN 1935 referanslı yük çerçevesi" },
+      { name: "Kaplama kalınlığı", value: "8–12 µm", method: "XRF ölçüm, 5 nokta" },
+      { name: "Kritik ölçüler", value: "± 0,05 mm", method: "Kumpas / komparatör, vardiya örneklemesi" },
+    ],
+    timelineLabel: "ORDER → DELIVERY",
+    timeline: [
+      { days: "DAY 0–2", title: "Sipariş teyidi", desc: "Proforma onayı, ödeme koşulu ve üretim slotu." },
+      { days: "DAY 3–18", title: "Üretim", desc: "İşleme, ısıl işlem, kaplama ve montaj." },
+      { days: "DAY 19–21", title: "Kalite & paketleme", desc: "Çıkış kontrolü, paletleme, etiketleme." },
+      { days: "DAY 22–24", title: "Gümrük & yükleme", desc: "Evrak, gümrükleme, konteyner yükleme." },
+      { days: "DAY 25–34", title: "Transit & teslim", desc: "Deniz transiti ve varış limanı teslimi." },
+    ],
+  },
   about: {
     kicker: "About us",
     title: { pre: "We built door hardware", em: "around", post: "export." },
@@ -341,6 +396,11 @@ export const en: Dictionary = {
       title: "Knowledge Center — CLAVISCOR",
       description:
         "Technical notes, standards explained and export practice in door hardware and ceiling systems. The Claviscor Knowledge Center for purchasing and project teams.",
+    },
+    uretim: {
+      title: "Manufacturing — CLAVISCOR",
+      description:
+        "In-house production of locks, hardware and ceiling systems. CNC machining, heat treatment, plating lines and batch-level measurement.",
     },
     hakkimizda: {
       title: "About — CLAVISCOR",

@@ -10,6 +10,7 @@ import { SiteNav } from "@/components/site/SiteNav";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { Reveal } from "@/components/motion/Reveal";
 import { Emphasis } from "@/components/site/Emphasis";
+import { QualityTable, DeliveryTimeline } from "@/components/production/ProductionSections";
 
 export async function generateMetadata({
   params,
@@ -87,6 +88,14 @@ export default async function IhracatPage({ params }: { params: Promise<{ locale
               ))}
             </ol>
           </Reveal>
+        </section>
+
+        <section className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-16">
+          <QualityTable dict={dict} />
+        </section>
+
+        <section className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-16">
+          <DeliveryTimeline dict={dict} />
         </section>
 
         <section className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-16">
