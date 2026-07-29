@@ -99,6 +99,25 @@ export const en: Dictionary = {
     corporateLinks: ["About", "Manufacturing", "Certificates", "Export", "Contact"],
     rights: "CE · TSE · ISO 9001",
   },
+  certificatesPage: {
+    kicker: "Certification & standards",
+    title: { pre: "A certificate is the", em: "proof", post: "behind the claim." },
+    subtitle:
+      "Our products pass independent laboratory testing. You can request current copies of the documents below from our export team.",
+    columns: { standard: "STANDARD", issuer: "ISSUING BODY", documentNo: "DOCUMENT NO", valid: "VALID UNTIL" },
+    requestCta: "Request document",
+    requestNote: "Document numbers and validity are shared on request together with the current copy.",
+    groups: { system: "System & Corporate", hardware: "Locks & Hardware", ceiling: "Ceiling Systems" },
+    items: {
+      iso9001: { title: "Quality Management System", desc: "Quality management system certificate covering design, production and sales processes." },
+      tse: { title: "Turkish Standard Conformity", desc: "TSE conformity certificate required for domestic sales and public tenders." },
+      ce: { title: "Declaration of Performance (DoP)", desc: "Item-level declaration of performance for products under the Construction Products Regulation." },
+    },
+    explainer: {
+      title: { pre: "CE is not a logo,", em: "it is a declaration.", post: "" },
+      body: "The CE mark is the manufacturer's declaration of conformity with the relevant regulation; on its own it is not a quality award. What matters is the harmonised standard and test report the declaration rests on. So when you ask for documents, ask not for the mark but for the declaration of performance and the report behind it.",
+    },
+  },
   contact: {
     kicker: "Contact",
     title: { pre: "Reach the right desk in", em: "one", post: "message." },
@@ -256,6 +275,11 @@ export const en: Dictionary = {
       title: "Knowledge Center — CLAVISCOR",
       description:
         "Technical notes, standards explained and export practice in door hardware and ceiling systems. The Claviscor Knowledge Center for purchasing and project teams.",
+    },
+    sertifikalar: {
+      title: "Certificates — CLAVISCOR",
+      description:
+        "Claviscor quality and conformity documents: ISO 9001, TSE and CE declaration of performance. Current copies on request.",
     },
     iletisim: {
       title: "Contact — CLAVISCOR",

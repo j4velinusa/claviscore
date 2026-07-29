@@ -99,6 +99,25 @@ export const tr = {
     corporateLinks: ["Hakkımızda", "Üretim", "Sertifikalar", "İhracat", "İletişim"],
     rights: "CE · TSE · ISO 9001",
   },
+  certificatesPage: {
+    kicker: "Sertifika & standart",
+    title: { pre: "Belge,", em: "iddianın", post: "kanıtıdır." },
+    subtitle:
+      "Ürünlerimiz bağımsız laboratuvar testlerinden geçer. Aşağıdaki belgelerin güncel kopyalarını ihracat ekibimizden isteyebilirsiniz.",
+    columns: { standard: "STANDART", issuer: "VEREN KURULUŞ", documentNo: "BELGE NO", valid: "GEÇERLİLİK" },
+    requestCta: "Belgeyi iste",
+    requestNote: "Belge numarası ve geçerlilik bilgisi talep üzerine güncel kopyayla paylaşılır.",
+    groups: { system: "Sistem & Kurumsal", hardware: "Kilit & Donanım", ceiling: "Tavan Sistemleri" },
+    items: {
+      iso9001: { title: "Kalite Yönetim Sistemi", desc: "Tasarım, üretim ve satış süreçlerini kapsayan kalite yönetim sistemi belgesi." },
+      tse: { title: "Türk Standardına Uygunluk", desc: "Yurt içi satış ve kamu ihalelerinde talep edilen TSE uygunluk belgesi." },
+      ce: { title: "Performans Beyanı (DoP)", desc: "Yapı Malzemeleri Yönetmeliği kapsamındaki ürünler için kalem bazlı performans beyanı." },
+    },
+    explainer: {
+      title: { pre: "CE bir logo değil,", em: "bir beyandır.", post: "" },
+      body: "CE işareti üreticinin ilgili yönetmeliğe uygunluk beyanıdır; tek başına bir kalite ödülü değildir. Anlamlı olan, beyanın dayandığı harmonize standart ve test raporudur. Bu yüzden belge isterken yalnız işareti değil, arkasındaki performans beyanını ve raporu isteyin.",
+    },
+  },
   contact: {
     kicker: "İletişim",
     title: { pre: "Doğru kişiye", em: "tek", post: "mesajda ulaşın." },
@@ -258,6 +277,11 @@ export const tr = {
       title: "Bilgi Merkezi — CLAVISCOR",
       description:
         "Kapı donanımı ve tavan sistemlerinde teknik notlar, standart okumaları ve ihracat pratiği. Satın alma ve proje ekipleri için Claviscor Bilgi Merkezi.",
+    },
+    sertifikalar: {
+      title: "Sertifikalar — CLAVISCOR",
+      description:
+        "Claviscor kalite ve uygunluk belgeleri: ISO 9001, TSE ve CE performans beyanı. Güncel kopyalar talep üzerine.",
     },
     iletisim: {
       title: "İletişim — CLAVISCOR",
