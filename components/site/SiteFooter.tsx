@@ -3,6 +3,14 @@ import { site } from "@/lib/site";
 import { type Locale, localePath } from "@/lib/i18n";
 import type { Dictionary } from "@/lib/dictionaries/tr";
 
+// Yapımcı künyesi. Bilinçli olarak lib/site.ts'te DEĞİL: orası müşterinin marka ve
+// iletişim bilgisi, bu ise siteyi yapanın imzası.
+const credit = { href: "https://doganaykac.com", label: "doganaykac.com" } as const;
+
+// Kurumsal kolonun hedefleri. Sıra sözlükteki footer.corporateLinks sırasını izler:
+// Hakkımızda · Üretim · Sertifikalar · İhracat · İletişim.
+const corporatePaths = ["/hakkimizda", "/uretim", "/sertifikalar", "/ihracat", "/iletisim"];
+
 export function SiteFooter({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const home = localePath(locale, "/");
 
@@ -33,9 +41,20 @@ export function SiteFooter({ dict, locale }: { dict: Dictionary; locale: Locale 
             {dict.footer.corporate}
           </div>
           <div className="flex flex-col gap-[11px] text-sm text-ink-3">
-            {dict.footer.corporateLinks.map((label) => (
-              <span key={label}>{label}</span>
-            ))}
+            {dict.footer.corporateLinks.map((label, i) => {
+              const path = corporatePaths[i];
+              return path ? (
+                <Link
+                  key={label}
+                  href={localePath(locale, path)}
+                  className="hover:text-bronze-2 transition-colors"
+                >
+                  {label}
+                </Link>
+              ) : (
+                <span key={label}>{label}</span>
+              );
+            })}
           </div>
         </div>
         <div>
@@ -53,9 +72,20 @@ export function SiteFooter({ dict, locale }: { dict: Dictionary; locale: Locale 
           </div>
         </div>
       </div>
-      <div className="mx-auto max-w-[1120px] px-5 sm:px-8 py-[22px] border-t border-ink/8 flex flex-col sm:flex-row gap-2 justify-between text-xs text-muted">
+      <div className="mx-auto max-w-[1120px] px-5 sm:px-8 py-[22px] border-t border-ink/8 flex flex-col sm:flex-row flex-wrap gap-x-6 gap-y-2 justify-between text-xs text-muted">
         <span>© 2026 {site.legalNameUpper}</span>
         <span>{dict.footer.rights}</span>
+        <span>
+          {dict.footer.credit}{" "}
+          <a
+            href={credit.href}
+            target="_blank"
+            rel="noopener"
+            className="font-medium text-ink-3 hover:text-bronze-2 transition-colors"
+          >
+            {credit.label}
+          </a>
+        </span>
       </div>
     </footer>
   );

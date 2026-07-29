@@ -86,7 +86,7 @@ export const en: Dictionary = {
   },
   closing: {
     title: { pre: "Get your sample and price", em: "quote.", post: "" },
-    body: "Share your SKU list and we'll come back within 48 hours with pricing and a sampling plan.",
+    body: "Share your SKU list and we'll come back within 4 hours with pricing and a sampling plan.",
     cta: "Request a quote",
   },
   footer: {
@@ -98,6 +98,7 @@ export const en: Dictionary = {
     productLinks: ["Cylinder Barrels", "Padlocks", "Hinges", "Door Handles", "Hotel Systems", "Ceiling Systems"],
     corporateLinks: ["About", "Manufacturing", "Certificates", "Export", "Contact"],
     rights: "CE · TSE · ISO 9001",
+    credit: "Designed and coded by",
   },
   production: {
     kicker: "Manufacturing",
@@ -269,7 +270,7 @@ export const en: Dictionary = {
     kicker: "Contact",
     title: { pre: "Reach the right desk in", em: "one", post: "message." },
     subtitle:
-      "One line for quotes, samples and technical questions. Send your message with a subject and our export team will reply within 48 hours.",
+      "One line for quotes, samples and technical questions. Send your message with a subject and our export team will reply within 4 hours.",
     form: {
       title: "Leave a message",
       topic: "TOPIC",
@@ -304,9 +305,9 @@ export const en: Dictionary = {
       emailLabel: "Email",
       phoneLabel: "Phone",
       promiseLabel: "RESPONSE PROMISE",
-      promise: "48 hours",
+      promise: "4 hours",
       promiseWhat: "to reply",
-      promiseDesc: "We answer quote and sample requests within two business days with pricing and a plan.",
+      promiseDesc: "We answer quote and sample requests within four hours during business hours, with pricing and a plan.",
     },
   },
   blog: {
@@ -395,7 +396,7 @@ export const en: Dictionary = {
       title: "Catalog coming",
       accent: "soon.",
       description:
-        "We're building our digital catalog. Until then, you can request the current product catalog and price list by email — we reply within 48 hours.",
+        "We're building our digital catalog. Until then, you can request the current product catalog and price list by email — we reply within 4 hours.",
     },
     koleksiyon: {
       kicker: "Collection",
@@ -446,7 +447,7 @@ export const en: Dictionary = {
     iletisim: {
       title: "Contact — CLAVISCOR",
       description:
-        "The Claviscor export team for quotes, samples and technical questions. Head office in Çerkezköy / Tekirdağ, reply within 48 hours.",
+        "The Claviscor export team for quotes, samples and technical questions. Head office in Çerkezköy / Tekirdağ, reply within 4 hours.",
     },
     koleksiyon: {
       title: "Collection — CLAVISCOR",

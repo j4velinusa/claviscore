@@ -86,7 +86,7 @@ export const tr = {
   },
   closing: {
     title: { pre: "Numune ve fiyat teklifinizi", em: "alın.", post: "" },
-    body: "SKU listenizi paylaşın, 48 saat içinde fiyat ve numune planıyla dönelim.",
+    body: "SKU listenizi paylaşın, 4 saat içinde fiyat ve numune planıyla dönelim.",
     cta: "Teklif iste",
   },
   footer: {
@@ -98,6 +98,8 @@ export const tr = {
     productLinks: ["Silindir Bareller", "Asma Kilitler", "Menteşeler", "Kapı Kolları", "Otel Sistemleri", "Tavan Sistemleri"],
     corporateLinks: ["Hakkımızda", "Üretim", "Sertifikalar", "İhracat", "İletişim"],
     rights: "CE · TSE · ISO 9001",
+    // Yapımcı künyesi. Alan adı çevrilmez, SiteFooter'da link olarak eklenir.
+    credit: "Tasarım ve kod:",
   },
   production: {
     kicker: "Üretim",
@@ -271,7 +273,7 @@ export const tr = {
     kicker: "İletişim",
     title: { pre: "Doğru kişiye", em: "tek", post: "mesajda ulaşın." },
     subtitle:
-      "Teklif, numune ve teknik sorular için tek hat. Mesajınızı konu başlığıyla gönderin, ihracat ekibimiz 48 saat içinde dönsün.",
+      "Teklif, numune ve teknik sorular için tek hat. Mesajınızı konu başlığıyla gönderin, ihracat ekibimiz 4 saat içinde dönsün.",
     form: {
       title: "Mesaj bırakın",
       topic: "KONU",
@@ -306,9 +308,9 @@ export const tr = {
       emailLabel: "E-posta",
       phoneLabel: "Telefon",
       promiseLabel: "YANIT SÖZÜ",
-      promise: "48 saat",
+      promise: "4 saat",
       promiseWhat: "içinde dönüş",
-      promiseDesc: "Teklif ve numune taleplerine iki iş günü içinde fiyat ve planla yanıt veriyoruz.",
+      promiseDesc: "Teklif ve numune taleplerine mesai saatlerinde dört saat içinde fiyat ve planla yanıt veriyoruz.",
     },
   },
   blog: {
@@ -399,7 +401,7 @@ export const tr = {
       title: "Katalog çok",
       accent: "yakında.",
       description:
-        "Dijital katalogumuz üzerinde çalışıyoruz. O zamana dek güncel ürün kataloğunu ve fiyat listesini e-posta ile talep edebilirsiniz — 48 saat içinde dönüş yapıyoruz.",
+        "Dijital katalogumuz üzerinde çalışıyoruz. O zamana dek güncel ürün kataloğunu ve fiyat listesini e-posta ile talep edebilirsiniz — 4 saat içinde dönüş yapıyoruz.",
     },
     koleksiyon: {
       kicker: "Koleksiyon",
@@ -450,7 +452,7 @@ export const tr = {
     iletisim: {
       title: "İletişim — CLAVISCOR",
       description:
-        "Teklif, numune ve teknik sorularınız için Claviscor ihracat ekibi. Çerkezköy / Tekirdağ merkez, 48 saat içinde dönüş.",
+        "Teklif, numune ve teknik sorularınız için Claviscor ihracat ekibi. Çerkezköy / Tekirdağ merkez, 4 saat içinde dönüş.",
     },
     koleksiyon: {
       title: "Koleksiyon — CLAVISCOR",
