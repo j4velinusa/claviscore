@@ -27,8 +27,36 @@ const field =
 let seq = 0;
 const newId = () => `it-${++seq}`;
 
-export function ProformaBuilder({ today }: { today: string }) {
-  const [no, setNo] = useState("PI-0000-0000");
+// Sunucudaki ProformaSummary'nin istemci karşılığı — tip server-only modülden
+// gelmesin diye burada tanımlı (lib/blog-config.ts ile aynı gerekçe).
+export type SavedProforma = {
+  no: string;
+  date: string;
+  company: string;
+  currency: string;
+  total: number;
+  status: "draft" | "final";
+  sha: string;
+};
+
+export function ProformaBuilder({
+  today,
+  initialNo,
+  initialList,
+  loadError,
+}: {
+  today: string;
+  initialNo: string;
+  initialList: SavedProforma[];
+  loadError: string;
+}) {
+  const [no, setNo] = useState(initialNo);
+  // sha dolu ise kayıtlı bir proforma açıldı demektir; boşken kaydetmek yeni dosya yaratır.
+  const [sha, setSha] = useState("");
+  const [status, setStatus] = useState<"draft" | "final">("draft");
+  const [list, setList] = useState<SavedProforma[]>(initialList);
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState(loadError);
   const [date, setDate] = useState(today);
   const [validity, setValidity] = useState(30);
   const [currency, setCurrency] = useState<CurrencyCode>("EUR");
@@ -52,6 +80,77 @@ export function ProformaBuilder({ today }: { today: string }) {
     setItems((prev) => prev.map((it) => (it.id === id ? { ...it, ...patch } : it)));
 
   const removeItem = (id: string) => setItems((prev) => prev.filter((it) => it.id !== id));
+
+  const refreshList = async () => {
+    const res = await fetch("/api/admin/proforma");
+    if (!res.ok) return;
+    const data = (await res.json()) as { list: SavedProforma[]; next: string };
+    setList(data.list);
+    return data.next;
+  };
+
+  const save = async () => {
+    setBusy(true);
+    setMsg("");
+    try {
+      const record = {
+        no, date, validity, currency, buyer, items, discountPct, freight,
+        incoterm, portLoad, portDisch, payment, notes, status,
+        updatedAt: new Date().toISOString(),
+      };
+      const res = await fetch("/api/admin/proforma", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ record, sha: sha || undefined }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setMsg(data.error ?? "Kaydedilemedi");
+        return;
+      }
+      setSha(data.sha);
+      setMsg(`${no} kaydedildi`);
+      await refreshList();
+    } catch {
+      setMsg("Sunucuya ulaşılamadı");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const load = async (target: string) => {
+    setBusy(true);
+    setMsg("");
+    try {
+      const res = await fetch(`/api/admin/proforma?no=${target}`);
+      const data = await res.json();
+      if (!res.ok) {
+        setMsg(data.error ?? "Kayıt açılamadı");
+        return;
+      }
+      const r = data.record;
+      setNo(r.no); setSha(data.sha); setStatus(r.status);
+      setDate(r.date); setValidity(r.validity); setCurrency(r.currency);
+      setBuyer(r.buyer); setItems(r.items); setDiscountPct(r.discountPct);
+      setFreight(r.freight); setIncoterm(r.incoterm); setPortLoad(r.portLoad);
+      setPortDisch(r.portDisch); setPayment(r.payment); setNotes(r.notes);
+    } catch {
+      setMsg("Sunucuya ulaşılamadı");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  /** Yeni belge: formu boşaltır ve sıradaki numarayı alır. */
+  const startNew = async () => {
+    setBusy(true);
+    setMsg("");
+    const next = await refreshList();
+    setNo(next ?? no); setSha(""); setStatus("draft");
+    setDate(today); setValidity(30); setBuyer({ company: "", attn: "", address: "", country: "" });
+    setItems([]); setDiscountPct(0); setFreight(0); setPortLoad(""); setPortDisch(""); setNotes("");
+    setBusy(false);
+  };
 
   return (
     <div className="grid lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] gap-8 items-start">
@@ -309,13 +408,91 @@ export function ProformaBuilder({ today }: { today: string }) {
           />
         </div>
 
-        <button
-          type="button"
-          onClick={() => window.print()}
-          className="text-[13.5px] font-semibold text-cream bg-ink px-5 py-2.5 rounded-full transition hover:bg-[#33291f] self-start"
-        >
-          PDF olarak yazdır
-        </button>
+        <div>
+          <div className={`${label} mb-1.5`}>DURUM</div>
+          <div className="flex gap-2">
+            {(["draft", "final"] as const).map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => setStatus(s)}
+                aria-pressed={status === s}
+                className={`text-[12.5px] font-semibold px-4 py-2 rounded-full border transition ${
+                  status === s
+                    ? "bg-ink text-cream border-ink"
+                    : "bg-white text-ink-3 border-ink/[0.14] hover:border-ink/35"
+                }`}
+              >
+                {s === "draft" ? "Taslak" : "Kesinleşti"}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={save}
+            disabled={busy}
+            className="text-[13.5px] font-semibold text-cream bg-ink px-5 py-2.5 rounded-full transition disabled:opacity-40 hover:bg-[#33291f]"
+          >
+            {busy ? "Kaydediliyor…" : sha ? "Kaydet" : "Kaydet ve numarayı ayır"}
+          </button>
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="text-[13.5px] font-semibold border border-ink/[0.14] px-5 py-2.5 rounded-full transition hover:border-ink/35"
+          >
+            PDF olarak yazdır
+          </button>
+          <button
+            type="button"
+            onClick={startNew}
+            disabled={busy}
+            className="text-[13px] text-bronze-2 hover:opacity-70 transition-opacity disabled:opacity-40"
+          >
+            Yeni belge
+          </button>
+        </div>
+
+        {msg && (
+          <p role="status" className="text-[12.5px] text-muted">
+            {msg}
+          </p>
+        )}
+
+        <div>
+          <div className={`${label} mb-2`}>KAYITLI PROFORMALAR · {list.length}</div>
+          <div className="flex flex-col gap-1.5 max-h-[240px] overflow-y-auto">
+            {list.map((p) => (
+              <button
+                key={p.no}
+                type="button"
+                onClick={() => load(p.no)}
+                className={`text-left bg-white border rounded-lg px-3 py-2 transition-colors hover:border-ink/35 ${
+                  p.no === no ? "border-bronze" : "border-ink/[0.1]"
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-mono text-[12px]">{p.no}</span>
+                  <span
+                    className={`text-[10.5px] font-semibold px-2 py-0.5 rounded-full ${
+                      p.status === "final" ? "text-[#2E7D5B] bg-[#2E7D5B]/15" : "text-muted bg-ink/8"
+                    }`}
+                  >
+                    {p.status === "final" ? "Kesinleşti" : "Taslak"}
+                  </span>
+                </div>
+                <div className="text-[12px] text-muted truncate mt-0.5">
+                  {p.company || "—"} · {p.date}
+                </div>
+              </button>
+            ))}
+            {list.length === 0 && (
+              <p className="text-[12.5px] text-muted py-3 text-center">Henüz kayıtlı proforma yok.</p>
+            )}
+          </div>
+        </div>
       </section>
 
       {/* ---------- A4 ÖNİZLEME ---------- */}

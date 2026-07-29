@@ -148,3 +148,139 @@ export function slugifyTitle(title: string): string {
       .slice(0, 60) || "yeni-yazi"
   );
 }
+
+// ---------------------------------------------------------------------------
+// Proforma kayıtları — content/proforma/<no>.json
+// Blog ile aynı desen: GitHub tek gerçeklik kaynağı, veritabanı yok. Numara
+// sayacı ayrı bir yerde tutulmuyor; mevcut dosya adlarından türetiliyor, böylece
+// sayaç ile dosyalar arasında tutarsızlık oluşamıyor.
+// ---------------------------------------------------------------------------
+
+const PROFORMA_DIR = "content/proforma";
+
+export type ProformaRecord = {
+  no: string;
+  date: string;
+  validity: number;
+  currency: string;
+  buyer: { company: string; attn: string; address: string; country: string };
+  items: { id: string; code: string; name: string; hs: string; qty: number; unitPrice: number }[];
+  discountPct: number;
+  freight: number;
+  incoterm: string;
+  portLoad: string;
+  portDisch: string;
+  payment: string;
+  notes: string;
+  status: "draft" | "final";
+  updatedAt: string;
+};
+
+export type ProformaSummary = {
+  no: string;
+  date: string;
+  company: string;
+  currency: string;
+  total: number;
+  status: ProformaRecord["status"];
+  sha: string;
+};
+
+function proformaTotal(r: ProformaRecord): number {
+  const sub = r.items.reduce((a, it) => a + (Number(it.qty) || 0) * (Number(it.unitPrice) || 0), 0);
+  return sub - sub * ((Number(r.discountPct) || 0) / 100) + (Number(r.freight) || 0);
+}
+
+/** Dizindeki dosya adları. Dizin yoksa boş (henüz proforma kesilmemiş). */
+async function proformaFiles(): Promise<{ name: string; sha: string }[]> {
+  const { owner, repo, branch } = config();
+  const res = await gh(`/repos/${owner}/${repo}/contents/${PROFORMA_DIR}?ref=${branch}`);
+  if (res.status === 404) return [];
+  if (!res.ok) throw new Error(`GitHub listeleme hatası (${res.status})`);
+  const entries = (await res.json()) as { name: string; type: string; sha: string }[];
+  return entries
+    .filter((e) => e.type === "file" && e.name.endsWith(".json"))
+    .map((e) => ({ name: e.name, sha: e.sha }));
+}
+
+export async function listProformas(): Promise<ProformaSummary[]> {
+  const files = await proformaFiles();
+  const out = await Promise.all(
+    files.map(async (f) => {
+      const rec = await getProforma(f.name.replace(/\.json$/, ""));
+      if (!rec) return null;
+      return {
+        no: rec.record.no,
+        date: rec.record.date,
+        company: rec.record.buyer.company,
+        currency: rec.record.currency,
+        total: proformaTotal(rec.record),
+        status: rec.record.status,
+        sha: rec.sha,
+      };
+    }),
+  );
+  return out
+    .filter((p): p is ProformaSummary => p !== null)
+    .sort((a, b) => b.no.localeCompare(a.no));
+}
+
+export async function getProforma(
+  no: string,
+): Promise<{ record: ProformaRecord; sha: string } | null> {
+  const { owner, repo, branch } = config();
+  const res = await gh(`/repos/${owner}/${repo}/contents/${PROFORMA_DIR}/${no}.json?ref=${branch}`);
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`GitHub okuma hatası (${res.status})`);
+  const file = (await res.json()) as { content: string; sha: string };
+  const raw = Buffer.from(file.content, "base64").toString("utf8");
+  return { record: JSON.parse(raw) as ProformaRecord, sha: file.sha };
+}
+
+/**
+ * Yıl içindeki en büyük sırayı bulup bir artırır: PI-2026-0007 varsa PI-2026-0008.
+ * Sayaç dosyada tutulmadığı için "sayaç ilerledi ama kayıt oluşmadı" durumu yok.
+ * Yarış durumunda iki kullanıcı aynı numarayı alırsa ikincinin yazması reddedilir
+ * (putProforma sha'sız PUT gönderir, var olan dosyada GitHub 422 döner).
+ */
+export async function nextProformaNo(year: number): Promise<string> {
+  const files = await proformaFiles();
+  const prefix = `PI-${year}-`;
+  const max = files
+    .map((f) => f.name.replace(/\.json$/, ""))
+    .filter((n) => n.startsWith(prefix))
+    .map((n) => Number(n.slice(prefix.length)))
+    .filter((n) => Number.isFinite(n))
+    .reduce((a, b) => Math.max(a, b), 0);
+  return `${prefix}${String(max + 1).padStart(4, "0")}`;
+}
+
+export async function putProforma(
+  record: ProformaRecord,
+  sha?: string,
+): Promise<{ sha: string; commitUrl: string }> {
+  const { owner, repo, branch } = config();
+  const body = JSON.stringify(record, null, 2) + "\n";
+
+  const res = await gh(`/repos/${owner}/${repo}/contents/${PROFORMA_DIR}/${record.no}.json`, {
+    method: "PUT",
+    body: JSON.stringify({
+      message: `${sha ? "proforma: güncelle" : "proforma: yeni"} ${record.no}`,
+      content: Buffer.from(body, "utf8").toString("base64"),
+      branch,
+      ...(sha ? { sha } : {}),
+    }),
+  });
+
+  if (res.status === 409 || res.status === 422) {
+    throw new Error(
+      `${record.no} zaten var veya başka bir yerden değiştirilmiş. Listeyi yenileyip tekrar deneyin.`,
+    );
+  }
+  if (!res.ok) {
+    const detail = await res.text();
+    throw new Error(`GitHub yazma hatası (${res.status}): ${detail.slice(0, 200)}`);
+  }
+  const out = (await res.json()) as { content: { sha: string }; commit: { html_url: string } };
+  return { sha: out.content.sha, commitUrl: out.commit.html_url };
+}
