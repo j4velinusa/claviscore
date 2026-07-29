@@ -99,6 +99,50 @@ export const en: Dictionary = {
     corporateLinks: ["About", "Manufacturing", "Certificates", "Export", "Contact"],
     rights: "CE · TSE · ISO 9001",
   },
+  contact: {
+    kicker: "Contact",
+    title: { pre: "Reach the right desk in", em: "one", post: "message." },
+    subtitle:
+      "One line for quotes, samples and technical questions. Send your message with a subject and our export team will reply within 48 hours.",
+    form: {
+      title: "Leave a message",
+      topic: "TOPIC",
+      company: "Company",
+      name: "Contact person",
+      email: "Email",
+      country: "Country / city",
+      lines: "Product line",
+      message: "Message",
+      submit: "Send by email",
+      hint: "Fill in company, email and message.",
+      ready: "Your email app will open with the message ready.",
+      kvkk: "GDPR · YOUR DATA IS USED ONLY FOR THE QUOTE PROCESS",
+    },
+    topics: {
+      quote: { label: "Price quote", tag: "QUOTE", hint: "Write product codes, quantities and your target delivery term (FOB / CIF / DAP)." },
+      sample: { label: "Sample", tag: "SAMPLE", hint: "Write the SKUs and finishes you want; add your courier account if you have one." },
+      tech: { label: "Technical", tag: "TECHNICAL", hint: "Write your question on dimensions, standards or installation." },
+      partner: { label: "Distribution", tag: "DISTRIBUTOR", hint: "Share your territory, current product groups and expected annual volume." },
+    },
+    lines: {
+      lock: "Locks & Cylinders",
+      hinge: "Hinges",
+      handle: "Door Handles",
+      hotel: "Hotel Systems",
+      ceiling: "Ceiling Systems",
+      other: "Mixed / Unsure",
+    },
+    info: {
+      addressLabel: "FACTORY & HEAD OFFICE",
+      linesLabel: "DIRECT LINES",
+      emailLabel: "Email",
+      phoneLabel: "Phone",
+      promiseLabel: "RESPONSE PROMISE",
+      promise: "48 hours",
+      promiseWhat: "to reply",
+      promiseDesc: "We answer quote and sample requests within two business days with pricing and a plan.",
+    },
+  },
   blog: {
     kicker: "Knowledge Center",
     title: { pre: "The knowledge", em: "behind", post: "the hardware." },
@@ -212,6 +256,11 @@ export const en: Dictionary = {
       title: "Knowledge Center — CLAVISCOR",
       description:
         "Technical notes, standards explained and export practice in door hardware and ceiling systems. The Claviscor Knowledge Center for purchasing and project teams.",
+    },
+    iletisim: {
+      title: "Contact — CLAVISCOR",
+      description:
+        "The Claviscor export team for quotes, samples and technical questions. Head office in Çerkezköy / Tekirdağ, reply within 48 hours.",
     },
     koleksiyon: {
       title: "Collection — CLAVISCOR",

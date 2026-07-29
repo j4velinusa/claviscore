@@ -99,6 +99,50 @@ export const tr = {
     corporateLinks: ["Hakkımızda", "Üretim", "Sertifikalar", "İhracat", "İletişim"],
     rights: "CE · TSE · ISO 9001",
   },
+  contact: {
+    kicker: "İletişim",
+    title: { pre: "Doğru kişiye", em: "tek", post: "mesajda ulaşın." },
+    subtitle:
+      "Teklif, numune ve teknik sorular için tek hat. Mesajınızı konu başlığıyla gönderin, ihracat ekibimiz 48 saat içinde dönsün.",
+    form: {
+      title: "Mesaj bırakın",
+      topic: "KONU",
+      company: "Firma",
+      name: "Yetkili",
+      email: "E-posta",
+      country: "Ülke / şehir",
+      lines: "Ürün hattı",
+      message: "Mesaj",
+      submit: "E-posta ile gönder",
+      hint: "Firma, e-posta ve mesaj alanlarını doldurun.",
+      ready: "E-posta uygulamanız hazır mesajla açılacak.",
+      kvkk: "KVKK · VERİLERİNİZ YALNIZCA TEKLİF SÜRECİNDE KULLANILIR",
+    },
+    topics: {
+      quote: { label: "Fiyat teklifi", tag: "TEKLİF", hint: "Ürün kodları, adet ve hedef teslim şeklinizi (FOB / CIF / DAP) yazın." },
+      sample: { label: "Numune", tag: "NUMUNE", hint: "İlgilendiğiniz SKU ve kaplama tercihini yazın; kargo hesabınız varsa ekleyin." },
+      tech: { label: "Teknik soru", tag: "TEKNİK", hint: "Ölçü, standart ya da montaj sorunuzu yazın." },
+      partner: { label: "Distribütörlük", tag: "DİSTRİBÜTÖR", hint: "Faaliyet bölgeniz, mevcut ürün gruplarınız ve yıllık hacim beklentinizi paylaşın." },
+    },
+    lines: {
+      lock: "Kilit & Barel",
+      hinge: "Menteşe",
+      handle: "Kapı Kolu",
+      hotel: "Otel Sistemleri",
+      ceiling: "Tavan Sistemleri",
+      other: "Karma / Belirsiz",
+    },
+    info: {
+      addressLabel: "FABRİKA & MERKEZ",
+      linesLabel: "DOĞRUDAN HATLAR",
+      emailLabel: "E-posta",
+      phoneLabel: "Telefon",
+      promiseLabel: "YANIT SÖZÜ",
+      promise: "48 saat",
+      promiseWhat: "içinde dönüş",
+      promiseDesc: "Teklif ve numune taleplerine iki iş günü içinde fiyat ve planla yanıt veriyoruz.",
+    },
+  },
   blog: {
     kicker: "Bilgi Merkezi",
     title: { pre: "Donanımın", em: "arkasındaki", post: "bilgi." },
@@ -214,6 +258,11 @@ export const tr = {
       title: "Bilgi Merkezi — CLAVISCOR",
       description:
         "Kapı donanımı ve tavan sistemlerinde teknik notlar, standart okumaları ve ihracat pratiği. Satın alma ve proje ekipleri için Claviscor Bilgi Merkezi.",
+    },
+    iletisim: {
+      title: "İletişim — CLAVISCOR",
+      description:
+        "Teklif, numune ve teknik sorularınız için Claviscor ihracat ekibi. Çerkezköy / Tekirdağ merkez, 48 saat içinde dönüş.",
     },
     koleksiyon: {
       title: "Koleksiyon — CLAVISCOR",
