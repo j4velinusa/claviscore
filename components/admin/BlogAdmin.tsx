@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { blogCategories, type BlogCategory, type PostStatus } from "@/lib/blog-config";
@@ -195,6 +196,16 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
           Blog Yazıları
           <span className="ml-auto text-[11px] font-bold text-[#6f6452]">{rows.length}</span>
         </span>
+        <div className="font-mono text-[10px] tracking-[0.14em] text-[#6f6452] px-3 pt-6 pb-2.5">BELGELER</div>
+        <Link
+          href="/admin/proforma"
+          className="flex items-center gap-[11px] px-3 py-2.5 rounded-[10px] text-sm font-medium hover:bg-white/5 transition-colors"
+        >
+          <span aria-hidden className="font-mono text-[11px] w-5 text-[#6f6452]">
+            ⎘
+          </span>
+          Proforma
+        </Link>
         <form action="/api/admin/login" method="post" className="mt-auto px-3">
           <button
             type="button"

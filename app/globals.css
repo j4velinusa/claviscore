@@ -172,6 +172,43 @@ html {
   margin-top: 8px;
 }
 
+/* Proforma yazdırma: sayfada yalnız A4 belgesi kalır, form ve panel kromu gizlenir.
+   Ayrı bir PDF kütüphanesi yok — tarayıcının "PDF olarak kaydet" çıktısı kullanılıyor. */
+@media print {
+  .pf-hide-print,
+  aside {
+    display: none !important;
+  }
+  html,
+  body {
+    background: #fff;
+  }
+  /* Grid'i tek sütuna indir ki belge tam genişlikte bassın. */
+  .pf-sheet {
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+  main > div:has(> section .pf-sheet),
+  main > div {
+    display: block !important;
+  }
+  /* Kalem satırları ve toplam bloğu sayfa arasında bölünmesin. */
+  .pf-sheet > div,
+  .pf-sheet header {
+    break-inside: avoid;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 14mm;
+}
+
 @keyframes spin-slow {
   to {
     transform: rotate(360deg);
