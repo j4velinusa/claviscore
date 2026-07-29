@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Şablon dosyası commit edilir; gerçek .env* dosyaları yukarıda hariç tutuldu.
+!.env.example

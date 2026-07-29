@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/motion/Reveal";
 import { CountUp } from "@/components/motion/CountUp";
+import { site } from "@/lib/site";
 import type { Locale } from "@/lib/i18n";
 import type { Dictionary } from "@/lib/dictionaries/tr";
 
@@ -25,7 +26,7 @@ export function Stats({ dict, locale }: { dict: Dictionary; locale: Locale }) {
             <div className={labelClass}>{t.certified}</div>
           </div>
           <div className="px-4 py-2 border-l border-ink/10">
-            <CountUp value={1976} group={false} locale={locale} className={valueClass} />
+            <CountUp value={site.founded} group={false} locale={locale} className={valueClass} />
             <div className={labelClass}>{t.founded}</div>
           </div>
         </div>

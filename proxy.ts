@@ -28,6 +28,7 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // API, _next varlıkları ve nokta içeren dosyaları (icon.svg, resimler) hariç tut.
-  matcher: ["/((?!api|_next/static|_next/image|.*\\..*).*)"],
+  // API, admin paneli, _next varlıkları ve nokta içeren dosyaları (icon.svg, resimler)
+  // hariç tut. Admin dil yönlendirmesinin dışındadır: /admin, /tr/admin'e yazılmamalı.
+  matcher: ["/((?!api|admin|_next/static|_next/image|.*\\..*).*)"],
 };

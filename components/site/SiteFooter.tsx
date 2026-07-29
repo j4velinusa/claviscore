@@ -54,7 +54,7 @@ export function SiteFooter({ dict, locale }: { dict: Dictionary; locale: Locale 
         </div>
       </div>
       <div className="mx-auto max-w-[1120px] px-5 sm:px-8 py-[22px] border-t border-ink/8 flex flex-col sm:flex-row gap-2 justify-between text-xs text-muted">
-        <span>© 2026 {site.legalName.toLocaleUpperCase("tr-TR")}</span>
+        <span>© 2026 {site.legalNameUpper}</span>
         <span>{dict.footer.rights}</span>
       </div>
     </footer>

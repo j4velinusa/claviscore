@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FBF9F5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  a { color: #A87C4F; text-decoration: none; } a:hover { color: #8A6638; }
+</style>
+</helmet>
+
+<div style="background: #FBF9F5; font-family: 'Manrope', system-ui, sans-serif; color: #1A1714; overflow-x: hidden;">
+
+  <!-- ===== NAV ===== -->
+  <div style="position: sticky; top: 0; z-index: 50; background: rgba(251,249,245,.82); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(26,23,20,.07);">
+    <div style="max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px 32px;">
+      <div style="display: flex; align-items: center; gap: 9px;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: #A87C4F;"></div>
+        <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 34px; font-size: 14px; font-weight: 500; color: #4A453E;">
+        <span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">Ürünler</span><span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">Koleksiyon</span><span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">Sertifikalar</span><span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">İhracat</span><span style="color: #1A1714; font-weight: 600; cursor: pointer;">Bilgi Merkezi</span><span style="cursor: pointer; transition: color .25s;" style-hover="color:#A87C4F;">İletişim</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <span style="font-size: 13px; font-weight: 500; color: #8a857c; white-space: nowrap;">TR / EN</span>
+        <span style="font-size: 14px; font-weight: 600; color: #FBF9F5; background: #1A1714; padding: 9px 20px; border-radius: 980px; white-space: nowrap; cursor: pointer; transition: background .25s, transform .25s;" style-hover="background:#33291f; transform:translateY(-1px);">Teklif Al</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- reading progress -->
+  <div style="position: sticky; top: 57px; z-index: 49; height: 2px; background: rgba(26,23,20,.07);">
+    <div style="height: 100%; width: {{ progress }}%; background: #A87C4F; transition: width .12s linear;"></div>
+  </div>
+
+  <!-- ===== ARTICLE HEADER ===== -->
+  <div style="max-width: 780px; margin: 0 auto; padding: 60px 32px 0;">
+    <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #9a948a;">
+      <a href="Blog.dc.html">Bilgi Merkezi</a><span>›</span><span style="color: #8A6638;">Teknik</span>
+    </div>
+    <h1 style="font-size: 54px; line-height: 1.08; letter-spacing: -0.035em; font-weight: 700; margin: 22px 0 0; text-wrap: pretty;">Anti-snap barel gerçekte neyi <span style="font-family: 'Newsreader', serif; font-weight: 500; font-style: italic; letter-spacing: -0.01em;">durdurur?</span></h1>
+    <p style="font-size: 20px; line-height: 1.55; color: #78726B; margin: 20px 0 0; font-weight: 500; text-wrap: pretty;">Kırma saldırısı silindirin en zayıf kesitini hedefler. Kontrollü kopma kanalı, sertleştirilmiş pim ve gövde geometrisi birlikte çalışır — katalogdaki hangi rakam gerçekten anlam taşır?</p>
+    <div style="display: flex; align-items: center; gap: 16px; margin: 30px 0 0; padding: 20px 0; border-top: 1px solid rgba(26,23,20,.1); border-bottom: 1px solid rgba(26,23,20,.1);">
+      <div style="width: 42px; height: 42px; border-radius: 50%; background: #F0ECE3; border: 1px solid rgba(26,23,20,.1); display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 13px; color: #8A6638;">MK</div>
+      <div style="flex: 1;">
+        <div style="font-size: 14.5px; font-weight: 600;">Mehmet Karaca</div>
+        <div style="font-size: 13px; color: #9a948a;">Ar-Ge / Silindir Grubu · 14 Tem 2026 · 7 dk okuma</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="font-family: 'DM Mono', monospace; font-size: 11px; color: #8A6638; background: #F4EEE2; padding: 6px 12px; border-radius: 980px;">EN 1303</span>
+        <span style="font-family: 'DM Mono', monospace; font-size: 11px; color: #8A6638; background: #F4EEE2; padding: 6px 12px; border-radius: 980px;">BRL-100</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LEAD IMAGE ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 40px 32px 0;">
+    <div style="position: relative; background: linear-gradient(160deg,#F1ECE2,#E6DFD1); border-radius: 28px; height: 460px; display: flex; align-items: center; justify-content: center;">
+      <div style="width: 230px; height: 230px; border-radius: 50%; border: 1.5px solid rgba(26,23,20,.2); display: flex; align-items: center; justify-content: center;">
+        <div style="width: 130px; height: 130px; border-radius: 50%; border: 1.5px solid rgba(26,23,20,.16); display: flex; align-items: center; justify-content: center;">
+          <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(168,124,79,.26); border: 1px solid rgba(168,124,79,.55);"></div>
+        </div>
+      </div>
+      <div style="position: absolute; bottom: 24px; left: 30px; font-family: 'DM Mono', monospace; font-size: 11px; color: #9A917F; letter-spacing: 0.06em;">[ GÖRSEL — barel kesiti, kopma kanalı detayı ]</div>
+    </div>
+    <div style="font-size: 13px; color: #9a948a; margin: 12px 0 0; padding-left: 4px;">Kontrollü kopma kanalı, silindirin ön bölümünü gövdeden ayırırken kilitleme mekanizmasını korur.</div>
+  </div>
+
+  <!-- ===== BODY + TOC ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 56px 32px 0; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 56px; align-items: start;">
+
+    <!-- TOC -->
+    <div style="position: sticky; top: 100px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10.5px; letter-spacing: 0.14em; color: #b1a896; margin-bottom: 14px;">İÇİNDEKİLER</div>
+      <div style="display: flex; flex-direction: column; gap: 2px;">
+        <sc-for list="{{ toc }}" as="t" hint-placeholder-count="5">
+          <span onClick="{{ t.on }}" style="font-size: 13.5px; line-height: 1.45; padding: 7px 12px; border-radius: 9px; cursor: pointer; color: {{ t.fg }}; background: {{ t.bg }}; font-weight: {{ t.fw }}; transition: background .2s, color .2s;" style-hover="background:#F0ECE3;">{{ t.label }}</span>
+        </sc-for>
+      </div>
+      <div style="margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(26,23,20,.1); display: flex; flex-direction: column; gap: 9px;">
+        <span style="font-family: 'DM Mono', monospace; font-size: 10.5px; letter-spacing: 0.14em; color: #b1a896;">PAYLAŞ</span>
+        <div style="display: flex; gap: 7px;">
+          <span style="width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(26,23,20,.14); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #4A453E; cursor: pointer; transition: background .2s;" style-hover="background:#F0ECE3;">in</span>
+          <span style="width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(26,23,20,.14); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #4A453E; cursor: pointer; transition: background .2s;" style-hover="background:#F0ECE3;">X</span>
+          <span onClick="{{ copyLink }}" style="width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(26,23,20,.14); display: flex; align-items: center; justify-content: center; font-size: 13px; color: #4A453E; cursor: pointer; transition: background .2s;" style-hover="background:#F0ECE3;">⧉</span>
+        </div>
+        <span style="font-size: 12px; color: #9a948a;">{{ copyMsg }}</span>
+      </div>
+    </div>
+
+    <!-- ARTICLE BODY -->
+    <div style="max-width: 700px;">
+      <p style="font-size: 18.5px; line-height: 1.75; color: #2A2620; margin: 0; text-wrap: pretty;">Kırma saldırısı, adından beklenenden çok daha basittir: silindirin dışarıda kalan bölümü kavranır, tork uygulanır ve gövde en ince kesitinden — genelde vida deliği hizasından — koparılır. Kopan parça mekanizmayı açığa çıkarırsa kilit saniyeler içinde devre dışı kalır.</p>
+
+      <div id="s1" style="height: 1px;"></div>
+      <h2 style="font-size: 30px; line-height: 1.2; letter-spacing: -0.025em; font-weight: 700; margin: 44px 0 0;">1. Zayıf kesit neresidir?</h2>
+      <p style="font-size: 18.5px; line-height: 1.75; color: #2A2620; margin: 16px 0 0; text-wrap: pretty;">Standart bir Avrupa profili silindirde gövde, bağlantı vidasının geçtiği noktada daralır. Bu daralma üretim gereğidir; kaldırılamaz. Anti-snap tasarımın mantığı da bu yüzden "kırılmayı önlemek" değil, <strong style="font-weight: 700;">kırılmanın nerede olacağını seçmektir</strong>.</p>
+
+      <!-- pull quote -->
+      <div style="margin: 34px 0 0; padding: 26px 30px; background: #F4EEE2; border-radius: 18px;">
+        <div style="font-family: 'Newsreader', serif; font-style: italic; font-size: 23px; line-height: 1.45; color: #1A1714;">Amaç kırılmayı önlemek değil, kırılmanın nerede olacağını tasarımla belirlemektir.</div>
+      </div>
+
+      <div id="s2" style="height: 1px;"></div>
+      <h2 style="font-size: 30px; line-height: 1.2; letter-spacing: -0.025em; font-weight: 700; margin: 44px 0 0;">2. Kontrollü kopma kanalı</h2>
+      <p style="font-size: 18.5px; line-height: 1.75; color: #2A2620; margin: 16px 0 0; text-wrap: pretty;">Gövdenin ön bölümüne açılan kanal, kopmayı kilitleme mekanizmasının önüne taşır. Saldırgan silindiri kırdığında elinde yalnızca ön parça kalır; pim yuvaları ve kam bağlantısı kapının içinde, korunmuş bölgede durur. Ön parçanın koptuğu noktada kalan gövde hâlâ anahtarla çalışabilir durumdadır.</p>
+
+      <!-- spec table -->
+      <div style="margin: 32px 0 0; border: 1px solid rgba(26,23,20,.1); border-radius: 18px; overflow: hidden; background: #FFFFFF;">
+        <div style="display: grid; grid-template-columns: minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr); gap: 12px; padding: 14px 22px; background: #F7F4ED; border-bottom: 1px solid rgba(26,23,20,.08); font-family: 'DM Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; color: #b1a896;">
+          <div>ÖZELLİK</div><div>STANDART BAREL</div><div>ANTI-SNAP</div>
+        </div>
+        <sc-for list="{{ specRows }}" as="r" hint-placeholder-count="4">
+          <div style="display: grid; grid-template-columns: minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr); gap: 12px; padding: 15px 22px; border-bottom: 1px solid rgba(26,23,20,.06); font-size: 14.5px;">
+            <div style="font-weight: 600;">{{ r.k }}</div>
+            <div style="color: #78726B;">{{ r.a }}</div>
+            <div style="color: #8A6638; font-weight: 600;">{{ r.b }}</div>
+          </div>
+        </sc-for>
+        <div style="padding: 13px 22px; font-family: 'DM Mono', monospace; font-size: 11px; color: #9a948a;">TS EN 1303 / EN 1627 REFERANSLI · LABORATUVAR RAPORU MEVCUT</div>
+      </div>
+
+      <div id="s3" style="height: 1px;"></div>
+      <h2 style="font-size: 30px; line-height: 1.2; letter-spacing: -0.025em; font-weight: 700; margin: 44px 0 0;">3. Sertleştirilmiş pim ve delme direnci</h2>
+      <p style="font-size: 18.5px; line-height: 1.75; color: #2A2620; margin: 16px 0 0; text-wrap: pretty;">Kırma tek saldırı yöntemi değildir. Silindiri delmek, kam bağlantısını doğrudan hedefler. Gövdeye yerleştirilen sertleştirilmiş çelik pimler matkap ucunu saptırır; kayan uç ilerlemek yerine yüzeyde döner. Pim sayısı değil, konumu belirleyicidir — kam hizasını ve pim yuvası hattını örtmelidir.</p>
+      <p style="font-size: 18.5px; line-height: 1.75; color: #2A2620; margin: 16px 0 0; text-wrap: pretty;">Bir başka saldırı biçimi olan çekme (pulling), gövdeyi öne doğru sökmeye çalışır. Burada rozetin ve bağlantı vidasının kalitesi silindir kadar kritiktir; zayıf bir rozet, en iyi bareli bile devre dışı bırakır.</p>
+
+      <div id="s4" style="height: 1px;"></div>
+      <h2 style="font-size: 30px; line-height: 1.2; letter-spacing: -0.025em; font-weight: 700; margin: 44px 0 0;">4. Katalogda neye bakmalı?</h2>
+      <div style="display: flex; flex-direction: column; gap: 12px; margin: 20px 0 0;">
+        <sc-for list="{{ checklist }}" as="c" hint-placeholder-count="4">
+          <div style="display: flex; gap: 13px; align-items: flex-start; background: #FFFFFF; border: 1px solid rgba(26,23,20,.08); border-radius: 14px; padding: 16px 20px;">
+            <span style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #F4EEE2; color: #8A6638; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 11px; margin-top: 1px;">{{ c.n }}</span>
+            <div style="font-size: 15.5px; line-height: 1.6; color: #2A2620;">{{ c.t }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div id="s5" style="height: 1px;"></div>
+      <h2 style="font-size: 30px; line-height: 1.2; letter-spacing: -0.025em; font-weight: 700; margin: 44px 0 0;">Sonuç</h2>
+      <p style="font-size: 18.5px; line-height: 1.75; color: #2A2620; margin: 16px 0 0; text-wrap: pretty;">Anti-snap bir pazarlama etiketi değil, ölçülebilir bir tasarım kararıdır. Doğru soru "anti-snap mi?" değil, "hangi kesitten, kaç Nm torkta kopuyor ve kopma sonrası mekanizma korunuyor mu?" olmalıdır. Test raporunu isteyin; rakam varsa cevap da vardır.</p>
+
+      <!-- product CTA -->
+      <div style="margin: 46px 0 0; background: #18120D; border-radius: 22px; padding: 34px 36px; display: flex; align-items: center; justify-content: space-between; gap: 28px;">
+        <div>
+          <div style="font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #C2A06A;">BRL-100 SERİSİ</div>
+          <div style="font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: #F4EEE2; margin-top: 8px;">Anti-snap silindir bareller</div>
+          <div style="font-size: 15px; color: #B4AC9E; margin-top: 6px;">Ø17 mm pirinç gövde · 5 pim · sertleştirilmiş delme koruması</div>
+        </div>
+        <span style="flex: none; font-size: 14px; font-weight: 600; color: #18120D; background: #C2A06A; padding: 14px 26px; border-radius: 980px; cursor: pointer; white-space: nowrap; transition: background .25s, transform .25s;" style-hover="background:#D4B47D; transform:translateY(-1px);">Ürünü gör&nbsp;›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RELATED ===== -->
+  <div style="max-width: 1120px; margin: 0 auto; padding: 78px 32px 0;">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 22px; border-bottom: 1px solid rgba(26,23,20,.1);">
+      <h2 style="font-size: 28px; font-weight: 700; letter-spacing: -0.025em; margin: 0;">İlgili yazılar</h2>
+      <a href="Blog.dc.html" style="font-size: 14px; font-weight: 600;">Tümünü gör&nbsp;›</a>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 26px;">
+      <sc-for list="{{ related }}" as="p" hint-placeholder-count="3">
+        <div style="background: #FFFFFF; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 16px 40px -28px rgba(0,0,0,.22); cursor: pointer; display: flex; flex-direction: column; transition: transform .45s cubic-bezier(.16,.84,.44,1), box-shadow .45s cubic-bezier(.16,.84,.44,1);" style-hover="transform:translateY(-6px); box-shadow:0 1px 2px rgba(0,0,0,.04), 0 28px 56px -28px rgba(0,0,0,.3);">
+          <div style="position: relative; aspect-ratio: 16/10; background: linear-gradient(160deg,#F1ECE2,#E6DFD1); display: flex; align-items: center; justify-content: center;">
+            <div style="width: 84px; height: 84px; border-radius: 50%; border: 1.5px solid rgba(26,23,20,.18); display: flex; align-items: center; justify-content: center;">
+              <div style="width: 30px; height: 30px; border-radius: 50%; background: rgba(168,124,79,.22); border: 1px solid rgba(168,124,79,.5);"></div>
+            </div>
+            <span style="position: absolute; top: 16px; left: 18px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: #8A6638; background: rgba(251,249,245,.92); padding: 5px 10px; border-radius: 980px;">{{ p.cat }}</span>
+          </div>
+          <div style="padding: 22px 24px 26px;">
+            <div style="font-size: 12.5px; color: #9a948a;">{{ p.meta }}</div>
+            <h3 style="font-size: 19.5px; line-height: 1.24; letter-spacing: -0.02em; font-weight: 700; margin: 9px 0 0; text-wrap: pretty;">{{ p.title }}</h3>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div style="background: #F0ECE3; border-top: 1px solid rgba(26,23,20,.08); margin-top: 80px;">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 56px 32px 28px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #A87C4F;"></div>
+          <span style="font-size: 18px; font-weight: 700; letter-spacing: -0.02em;">MARKA</span>
+        </div>
+        <p style="font-size: 14px; line-height: 1.6; color: #8a857c; max-width: 280px; margin: 16px 0 0;">Kapı güvenlik donanımı ve tavan sistemleri üreticisi. 1976'dan beri tasarlıyor, işliyor ve dünyaya ihraç ediyoruz.</p>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">Ürünler</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>Silindir Bareller</span><span>Asma Kilitler</span><span>Menteşeler</span><span>Kapı Kolları</span><span>Otel Sistemleri</span><span>Tavan Sistemleri</span></div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">Kurumsal</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>Hakkımızda</span><span>Üretim</span><span>Sertifikalar</span><span>Bilgi Merkezi</span><span>İletişim</span></div>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #b1a896; margin-bottom: 16px; text-transform: uppercase;">İletişim</div>
+        <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px; color: #4A453E;"><span>export@marka.com</span><span>+90 232 000 00 00</span><span>İAOSB, İzmir</span></div>
+      </div>
+    </div>
+    <div style="max-width: 1120px; margin: 0 auto; padding: 22px 32px; border-top: 1px solid rgba(26,23,20,.08); display: flex; justify-content: space-between; font-size: 12px; color: #9a948a;">
+      <span>© 2025 MARKA DONANIM SAN. TİC. A.Ş.</span>
+      <span>CE · TSE · ISO 9001</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1120,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { progress: 0, activeSec: 's1', copyMsg: '' };
+
+  componentDidMount() {
+    this._alive = true;
+    this._onScroll = () => this._track();
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    document.addEventListener('scroll', this._onScroll, { passive: true, capture: true });
+    this._iv = setInterval(() => { if (this._alive) this._track(); }, 100);
+    this._track();
+  }
+  componentWillUnmount() {
+    this._alive = false;
+    window.removeEventListener('scroll', this._onScroll);
+    document.removeEventListener('scroll', this._onScroll, true);
+    if (this._iv) clearInterval(this._iv);
+    if (this._t) clearTimeout(this._t);
+  }
+
+  sections() {
+    return [
+      { id: 's1', label: 'Zayıf kesit neresidir?' },
+      { id: 's2', label: 'Kontrollü kopma kanalı' },
+      { id: 's3', label: 'Sertleştirilmiş pim' },
+      { id: 's4', label: 'Katalogda neye bakmalı?' },
+      { id: 's5', label: 'Sonuç' },
+    ];
+  }
+
+  _track() {
+    const doc = document.documentElement;
+    const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+    const pct = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
+
+    let active = this.state.activeSec;
+    const secs = this.sections();
+    for (const s of secs) {
+      const el = document.getElementById(s.id);
+      if (!el) continue;
+      if (el.getBoundingClientRect().top < 160) active = s.id;
+    }
+    if (Math.abs(pct - this.state.progress) > 0.4 || active !== this.state.activeSec) {
+      this.setState({ progress: pct, activeSec: active });
+    }
+  }
+
+  _go(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const y = window.scrollY + el.getBoundingClientRect().top - 110;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+
+  renderVals() {
+    const s = this.state;
+    return {
+      progress: Math.round(s.progress),
+      toc: this.sections().map(sec => {
+        const on = sec.id === s.activeSec;
+        return {
+          label: sec.label,
+          fg: on ? '#1A1714' : '#78726B',
+          bg: on ? '#F4EEE2' : 'transparent',
+          fw: on ? '600' : '500',
+          on: () => this._go(sec.id),
+        };
+      }),
+      specRows: [
+        { k: 'Kopma noktası', a: 'Vida deliği hizası', b: 'Ön kanal (kontrollü)' },
+        { k: 'Kopma sonrası mekanizma', a: 'Açığa çıkar', b: 'Korunur, çalışır' },
+        { k: 'Delme direnci', a: 'Yok', b: 'Sertleştirilmiş pim' },
+        { k: 'Tork dayanımı', a: '~ 12 Nm', b: '≥ 25 Nm' },
+        { k: 'EN 1303 saldırı sınıfı', a: '0', b: '2' },
+      ],
+      checklist: [
+        { n: '1', t: 'Kopma torkunun Nm cinsinden beyan edilmesi — "anti-snap" ibaresi tek başına ölçü değildir.' },
+        { n: '2', t: 'Kopma sonrası kilidin çalışmaya devam ettiğini gösteren test raporu.' },
+        { n: '3', t: 'Sertleştirilmiş pimlerin konumu: kam hizası ve pim yuvası hattını örtüyor mu?' },
+        { n: '4', t: 'Rozet ve bağlantı vidası sınıfı — zayıf rozet en iyi bareli devre dışı bırakır.' },
+      ],
+      related: [
+        { cat: 'STANDARTLAR', title: 'EN 1303 sınıf kodunu okumak', meta: '9 Tem 2026 · 6 dk' },
+        { cat: 'TEKNİK', title: 'Pirinç mi çinko alaşımı mı?', meta: '18 Haz 2026 · 5 dk' },
+        { cat: 'PROJE', title: '400 odalı otelde RFID geçişi', meta: '11 Haz 2026 · 9 dk' },
+      ],
+      copyMsg: s.copyMsg,
+      copyLink: () => {
+        this.setState({ copyMsg: 'Bağlantı kopyalandı' });
+        if (this._t) clearTimeout(this._t);
+        this._t = setTimeout(() => { if (this._alive) this.setState({ copyMsg: '' }); }, 1800);
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

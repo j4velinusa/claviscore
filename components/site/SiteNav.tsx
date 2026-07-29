@@ -17,6 +17,7 @@ export function SiteNav({ dict, locale }: { dict: Dictionary; locale: Locale }) 
     { label: dict.nav.collection, href: localePath(locale, "/koleksiyon") },
     { label: dict.nav.certificates, href: `${home}#sertifikalar` },
     { label: dict.nav.export, href: `${home}#ihracat` },
+    { label: dict.nav.blog, href: localePath(locale, "/blog") },
     { label: dict.nav.contact, href: `${home}#iletisim` },
   ];
   const quoteHref = `mailto:${site.email}?subject=${encodeURIComponent(dict.mailSubject.quote)}`;
