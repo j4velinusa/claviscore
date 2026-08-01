@@ -15,8 +15,9 @@ import {
 // Panel zaten tarayıcıda 1600px WebP'ye indiriyor; bu sınır ona karşı değil,
 // dönüşüm atlanırsa diye son savunma.
 const MAX_BYTES = 2 * 1024 * 1024;
-// PDF dönüştürülmüyor, ham gidiyor. base64 %33 şişirdiği için 3 MB ≈ 4 MB gövde —
-// Vercel'in 4,5 MB istek sınırının hemen altı. Daha büyük katalog sıkıştırılmalı.
+// PDF'ler artık bu uç noktadan GEÇMİYOR — 4,5 MB'lık gövde sınırı yüzünden
+// doğrudan blob deposuna yükleniyorlar (bkz. /api/admin/blob-upload). Buradaki
+// PDF kolu yalnız eski istemcilere karşı savunma olarak duruyor.
 const MAX_PDF_BYTES = 3 * 1024 * 1024;
 
 /** Kimlikten yuva — dosya adı yükleme anında sürümle birlikte türetiliyor. */

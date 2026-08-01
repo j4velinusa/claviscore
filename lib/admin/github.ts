@@ -440,6 +440,42 @@ export async function putMedia(input: {
   return { file, commitUrl: out.commit.html_url };
 }
 
+/**
+ * Blob deposundaki bir belgeyi kayda işler. Dosyanın kendisi repoya girmiyor;
+ * burada yalnız adresi ve boyutu tutuluyor.
+ */
+export async function putMediaUrl(input: {
+  id: string;
+  file: string;
+  url: string;
+  size: number;
+}): Promise<{ previous?: { file: string; url?: string } }> {
+  const { manifest } = await getMediaManifest();
+  const previous = manifest[input.id];
+  await updateManifest((m) => {
+    m[input.id] = {
+      file: input.file,
+      url: input.url,
+      size: input.size,
+      updatedAt: new Date().toISOString(),
+    };
+  }, `belge kaydı: ${input.id}`);
+  return { previous: previous ? { file: previous.file, url: previous.url } : undefined };
+}
+
+/** Kaydı siler ve önceki girdiyi döndürür — blob'daki dosyayı çağıran temizliyor. */
+export async function removeMediaRecord(
+  id: string,
+): Promise<{ file: string; url?: string } | null> {
+  const { manifest } = await getMediaManifest();
+  const entry = manifest[id];
+  if (!entry) return null;
+  await updateManifest((m) => {
+    delete m[id];
+  }, `belge kaydı silindi: ${id}`);
+  return { file: entry.file, url: entry.url };
+}
+
 async function deleteMediaFile(dir: string, file: string, message: string): Promise<void> {
   const { owner, repo, branch } = config();
   const sha = await fileSha(dir, file);

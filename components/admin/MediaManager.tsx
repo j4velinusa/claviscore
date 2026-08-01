@@ -15,7 +15,9 @@ import {
   type MediaSlot,
 } from "@/lib/media-config";
 import { tr } from "@/lib/dictionaries/tr";
-import { rawBase64, toWebp } from "@/lib/image-encode";
+// Yerel upload() fonksiyonuyla çakışmasın diye ad değiştirildi.
+import { upload as uploadToBlob } from "@vercel/blob/client";
+import { toWebp } from "@/lib/image-encode";
 
 // Panel tek dilli (Türkçe) — admin arayüzü public site i18n'ine dahil değil.
 // Ürün adları için Türkçe sözlük doğrudan içe aktarılıyor; sunucudan geçirmeye gerek yok.
@@ -24,6 +26,11 @@ const NAMES = tr.katalog.products;
 function slotTitle(slot: MediaSlot): string {
   if (slot.group !== "urun") return slot.label;
   return NAMES[slot.key as keyof typeof NAMES]?.name ?? slot.key;
+}
+
+/** Kimlik bir belge yuvasına mı ait — silmede hangi uç noktaya gidileceğini belirler. */
+function isPdfId(id: string): boolean {
+  return DOC_SLOTS.some((s) => slotId(s.group, s.key) === id);
 }
 
 export function MediaManager({ initial }: { initial: MediaManifest }) {
@@ -36,6 +43,8 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
   // kartta yerel önizleme gösteriliyor.
   const [preview, setPreview] = useState<Record<string, string>>({});
   // Yükleme sonucu: kartın altında gösterilen ölçü/boyut/kodlama bilgisi.
+  // Blob'a yüklenen belgenin adresi — kart "aç" bağlantısı için.
+  const [docUrl, setDocUrl] = useState<Record<string, string>>({});
   const [info, setInfo] = useState<
     Record<string, { text: string; dusukKaynak: boolean; sourceEdge: number; maxEdge: number }>
   >({});
@@ -59,28 +68,52 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
     setNote(null);
     setBusyId(id);
     try {
-      const enc = isPdf ? null : await toWebp(file, slot.maxEdge ?? 1600);
-      const base64 = enc ? enc.base64 : await rawBase64(file);
-      const res = await fetch("/api/admin/media", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, base64 }),
-      });
-      // res.ok ÖNCE: JSON olmayan bir hata yanıtında (proxy/timeout sayfası)
-      // ayrıştırma istisnası gerçek durum kodunu gizliyordu.
-      const data = (await res.json().catch(() => ({}))) as { error?: string; file?: string };
-      if (!res.ok) throw new Error(data.error || `Yükleme başarısız (${res.status})`);
+      let savedFile: string;
+      // Görsel yolunda kodlama sonucu; belge yolunda yok (dönüşüm yapılmıyor).
+      let enc: Awaited<ReturnType<typeof toWebp>> | null = null;
 
-      setManifest((m) => ({ ...m, [id]: { file: data.file!, updatedAt: new Date().toISOString() } }));
-      if (enc) {
+      if (isPdf) {
+        // Dosya sunucusuz fonksiyondan GEÇMİYOR: tarayıcı doğrudan blob deposuna
+        // yüklüyor, uç nokta yalnız kısa ömürlü jeton üretiyor. Vercel'in 4,5 MB'lık
+        // istek gövdesi sınırı böylece devre dışı kalıyor — 60 MB katalog geçebiliyor.
+        const blob = await uploadToBlob(`${id}/${file.name}`, file, {
+          access: "public",
+          handleUploadUrl: "/api/admin/blob-upload",
+          contentType: "application/pdf",
+        });
+        const res = await fetch("/api/admin/media-url", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, url: blob.url, pathname: blob.pathname, size: file.size }),
+        });
+        const data = (await res.json().catch(() => ({}))) as { error?: string };
+        if (!res.ok) throw new Error(data.error || `Kayıt yazılamadı (${res.status})`);
+        savedFile = blob.pathname;
+        setDocUrl((d) => ({ ...d, [id]: blob.url }));
+      } else {
+        enc = await toWebp(file, slot.maxEdge ?? 1600);
+        const res = await fetch("/api/admin/media", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, base64: enc.base64 }),
+        });
+        // res.ok ÖNCE: JSON olmayan bir hata yanıtında (proxy/timeout sayfası)
+        // ayrıştırma istisnası gerçek durum kodunu gizliyordu.
+        const data = (await res.json().catch(() => ({}))) as { error?: string; file?: string };
+        if (!res.ok) throw new Error(data.error || `Yükleme başarısız (${res.status})`);
+        savedFile = data.file!;
+
         // Önizleme ham dosyadan değil, commit edilen blob'dan: ekranda görünen
         // ile repoya giden aynı olsun; ham dosya da bellekte tutulmasın.
-        const url = URL.createObjectURL(enc.blob);
-        setPreview((p) => {
-          if (p[id]) URL.revokeObjectURL(p[id]);
-          return { ...p, [id]: url };
+        const objectUrl = URL.createObjectURL(enc.blob);
+        setPreview((prev) => {
+          if (prev[id]) URL.revokeObjectURL(prev[id]);
+          return { ...prev, [id]: objectUrl };
         });
       }
+
+      setManifest((m) => ({ ...m, [id]: { file: savedFile, updatedAt: new Date().toISOString() } }));
+
       // Ne yüklendiğini rakamla söyle. "Kalite düşüyor" şikâyetinin sebebi çoğu
       // zaman kaynağın küçük gelmesi oluyor ve panel bunu göstermediği sürece
       // kullanıcı sebebi göremiyor.
@@ -92,7 +125,7 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
         [id]: {
           text: enc
             ? `${enc.width}×${enc.height} · ${kb} KB · ${enc.lossless ? "kayıpsız" : "kayıplı"}`
-            : `${file.name} · ${kb} KB`,
+            : `${file.name} · ${kb >= 1024 ? (kb / 1024).toFixed(1) + " MB" : kb + " KB"}`,
           dusukKaynak,
           sourceEdge: enc ? enc.sourceEdge : 0,
           maxEdge,
@@ -101,7 +134,9 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
       setNote(
         dusukKaynak && enc
           ? `Yüklendi ama kaynak küçük: en uzun kenar ${enc.sourceEdge} px geldi, bu yuva ${maxEdge} px'e kadar kullanabiliyor. Daha büyük bir dosya yüklersen görsel daha net olur.`
-          : "Yüklendi. Sitede görünmesi için dağıtımın bitmesi gerekiyor (~1 dk).",
+          : isPdf
+            ? "Belge yüklendi. Sitede görünmesi için dağıtımın bitmesi gerekiyor (~1 dk)."
+            : "Yüklendi. Sitede görünmesi için dağıtımın bitmesi gerekiyor (~1 dk).",
       );
     } catch (err) {
       setError((err as Error).message);
@@ -115,7 +150,8 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
     setNote(null);
     setBusyId(id);
     try {
-      const res = await fetch(`/api/admin/media?id=${encodeURIComponent(id)}`, { method: "DELETE" });
+      const endpoint = isPdfId(id) ? "/api/admin/media-url" : "/api/admin/media";
+      const res = await fetch(`${endpoint}?id=${encodeURIComponent(id)}`, { method: "DELETE" });
       const data = (await res.json()) as { error?: string };
       if (!res.ok) throw new Error(data.error || `Silinemedi (${res.status})`);
       setManifest((m) => {
@@ -160,8 +196,9 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
             <img src={src} alt="" className="absolute inset-0 size-full object-cover" />
           ) : isPdf && entry ? (
             // PDF'in önizlemesi yok; yüklü olduğunu ve açılabildiğini göster.
+            // Adres blob'dan geliyorsa kayıtta duruyor, repodaysa yoldan türetiliyor.
             <a
-              href={`${DOC_URL_BASE}/${entry.file}`}
+              href={docUrl[id] ?? entry.url ?? `${DOC_URL_BASE}/${entry.file}`}
               target="_blank"
               rel="noopener"
               className="flex flex-col items-center gap-1.5 text-bronze-2 hover:opacity-70 transition-opacity"

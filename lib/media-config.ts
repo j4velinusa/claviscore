@@ -144,7 +144,7 @@ export const DOC_SLOTS: readonly MediaSlot[] = [
     key: "katalog-tr",
     group: "dok",
     label: "Ürün kataloğu — Türkçe (PDF)",
-    note: "Ana sayfadaki \"Kataloğu indir\" düğmesi bunu indirir. En fazla 3 MB.",
+    note: "Ana sayfadaki \"Kataloğu indir\" düğmesi bunu indirir. En fazla 100 MB.",
     aspect: "1 / 1",
     kind: "pdf",
   },
@@ -152,7 +152,7 @@ export const DOC_SLOTS: readonly MediaSlot[] = [
     key: "katalog-en",
     group: "dok",
     label: "Ürün kataloğu — İngilizce (PDF)",
-    note: "İngilizce sayfalardaki indirme düğmesi bunu kullanır. En fazla 3 MB.",
+    note: "İngilizce sayfalardaki indirme düğmesi bunu kullanır. En fazla 100 MB.",
     aspect: "1 / 1",
     kind: "pdf",
   },
@@ -193,8 +193,19 @@ export function blogCoverSlot(id: string): MediaSlot {
   };
 }
 
-/** slotId → dosya kaydı. Kaynak: content/media.json */
-export type MediaManifest = Record<string, { file: string; updatedAt: string }>;
+/**
+ * slotId → dosya kaydı. Kaynak: content/media.json
+ *
+ * İki depolama var ve kayıt hangisi olduğunu `url` ile ayırıyor:
+ * - Görseller repoda (public/gorseller) → yalnız `file`, adres yoldan türetiliyor.
+ * - Büyük belgeler blob deposunda → `url` dolu, `file` silme için blob yolu.
+ *   Sebebi: 60 MB'lık bir katalog ne repoya ne de sunucusuz fonksiyonun
+ *   4,5 MB'lık istek gövdesine sığıyor.
+ */
+export type MediaManifest = Record<
+  string,
+  { file: string; updatedAt: string; url?: string; size?: number }
+>;
 
 /** slotId → public URL. Görseli olmayan yuva haritada yer almaz. */
 export type MediaMap = Record<string, string>;
@@ -203,9 +214,14 @@ export type MediaMap = Record<string, string>;
 export function toMediaMap(manifest: MediaManifest): MediaMap {
   const out: MediaMap = {};
   for (const [id, entry] of Object.entries(manifest)) {
-    if (!entry?.file) continue;
-    // Kök yuvanın tipine göre: belgeler /belgeler, görseller /gorseller.
-    // Kayıtlı olmayan bir kimlik kalmışsa (yuva silinmiş) görsel varsayılır.
+    if (!entry) continue;
+    // Blob deposundaki dosyanın adresi kayıtta duruyor; repodakinin adresi
+    // yuvanın tipinden türetiliyor (belgeler /belgeler, görseller /gorseller).
+    if (entry.url) {
+      out[id] = entry.url;
+      continue;
+    }
+    if (!entry.file) continue;
     const slot = ALL_SLOTS.find((sl) => slotId(sl.group, sl.key) === id);
     const base = slot && slotKind(slot) === "pdf" ? DOC_URL_BASE : MEDIA_URL_BASE;
     out[id] = `${base}/${entry.file}`;
