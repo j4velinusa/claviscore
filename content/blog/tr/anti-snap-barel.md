@@ -1,20 +1,22 @@
 ---
-title: "Anti-snap barel gerçekte neyi durdurur?"
-titleAccent: "durdurur?"
-excerpt: "Kırma saldırısı silindirin en zayıf kesitini hedefler. Kontrollü kopma kanalı, sertleştirilmiş pim ve gövde geometrisi birlikte çalışır — katalogdaki hangi rakam gerçekten anlam taşır?"
+title: Anti-snap barel gerçekte neyi durdurur?
+titleAccent: durdurur?
+excerpt: >-
+  Kırma saldırısı silindirin en zayıf kesitini hedefler. Kontrollü kopma kanalı,
+  sertleştirilmiş pim ve gövde geometrisi birlikte çalışır — katalogdaki hangi
+  rakam gerçekten anlam taşır?
 category: teknik
 status: live
 featured: true
-date: "2026-07-14"
+date: '2026-07-14'
 readingMinutes: 7
-tags: ["EN 1303", "BRL-100"]
-coverCaption: "Kontrollü kopma kanalı, silindirin ön bölümünü gövdeden ayırırken kilitleme mekanizmasını korur."
-productCta:
-  sku: "BRL-100 SERİSİ"
-  title: "Anti-snap silindir bareller"
-  desc: "Ø17 mm pirinç gövde · 5 pim · sertleştirilmiş delme koruması"
+tags:
+  - EN 1303
+  - BRL-100
+coverCaption: >-
+  Kontrollü kopma kanalı, silindirin ön bölümünü gövdeden ayırırken kilitleme
+  mekanizmasını korur.
 ---
-
 Kırma saldırısı, adından beklenenden çok daha basittir: silindirin dışarıda kalan bölümü kavranır, tork uygulanır ve gövde en ince kesitinden — genelde vida deliği hizasından — koparılır. Kopan parça mekanizmayı açığa çıkarırsa kilit saniyeler içinde devre dışı kalır.
 
 ## Zayıf kesit neresidir?
