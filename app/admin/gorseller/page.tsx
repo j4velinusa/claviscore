@@ -19,5 +19,9 @@ export default async function AdminGorsellerPage() {
     // yükleme denemesi gerçek hatayı gösterir.
   }
 
-  return <MediaManager initial={manifest} />;
+  // Belge yükleme blob deposuna gidiyor; token yoksa kullanıcı şifreli bir hata
+  // yerine ne yapması gerektiğini görsün.
+  const blobReady = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+
+  return <MediaManager initial={manifest} blobReady={blobReady} />;
 }

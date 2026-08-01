@@ -33,7 +33,14 @@ function isPdfId(id: string): boolean {
   return DOC_SLOTS.some((s) => slotId(s.group, s.key) === id);
 }
 
-export function MediaManager({ initial }: { initial: MediaManifest }) {
+export function MediaManager({
+  initial,
+  blobReady = true,
+}: {
+  initial: MediaManifest;
+  /** Blob deposu bağlı mı — belgeler oraya yükleniyor. */
+  blobReady?: boolean;
+}) {
   const router = useRouter();
   const [manifest, setManifest] = useState<MediaManifest>(initial);
   const [busyId, setBusyId] = useState<string | null>(null);
@@ -372,6 +379,12 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
         <h2 className="font-mono text-[11px] tracking-[0.14em] text-label mt-10 pb-3 border-b border-ink/10">
           BELGELER
         </h2>
+        {!blobReady && (
+          <p role="alert" className="mt-4 text-sm text-[#a33] bg-[#a33]/8 rounded-xl px-4 py-3">
+            Blob deposu bağlı değil, belge yüklenemez. Vercel → Storage → Blob store
+            oluşturun ve bağlarken &quot;read-write token&quot; kutusunu işaretleyin.
+          </p>
+        )}
         <div className="grid sm:grid-cols-2 gap-4 mt-5 max-w-[720px]">
           {DOC_SLOTS.map((s) => (
             <Card key={slotId(s.group, s.key)} slot={s} />
