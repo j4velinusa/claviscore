@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { site } from "@/lib/site";
 import type { Product } from "@/lib/products";
 import type { Dictionary } from "@/lib/dictionaries/tr";
@@ -11,7 +12,16 @@ const cardClass =
  * ok bırakmamak için kart, SKU'su konuya yazılmış teklif e-postası açıyor — sitenin
  * geri kalanındaki mailto CTA modeliyle aynı. Detay sayfası gelince href oraya döner.
  */
-export function ProductCard({ product, dict }: { product: Product; dict: Dictionary }) {
+export function ProductCard({
+  product,
+  dict,
+  imageSrc,
+}: {
+  product: Product;
+  dict: Dictionary;
+  /** Panelden yüklenmiş görselin yolu. Yoksa mockup'taki soyut yer tutucu kalır. */
+  imageSrc?: string;
+}) {
   const t = dict.katalog;
   const copy = t.products[product.sku as keyof typeof t.products];
   const href = `mailto:${site.email}?subject=${encodeURIComponent(`${dict.mailSubject.quote} — ${product.sku}`)}`;
@@ -19,13 +29,24 @@ export function ProductCard({ product, dict }: { product: Product; dict: Diction
   return (
     <a href={href} className={cardClass}>
       <div className="relative aspect-[5/4] [background:linear-gradient(160deg,#F1ECE2,#E6DFD1)] flex items-center justify-center">
-        {/* Ürün görselleri henüz yok — mockup'taki soyut yer tutucu (dilden bağımsız). */}
-        <div
-          aria-hidden
-          className="size-[86px] rounded-full border-[1.5px] border-ink/[0.18] flex items-center justify-center"
-        >
-          <div className="size-[34px] rounded-full border-[1.5px] border-ink/[0.16]" />
-        </div>
+        {imageSrc ? (
+          // alt="" bilinçli: görselin taşıdığı bilgi zaten kartta yazıyor (ad, SKU,
+          // açıklama). Ürün adını burada tekrar etmek ekran okuyucuda çift okuma yapar.
+          <Image
+            src={imageSrc}
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 348px, (min-width: 640px) 50vw, 100vw"
+            className="object-cover"
+          />
+        ) : (
+          <div
+            aria-hidden
+            className="size-[86px] rounded-full border-[1.5px] border-ink/[0.18] flex items-center justify-center"
+          >
+            <div className="size-[34px] rounded-full border-[1.5px] border-ink/[0.16]" />
+          </div>
+        )}
         <span className="absolute top-4 left-[18px] font-mono text-[11px] tracking-[0.04em] text-bronze-2">
           {product.sku}
         </span>

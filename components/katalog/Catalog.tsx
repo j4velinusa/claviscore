@@ -1,12 +1,35 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, Suspense, useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Reveal } from "@/components/motion/Reveal";
 import { Emphasis } from "@/components/site/Emphasis";
 import { ProductCard } from "@/components/katalog/ProductCard";
 import { site } from "@/lib/site";
 import { catalogTabs, filterProducts, type CatalogTab } from "@/lib/products";
 import type { Dictionary } from "@/lib/dictionaries/tr";
+
+/** Kategori derin linki: /katalog?kategori=hinge. Footer ürün kolonu bunu kullanıyor. */
+const CATEGORY_PARAM = "kategori";
+
+function isTab(value: string | null): value is CatalogTab {
+  return value !== null && (catalogTabs as readonly string[]).includes(value);
+}
+
+/**
+ * URL'deki kategoriyi okuyup yukarı bildirir. Hiçbir şey render etmez.
+ *
+ * useSearchParams statik üretimi en yakın Suspense sınırına kadar istemciye kaydırır —
+ * bu yüzden sınır BİLEREK sadece bu bileşeni sarıyor. Ürün ızgarası sarılsaydı 16 ürün
+ * statik HTML'den düşer, arama motoru boş sayfa görürdü.
+ */
+function CategoryFromUrl({ onChange }: { onChange: (tab: CatalogTab) => void }) {
+  const raw = useSearchParams().get(CATEGORY_PARAM);
+  useEffect(() => {
+    onChange(isTab(raw) ? raw : "all");
+  }, [raw, onChange]);
+  return null;
+}
 
 const tabBase =
   "text-sm font-semibold px-5 py-[9px] rounded-full border transition duration-[250ms] ease-swift";
@@ -35,15 +58,41 @@ function Showing({ template, count, total }: { template: string; count: number; 
   );
 }
 
-export function Catalog({ dict }: { dict: Dictionary }) {
+export function Catalog({
+  dict,
+  images = {},
+}: {
+  dict: Dictionary;
+  /** SKU → görsel yolu. Sunucuda lib/product-images.ts'ten üretilip geçiliyor. */
+  images?: Record<string, string>;
+}) {
   const t = dict.katalog;
+  const router = useRouter();
+  const pathname = usePathname();
+  // Başlangıç "all": ilk HTML tüm ürünleri içersin. Derin link geldiyse
+  // CategoryFromUrl bunu hidrasyondan hemen sonra düzeltir.
   const [tab, setTab] = useState<CatalogTab>("all");
   const list = filterProducts(tab);
   const total = filterProducts("all").length;
   const sampleHref = `mailto:${site.email}?subject=${encodeURIComponent(dict.mailSubject.sample)}`;
 
+  // Sekmeye basınca URL'i de güncelle: filtrelenmiş liste paylaşılabilir olsun.
+  // replace kullanılıyor — her filtre tıklaması geçmişe kayıt düşmesin.
+  function select(next: CatalogTab) {
+    setTab(next);
+    const query = new URLSearchParams(window.location.search);
+    if (next === "all") query.delete(CATEGORY_PARAM);
+    else query.set(CATEGORY_PARAM, next);
+    const qs = query.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+  }
+
   return (
     <>
+      <Suspense fallback={null}>
+        <CategoryFromUrl onChange={setTab} />
+      </Suspense>
+
       <section className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-16 pb-9 text-center">
         <Reveal>
           <p className="text-[13px] font-semibold tracking-[0.12em] uppercase text-bronze-2">{t.kicker}</p>
@@ -68,7 +117,7 @@ export function Catalog({ dict }: { dict: Dictionary }) {
             <button
               key={c}
               type="button"
-              onClick={() => setTab(c)}
+              onClick={() => select(c)}
               aria-pressed={c === tab}
               className={`${tabBase} ${c === tab ? tabOn : tabOff}`}
             >
@@ -83,7 +132,7 @@ export function Catalog({ dict }: { dict: Dictionary }) {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {list.map((p, i) => (
               <Reveal key={p.sku} delay={(i % 3) * 70} className="h-full">
-                <ProductCard product={p} dict={dict} />
+                <ProductCard product={p} dict={dict} imageSrc={images[p.sku]} />
               </Reveal>
             ))}
           </div>

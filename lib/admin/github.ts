@@ -2,6 +2,7 @@ import "server-only";
 import matter from "gray-matter";
 import type { Locale } from "@/lib/i18n";
 import type { PostFrontmatter } from "@/lib/blog-config";
+import { productImageFile, type ProductImageManifest } from "@/lib/products";
 
 // Admin panelin içerik katmanı: GitHub Contents API. Public site içeriği build anında
 // dosyadan okur (lib/blog.ts); admin ise repo'nun ANLIK halini görsün diye doğrudan
@@ -283,4 +284,123 @@ export async function putProforma(
   }
   const out = (await res.json()) as { content: { sha: string }; commit: { html_url: string } };
   return { sha: out.content.sha, commitUrl: out.commit.html_url };
+}
+
+// ---------------------------------------------------------------------------
+// Ürün görselleri — public/urunler/<sku>.webp + content/products/images.json
+//
+// İkilinin kendisi repoya commit'leniyor; ayrı depolama servisi yok. Bir yükleme
+// İKİ commit üretir (önce görsel, sonra kayıt dosyası) çünkü Contents API tek
+// PUT'ta tek dosya yazar. Sıra bilinçli: görsel önce gider, kayıt sonra — kayıtta
+// görünen her dosyanın repoda karşılığı olduğu garanti olsun, tersi değil.
+// Yarıda kalırsa ortaya sahipsiz bir görsel çıkar (zararsız), kırık kayıt çıkmaz.
+//
+// Dosya adı SKU'dan türetiliyor ve uzantı daima .webp: panel görseli yüklemeden
+// önce tarayıcıda WebP'ye çeviriyor. Böylece uzantı takibi ve yetim dosya sorunu
+// oluşmuyor — aynı SKU'ya ikinci yükleme aynı yolu ezer.
+// ---------------------------------------------------------------------------
+
+const PRODUCT_IMAGE_DIR = "public/urunler";
+const PRODUCT_IMAGE_MANIFEST = "content/products/images.json";
+
+async function fileSha(path: string): Promise<string | undefined> {
+  const { owner, repo, branch } = config();
+  const res = await gh(`/repos/${owner}/${repo}/contents/${path}?ref=${branch}`);
+  if (res.status === 404) return undefined;
+  if (!res.ok) throw new Error(`GitHub okuma hatası (${res.status})`);
+  const file = (await res.json()) as { sha: string };
+  return file.sha;
+}
+
+export async function getProductImageManifest(): Promise<{
+  manifest: ProductImageManifest;
+  sha?: string;
+}> {
+  const { owner, repo, branch } = config();
+  const res = await gh(
+    `/repos/${owner}/${repo}/contents/${PRODUCT_IMAGE_MANIFEST}?ref=${branch}`,
+  );
+  if (res.status === 404) return { manifest: {} };
+  if (!res.ok) throw new Error(`GitHub okuma hatası (${res.status})`);
+  const file = (await res.json()) as { content: string; sha: string };
+  const raw = Buffer.from(file.content, "base64").toString("utf8");
+  return { manifest: JSON.parse(raw) as ProductImageManifest, sha: file.sha };
+}
+
+async function putManifest(manifest: ProductImageManifest, message: string): Promise<void> {
+  const { owner, repo, branch } = config();
+  // sha yazmadan HEMEN önce okunuyor: görsel PUT'u sırasında başkası kayıt
+  // dosyasına dokunmuşsa bayat sha ile 409 almayalım.
+  const current = await getProductImageManifest();
+  const body = JSON.stringify(manifest, null, 2) + "\n";
+
+  const res = await gh(`/repos/${owner}/${repo}/contents/${PRODUCT_IMAGE_MANIFEST}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      message,
+      content: Buffer.from(body, "utf8").toString("base64"),
+      branch,
+      ...(current.sha ? { sha: current.sha } : {}),
+    }),
+  });
+  if (!res.ok) {
+    const detail = await res.text();
+    throw new Error(`Kayıt dosyası yazılamadı (${res.status}): ${detail.slice(0, 200)}`);
+  }
+}
+
+/** Görseli commit'ler ve kayıt dosyasına işler. base64 ham ikili (data URL öneki olmadan). */
+export async function putProductImage(input: {
+  sku: string;
+  base64: string;
+}): Promise<{ file: string; commitUrl: string }> {
+  const { owner, repo, branch } = config();
+  const file = productImageFile(input.sku);
+  const path = `${PRODUCT_IMAGE_DIR}/${file}`;
+  const sha = await fileSha(path);
+
+  const res = await gh(`/repos/${owner}/${repo}/contents/${path}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      message: `ürün görseli: ${input.sku}`,
+      content: input.base64,
+      branch,
+      ...(sha ? { sha } : {}),
+    }),
+  });
+  if (!res.ok) {
+    const detail = await res.text();
+    throw new Error(`Görsel yüklenemedi (${res.status}): ${detail.slice(0, 200)}`);
+  }
+  const out = (await res.json()) as { commit: { html_url: string } };
+
+  const { manifest } = await getProductImageManifest();
+  manifest[input.sku] = { file, updatedAt: new Date().toISOString() };
+  await putManifest(manifest, `ürün görseli kaydı: ${input.sku}`);
+
+  return { file, commitUrl: out.commit.html_url };
+}
+
+/** Kaydı ve görsel dosyasını siler. Dosya yoksa kayıt yine de temizlenir. */
+export async function removeProductImage(sku: string): Promise<void> {
+  const { owner, repo, branch } = config();
+  const file = productImageFile(sku);
+  const path = `${PRODUCT_IMAGE_DIR}/${file}`;
+
+  // Kayıt önce temizleniyor: silme yarıda kalırsa site kırık görsele değil,
+  // yer tutucuya düşsün.
+  const { manifest } = await getProductImageManifest();
+  delete manifest[sku];
+  await putManifest(manifest, `ürün görseli kaydı silindi: ${sku}`);
+
+  const sha = await fileSha(path);
+  if (!sha) return;
+  const res = await gh(`/repos/${owner}/${repo}/contents/${path}`, {
+    method: "DELETE",
+    body: JSON.stringify({ message: `ürün görseli silindi: ${sku}`, sha, branch }),
+  });
+  if (!res.ok) {
+    const detail = await res.text();
+    throw new Error(`Görsel silinemedi (${res.status}): ${detail.slice(0, 200)}`);
+  }
 }

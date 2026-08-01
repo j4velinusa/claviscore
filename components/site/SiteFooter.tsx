@@ -11,9 +11,12 @@ const credit = { href: "https://doganaykac.com", label: "doganaykac.com" } as co
 // Hakkımızda · Üretim · Sertifikalar · İhracat · İletişim.
 const corporatePaths = ["/hakkimizda", "/uretim", "/sertifikalar", "/ihracat", "/iletisim"];
 
-export function SiteFooter({ dict, locale }: { dict: Dictionary; locale: Locale }) {
-  const home = localePath(locale, "/");
+// Ürün kolonunun katalog kategorileri. Sıra sözlükteki footer.productLinks sırasını izler:
+// Silindir Bareller · Asma Kilitler · Menteşeler · Kapı Kolları · Otel Sistemleri · Tavan Sistemleri.
+// Değerler lib/products.ts'teki catalogTabs anahtarları; Catalog bunu ?kategori= ile okuyor.
+const productCategories = ["barrel", "padlock", "hinge", "handle", "hotel", "ceiling"];
 
+export function SiteFooter({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   return (
     <footer id="iletisim" className="bg-paper border-t border-ink/8">
       <div className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-14 pb-7 grid grid-cols-2 gap-10 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
@@ -29,11 +32,19 @@ export function SiteFooter({ dict, locale }: { dict: Dictionary; locale: Locale 
             {dict.footer.products}
           </div>
           <div className="flex flex-col gap-[11px] text-sm text-ink-3">
-            {dict.footer.productLinks.map((label) => (
-              <Link key={label} href={`${home}#urunler`} className="hover:text-bronze-2 transition-colors">
-                {label}
-              </Link>
-            ))}
+            {dict.footer.productLinks.map((label, i) => {
+              const category = productCategories[i];
+              const katalog = localePath(locale, "/katalog");
+              return (
+                <Link
+                  key={label}
+                  href={category ? `${katalog}?kategori=${category}` : katalog}
+                  className="hover:text-bronze-2 transition-colors"
+                >
+                  {label}
+                </Link>
+              );
+            })}
           </div>
         </div>
         <div>

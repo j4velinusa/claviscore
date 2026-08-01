@@ -61,6 +61,22 @@ export const products: readonly Product[] = [
   { sku: "GYP-760", category: "ceiling", finishes: [FINISH.panel, FINISH.wood] },
 ];
 
+// --- Ürün görselleri: istemci-güvenli kısım -------------------------------
+// Dosyadan okuma lib/product-images.ts'te (server-only). Buradaki sabit ve tip
+// hem panelde (istemci) hem sunucuda kullanıldığı için o modüle konamaz —
+// lib/blog-config.ts ↔ lib/blog.ts ayrımının aynısı.
+
+/** Panelden yüklenen görsellerin servis edildiği kök. Dosyalar public/urunler/ altında. */
+export const PRODUCT_IMAGE_URL_BASE = "/urunler";
+
+/** SKU → dosya kaydı. Kaynak: content/products/images.json */
+export type ProductImageManifest = Record<string, { file: string; updatedAt: string }>;
+
+/** Dosya adı SKU'dan türetilir; uzantı daima .webp (panel yüklemeden önce çevirir). */
+export function productImageFile(sku: string): string {
+  return `${sku.toLowerCase()}.webp`;
+}
+
 /** Seçili sekmeye göre filtreler. "all" tüm listeyi olduğu gibi döndürür. */
 export function filterProducts(tab: CatalogTab): readonly Product[] {
   return tab === "all" ? products : products.filter((p) => p.category === tab);
