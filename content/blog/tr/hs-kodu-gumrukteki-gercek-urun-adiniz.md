@@ -9,10 +9,6 @@ category: teknik
 status: draft
 date: '2026-07-29'
 readingMinutes: 5
-author:
-  name: ''
-  role: ''
-  initials: '??'
 ---
 HS kodu: gümrükteki gerçek ürün adınız
 

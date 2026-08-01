@@ -6,10 +6,6 @@ category: ihracat
 status: live
 date: "2026-07-02"
 readingMinutes: 8
-author:
-  name: "Elif Kaya"
-  role: "Export Operations"
-  initials: "EK"
 tags: ["Incoterms"]
 coverCaption: "The delivery term defines not the physical journey of the goods but where responsibility changes hands."
 ---

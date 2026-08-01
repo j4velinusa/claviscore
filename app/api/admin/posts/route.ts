@@ -17,8 +17,6 @@ type Payload = {
   status?: unknown;
   date?: unknown;
   readingMinutes?: unknown;
-  authorName?: unknown;
-  authorRole?: unknown;
   tags?: unknown;
   featured?: unknown;
   coverCaption?: unknown;
@@ -27,15 +25,6 @@ type Payload = {
 
 function str(v: unknown, fallback = ""): string {
   return typeof v === "string" ? v.trim() : fallback;
-}
-
-/** Ad-soyaddan baş harfler — tasarımdaki yuvarlak avatar için. */
-function initials(name: string): string {
-  const parts = name.split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "??";
-  const first = parts[0][0] ?? "";
-  const last = parts.length > 1 ? (parts[parts.length - 1][0] ?? "") : "";
-  return (first + last).toLocaleUpperCase("tr-TR");
 }
 
 /** Tek yazıyı gövdesi ve sha'sıyla döndürür — düzenleme çekmecesi bunu kullanır. */
@@ -95,7 +84,6 @@ export async function POST(request: Request) {
 
   const slug = str(p.slug) || slugifyTitle(title);
   const providedSha = str(p.sha);
-  const authorName = str(p.authorName, "Claviscor");
 
   // Yeni yazıda aynı slug varsa üstüne yazmayı reddet — kaza eseri içerik kaybı olmasın.
   if (!providedSha) {
@@ -120,11 +108,6 @@ export async function POST(request: Request) {
     ...(p.featured === true ? { featured: true } : {}),
     date,
     readingMinutes: Number.isFinite(readingMinutes) && readingMinutes > 0 ? readingMinutes : 5,
-    author: {
-      name: authorName,
-      role: str(p.authorRole, "Claviscor"),
-      initials: initials(authorName),
-    },
     ...(tags.length > 0 ? { tags } : {}),
     ...(str(p.coverCaption) ? { coverCaption: str(p.coverCaption) } : {}),
   };

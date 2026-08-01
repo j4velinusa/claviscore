@@ -7,10 +7,6 @@ status: live
 featured: true
 date: "2026-07-14"
 readingMinutes: 7
-author:
-  name: "Mehmet Karaca"
-  role: "R&D / Cylinder Group"
-  initials: "MK"
 tags: ["EN 1303", "BRL-100"]
 coverCaption: "The controlled break-off channel separates the front section of the cylinder while keeping the locking mechanism protected."
 productCta:

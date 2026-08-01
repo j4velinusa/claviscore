@@ -7,10 +7,6 @@ status: live
 featured: true
 date: "2026-07-14"
 readingMinutes: 7
-author:
-  name: "Mehmet Karaca"
-  role: "Ar-Ge / Silindir Grubu"
-  initials: "MK"
 tags: ["EN 1303", "BRL-100"]
 coverCaption: "Kontrollü kopma kanalı, silindirin ön bölümünü gövdeden ayırırken kilitleme mekanizmasını korur."
 productCta:

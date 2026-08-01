@@ -6,10 +6,6 @@ category: standart
 status: live
 date: "2026-07-09"
 readingMinutes: 6
-author:
-  name: "Mehmet Karaca"
-  role: "Ar-Ge / Silindir Grubu"
-  initials: "MK"
 tags: ["EN 1303"]
 coverCaption: "Sınıflandırma kodu, silindirin hangi başlıkta hangi seviyede test edildiğini tek satırda özetler."
 ---

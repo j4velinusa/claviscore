@@ -16,7 +16,6 @@ export type PostFrontmatter = {
   /** ISO tarih (2026-07-14). Görüntüleme biçimi dile göre üretilir. */
   date: string;
   readingMinutes: number;
-  author: { name: string; role: string; initials: string };
   /** Başlıkta serif italik render edilecek son kelime öbeği (opsiyonel). */
   titleAccent?: string;
   tags?: string[];

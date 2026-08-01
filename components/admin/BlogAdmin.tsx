@@ -13,7 +13,6 @@ export type AdminRow = {
   category: BlogCategory;
   status: PostStatus;
   date: string;
-  author: { name: string };
   sha: string;
 };
 
@@ -44,8 +43,6 @@ type Draft = {
   status: PostStatus;
   date: string;
   readingMinutes: number;
-  authorName: string;
-  authorRole: string;
   tags: string;
   coverCaption: string;
   featured: boolean;
@@ -63,8 +60,6 @@ const emptyDraft = (locale: Locale, today: string): Draft => ({
   status: "draft",
   date: today,
   readingMinutes: 5,
-  authorName: "",
-  authorRole: "",
   tags: "",
   coverCaption: "",
   featured: false,
@@ -130,8 +125,6 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
         status: p.status ?? "draft",
         date: p.date ?? today,
         readingMinutes: p.readingMinutes ?? 5,
-        authorName: p.author?.name ?? "",
-        authorRole: p.author?.role ?? "",
         tags: (p.tags ?? []).join(", "),
         coverCaption: p.coverCaption ?? "",
         featured: p.featured === true,
@@ -278,7 +271,7 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
           <table className="w-full text-left text-[13.5px] min-w-[640px]">
             <thead>
               <tr className="bg-linen">
-                {["BAŞLIK", "DİL", "KATEGORİ", "DURUM", "TARİH", "YAZAR"].map((h) => (
+                {["BAŞLIK", "DİL", "KATEGORİ", "DURUM", "TARİH"].map((h) => (
                   <th
                     key={h}
                     className="font-mono text-[10px] tracking-[0.12em] text-label font-normal px-5 py-3.5 whitespace-nowrap"
@@ -311,7 +304,6 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
                   <td className="px-5 py-4 font-mono text-[11.5px] text-muted whitespace-nowrap">
                     {r.date}
                   </td>
-                  <td className="px-5 py-4 text-muted whitespace-nowrap">{r.author?.name}</td>
                 </tr>
               ))}
             </tbody>
@@ -372,6 +364,57 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
                 onChange={(e) => set("slug", e.target.value)}
               />
 
+              {/* DURUM ve KATEGORİ tasarımdaki gibi çip satırı — açılır menüde
+                  değiller. Durum sekiz alanlık ızgaranın ortasında bir <select>
+                  iken görülmüyordu: yazı yazılıp kaydediliyor, varsayılan "Taslak"
+                  olduğu için sessizce yayınlanmamış kalıyordu. */}
+              <div className="mt-5" role="group" aria-label="Durum">
+                <span className={label}>DURUM</span>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {(["draft", "scheduled", "live"] as const).map((s) => (
+                    <button
+                      key={s}
+                      type="button"
+                      onClick={() => set("status", s)}
+                      aria-pressed={draft.status === s}
+                      className={`text-[12.5px] px-3 py-[7px] rounded-lg transition-colors ${
+                        draft.status === s
+                          ? "bg-[#F4EEE2] text-ink font-semibold"
+                          : "text-muted hover:bg-[#EFEAE0] font-medium"
+                      }`}
+                    >
+                      {STATUS[s].label}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-[12px] text-muted mt-2 leading-[1.5]">
+                  {draft.status === "live"
+                    ? "Kaydedince sitede yayına girer."
+                    : "Yalnızca panelde görünür; sitede yayınlanmaz."}
+                </p>
+              </div>
+
+              <div className="mt-5" role="group" aria-label="Kategori">
+                <span className={label}>KATEGORİ</span>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {blogCategories.map((c) => (
+                    <button
+                      key={c}
+                      type="button"
+                      onClick={() => set("category", c)}
+                      aria-pressed={draft.category === c}
+                      className={`text-[12.5px] px-3 py-[7px] rounded-lg transition-colors ${
+                        draft.category === c
+                          ? "bg-[#F4EEE2] text-ink font-semibold"
+                          : "text-muted hover:bg-[#EFEAE0] font-medium"
+                      }`}
+                    >
+                      {CATS[c]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <label className={`${label} block mt-5`} htmlFor="f-excerpt">
                 ÖZET
               </label>
@@ -397,40 +440,6 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
                     {locales.map((l) => (
                       <option key={l} value={l}>
                         {l.toUpperCase()}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className={label} htmlFor="f-cat">
-                    KATEGORİ
-                  </label>
-                  <select
-                    id="f-cat"
-                    className={field}
-                    value={draft.category}
-                    onChange={(e) => set("category", e.target.value as BlogCategory)}
-                  >
-                    {blogCategories.map((c) => (
-                      <option key={c} value={c}>
-                        {CATS[c]}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className={label} htmlFor="f-status">
-                    DURUM
-                  </label>
-                  <select
-                    id="f-status"
-                    className={field}
-                    value={draft.status}
-                    onChange={(e) => set("status", e.target.value as PostStatus)}
-                  >
-                    {(["draft", "scheduled", "live"] as const).map((s) => (
-                      <option key={s} value={s}>
-                        {STATUS[s].label}
                       </option>
                     ))}
                   </select>
@@ -471,29 +480,7 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
                     onChange={(e) => set("tags", e.target.value)}
                   />
                 </div>
-                <div>
-                  <label className={label} htmlFor="f-author">
-                    YAZAR
-                  </label>
-                  <input
-                    id="f-author"
-                    className={field}
-                    value={draft.authorName}
-                    onChange={(e) => set("authorName", e.target.value)}
-                  />
                 </div>
-                <div>
-                  <label className={label} htmlFor="f-role">
-                    ÜNVAN
-                  </label>
-                  <input
-                    id="f-role"
-                    className={field}
-                    value={draft.authorRole}
-                    onChange={(e) => set("authorRole", e.target.value)}
-                  />
-                </div>
-              </div>
 
               <label className={`${label} block mt-5`} htmlFor="f-cover">
                 KAPAK ALTYAZISI
@@ -538,7 +525,13 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
                 disabled={busy || !draft.title.trim()}
                 className="text-[13.5px] font-semibold text-cream bg-ink px-5 py-2.5 rounded-full transition disabled:opacity-40 hover:bg-[#33291f]"
               >
-                {busy ? "Commit atılıyor…" : "Kaydet ve commit'le"}
+                {/* Etiket sonucu söylüyor: "Kaydet" basıp yazının taslakta kaldığını
+                    sonradan fark etmek en sık yaşanan sorundu. */}
+                {busy
+                  ? "Commit atılıyor…"
+                  : draft.status === "live"
+                    ? "Yayınla ve commit'le"
+                    : "Taslak olarak kaydet"}
               </button>
               <span className="font-mono text-[11px] text-muted">
                 {draft.locale}/{draft.slug || "…"}.md

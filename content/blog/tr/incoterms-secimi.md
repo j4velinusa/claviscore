@@ -6,10 +6,6 @@ category: ihracat
 status: live
 date: "2026-07-02"
 readingMinutes: 8
-author:
-  name: "Elif Kaya"
-  role: "İhracat Operasyon"
-  initials: "EK"
 tags: ["Incoterms"]
 coverCaption: "Teslim şekli, malın fiziksel yolculuğunu değil, sorumluluğun nerede el değiştirdiğini tanımlar."
 ---

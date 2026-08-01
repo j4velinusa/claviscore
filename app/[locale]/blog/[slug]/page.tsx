@@ -71,17 +71,12 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
           <p className="text-[clamp(17px,2.4vw,20px)] leading-[1.55] text-muted font-medium mt-5 text-pretty">
             {post.excerpt}
           </p>
+          {/* Yazar künyesi kaldırıldı: tasarımdaki isimler uydurmaydı ve gerçek bir
+              kişiye bağlanamıyor. Yerinde tarih ve okuma süresi kalıyor. */}
           <div className="flex items-center gap-4 flex-wrap mt-[30px] py-5 border-y border-ink/10">
-            <span
-              aria-hidden
-              className="size-[42px] flex-none rounded-full bg-paper border border-ink/10 flex items-center justify-center font-mono text-[13px] text-bronze-2"
-            >
-              {post.author.initials}
-            </span>
             <div className="flex-1 min-w-[200px]">
-              <div className="text-[14.5px] font-semibold">{post.author.name}</div>
               <div className="text-[13px] text-muted">
-                {post.author.role} · {post.dateLabel} · {post.readingMinutes} {t.readingSuffix}
+                {post.dateLabel} · {post.readingMinutes} {t.readingSuffix}
               </div>
             </div>
             {post.tags && post.tags.length > 0 && (

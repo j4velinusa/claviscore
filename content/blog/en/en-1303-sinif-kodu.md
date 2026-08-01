@@ -6,10 +6,6 @@ category: standart
 status: live
 date: "2026-07-09"
 readingMinutes: 6
-author:
-  name: "Mehmet Karaca"
-  role: "R&D / Cylinder Group"
-  initials: "MK"
 tags: ["EN 1303"]
 coverCaption: "The classification code summarises, in a single line, which category the cylinder was tested in and at what level."
 ---

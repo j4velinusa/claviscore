@@ -21,7 +21,6 @@ export default async function AdminBlogPage() {
       category: p.category,
       status: p.status,
       date: p.date,
-      author: { name: p.author?.name ?? "—" },
       sha: p.sha,
     }));
     rows.sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
