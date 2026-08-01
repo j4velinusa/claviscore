@@ -6,7 +6,8 @@ import { buildMetadata } from "@/lib/metadata";
 import { SiteNav } from "@/components/site/SiteNav";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { Catalog } from "@/components/katalog/Catalog";
-import { productImageMap } from "@/lib/product-images";
+import { mediaMap } from "@/lib/media";
+import { productImages } from "@/lib/media-config";
 
 export async function generateMetadata({
   params,
@@ -34,7 +35,7 @@ export default async function KatalogPage({ params }: { params: Promise<{ locale
       <main className="flex-1">
         {/* Görsel eşlemesi build anında dosyadan okunuyor; Catalog istemci
             bileşeni olduğu için fs'e kendisi erişemez. */}
-        <Catalog dict={dict} images={productImageMap()} />
+        <Catalog dict={dict} images={productImages(mediaMap())} />
       </main>
       <SiteFooter dict={dict} locale={locale} />
     </div>

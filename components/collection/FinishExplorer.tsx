@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { finishKeys, FINISH, productsWithFinish, type FinishKey } from "@/lib/products";
@@ -10,7 +11,16 @@ import type { Dictionary } from "@/lib/dictionaries/tr";
  * Kaplama seçici. Ürün listesi katalogdan TÜRETİLİYOR (productsWithFinish) —
  * ayrı bir koleksiyon listesi tutulsaydı katalog değiştikçe ikisi ayrışırdı.
  */
-export function FinishExplorer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
+export function FinishExplorer({
+  dict,
+  locale,
+  images = {},
+}: {
+  dict: Dictionary;
+  locale: Locale;
+  /** SKU → görsel yolu. Katalogla aynı kaynak; sunucuda üretilip geçiliyor. */
+  images?: Record<string, string>;
+}) {
   const t = dict.koleksiyonPage;
   const [active, setActive] = useState<FinishKey>("brass");
   const shown = productsWithFinish(active);
@@ -66,11 +76,29 @@ export function FinishExplorer({ dict, locale }: { dict: Dictionary; locale: Loc
             {shown.map((p) => {
               const c = dict.katalog.products[p.sku as keyof typeof dict.katalog.products];
               return (
-                <div key={p.sku} className="bg-white border border-ink/[0.08] rounded-[18px] px-5 py-5">
-                  <div className="font-mono text-[11px] tracking-[0.06em] text-bronze-2">{p.sku}</div>
-                  <div className="text-[17px] font-bold tracking-[-0.015em] mt-1.5">{c.name}</div>
-                  <p className="text-[13.5px] leading-[1.55] text-muted mt-1.5 text-pretty">{c.desc}</p>
-                  <div className="font-mono text-[11px] text-muted mt-3">{c.spec}</div>
+                <div
+                  key={p.sku}
+                  className="bg-white border border-ink/[0.08] rounded-[18px] overflow-hidden"
+                >
+                  {images[p.sku] && (
+                    <div className="relative aspect-[5/4] bg-linen">
+                      <Image
+                        src={images[p.sku]}
+                        alt=""
+                        fill
+                        sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                  {/* Görsel yoksa kart tasarımdaki gibi düz metin kalıyor — katalogdaki
+                      soyut yer tutucu buraya taşınmadı, koleksiyon listesi daha yoğun. */}
+                  <div className="px-5 py-5">
+                    <div className="font-mono text-[11px] tracking-[0.06em] text-bronze-2">{p.sku}</div>
+                    <div className="text-[17px] font-bold tracking-[-0.015em] mt-1.5">{c.name}</div>
+                    <p className="text-[13.5px] leading-[1.55] text-muted mt-1.5 text-pretty">{c.desc}</p>
+                    <div className="font-mono text-[11px] text-muted mt-3">{c.spec}</div>
+                  </div>
                 </div>
               );
             })}

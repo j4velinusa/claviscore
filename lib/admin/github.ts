@@ -2,7 +2,7 @@ import "server-only";
 import matter from "gray-matter";
 import type { Locale } from "@/lib/i18n";
 import type { PostFrontmatter } from "@/lib/blog-config";
-import { productImageFile, type ProductImageManifest } from "@/lib/products";
+import type { MediaManifest } from "@/lib/media-config";
 
 // Admin panelin içerik katmanı: GitHub Contents API. Public site içeriği build anında
 // dosyadan okur (lib/blog.ts); admin ise repo'nun ANLIK halini görsün diye doğrudan
@@ -287,7 +287,7 @@ export async function putProforma(
 }
 
 // ---------------------------------------------------------------------------
-// Ürün görselleri — public/urunler/<sku>.webp + content/products/images.json
+// Görsel yuvaları — public/gorseller/<grup>-<yuva>.webp + content/media.json
 //
 // İkilinin kendisi repoya commit'leniyor; ayrı depolama servisi yok. Bir yükleme
 // İKİ commit üretir (önce görsel, sonra kayıt dosyası) çünkü Contents API tek
@@ -295,13 +295,13 @@ export async function putProforma(
 // görünen her dosyanın repoda karşılığı olduğu garanti olsun, tersi değil.
 // Yarıda kalırsa ortaya sahipsiz bir görsel çıkar (zararsız), kırık kayıt çıkmaz.
 //
-// Dosya adı SKU'dan türetiliyor ve uzantı daima .webp: panel görseli yüklemeden
+// Dosya adı yuvadan türetiliyor ve uzantı daima .webp: panel görseli yüklemeden
 // önce tarayıcıda WebP'ye çeviriyor. Böylece uzantı takibi ve yetim dosya sorunu
-// oluşmuyor — aynı SKU'ya ikinci yükleme aynı yolu ezer.
+// oluşmuyor — aynı yuvaya ikinci yükleme aynı yolu ezer.
 // ---------------------------------------------------------------------------
 
-const PRODUCT_IMAGE_DIR = "public/urunler";
-const PRODUCT_IMAGE_MANIFEST = "content/products/images.json";
+const MEDIA_DIR = "public/gorseller";
+const MEDIA_MANIFEST = "content/media.json";
 
 async function fileSha(path: string): Promise<string | undefined> {
   const { owner, repo, branch } = config();
@@ -312,29 +312,32 @@ async function fileSha(path: string): Promise<string | undefined> {
   return file.sha;
 }
 
-export async function getProductImageManifest(): Promise<{
-  manifest: ProductImageManifest;
-  sha?: string;
-}> {
+export async function getMediaManifest(): Promise<{ manifest: MediaManifest; sha?: string }> {
   const { owner, repo, branch } = config();
-  const res = await gh(
-    `/repos/${owner}/${repo}/contents/${PRODUCT_IMAGE_MANIFEST}?ref=${branch}`,
-  );
+  const res = await gh(`/repos/${owner}/${repo}/contents/${MEDIA_MANIFEST}?ref=${branch}`);
   if (res.status === 404) return { manifest: {} };
   if (!res.ok) throw new Error(`GitHub okuma hatası (${res.status})`);
   const file = (await res.json()) as { content: string; sha: string };
   const raw = Buffer.from(file.content, "base64").toString("utf8");
-  return { manifest: JSON.parse(raw) as ProductImageManifest, sha: file.sha };
+  let manifest: MediaManifest;
+  try {
+    manifest = JSON.parse(raw) as MediaManifest;
+  } catch {
+    // Kayıt dosyası elle bozulmuşsa panel açılmaya devam etsin; boş sayılır ve
+    // ilk yazmada geçerli JSON'a dönüşür. Repodaki görseller kaybolmaz.
+    return { manifest: {}, sha: file.sha };
+  }
+  return { manifest, sha: file.sha };
 }
 
-async function putManifest(manifest: ProductImageManifest, message: string): Promise<void> {
+async function putManifest(manifest: MediaManifest, message: string): Promise<void> {
   const { owner, repo, branch } = config();
   // sha yazmadan HEMEN önce okunuyor: görsel PUT'u sırasında başkası kayıt
   // dosyasına dokunmuşsa bayat sha ile 409 almayalım.
-  const current = await getProductImageManifest();
+  const current = await getMediaManifest();
   const body = JSON.stringify(manifest, null, 2) + "\n";
 
-  const res = await gh(`/repos/${owner}/${repo}/contents/${PRODUCT_IMAGE_MANIFEST}`, {
+  const res = await gh(`/repos/${owner}/${repo}/contents/${MEDIA_MANIFEST}`, {
     method: "PUT",
     body: JSON.stringify({
       message,
@@ -350,19 +353,19 @@ async function putManifest(manifest: ProductImageManifest, message: string): Pro
 }
 
 /** Görseli commit'ler ve kayıt dosyasına işler. base64 ham ikili (data URL öneki olmadan). */
-export async function putProductImage(input: {
-  sku: string;
+export async function putMedia(input: {
+  id: string;
+  file: string;
   base64: string;
 }): Promise<{ file: string; commitUrl: string }> {
   const { owner, repo, branch } = config();
-  const file = productImageFile(input.sku);
-  const path = `${PRODUCT_IMAGE_DIR}/${file}`;
+  const path = `${MEDIA_DIR}/${input.file}`;
   const sha = await fileSha(path);
 
   const res = await gh(`/repos/${owner}/${repo}/contents/${path}`, {
     method: "PUT",
     body: JSON.stringify({
-      message: `ürün görseli: ${input.sku}`,
+      message: `görsel: ${input.id}`,
       content: input.base64,
       branch,
       ...(sha ? { sha } : {}),
@@ -374,30 +377,29 @@ export async function putProductImage(input: {
   }
   const out = (await res.json()) as { commit: { html_url: string } };
 
-  const { manifest } = await getProductImageManifest();
-  manifest[input.sku] = { file, updatedAt: new Date().toISOString() };
-  await putManifest(manifest, `ürün görseli kaydı: ${input.sku}`);
+  const { manifest } = await getMediaManifest();
+  manifest[input.id] = { file: input.file, updatedAt: new Date().toISOString() };
+  await putManifest(manifest, `görsel kaydı: ${input.id}`);
 
-  return { file, commitUrl: out.commit.html_url };
+  return { file: input.file, commitUrl: out.commit.html_url };
 }
 
 /** Kaydı ve görsel dosyasını siler. Dosya yoksa kayıt yine de temizlenir. */
-export async function removeProductImage(sku: string): Promise<void> {
+export async function removeMedia(id: string, file: string): Promise<void> {
   const { owner, repo, branch } = config();
-  const file = productImageFile(sku);
-  const path = `${PRODUCT_IMAGE_DIR}/${file}`;
+  const path = `${MEDIA_DIR}/${file}`;
 
   // Kayıt önce temizleniyor: silme yarıda kalırsa site kırık görsele değil,
   // yer tutucuya düşsün.
-  const { manifest } = await getProductImageManifest();
-  delete manifest[sku];
-  await putManifest(manifest, `ürün görseli kaydı silindi: ${sku}`);
+  const { manifest } = await getMediaManifest();
+  delete manifest[id];
+  await putManifest(manifest, `görsel kaydı silindi: ${id}`);
 
   const sha = await fileSha(path);
   if (!sha) return;
   const res = await gh(`/repos/${owner}/${repo}/contents/${path}`, {
     method: "DELETE",
-    body: JSON.stringify({ message: `ürün görseli silindi: ${sku}`, sha, branch }),
+    body: JSON.stringify({ message: `görsel silindi: ${id}`, sha, branch }),
   });
   if (!res.ok) {
     const detail = await res.text();

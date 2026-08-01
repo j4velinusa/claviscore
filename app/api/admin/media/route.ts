@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSession } from "@/lib/admin/auth";
-import {
-  getProductImageManifest,
-  putProductImage,
-  removeProductImage,
-} from "@/lib/admin/github";
-import { products } from "@/lib/products";
+import { getMediaManifest, putMedia, removeMedia } from "@/lib/admin/github";
+import { ALL_SLOTS, slotId, slotFile, VALID_SLOT_IDS } from "@/lib/media-config";
 
 // Yüklenen ikili base64 olarak JSON gövdede geliyor; base64 ham boyutu ~%33 şişirir.
 // 2 MB ham ≈ 2,7 MB gövde — Vercel'in istek sınırının (4,5 MB) altında güvenli pay.
@@ -13,14 +9,18 @@ import { products } from "@/lib/products";
 // dönüşüm atlanırsa diye son savunma.
 const MAX_BYTES = 2 * 1024 * 1024;
 
-const KNOWN_SKUS = new Set(products.map((p) => p.sku));
+/** Kimlikten dosya adı — yalnız kayıtlı yuvalar için. Bilinmeyen kimlik null döner. */
+function fileForId(id: string): string | null {
+  const slot = ALL_SLOTS.find((s) => slotId(s.group, s.key) === id);
+  return slot ? slotFile(slot.group, slot.key) : null;
+}
 
 export async function GET() {
   if (!(await hasSession())) {
     return NextResponse.json({ error: "Oturum yok" }, { status: 401 });
   }
   try {
-    const { manifest } = await getProductImageManifest();
+    const { manifest } = await getMediaManifest();
     return NextResponse.json({ manifest });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 502 });
@@ -32,18 +32,22 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Oturum yok" }, { status: 401 });
   }
 
-  let body: { sku?: unknown; base64?: unknown };
+  let body: { id?: unknown; base64?: unknown };
   try {
-    body = (await request.json()) as { sku?: unknown; base64?: unknown };
+    body = (await request.json()) as { id?: unknown; base64?: unknown };
   } catch {
     return NextResponse.json({ error: "Geçersiz istek" }, { status: 400 });
   }
 
-  const sku = typeof body.sku === "string" ? body.sku : "";
-  // SKU katalogdaki sabit listeden gelmeli: dosya adı bundan türetildiği için
+  const id = typeof body.id === "string" ? body.id : "";
+  // Kimlik kayıtlı yuva listesinden gelmeli: dosya adı bundan türetildiği için
   // serbest metin kabul etmek yol kaçışına (../) açık kapı bırakırdı.
-  if (!KNOWN_SKUS.has(sku)) {
-    return NextResponse.json({ error: "Bilinmeyen ürün kodu" }, { status: 400 });
+  if (!VALID_SLOT_IDS.has(id)) {
+    return NextResponse.json({ error: "Bilinmeyen görsel yuvası" }, { status: 400 });
+  }
+  const file = fileForId(id);
+  if (!file) {
+    return NextResponse.json({ error: "Bilinmeyen görsel yuvası" }, { status: 400 });
   }
 
   const base64 = typeof body.base64 === "string" ? body.base64 : "";
@@ -51,7 +55,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Görsel yok" }, { status: 400 });
   }
   if (!/^[A-Za-z0-9+/]+={0,2}$/.test(base64)) {
-    return NextResponse.json({ error: "Görsel base64 olmalı (data URL öneki olmadan)" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Görsel base64 olmalı (data URL öneki olmadan)" },
+      { status: 400 },
+    );
   }
 
   const bytes = Buffer.from(base64, "base64");
@@ -72,8 +79,8 @@ export async function POST(request: Request) {
   }
 
   try {
-    const result = await putProductImage({ sku, base64 });
-    return NextResponse.json({ ok: true, sku, ...result });
+    const result = await putMedia({ id, file, base64 });
+    return NextResponse.json({ ok: true, id, ...result });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 502 });
   }
@@ -83,13 +90,17 @@ export async function DELETE(request: Request) {
   if (!(await hasSession())) {
     return NextResponse.json({ error: "Oturum yok" }, { status: 401 });
   }
-  const sku = new URL(request.url).searchParams.get("sku") ?? "";
-  if (!KNOWN_SKUS.has(sku)) {
-    return NextResponse.json({ error: "Bilinmeyen ürün kodu" }, { status: 400 });
+  const id = new URL(request.url).searchParams.get("id") ?? "";
+  if (!VALID_SLOT_IDS.has(id)) {
+    return NextResponse.json({ error: "Bilinmeyen görsel yuvası" }, { status: 400 });
+  }
+  const file = fileForId(id);
+  if (!file) {
+    return NextResponse.json({ error: "Bilinmeyen görsel yuvası" }, { status: 400 });
   }
   try {
-    await removeProductImage(sku);
-    return NextResponse.json({ ok: true, sku });
+    await removeMedia(id, file);
+    return NextResponse.json({ ok: true, id });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 502 });
   }

@@ -3,7 +3,14 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { products, PRODUCT_IMAGE_URL_BASE, type ProductImageManifest } from "@/lib/products";
+import {
+  MEDIA_URL_BASE,
+  PRODUCT_SLOTS,
+  SITE_SLOTS,
+  slotId,
+  type MediaManifest,
+  type MediaSlot,
+} from "@/lib/media-config";
 import { tr } from "@/lib/dictionaries/tr";
 
 // Panel tek dilli (Türkçe) — admin arayüzü public site i18n'ine dahil değil.
@@ -30,6 +37,7 @@ async function toWebp(file: File): Promise<string> {
     // ama tarayıcıların çoğu çözemez — kullanıcıya ne yapacağını söyle.
     throw new Error("Bu görsel biçimi okunamadı. JPEG veya PNG olarak kaydedip tekrar deneyin.");
   }
+
   const scale = Math.min(1, MAX_EDGE / Math.max(bitmap.width, bitmap.height));
   const w = Math.round(bitmap.width * scale);
   const h = Math.round(bitmap.height * scale);
@@ -58,10 +66,15 @@ async function toWebp(file: File): Promise<string> {
   return btoa(binary);
 }
 
-export function ProductImages({ initial }: { initial: ProductImageManifest }) {
+function slotTitle(slot: MediaSlot): string {
+  if (slot.group !== "urun") return slot.label;
+  return NAMES[slot.key as keyof typeof NAMES]?.name ?? slot.key;
+}
+
+export function MediaManager({ initial }: { initial: MediaManifest }) {
   const router = useRouter();
-  const [manifest, setManifest] = useState<ProductImageManifest>(initial);
-  const [busySku, setBusySku] = useState<string | null>(null);
+  const [manifest, setManifest] = useState<MediaManifest>(initial);
+  const [busyId, setBusyId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [note, setNote] = useState<string | null>(null);
   // Yüklenen görselin URL'i commit sonrası deploy bitene kadar 404 döner; o aralıkta
@@ -80,64 +93,131 @@ export function ProductImages({ initial }: { initial: ProductImageManifest }) {
     return () => Object.values(previewRef.current).forEach((u) => URL.revokeObjectURL(u));
   }, []);
 
-  async function upload(sku: string, file: File) {
+  async function upload(id: string, file: File) {
     setError(null);
     setNote(null);
-    setBusySku(sku);
+    setBusyId(id);
     try {
       const base64 = await toWebp(file);
-      const res = await fetch("/api/admin/product-images", {
+      const res = await fetch("/api/admin/media", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sku, base64 }),
+        body: JSON.stringify({ id, base64 }),
       });
       const data = (await res.json()) as { error?: string; file?: string };
       if (!res.ok) throw new Error(data.error || `Yükleme başarısız (${res.status})`);
 
-      setManifest((m) => ({ ...m, [sku]: { file: data.file!, updatedAt: new Date().toISOString() } }));
+      setManifest((m) => ({ ...m, [id]: { file: data.file!, updatedAt: new Date().toISOString() } }));
       const url = URL.createObjectURL(file);
       setPreview((p) => {
-        if (p[sku]) URL.revokeObjectURL(p[sku]);
-        return { ...p, [sku]: url };
+        if (p[id]) URL.revokeObjectURL(p[id]);
+        return { ...p, [id]: url };
       });
-      setNote(`${sku} yüklendi. Sitede görünmesi için dağıtımın bitmesi gerekiyor (~1 dk).`);
+      setNote("Yüklendi. Sitede görünmesi için dağıtımın bitmesi gerekiyor (~1 dk).");
     } catch (err) {
       setError((err as Error).message);
     } finally {
-      setBusySku(null);
+      setBusyId(null);
     }
   }
 
-  async function remove(sku: string) {
+  async function remove(id: string) {
     setError(null);
     setNote(null);
-    setBusySku(sku);
+    setBusyId(id);
     try {
-      const res = await fetch(`/api/admin/product-images?sku=${encodeURIComponent(sku)}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(`/api/admin/media?id=${encodeURIComponent(id)}`, { method: "DELETE" });
       const data = (await res.json()) as { error?: string };
       if (!res.ok) throw new Error(data.error || `Silinemedi (${res.status})`);
       setManifest((m) => {
         const next = { ...m };
-        delete next[sku];
+        delete next[id];
         return next;
       });
       setPreview((p) => {
-        if (p[sku]) URL.revokeObjectURL(p[sku]);
+        if (p[id]) URL.revokeObjectURL(p[id]);
         const next = { ...p };
-        delete next[sku];
+        delete next[id];
         return next;
       });
-      setNote(`${sku} görseli kaldırıldı.`);
+      setNote("Görsel kaldırıldı.");
     } catch (err) {
       setError((err as Error).message);
     } finally {
-      setBusySku(null);
+      setBusyId(null);
     }
   }
 
-  const withImage = Object.keys(manifest).length;
+  function Card({ slot }: { slot: MediaSlot }) {
+    const id = slotId(slot.group, slot.key);
+    const entry = manifest[id];
+    const src = preview[id] ?? (entry ? `${MEDIA_URL_BASE}/${entry.file}` : null);
+    const busy = busyId === id;
+
+    return (
+      <div className="bg-white border border-ink/[0.08] rounded-[18px] overflow-hidden flex flex-col">
+        <div
+          className="relative bg-linen flex items-center justify-center"
+          style={{ aspectRatio: slot.aspect }}
+        >
+          {src ? (
+            // next/image değil: yeni commit'lenen dosya için optimizasyon önbelleği
+            // yanıltıcı olabiliyor, ayrıca panelde boyut kritik değil.
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={src} alt="" className="absolute inset-0 size-full object-cover" />
+          ) : (
+            <span className="font-mono text-[11px] text-label">görsel yok</span>
+          )}
+          {slot.group === "urun" && (
+            <span className="absolute top-3 left-3 font-mono text-[10px] text-bronze-2 bg-cream/85 rounded-full px-2 py-0.5">
+              {slot.key}
+            </span>
+          )}
+        </div>
+
+        <div className="px-4 py-3.5 flex flex-col gap-2 flex-1">
+          <div className="text-sm font-semibold leading-tight">{slotTitle(slot)}</div>
+          <p className="text-[12px] leading-[1.45] text-muted">{slot.note}</p>
+          <input
+            ref={(el) => {
+              inputs.current[id] = el;
+            }}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              e.target.value = "";
+              if (file) void upload(id, file);
+            }}
+          />
+          <div className="flex items-center gap-2 mt-auto pt-1">
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() => inputs.current[id]?.click()}
+              className="text-[13px] font-semibold text-cream bg-ink px-3.5 py-2 rounded-full disabled:opacity-50 transition-opacity"
+            >
+              {busy ? "Yükleniyor…" : entry ? "Değiştir" : "Görsel yükle"}
+            </button>
+            {entry && (
+              <button
+                type="button"
+                disabled={busy}
+                onClick={() => void remove(id)}
+                className="text-[13px] text-muted hover:text-[#a33] disabled:opacity-50 transition-colors"
+              >
+                Kaldır
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const filled = Object.keys(manifest).length;
+  const total = SITE_SLOTS.length + PRODUCT_SLOTS.length;
 
   return (
     <div className="flex min-h-dvh">
@@ -165,9 +245,9 @@ export function ProductImages({ initial }: { initial: ProductImageManifest }) {
           <span aria-hidden className="font-mono text-[11px] w-5 text-[#6f6452]">
             ▦
           </span>
-          Ürün Görselleri
+          Görseller
           <span className="ml-auto text-[11px] font-bold text-[#6f6452]">
-            {withImage}/{products.length}
+            {filled}/{total}
           </span>
         </span>
         <div className="font-mono text-[10px] tracking-[0.14em] text-[#6f6452] px-3 pt-6 pb-2.5">
@@ -199,12 +279,12 @@ export function ProductImages({ initial }: { initial: ProductImageManifest }) {
 
       <main className="flex-1 min-w-0 px-5 sm:px-8 py-7">
         <div className="flex items-center justify-between gap-4 flex-wrap">
-          <h1 className="text-[22px] font-bold tracking-[-0.025em]">Ürün Görselleri</h1>
+          <h1 className="text-[22px] font-bold tracking-[-0.025em]">Görseller</h1>
           <span className="font-mono text-[11px] text-muted">
-            {withImage} / {products.length} ürün
+            {filled} / {total} dolu
           </span>
         </div>
-        <p className="text-sm text-muted mt-2 max-w-[640px] leading-relaxed">
+        <p className="text-sm text-muted mt-2 max-w-[660px] leading-relaxed">
           Görsel seçtiğinizde tarayıcıda 1600 px&apos;e küçültülüp WebP&apos;ye çevrilir, sonra repoya
           commit&apos;lenir. Sitede görünmesi için dağıtımın tamamlanması gerekir (~1 dk).
         </p>
@@ -215,75 +295,27 @@ export function ProductImages({ initial }: { initial: ProductImageManifest }) {
           </p>
         )}
         {note && (
-          <p className="mt-4 text-sm text-bronze-2 bg-bronze/8 rounded-xl px-4 py-3">{note}</p>
+          <p role="status" className="mt-4 text-sm text-bronze-2 bg-bronze/8 rounded-xl px-4 py-3">
+            {note}
+          </p>
         )}
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6">
-          {products.map((p) => {
-            const entry = manifest[p.sku];
-            const localPreview = preview[p.sku];
-            const src = localPreview ?? (entry ? `${PRODUCT_IMAGE_URL_BASE}/${entry.file}` : null);
-            const busy = busySku === p.sku;
-            const name = NAMES[p.sku as keyof typeof NAMES]?.name ?? p.sku;
+        <h2 className="font-mono text-[11px] tracking-[0.14em] text-label mt-8 pb-3 border-b border-ink/10">
+          SİTE GÖRSELLERİ
+        </h2>
+        <div className="grid sm:grid-cols-2 gap-4 mt-5 max-w-[720px]">
+          {SITE_SLOTS.map((s) => (
+            <Card key={slotId(s.group, s.key)} slot={s} />
+          ))}
+        </div>
 
-            return (
-              <div
-                key={p.sku}
-                className="bg-white border border-ink/[0.08] rounded-[18px] overflow-hidden flex flex-col"
-              >
-                <div className="relative aspect-[5/4] bg-linen flex items-center justify-center">
-                  {src ? (
-                    // next/image değil: yeni commit'lenen dosya için optimizasyon
-                    // önbelleği yanıltıcı olabiliyor, ayrıca burada boyut kritik değil.
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={src} alt="" className="absolute inset-0 size-full object-cover" />
-                  ) : (
-                    <span className="font-mono text-[11px] text-label">görsel yok</span>
-                  )}
-                  <span className="absolute top-3 left-3 font-mono text-[10px] text-bronze-2 bg-cream/85 rounded-full px-2 py-0.5">
-                    {p.sku}
-                  </span>
-                </div>
-
-                <div className="px-4 py-3.5 flex flex-col gap-2.5 flex-1">
-                  <div className="text-sm font-semibold leading-tight">{name}</div>
-                  <input
-                    ref={(el) => {
-                      inputs.current[p.sku] = el;
-                    }}
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      e.target.value = "";
-                      if (file) void upload(p.sku, file);
-                    }}
-                  />
-                  <div className="flex items-center gap-2 mt-auto">
-                    <button
-                      type="button"
-                      disabled={busy}
-                      onClick={() => inputs.current[p.sku]?.click()}
-                      className="text-[13px] font-semibold text-cream bg-ink px-3.5 py-2 rounded-full disabled:opacity-50 transition-opacity"
-                    >
-                      {busy ? "Yükleniyor…" : entry ? "Değiştir" : "Görsel yükle"}
-                    </button>
-                    {entry && (
-                      <button
-                        type="button"
-                        disabled={busy}
-                        onClick={() => void remove(p.sku)}
-                        className="text-[13px] text-muted hover:text-[#a33] disabled:opacity-50 transition-colors"
-                      >
-                        Kaldır
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+        <h2 className="font-mono text-[11px] tracking-[0.14em] text-label mt-10 pb-3 border-b border-ink/10">
+          ÜRÜN GÖRSELLERİ
+        </h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-5">
+          {PRODUCT_SLOTS.map((s) => (
+            <Card key={slotId(s.group, s.key)} slot={s} />
+          ))}
         </div>
       </main>
     </div>

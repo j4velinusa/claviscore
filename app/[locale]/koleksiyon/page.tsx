@@ -9,6 +9,8 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 import { Reveal } from "@/components/motion/Reveal";
 import { Emphasis } from "@/components/site/Emphasis";
 import { FinishExplorer } from "@/components/collection/FinishExplorer";
+import { mediaMap } from "@/lib/media";
+import { productImages } from "@/lib/media-config";
 
 export async function generateMetadata({
   params,
@@ -51,7 +53,7 @@ export default async function KoleksiyonPage({ params }: { params: Promise<{ loc
 
         <section className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-12">
           <Reveal>
-            <FinishExplorer dict={dict} locale={locale} />
+            <FinishExplorer dict={dict} locale={locale} images={productImages(mediaMap())} />
           </Reveal>
         </section>
 

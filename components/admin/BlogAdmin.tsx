@@ -197,13 +197,13 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
           <span className="ml-auto text-[11px] font-bold text-[#6f6452]">{rows.length}</span>
         </span>
         <Link
-          href="/admin/urunler"
+          href="/admin/gorseller"
           className="flex items-center gap-[11px] px-3 py-2.5 rounded-[10px] text-sm font-medium hover:bg-white/5 transition-colors"
         >
           <span aria-hidden className="font-mono text-[11px] w-5 text-[#6f6452]">
             ▦
           </span>
-          Ürün Görselleri
+          Görseller
         </Link>
         <div className="font-mono text-[10px] tracking-[0.14em] text-[#6f6452] px-3 pt-6 pb-2.5">BELGELER</div>
         <Link
