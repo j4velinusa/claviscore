@@ -1,15 +1,19 @@
 ---
-title: "EN 1303 sınıf kodunu okumak"
-titleAccent: "okumak"
-excerpt: "Sekiz haneli kodun her basamağı ne söyler? Anahtar kombinasyonu, aşınma, korozyon ve saldırı direncini katalog karşılaştırmasında doğru okumak."
+title: EN 1303 sınıf kodunu okumak
+titleAccent: okumak
+excerpt: >-
+  Sekiz haneli kodun her basamağı ne söyler? Anahtar kombinasyonu, aşınma,
+  korozyon ve saldırı direncini katalog karşılaştırmasında doğru okumak.
 category: standart
 status: live
-date: "2026-07-09"
+date: '2026-07-09'
 readingMinutes: 6
-tags: ["EN 1303"]
-coverCaption: "Sınıflandırma kodu, silindirin hangi başlıkta hangi seviyede test edildiğini tek satırda özetler."
+tags:
+  - EN 1303
+coverCaption: >-
+  Sınıflandırma kodu, silindirin hangi başlıkta hangi seviyede test edildiğini
+  tek satırda özetler.
 ---
-
 İki silindiri karşılaştırırken en hızlı yol fiyat listesine bakmak değil, sınıflandırma kodunu okumaktır. EN 1303 her silindire basamak basamak bir performans profili verir; bu profil olmadan "daha iyi" iddiası ölçülebilir değildir.
 
 ## Kod neyi anlatır?
