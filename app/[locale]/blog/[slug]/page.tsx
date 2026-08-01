@@ -9,6 +9,9 @@ import { SiteNav } from "@/components/site/SiteNav";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { PostCard } from "@/components/blog/PostCard";
 import { ReadingProgress, ArticleAside } from "@/components/blog/ArticleChrome";
+import Image from "next/image";
+import { mediaMap } from "@/lib/media";
+import { blogSlotId } from "@/lib/media-config";
 
 type Params = { locale: string; slug: string };
 
@@ -51,6 +54,9 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
   const t = dict.blog;
   const related = getRelatedPosts(locale, slug);
   const loc: Locale = locale;
+  // Kapak görseli yazının markdown'ında değil, görsel kaydında: panelden
+  // yüklendiğinde yazı dosyasına dokunulmuyor, iki kaynak ayrışmıyor.
+  const cover = mediaMap()[blogSlotId(loc, slug)];
 
   return (
     <div className="overflow-x-clip min-h-dvh flex flex-col">
@@ -96,14 +102,26 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
 
         <div className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-10">
           <div
-            aria-hidden
-            className="relative [background:linear-gradient(160deg,#F1ECE2,#E6DFD1)] rounded-[28px] h-[260px] sm:h-[460px] flex items-center justify-center"
+            aria-hidden={!cover}
+            className="relative [background:linear-gradient(160deg,#F1ECE2,#E6DFD1)] rounded-[28px] h-[260px] sm:h-[460px] overflow-hidden flex items-center justify-center"
           >
-            <div className="size-[150px] sm:size-[230px] rounded-full border-[1.5px] border-ink/20 flex items-center justify-center">
-              <div className="size-[84px] sm:size-[130px] rounded-full border-[1.5px] border-ink/[0.16] flex items-center justify-center">
-                <div className="size-[34px] sm:size-[50px] rounded-full bg-bronze/25 border border-bronze/55" />
+            {cover ? (
+              <Image
+                src={cover}
+                alt=""
+                fill
+                priority
+                sizes="(min-width: 1120px) 1056px, 100vw"
+                quality={90}
+                className="object-cover"
+              />
+            ) : (
+              <div className="size-[150px] sm:size-[230px] rounded-full border-[1.5px] border-ink/20 flex items-center justify-center">
+                <div className="size-[84px] sm:size-[130px] rounded-full border-[1.5px] border-ink/[0.16] flex items-center justify-center">
+                  <div className="size-[34px] sm:size-[50px] rounded-full bg-bronze/25 border border-bronze/55" />
+                </div>
               </div>
-            </div>
+            )}
           </div>
           {post.coverCaption && (
             <p className="text-[13px] text-muted mt-3 pl-1">{post.coverCaption}</p>

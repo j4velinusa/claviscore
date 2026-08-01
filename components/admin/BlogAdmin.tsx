@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { blogCategories, type BlogCategory, type PostStatus } from "@/lib/blog-config";
 import { locales, type Locale } from "@/lib/i18n";
+import { blogSlotId, MEDIA_URL_BASE } from "@/lib/media-config";
+import { toWebp } from "@/lib/image-encode";
 
 export type AdminRow = {
   slug: string;
@@ -76,6 +78,11 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
   const [query, setQuery] = useState("");
   const [draft, setDraft] = useState<Draft | null>(null);
   const [busy, setBusy] = useState(false);
+  // Kapak görseli yazının slug'ına bağlı bir yuvaya yükleniyor; slug yoksa
+  // (yazı henüz kaydedilmemişse) yükleme yapılamaz.
+  const [coverBusy, setCoverBusy] = useState(false);
+  const [coverUrl, setCoverUrl] = useState<string | null>(null);
+  const coverInput = useRef<HTMLInputElement | null>(null);
   const [toast, setToast] = useState("");
   const [error, setError] = useState("");
 
@@ -100,7 +107,35 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
 
   const openNew = () => {
     setError("");
+    setCoverUrl(null);
     setDraft(emptyDraft("tr", today));
+  };
+
+  /** Kapak görselini yazının yuvasına yükler. Slug yoksa yazı önce kaydedilmeli. */
+  const uploadCover = async (file: File) => {
+    if (!draft?.slug) return;
+    setError("");
+    setCoverBusy(true);
+    try {
+      const { base64 } = await toWebp(file, 1800);
+      const res = await fetch("/api/admin/media", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: blogSlotId(draft.locale, draft.slug), base64 }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { error?: string; file?: string };
+      if (!res.ok) {
+        setError(data.error ?? `Kapak yüklenemedi (${res.status})`);
+        return;
+      }
+      setCoverUrl(`${MEDIA_URL_BASE}/${data.file}`);
+      setToast("Kapak yüklendi — yayına girmesi için deploy'u bekleyin");
+      setTimeout(() => setToast(""), 4000);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setCoverBusy(false);
+    }
   };
 
   const openExisting = async (row: AdminRow) => {
@@ -114,6 +149,7 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
         return;
       }
       const p = data.post;
+      setCoverUrl(data.cover ? `${MEDIA_URL_BASE}/${data.cover}` : null);
       setDraft({
         locale: row.locale,
         slug: p.slug,
@@ -481,6 +517,46 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
                   />
                 </div>
                 </div>
+
+              <div className="mt-5">
+                <span className={label}>KAPAK GÖRSELİ</span>
+                <div className="mt-2 flex items-center gap-3">
+                  <div className="relative w-[104px] aspect-[16/10] rounded-lg overflow-hidden bg-linen flex items-center justify-center flex-none">
+                    {coverUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={coverUrl} alt="" className="absolute inset-0 size-full object-cover" />
+                    ) : (
+                      <span className="font-mono text-[9.5px] text-label">yok</span>
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <input
+                      ref={coverInput}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const f = e.target.files?.[0];
+                        e.target.value = "";
+                        if (f) void uploadCover(f);
+                      }}
+                    />
+                    <button
+                      type="button"
+                      disabled={coverBusy || !draft.slug}
+                      onClick={() => coverInput.current?.click()}
+                      className="text-[13px] font-semibold text-cream bg-ink px-3.5 py-2 rounded-full disabled:opacity-40 transition-opacity"
+                    >
+                      {coverBusy ? "Yükleniyor…" : coverUrl ? "Değiştir" : "Görsel yükle"}
+                    </button>
+                    <p className="text-[11.5px] text-muted mt-1.5 leading-[1.45]">
+                      {draft.slug
+                        ? "Yazı sayfasının üstünde ve listedeki kartta görünür."
+                        : "Önce yazıyı kaydedin; kapak slug'a bağlanıyor."}
+                    </p>
+                  </div>
+                </div>
+              </div>
 
               <label className={`${label} block mt-5`} htmlFor="f-cover">
                 KAPAK ALTYAZISI

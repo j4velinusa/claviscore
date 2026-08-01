@@ -1,7 +1,14 @@
 import { NextResponse } from "next/server";
 import { hasSession } from "@/lib/admin/auth";
 import { getMediaManifest, putMedia, removeMedia } from "@/lib/admin/github";
-import { ALL_SLOTS, slotId, slotKind, VALID_SLOT_IDS, type MediaSlot } from "@/lib/media-config";
+import {
+  ALL_SLOTS,
+  blogCoverSlot,
+  isBlogSlotId,
+  slotId,
+  slotKind,
+  type MediaSlot,
+} from "@/lib/media-config";
 
 // Yüklenen ikili base64 olarak JSON gövdede geliyor; base64 ham boyutu ~%33 şişirir.
 // 2 MB ham ≈ 2,7 MB gövde — Vercel'in istek sınırının (4,5 MB) altında güvenli pay.
@@ -14,6 +21,8 @@ const MAX_PDF_BYTES = 3 * 1024 * 1024;
 
 /** Kimlikten yuva — dosya adı yükleme anında sürümle birlikte türetiliyor. */
 function slotForId(id: string): MediaSlot | undefined {
+  // Blog kapakları sabit listede yok; kimlik desene uyuyorsa yuva türetiliyor.
+  if (isBlogSlotId(id)) return blogCoverSlot(id);
   return ALL_SLOTS.find((s) => slotId(s.group, s.key) === id);
 }
 
@@ -44,9 +53,6 @@ export async function POST(request: Request) {
   const id = typeof body.id === "string" ? body.id : "";
   // Kimlik kayıtlı yuva listesinden gelmeli: dosya adı bundan türetildiği için
   // serbest metin kabul etmek yol kaçışına (../) açık kapı bırakırdı.
-  if (!VALID_SLOT_IDS.has(id)) {
-    return NextResponse.json({ error: "Bilinmeyen görsel yuvası" }, { status: 400 });
-  }
   const slot = slotForId(id);
   if (!slot) {
     return NextResponse.json({ error: "Bilinmeyen görsel yuvası" }, { status: 400 });
@@ -113,9 +119,6 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: "Oturum yok" }, { status: 401 });
   }
   const id = new URL(request.url).searchParams.get("id") ?? "";
-  if (!VALID_SLOT_IDS.has(id)) {
-    return NextResponse.json({ error: "Bilinmeyen görsel yuvası" }, { status: 400 });
-  }
   const slot = slotForId(id);
   if (!slot) {
     return NextResponse.json({ error: "Bilinmeyen görsel yuvası" }, { status: 400 });

@@ -22,11 +22,14 @@ export function BlogIndex({
   featured,
   dict,
   locale,
+  covers,
 }: {
   posts: PostSummary[];
   featured: PostSummary | null;
   dict: Dictionary;
   locale: Locale;
+  /** slug → kapak görseli yolu. Sunucuda üretilip geçiliyor. */
+  covers?: Record<string, string>;
 }) {
   const t = dict.blog;
   const [tab, setTab] = useState<Tab>("all");
@@ -55,7 +58,7 @@ export function BlogIndex({
       {showFeatured && featured && (
         <div className="mx-auto max-w-[1120px] px-5 sm:px-8">
           <Reveal>
-            <FeaturedCard post={featured} dict={dict} locale={locale} />
+            <FeaturedCard cover={covers?.[featured.slug]} post={featured} dict={dict} locale={locale} />
           </Reveal>
         </div>
       )}
@@ -86,7 +89,7 @@ export function BlogIndex({
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-[22px]">
             {list.map((p, i) => (
               <Reveal key={p.slug} delay={(i % 3) * 70} className="h-full">
-                <PostCard post={p} dict={dict} locale={locale} />
+                <PostCard post={p} dict={dict} locale={locale} cover={covers?.[p.slug]} />
               </Reveal>
             ))}
           </div>

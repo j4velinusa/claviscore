@@ -10,7 +10,7 @@ export const MEDIA_URL_BASE = "/gorseller";
 /** Belgeler (PDF) ayrı kökte — "gorseller" altında PDF durması yanıltıcı olurdu. */
 export const DOC_URL_BASE = "/belgeler";
 
-export type MediaGroup = "site" | "urun" | "dok";
+export type MediaGroup = "site" | "urun" | "dok" | "blog";
 
 /** Yuvanın ne tuttuğu. Doğrulama, dönüşüm ve dizin buna göre değişiyor. */
 export type MediaKind = "image" | "pdf";
@@ -164,6 +164,34 @@ export const ALL_SLOTS: readonly MediaSlot[] = [...SITE_SLOTS, ...PRODUCT_SLOTS,
 export const VALID_SLOT_IDS: ReadonlySet<string> = new Set(
   ALL_SLOTS.map((s) => slotId(s.group, s.key)),
 );
+
+// --- Blog kapakları: kimlik SABİT LİSTEDE DEĞİL, yazı başına türetiliyor ------
+// Yazılar panelden eklendiği için yuva listesi önceden bilinemiyor. Kimlik yine
+// de serbest metin değil: dil sabit iki değerden biri, slug yalnız küçük harf,
+// rakam ve tire kabul ediyor — dosya adına yol kaçışı sokulamıyor.
+
+const BLOG_SLOT_PATTERN = /^blog:(tr|en)-[a-z0-9-]{1,70}$/;
+
+/** Yazının kapak yuvası kimliği: blog:tr-anti-snap-barel */
+export function blogSlotId(locale: string, slug: string): string {
+  return `blog:${locale}-${slug}`;
+}
+
+export function isBlogSlotId(id: string): boolean {
+  return BLOG_SLOT_PATTERN.test(id);
+}
+
+/** Blog kapağı için sentetik yuva — sabit kayıt defterinde karşılığı yok. */
+export function blogCoverSlot(id: string): MediaSlot {
+  return {
+    key: id.slice("blog:".length),
+    group: "blog",
+    label: "Kapak görseli",
+    note: "Yazı sayfasının üstünde ve listedeki kartta gösterilir.",
+    aspect: "16 / 10",
+    maxEdge: 1800,
+  };
+}
 
 /** slotId → dosya kaydı. Kaynak: content/media.json */
 export type MediaManifest = Record<string, { file: string; updatedAt: string }>;

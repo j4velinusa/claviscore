@@ -2,6 +2,7 @@ import Link from "next/link";
 import { type Locale, localePath } from "@/lib/i18n";
 import type { PostSummary } from "@/lib/blog-config";
 import type { Dictionary } from "@/lib/dictionaries/tr";
+import Image from "next/image";
 
 const shell =
   "bg-white overflow-hidden flex flex-col [box-shadow:0_1px_2px_rgba(0,0,0,.04),0_16px_40px_-28px_rgba(0,0,0,.22)] transition-[transform,box-shadow] duration-[450ms] ease-swift hover:-translate-y-1.5 hover:[box-shadow:0_1px_2px_rgba(0,0,0,.04),0_28px_56px_-28px_rgba(0,0,0,.3)]";
@@ -34,17 +35,31 @@ export function PostCard({
   post,
   dict,
   locale,
+  cover,
 }: {
   post: PostSummary;
   dict: Dictionary;
   locale: Locale;
+  /** Panelden yüklenen kapak. Yoksa tasarımdaki soyut yer tutucu kalır. */
+  cover?: string;
 }) {
   const t = dict.blog;
   const meta = `${post.dateLabel} · ${post.readingMinutes} ${t.minutes}`;
   return (
     <Link href={localePath(locale, `/blog/${post.slug}`)} className={`${shell} h-full rounded-[22px]`}>
-      <div className="relative aspect-[16/10] [background:linear-gradient(160deg,#F1ECE2,#E6DFD1)] flex items-center justify-center">
-        <Well size={92} dot={34} />
+      <div className="relative aspect-[16/10] [background:linear-gradient(160deg,#F1ECE2,#E6DFD1)] overflow-hidden flex items-center justify-center">
+        {cover ? (
+          <Image
+            src={cover}
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 348px, (min-width: 640px) 50vw, 100vw"
+            quality={90}
+            className="object-cover"
+          />
+        ) : (
+          <Well size={92} dot={34} />
+        )}
         <CatChip label={t.categories[post.category]} />
       </div>
       <div className="px-[26px] pt-6 pb-7 flex flex-col flex-1">
@@ -62,10 +77,12 @@ export function FeaturedCard({
   post,
   dict,
   locale,
+  cover,
 }: {
   post: PostSummary;
   dict: Dictionary;
   locale: Locale;
+  cover?: string;
 }) {
   const t = dict.blog;
   return (
@@ -73,8 +90,19 @@ export function FeaturedCard({
       href={localePath(locale, `/blog/${post.slug}`)}
       className={`${shell} rounded-[28px] lg:grid lg:grid-cols-[1.15fr_1fr] lg:flex-row`}
     >
-      <div className="relative [background:linear-gradient(160deg,#F1ECE2,#E6DFD1)] min-h-[260px] lg:min-h-[420px] flex items-center justify-center">
-        <Well size={210} dot={46} />
+      <div className="relative [background:linear-gradient(160deg,#F1ECE2,#E6DFD1)] min-h-[260px] lg:min-h-[420px] overflow-hidden flex items-center justify-center">
+        {cover ? (
+          <Image
+            src={cover}
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 600px, 100vw"
+            quality={90}
+            className="object-cover"
+          />
+        ) : (
+          <Well size={210} dot={46} />
+        )}
       </div>
       <div className="px-8 py-10 sm:px-11 sm:py-12 flex flex-col justify-center">
         <div className="flex items-center gap-3">

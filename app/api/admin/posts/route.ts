@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { hasSession } from "@/lib/admin/auth";
-import { getPost, putPost, slugifyTitle } from "@/lib/admin/github";
+import { getMediaManifest, getPost, putPost, slugifyTitle } from "@/lib/admin/github";
 import { blogCategories, type BlogCategory, type PostStatus } from "@/lib/blog-config";
 import { isLocale, type Locale } from "@/lib/i18n";
+import { blogSlotId } from "@/lib/media-config";
 
 const STATUSES: PostStatus[] = ["live", "scheduled", "draft"];
 
@@ -41,7 +42,11 @@ export async function GET(request: Request) {
   try {
     const post = await getPost(locale as Locale, slug);
     if (!post) return NextResponse.json({ error: "Yazı bulunamadı" }, { status: 404 });
-    return NextResponse.json({ post });
+    // Kapak görseli yazının içinde değil, görsel kaydında duruyor — editör
+    // mevcut kapağı gösterebilsin diye birlikte dönüyor.
+    const { manifest } = await getMediaManifest();
+    const cover = manifest[blogSlotId(locale, slug)]?.file;
+    return NextResponse.json({ post, cover });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 502 });
   }
