@@ -4,7 +4,7 @@
 // istemci bileşeninden içe aktarılamaz, panel ise bu tipleri kullanmak zorunda.
 
 import { products } from "@/lib/products";
-import { publications, publicationSlotKey } from "@/lib/publications";
+import { isPublicationSlotKey, publicationSlotKey } from "@/lib/publications";
 
 /** Yüklenen görsellerin servis edildiği kök. Dosyalar public/gorseller/ altında. */
 export const MEDIA_URL_BASE = "/gorseller";
@@ -133,27 +133,34 @@ export const PRODUCT_SLOTS: readonly MediaSlot[] = products.map((p) => ({
   maxEdge: 1800,
 }));
 
-/**
- * Belgeler — yayın kayıt defterinden TÜRETİLİYOR (lib/publications.ts).
- * Yayın eklenince yuvası kendiliğinden oluşuyor, burada elle liste tutulmuyor.
- *
- * Her yayının dil başına bir yuvası var: ihracat sitesinde TR ve EN nüshalar
- * ayrı dosyalar. Yalnız biri yüklüyse diğer dil de ona düşüyor (bkz. docHref).
- *
- * Anahtar biçimi "<yayın>-<dil>" — katalog için "katalog-tr" / "katalog-en".
- * Bu adlar bilinçle korundu: yuvalar yayın defterine taşınmadan önce de aynıydı,
- * değiştirilseydi panelden yüklenmiş PDF'ler sahipsiz kalırdı.
- */
-export const DOC_SLOTS: readonly MediaSlot[] = publications.flatMap((pub) =>
-  (["tr", "en"] as const).map((lang) => ({
-    key: publicationSlotKey(pub.id, lang),
-    group: "dok" as const,
-    label: `${pub.cover.tag} — ${lang === "tr" ? "Türkçe" : "İngilizce"} (PDF)`,
-    note: `${lang === "tr" ? "Türkçe" : "İngilizce"} nüsha. En fazla 100 MB.`,
+// --- Belgeler: yuvalar SABİT LİSTEDE DEĞİL ---------------------------------
+// Yayınlar panelden yönetildiği için hangi belgelerin olacağı önceden bilinemez.
+// Kimlik yine de serbest metin değil: "dok:<yayın>-<dil>" deseni doğrulanıyor,
+// yayın kimliği küçük harf/rakam/tire, dil iki sabit değerden biri — dosya adına
+// yol kaçışı sokulamıyor.
+//
+// Anahtar biçimi bilinçle korundu ("katalog-tr"): yuvalar defterden dinamiğe
+// taşınırken değiştirilseydi panelden yüklenmiş PDF'ler sahipsiz kalırdı.
+
+export const DOC_SLOTS: readonly MediaSlot[] = [];
+
+/** Yayın belgesi yuvası mı — API bunu doğrulayıp sentetik yuva üretiyor. */
+export function isDocSlotId(id: string): boolean {
+  return id.startsWith("dok:") && isPublicationSlotKey(id.slice("dok:".length));
+}
+
+export function docSlot(id: string): MediaSlot {
+  const key = id.slice("dok:".length);
+  const lang = key.endsWith("-en") ? "İngilizce" : "Türkçe";
+  return {
+    key,
+    group: "dok",
+    label: `${lang} nüsha (PDF)`,
+    note: `${lang} PDF. En fazla 100 MB.`,
     aspect: "3 / 4",
-    kind: "pdf" as const,
-  })),
-);
+    kind: "pdf",
+  };
+}
 
 export const ALL_SLOTS: readonly MediaSlot[] = [...SITE_SLOTS, ...PRODUCT_SLOTS, ...DOC_SLOTS];
 

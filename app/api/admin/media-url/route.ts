@@ -2,13 +2,15 @@ import { del } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { hasSession } from "@/lib/admin/auth";
 import { putMediaUrl, removeMediaRecord } from "@/lib/admin/github";
-import { ALL_SLOTS, slotId, slotKind } from "@/lib/media-config";
+import { ALL_SLOTS, docSlot, isDocSlotId, slotId, slotKind } from "@/lib/media-config";
 
 // Blob deposuna yüklenen belgenin KAYDINI tutar. Dosyanın kendisi buradan
 // geçmiyor (bkz. /api/admin/blob-upload); bu uç nokta yalnız content/media.json'a
 // adresi işliyor ve yerini alan eski dosyayı depodan siliyor.
 
 function pdfSlot(id: string) {
+  // Yayın belgeleri dinamik: kimlik desene uyuyorsa yuva türetiliyor.
+  if (isDocSlotId(id)) return docSlot(id);
   const slot = ALL_SLOTS.find((s) => slotId(s.group, s.key) === id);
   return slot && slotKind(slot) === "pdf" ? slot : undefined;
 }

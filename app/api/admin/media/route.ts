@@ -4,7 +4,9 @@ import { getMediaManifest, putMedia, removeMedia } from "@/lib/admin/github";
 import {
   ALL_SLOTS,
   blogCoverSlot,
+  docSlot,
   isBlogSlotId,
+  isDocSlotId,
   slotId,
   slotKind,
   type MediaSlot,
@@ -22,8 +24,10 @@ const MAX_PDF_BYTES = 3 * 1024 * 1024;
 
 /** Kimlikten yuva — dosya adı yükleme anında sürümle birlikte türetiliyor. */
 function slotForId(id: string): MediaSlot | undefined {
-  // Blog kapakları sabit listede yok; kimlik desene uyuyorsa yuva türetiliyor.
+  // Blog kapakları ve yayın belgeleri sabit listede yok; kimlik desene
+  // uyuyorsa yuva türetiliyor.
   if (isBlogSlotId(id)) return blogCoverSlot(id);
+  if (isDocSlotId(id)) return docSlot(id);
   return ALL_SLOTS.find((s) => slotId(s.group, s.key) === id);
 }
 

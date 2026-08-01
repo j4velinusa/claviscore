@@ -269,13 +269,6 @@ export const en: Dictionary = {
     metaPages: "PAGES",
     metaFormat: "FORMAT",
     metaLangs: "LANGUAGE",
-    items: {
-      katalog: {
-        kind: "CATALOG",
-        title: "Claviscor Product Catalog",
-        desc: "All product families, technical specifications and the finish swatch. The main reference catalog, from lock hardware to ceiling systems.",
-      },
-    },
     print: {
       kicker: "PRINTED COPY",
       title: "We'll ship it to your office.",

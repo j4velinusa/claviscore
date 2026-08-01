@@ -1,0 +1,28 @@
+[
+  {
+    "id": "katalog",
+    "group": "katalog",
+    "featured": true,
+    "format": "A4",
+    "langs": "TR / EN",
+    "readPath": "/katalog",
+    "cover": {
+      "theme": "koyu",
+      "font": "sans",
+      "tag": "Katalog",
+      "title": "Bir mekânın bütün yüzeyleri",
+      "sub": "Kilit · Kapı · Tavan",
+      "foot": "Claviscor"
+    },
+    "tr": {
+      "kind": "KATALOG",
+      "title": "Claviscor Ürün Kataloğu",
+      "desc": "Tüm ürün aileleri, teknik künyeler ve kaplama kartelası. Kilit donanımından tavan sistemlerine kadar ana referans katalog."
+    },
+    "en": {
+      "kind": "CATALOG",
+      "title": "Claviscor Product Catalog",
+      "desc": "All product families, technical specifications and the finish swatch. The main reference catalog, from lock hardware to ceiling systems."
+    }
+  }
+]

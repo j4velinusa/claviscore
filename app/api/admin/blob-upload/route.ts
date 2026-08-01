@@ -1,7 +1,15 @@
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
 import { hasSession } from "@/lib/admin/auth";
-import { blogCoverSlot, isBlogSlotId, ALL_SLOTS, slotId, slotKind } from "@/lib/media-config";
+import {
+  ALL_SLOTS,
+  blogCoverSlot,
+  docSlot,
+  isBlogSlotId,
+  isDocSlotId,
+  slotId,
+  slotKind,
+} from "@/lib/media-config";
 
 // Büyük belgeler (katalog, dergi) için doğrudan yükleme uç noktası.
 //
@@ -30,7 +38,9 @@ export async function POST(request: Request): Promise<NextResponse> {
         const id = decodeURIComponent(pathname.split("/")[0] ?? "");
         const slot = isBlogSlotId(id)
           ? blogCoverSlot(id)
-          : ALL_SLOTS.find((s) => slotId(s.group, s.key) === id);
+          : isDocSlotId(id)
+            ? docSlot(id)
+            : ALL_SLOTS.find((s) => slotId(s.group, s.key) === id);
         if (!slot || slotKind(slot) !== "pdf") {
           throw new Error("Bu yuvaya belge yüklenemez");
         }

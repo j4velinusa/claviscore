@@ -7,7 +7,8 @@ import { buildMetadata } from "@/lib/metadata";
 import { site } from "@/lib/site";
 import { mediaMap } from "@/lib/media";
 import { docHref } from "@/lib/media-config";
-import { featuredPublication, publications } from "@/lib/publications";
+import { featuredPublication, publicationCopy } from "@/lib/publications";
+import { readPublications } from "@/lib/publications-content";
 import { SiteNav } from "@/components/site/SiteNav";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { Reveal } from "@/components/motion/Reveal";
@@ -37,6 +38,8 @@ export default async function YayinlarPage({ params }: { params: Promise<{ local
   const dict = await getDictionary(locale);
   const t = dict.yayinlar;
 
+  // Yayınlar panelden yönetiliyor; build anında content/yayinlar.json'dan okunuyor.
+  const publications = readPublications();
   // PDF adresleri panelden yüklenen belgelerden; yüklenmemiş yayın haritada yok.
   const media = mediaMap();
   const docs = Object.fromEntries(
@@ -45,10 +48,8 @@ export default async function YayinlarPage({ params }: { params: Promise<{ local
       .filter(([, url]) => Boolean(url)),
   ) as Record<string, string>;
 
-  const featured = featuredPublication();
-  const featuredCopy = featured
-    ? t.items[featured.id as keyof typeof t.items]
-    : undefined;
+  const featured = featuredPublication(publications);
+  const featuredCopy = featured ? publicationCopy(featured, locale) : undefined;
   const featuredHref = featured ? docs[featured.id] : undefined;
   const printHref = `mailto:${site.email}?subject=${encodeURIComponent(dict.mailSubject.catalog)}`;
 
@@ -134,7 +135,7 @@ export default async function YayinlarPage({ params }: { params: Promise<{ local
           </section>
         )}
 
-        <PublicationsIndex dict={dict} locale={locale} docs={docs} />
+        <PublicationsIndex dict={dict} locale={locale} docs={docs} publications={publications} />
 
         <section className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-16 pb-20">
           <Reveal>

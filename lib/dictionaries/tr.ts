@@ -273,13 +273,6 @@ export const tr = {
     metaPages: "SAYFA",
     metaFormat: "ÖLÇÜ",
     metaLangs: "DİL",
-    items: {
-      katalog: {
-        kind: "KATALOG",
-        title: "Claviscor Ürün Kataloğu",
-        desc: "Tüm ürün aileleri, teknik künyeler ve kaplama kartelası. Kilit donanımından tavan sistemlerine kadar ana referans katalog.",
-      },
-    },
     print: {
       kicker: "BASILI NÜSHA",
       title: "Ofisinize kargolayalım.",

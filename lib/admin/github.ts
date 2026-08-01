@@ -2,6 +2,7 @@ import "server-only";
 import matter from "gray-matter";
 import type { Locale } from "@/lib/i18n";
 import type { PostFrontmatter } from "@/lib/blog-config";
+import type { Publication } from "@/lib/publications";
 import {
   mediaDir,
   slotFile,
@@ -509,4 +510,60 @@ export async function removeMedia(id: string, kind: MediaKind): Promise<boolean>
     delete m[id];
   }, `görsel kaydı silindi: ${id}`);
   return true;
+}
+
+// ---------------------------------------------------------------------------
+// Yayınlar — content/yayinlar.json
+//
+// Görsel kaydıyla aynı desen: oku-değiştir-yaz döngüsü, o okumanın sha'sıyla
+// yazma (compare-and-swap) ve çakışmada yeniden deneme. Bayat içeriği taze
+// sha ile yazmak, araya giren bir düzenlemeyi sessizce siler.
+// ---------------------------------------------------------------------------
+
+const PUBLICATIONS_FILE = "content/yayinlar.json";
+
+export async function getPublications(): Promise<{ list: Publication[]; sha?: string }> {
+  const { owner, repo, branch } = config();
+  const res = await gh(`/repos/${owner}/${repo}/contents/${PUBLICATIONS_FILE}?ref=${branch}`);
+  if (res.status === 404) return { list: [] };
+  if (!res.ok) throw new Error(`GitHub okuma hatası (${res.status})`);
+  const file = (await res.json()) as { content: string; sha: string };
+  const raw = Buffer.from(file.content, "base64").toString("utf8");
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    // Dosya elle bozulmuşsa sha'yı DÖNDÜRME: boş liste + geçerli sha, ilk
+    // yazmada bütün yayınları sessizce silerdi. sha'sız yazma 422 alır ve
+    // kullanıcı görünür bir hata görür.
+    throw new Error("content/yayinlar.json okunamadı (geçersiz JSON). Elle düzeltilmeli.");
+  }
+  if (!Array.isArray(parsed)) throw new Error("content/yayinlar.json bir dizi olmalı.");
+  return { list: parsed as Publication[], sha: file.sha };
+}
+
+export async function updatePublications(
+  mutate: (list: Publication[]) => void,
+  message: string,
+): Promise<void> {
+  const { owner, repo, branch } = config();
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const { list, sha } = await getPublications();
+    mutate(list);
+    const body = JSON.stringify(list, null, 2) + "\n";
+    const res = await gh(`/repos/${owner}/${repo}/contents/${PUBLICATIONS_FILE}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        message,
+        content: Buffer.from(body, "utf8").toString("base64"),
+        branch,
+        ...(sha ? { sha } : {}),
+      }),
+    });
+    if (res.ok) return;
+    if (res.status === 409 || res.status === 422) continue;
+    const detail = await res.text();
+    throw new Error(`Yayın dosyası yazılamadı (${res.status}): ${detail.slice(0, 200)}`);
+  }
+  throw new Error("Yayın dosyası eşzamanlı değişiklik nedeniyle yazılamadı. Tekrar deneyin.");
 }

@@ -6,8 +6,8 @@ import { PublicationCover } from "@/components/publications/PublicationCover";
 import { Reveal } from "@/components/motion/Reveal";
 import { type Locale, localePath } from "@/lib/i18n";
 import {
+  publicationCopy,
   publicationGroups,
-  publications,
   type Publication,
   type PublicationGroup,
 } from "@/lib/publications";
@@ -25,11 +25,13 @@ export function PublicationsIndex({
   dict,
   locale,
   docs,
+  publications,
 }: {
   dict: Dictionary;
   locale: Locale;
   /** Yayın kimliği → PDF adresi. Yüklenmemiş yayın haritada yok. */
   docs: Record<string, string>;
+  publications: readonly Publication[];
 }) {
   const t = dict.yayinlar;
   const [filter, setFilter] = useState<Filter>("all");
@@ -97,7 +99,7 @@ function PublicationCard({
   href?: string;
 }) {
   const t = dict.yayinlar;
-  const copy = t.items[pub.id as keyof typeof t.items];
+  const copy = publicationCopy(pub, locale);
   // Sayfa sayısı bilinmiyorsa meta satırına yazılmıyor — uydurma sayı basmıyoruz.
   const meta = [pub.pages ? `${pub.pages} ${t.metaPages.toLocaleLowerCase("tr")}` : null, pub.format, pub.langs]
     .filter(Boolean)

@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 import { blogCategories, type BlogCategory, type PostStatus } from "@/lib/blog-config";
 import { locales, type Locale } from "@/lib/i18n";
 import { blogSlotId, MEDIA_URL_BASE } from "@/lib/media-config";
 import { toWebp } from "@/lib/image-encode";
+import { AdminSidebar } from "@/components/admin/AdminSidebar";
 
 export type AdminRow = {
   slug: string;
@@ -207,57 +207,7 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
 
   return (
     <div className="flex min-h-dvh">
-      <aside className="hidden md:flex w-[238px] flex-none flex-col bg-night text-[#C9C0B2] px-3 py-6">
-        <div className="flex items-center gap-[9px] px-3">
-          <span className="size-2 rounded-full bg-bronze" aria-hidden />
-          <span className="text-[17px] font-bold tracking-[-0.02em] text-[#F4EEE2]">CLAVISCOR</span>
-        </div>
-        <div className="font-mono text-[10px] tracking-[0.14em] text-[#6f6452] px-3 pt-8 pb-2.5">
-          İÇERİK
-        </div>
-        <span
-          aria-current="page"
-          className="flex items-center gap-[11px] px-3 py-2.5 rounded-[10px] text-sm font-medium bg-white/5 text-[#F4EEE2]"
-        >
-          <span aria-hidden className="font-mono text-[11px] w-5 text-[#6f6452]">
-            ✎
-          </span>
-          Blog Yazıları
-          <span className="ml-auto text-[11px] font-bold text-[#6f6452]">{rows.length}</span>
-        </span>
-        <Link
-          href="/admin/gorseller"
-          className="flex items-center gap-[11px] px-3 py-2.5 rounded-[10px] text-sm font-medium hover:bg-white/5 transition-colors"
-        >
-          <span aria-hidden className="font-mono text-[11px] w-5 text-[#6f6452]">
-            ▦
-          </span>
-          Görseller
-        </Link>
-        <div className="font-mono text-[10px] tracking-[0.14em] text-[#6f6452] px-3 pt-6 pb-2.5">BELGELER</div>
-        <Link
-          href="/admin/proforma"
-          className="flex items-center gap-[11px] px-3 py-2.5 rounded-[10px] text-sm font-medium hover:bg-white/5 transition-colors"
-        >
-          <span aria-hidden className="font-mono text-[11px] w-5 text-[#6f6452]">
-            ⎘
-          </span>
-          Proforma
-        </Link>
-        <form action="/api/admin/login" method="post" className="mt-auto px-3">
-          <button
-            type="button"
-            onClick={async () => {
-              await fetch("/api/admin/login", { method: "DELETE" });
-              router.replace("/admin");
-              router.refresh();
-            }}
-            className="text-[13px] text-[#6f6452] hover:text-[#C9C0B2] transition-colors"
-          >
-            Çıkış yap
-          </button>
-        </form>
-      </aside>
+      <AdminSidebar active="blog" counts={{ blog: rows.length }} />
 
       <main className="flex-1 min-w-0 px-5 sm:px-8 py-7">
         <div className="flex items-center justify-between gap-4 flex-wrap">
