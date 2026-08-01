@@ -1,8 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Reveal } from "@/components/motion/Reveal";
 import { Emphasis } from "@/components/site/Emphasis";
 import { type Locale, localePath } from "@/lib/i18n";
+import { slotId, type MediaMap } from "@/lib/media-config";
 import type { Dictionary } from "@/lib/dictionaries/tr";
 
 const cardClass =
@@ -16,16 +18,32 @@ function Card({
   desc,
   delay,
   visual,
+  imageSrc,
 }: {
   title: string;
   desc: string;
   delay: number;
+  /** Panelden görsel yüklenmediğinde gösterilen soyut çizim. */
   visual: ReactNode;
+  imageSrc?: string;
 }) {
   return (
     <Reveal delay={delay}>
       <div className={cardClass}>
-        <div className={wellClass}>{visual}</div>
+        <div className={`${wellClass} relative`}>
+          {imageSrc ? (
+            <Image
+              src={imageSrc}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 348px, (min-width: 640px) 50vw, 100vw"
+              quality={90}
+              className="object-cover"
+            />
+          ) : (
+            visual
+          )}
+        </div>
         <div className="px-[26px] pt-6 pb-7">
           <div className="text-[22px] font-bold tracking-[-0.01em]">{title}</div>
           <div className="text-[15px] text-muted mt-1.5 leading-[1.5]">{desc}</div>
@@ -79,14 +97,23 @@ const visuals = {
   ),
 } as const;
 
-export function ProductFamilies({ dict, locale }: { dict: Dictionary; locale: Locale }) {
+export function ProductFamilies({
+  dict,
+  locale,
+  media = {},
+}: {
+  dict: Dictionary;
+  locale: Locale;
+  media?: MediaMap;
+}) {
   const t = dict.families;
+  // Yuva anahtarı sözlük anahtarını izliyor: aile-cylinder ↔ items.cylinder.
   const doorFamilies = [
-    { ...t.items.cylinder, visual: visuals.cylinder },
-    { ...t.items.padlock, visual: visuals.padlock },
-    { ...t.items.hinge, visual: visuals.hinge },
-    { ...t.items.handle, visual: visuals.handle },
-    { ...t.items.hotel, visual: visuals.hotel },
+    { ...t.items.cylinder, visual: visuals.cylinder, slot: "aile-cylinder" },
+    { ...t.items.padlock, visual: visuals.padlock, slot: "aile-padlock" },
+    { ...t.items.hinge, visual: visuals.hinge, slot: "aile-hinge" },
+    { ...t.items.handle, visual: visuals.handle, slot: "aile-handle" },
+    { ...t.items.hotel, visual: visuals.hotel, slot: "aile-hotel" },
   ];
 
   return (
@@ -102,7 +129,14 @@ export function ProductFamilies({ dict, locale }: { dict: Dictionary; locale: Lo
       <div className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-6">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {doorFamilies.map((f, i) => (
-            <Card key={f.title} title={f.title} desc={f.desc} delay={(i % 3) * 80} visual={f.visual} />
+            <Card
+              key={f.title}
+              title={f.title}
+              desc={f.desc}
+              delay={(i % 3) * 80}
+              visual={f.visual}
+              imageSrc={media[slotId("site", f.slot)]}
+            />
           ))}
           {/* Aksesuar & Yedek — koyu vurgu kartı */}
           <Reveal delay={160}>
@@ -124,12 +158,12 @@ export function ProductFamilies({ dict, locale }: { dict: Dictionary; locale: Lo
   );
 }
 
-export function CeilingSystems({ dict }: { dict: Dictionary }) {
+export function CeilingSystems({ dict, media = {} }: { dict: Dictionary; media?: MediaMap }) {
   const t = dict.ceiling;
   const ceilingFamilies = [
-    { ...t.items.suspended, visual: visuals.suspendedCeiling },
-    { ...t.items.lighting, visual: visuals.lighting },
-    { ...t.items.gypsum, visual: visuals.gypsum },
+    { ...t.items.suspended, visual: visuals.suspendedCeiling, slot: "tavan-suspended" },
+    { ...t.items.lighting, visual: visuals.lighting, slot: "tavan-lighting" },
+    { ...t.items.gypsum, visual: visuals.gypsum, slot: "tavan-gypsum" },
   ];
 
   return (
@@ -148,7 +182,14 @@ export function CeilingSystems({ dict }: { dict: Dictionary }) {
       <div className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-10">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {ceilingFamilies.map((f, i) => (
-            <Card key={f.title} title={f.title} desc={f.desc} delay={i * 80} visual={f.visual} />
+            <Card
+              key={f.title}
+              title={f.title}
+              desc={f.desc}
+              delay={i * 80}
+              visual={f.visual}
+              imageSrc={media[slotId("site", f.slot)]}
+            />
           ))}
         </div>
       </div>

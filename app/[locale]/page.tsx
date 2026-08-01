@@ -45,8 +45,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <main>
         <Hero dict={dict} locale={locale} imageSrc={media[slotId("site", "hero")]} />
         <Stats dict={dict} locale={locale} />
-        <ProductFamilies dict={dict} locale={locale} />
-        <CeilingSystems dict={dict} />
+        <ProductFamilies dict={dict} locale={locale} media={media} />
+        <CeilingSystems dict={dict} media={media} />
         <Engineering dict={dict} imageSrc={media[slotId("site", "muhendislik")]} />
         <ExportPanel dict={dict} locale={locale} />
         <Certificates dict={dict} />

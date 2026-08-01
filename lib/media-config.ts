@@ -75,6 +75,28 @@ export const SITE_SLOTS: readonly MediaSlot[] = [
     aspect: "4 / 5",
     maxEdge: 1800,
   },
+  // Ana sayfadaki ürün ailesi ve tavan kartları. Anahtarlar sözlükteki
+  // families.items / ceiling.items anahtarlarını izliyor — bileşen eşleştirmeyi
+  // bunun üzerinden yapıyor, ayrı bir tablo tutulmuyor.
+  ...(
+    [
+      ["aile-cylinder", "Ürün ailesi — Silindir Bareller"],
+      ["aile-padlock", "Ürün ailesi — Asma Kilitler"],
+      ["aile-hinge", "Ürün ailesi — Menteşeler"],
+      ["aile-handle", "Ürün ailesi — Kapı Kolları"],
+      ["aile-hotel", "Ürün ailesi — Otel Kilit Sistemleri"],
+      ["tavan-suspended", "Tavan — Asma Tavan"],
+      ["tavan-lighting", "Tavan — Tavan Aydınlatma"],
+      ["tavan-gypsum", "Tavan — Alçı Tavan"],
+    ] as const
+  ).map(([key, label]) => ({
+    key,
+    group: "site" as const,
+    label,
+    note: "Ana sayfa kartı. 16:11 oranında kırpılır.",
+    aspect: "16 / 11",
+    maxEdge: 1600,
+  })),
 ];
 
 /** Katalogdaki 16 ürünün yuvaları — ürün listesinden türetiliyor, elle tutulmuyor. */
