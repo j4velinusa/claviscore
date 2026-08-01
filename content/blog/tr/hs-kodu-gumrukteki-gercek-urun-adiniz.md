@@ -6,7 +6,7 @@ excerpt: >-
   vergi oranlarıyla karşılaşır. Bu yüzden HS kodu bir formalite değil, teklifin
   fiyat bileşenidir.
 category: teknik
-status: draft
+status: live
 date: '2026-07-29'
 readingMinutes: 5
 ---
