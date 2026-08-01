@@ -20,6 +20,15 @@ export type MediaSlot = {
   note: string;
   /** Panel önizlemesinin oranı; sitedeki alana yakın seçildi. */
   aspect: string;
+  /**
+   * Yüklemeden önce inilecek en uzun kenar (px).
+   *
+   * Alanın CSS genişliğinin ~2 katı seçiliyor: retina ekranda 1 CSS pikseli
+   * 2 cihaz pikseli demek, kaynak bunun altında kalırsa görsel yumuşak çıkar.
+   * Hero 1056 CSS px'te gösteriliyor → 2560; ürün kartı ~348 px → 1800 fazlasıyla
+   * yeter ama kırpma payı bırakıyor.
+   */
+  maxEdge: number;
 };
 
 /**
@@ -30,9 +39,22 @@ export function slotId(group: MediaGroup, key: string): string {
   return `${group}:${key}`;
 }
 
-/** Dosya adı yuvadan türetilir; uzantı daima .webp (panel yüklemeden önce çevirir). */
-export function slotFile(group: MediaGroup, key: string): string {
-  return `${group}-${key.toLowerCase()}.webp`;
+/** Yükleme zamanından 14 haneli sürüm damgası: 2026-08-01T08:47:00Z → 20260801084700 */
+export function versionStamp(iso: string): string {
+  return iso.replace(/\D/g, "").slice(0, 14);
+}
+
+/**
+ * Dosya adı yuvadan VE sürümden türetilir; uzantı daima .webp.
+ *
+ * Sürüm dosya adında, sorgu dizesinde değil: Next 16 yerel görsellerde sorgu
+ * dizesini `images.localPatterns` ile beyaz listeye almayı şart koşuyor ve
+ * joker arama desteklemiyor. Adın kendisi değişince optimizasyon önbelleği,
+ * CDN ve tarayıcı için anahtar da değişiyor — değiştirilen fotoğrafın eski
+ * hâli servis edilemiyor. Eski dosya yükleme sonunda siliniyor.
+ */
+export function slotFile(group: MediaGroup, key: string, version: string): string {
+  return `${group}-${key.toLowerCase()}-${version}.webp`;
 }
 
 /** Ana sayfadaki iki büyük görsel alanı. Tasarımda yer tutucu olarak duruyorlardı. */
@@ -43,6 +65,7 @@ export const SITE_SLOTS: readonly MediaSlot[] = [
     label: "Ana sayfa — büyük görsel",
     note: "Geniş ürün fotoğrafı. 1120×540 alanda ortadan kırpılır, yatay çekim uygun.",
     aspect: "16 / 9",
+    maxEdge: 2560,
   },
   {
     key: "muhendislik",
@@ -50,6 +73,7 @@ export const SITE_SLOTS: readonly MediaSlot[] = [
     label: "Ana sayfa — mühendislik bölümü",
     note: "Kesit veya yakın detay fotoğrafı. Dikeye yakın alanda gösterilir.",
     aspect: "4 / 5",
+    maxEdge: 1800,
   },
 ];
 
@@ -60,6 +84,7 @@ export const PRODUCT_SLOTS: readonly MediaSlot[] = products.map((p) => ({
   label: p.sku,
   note: "Ürün fotoğrafı. Kart 5:4 oranında kırpar.",
   aspect: "5 / 4",
+  maxEdge: 1800,
 }));
 
 export const ALL_SLOTS: readonly MediaSlot[] = [...SITE_SLOTS, ...PRODUCT_SLOTS];
@@ -75,7 +100,7 @@ export type MediaManifest = Record<string, { file: string; updatedAt: string }>;
 /** slotId → public URL. Görseli olmayan yuva haritada yer almaz. */
 export type MediaMap = Record<string, string>;
 
-/** Manifest'i doğrudan URL haritasına çevirir; hem sunucu hem panel kullanır. */
+/** Manifest'i URL haritasına çevirir; hem sunucu hem panel kullanır. */
 export function toMediaMap(manifest: MediaManifest): MediaMap {
   const out: MediaMap = {};
   for (const [id, entry] of Object.entries(manifest)) {

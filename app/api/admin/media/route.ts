@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { hasSession } from "@/lib/admin/auth";
 import { getMediaManifest, putMedia, removeMedia } from "@/lib/admin/github";
-import { ALL_SLOTS, slotId, slotFile, VALID_SLOT_IDS } from "@/lib/media-config";
+import { ALL_SLOTS, slotId, VALID_SLOT_IDS, type MediaSlot } from "@/lib/media-config";
 
 // Yüklenen ikili base64 olarak JSON gövdede geliyor; base64 ham boyutu ~%33 şişirir.
 // 2 MB ham ≈ 2,7 MB gövde — Vercel'in istek sınırının (4,5 MB) altında güvenli pay.
@@ -9,10 +9,9 @@ import { ALL_SLOTS, slotId, slotFile, VALID_SLOT_IDS } from "@/lib/media-config"
 // dönüşüm atlanırsa diye son savunma.
 const MAX_BYTES = 2 * 1024 * 1024;
 
-/** Kimlikten dosya adı — yalnız kayıtlı yuvalar için. Bilinmeyen kimlik null döner. */
-function fileForId(id: string): string | null {
-  const slot = ALL_SLOTS.find((s) => slotId(s.group, s.key) === id);
-  return slot ? slotFile(slot.group, slot.key) : null;
+/** Kimlikten yuva — dosya adı yükleme anında sürümle birlikte türetiliyor. */
+function slotForId(id: string): MediaSlot | undefined {
+  return ALL_SLOTS.find((s) => slotId(s.group, s.key) === id);
 }
 
 export async function GET() {
@@ -45,8 +44,8 @@ export async function POST(request: Request) {
   if (!VALID_SLOT_IDS.has(id)) {
     return NextResponse.json({ error: "Bilinmeyen görsel yuvası" }, { status: 400 });
   }
-  const file = fileForId(id);
-  if (!file) {
+  const slot = slotForId(id);
+  if (!slot) {
     return NextResponse.json({ error: "Bilinmeyen görsel yuvası" }, { status: 400 });
   }
 
@@ -68,18 +67,20 @@ export async function POST(request: Request) {
   if (bytes.byteLength > MAX_BYTES) {
     return NextResponse.json({ error: "Görsel 2 MB'ı aşıyor" }, { status: 413 });
   }
-  // WebP imzası: "RIFF" .... "WEBP". Panel dönüşümü atlarsa ya da başka bir
+  // WebP imzası: "RIFF" .... "WEBP". latin1 kullanılıyor — Node'un ascii
+  // çözücüsü her baytın yüksek bitini düşürdüğü için 0xD2 gibi baytlar da "R"
+  // olarak okunuyor ve imza kontrolü atlatılabiliyordu. Panel dönüşümü atlarsa ya da başka bir
   // istemci JPEG gönderirse repoda .webp adıyla JPEG durmasın.
   const isWebp =
     bytes.length > 12 &&
-    bytes.toString("ascii", 0, 4) === "RIFF" &&
-    bytes.toString("ascii", 8, 12) === "WEBP";
+    bytes.toString("latin1", 0, 4) === "RIFF" &&
+    bytes.toString("latin1", 8, 12) === "WEBP";
   if (!isWebp) {
     return NextResponse.json({ error: "Görsel WebP olmalı" }, { status: 415 });
   }
 
   try {
-    const result = await putMedia({ id, file, base64 });
+    const result = await putMedia({ id, group: slot.group, key: slot.key, base64 });
     return NextResponse.json({ ok: true, id, ...result });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 502 });
@@ -94,12 +95,12 @@ export async function DELETE(request: Request) {
   if (!VALID_SLOT_IDS.has(id)) {
     return NextResponse.json({ error: "Bilinmeyen görsel yuvası" }, { status: 400 });
   }
-  const file = fileForId(id);
-  if (!file) {
-    return NextResponse.json({ error: "Bilinmeyen görsel yuvası" }, { status: 400 });
-  }
   try {
-    await removeMedia(id, file);
+    const removed = await removeMedia(id);
+    // Kayıt yoksa silinecek bir şey de yok — 404, sessiz "ok" yerine.
+    if (!removed) {
+      return NextResponse.json({ error: "Bu yuvada görsel yok" }, { status: 404 });
+    }
     return NextResponse.json({ ok: true, id });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 502 });

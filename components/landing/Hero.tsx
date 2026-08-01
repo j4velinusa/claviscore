@@ -63,6 +63,7 @@ export function Hero({
                 fill
                 priority
                 sizes="(min-width: 1120px) 1056px, 100vw"
+                quality={90}
                 className="object-cover"
               />
             ) : (

@@ -2,7 +2,7 @@ import "server-only";
 import matter from "gray-matter";
 import type { Locale } from "@/lib/i18n";
 import type { PostFrontmatter } from "@/lib/blog-config";
-import type { MediaManifest } from "@/lib/media-config";
+import { slotFile, versionStamp, type MediaGroup, type MediaManifest } from "@/lib/media-config";
 
 // Admin panelin içerik katmanı: GitHub Contents API. Public site içeriği build anında
 // dosyadan okur (lib/blog.ts); admin ise repo'nun ANLIK halini görsün diye doğrudan
@@ -303,13 +303,21 @@ export async function putProforma(
 const MEDIA_DIR = "public/gorseller";
 const MEDIA_MANIFEST = "content/media.json";
 
-async function fileSha(path: string): Promise<string | undefined> {
+/**
+ * Dosyanın blob sha'sı — DİZİN listesinden okunuyor, dosyanın kendisinden değil.
+ *
+ * Contents API tek dosyayı JSON olarak isterken 1 MB üstü blob'larda 403 döner;
+ * o yol kullanılsaydı 1 MB'ı aşan bir görsel yüklendikten sonra aynı yuva bir
+ * daha değiştirilemez ve silinemez hale gelirdi. Dizin listesinde boyut sınırı
+ * yok, her girdi sha'sıyla geliyor.
+ */
+async function fileSha(dir: string, name: string): Promise<string | undefined> {
   const { owner, repo, branch } = config();
-  const res = await gh(`/repos/${owner}/${repo}/contents/${path}?ref=${branch}`);
+  const res = await gh(`/repos/${owner}/${repo}/contents/${dir}?ref=${branch}`);
   if (res.status === 404) return undefined;
   if (!res.ok) throw new Error(`GitHub okuma hatası (${res.status})`);
-  const file = (await res.json()) as { sha: string };
-  return file.sha;
+  const entries = (await res.json()) as { name: string; type: string; sha: string }[];
+  return entries.find((e) => e.type === "file" && e.name === name)?.sha;
 }
 
 export async function getMediaManifest(): Promise<{ manifest: MediaManifest; sha?: string }> {
@@ -330,37 +338,68 @@ export async function getMediaManifest(): Promise<{ manifest: MediaManifest; sha
   return { manifest, sha: file.sha };
 }
 
-async function putManifest(manifest: MediaManifest, message: string): Promise<void> {
+/**
+ * Kayıt dosyasını oku-değiştir-yaz döngüsüyle günceller (compare-and-swap).
+ *
+ * Değişiklik DAİMA taze okunan nesneye uygulanır ve O OKUMANIN sha'sıyla yazılır.
+ * Önceki sürüm içeriği çağıranın eski okumasından, sha'yı ise yazmadan hemen
+ * önceki ikinci bir okumadan alıyordu; bu ikisi eşleşmediği için GitHub'ın
+ * iyimser kilidi tamamen devre dışı kalıyor ve eşzamanlı iki yükleme
+ * birbirinin kaydını SESSİZCE siliyordu (dosya repoda kalır, kaydı kaybolur).
+ * Araya başka bir yazma girerse artık 409/422 gelir ve yeniden denenir.
+ */
+async function updateManifest(
+  mutate: (m: MediaManifest) => void,
+  message: string,
+): Promise<void> {
   const { owner, repo, branch } = config();
-  // sha yazmadan HEMEN önce okunuyor: görsel PUT'u sırasında başkası kayıt
-  // dosyasına dokunmuşsa bayat sha ile 409 almayalım.
-  const current = await getMediaManifest();
-  const body = JSON.stringify(manifest, null, 2) + "\n";
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const { manifest, sha } = await getMediaManifest();
+    mutate(manifest);
+    const body = JSON.stringify(manifest, null, 2) + "\n";
 
-  const res = await gh(`/repos/${owner}/${repo}/contents/${MEDIA_MANIFEST}`, {
-    method: "PUT",
-    body: JSON.stringify({
-      message,
-      content: Buffer.from(body, "utf8").toString("base64"),
-      branch,
-      ...(current.sha ? { sha: current.sha } : {}),
-    }),
-  });
-  if (!res.ok) {
+    const res = await gh(`/repos/${owner}/${repo}/contents/${MEDIA_MANIFEST}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        message,
+        content: Buffer.from(body, "utf8").toString("base64"),
+        branch,
+        ...(sha ? { sha } : {}),
+      }),
+    });
+    if (res.ok) return;
+    // 409: bayat sha. 422: biz "dosya yok" sanarken başkası oluşturdu.
+    // İkisi de "araya girildi" demek — taze okuyup tekrar dene.
+    if (res.status === 409 || res.status === 422) continue;
     const detail = await res.text();
     throw new Error(`Kayıt dosyası yazılamadı (${res.status}): ${detail.slice(0, 200)}`);
   }
+  throw new Error("Kayıt dosyası eşzamanlı değişiklik nedeniyle yazılamadı. Tekrar deneyin.");
 }
 
-/** Görseli commit'ler ve kayıt dosyasına işler. base64 ham ikili (data URL öneki olmadan). */
+/**
+ * Görseli commit'ler ve kayıt dosyasına işler. base64 ham ikili (data URL öneki yok).
+ *
+ * Sıra: yeni dosya → kayıt → eski dosyanın silinmesi. Böylece kayıt hiçbir anda
+ * var olmayan bir dosyayı göstermiyor; yarıda kalırsa en kötü ihtimalle repoda
+ * kullanılmayan bir dosya kalır.
+ */
 export async function putMedia(input: {
   id: string;
-  file: string;
+  group: MediaGroup;
+  key: string;
   base64: string;
 }): Promise<{ file: string; commitUrl: string }> {
   const { owner, repo, branch } = config();
-  const path = `${MEDIA_DIR}/${input.file}`;
-  const sha = await fileSha(path);
+
+  // Önceki dosya adı sonda silinecek; okuma en başta, henüz hiçbir şey
+  // commit'lenmemişken yapılıyor ki hata durumunda yetim dosya kalmasın.
+  const { manifest } = await getMediaManifest();
+  const previousFile = manifest[input.id]?.file;
+
+  const updatedAt = new Date().toISOString();
+  const file = slotFile(input.group, input.key, versionStamp(updatedAt));
+  const path = `${MEDIA_DIR}/${file}`;
 
   const res = await gh(`/repos/${owner}/${repo}/contents/${path}`, {
     method: "PUT",
@@ -368,7 +407,6 @@ export async function putMedia(input: {
       message: `görsel: ${input.id}`,
       content: input.base64,
       branch,
-      ...(sha ? { sha } : {}),
     }),
   });
   if (!res.ok) {
@@ -377,32 +415,54 @@ export async function putMedia(input: {
   }
   const out = (await res.json()) as { commit: { html_url: string } };
 
-  const { manifest } = await getMediaManifest();
-  manifest[input.id] = { file: input.file, updatedAt: new Date().toISOString() };
-  await putManifest(manifest, `görsel kaydı: ${input.id}`);
+  await updateManifest((m) => {
+    m[input.id] = { file, updatedAt };
+  }, `görsel kaydı: ${input.id}`);
 
-  return { file: input.file, commitUrl: out.commit.html_url };
+  // Eski sürüm artık hiçbir yerden gösterilmiyor. Silinemezse yalnızca repoda
+  // kullanılmayan bir dosya kalır — yüklemeyi başarısız saymaya değmez.
+  if (previousFile && previousFile !== file) {
+    try {
+      await deleteMediaFile(previousFile, `eski görsel silindi: ${input.id}`);
+    } catch {
+      // yut: kullanıcının işlemi başarıyla tamamlandı
+    }
+  }
+
+  return { file, commitUrl: out.commit.html_url };
 }
 
-/** Kaydı ve görsel dosyasını siler. Dosya yoksa kayıt yine de temizlenir. */
-export async function removeMedia(id: string, file: string): Promise<void> {
+async function deleteMediaFile(file: string, message: string): Promise<void> {
   const { owner, repo, branch } = config();
-  const path = `${MEDIA_DIR}/${file}`;
-
-  // Kayıt önce temizleniyor: silme yarıda kalırsa site kırık görsele değil,
-  // yer tutucuya düşsün.
-  const { manifest } = await getMediaManifest();
-  delete manifest[id];
-  await putManifest(manifest, `görsel kaydı silindi: ${id}`);
-
-  const sha = await fileSha(path);
+  const sha = await fileSha(MEDIA_DIR, file);
   if (!sha) return;
-  const res = await gh(`/repos/${owner}/${repo}/contents/${path}`, {
+  const res = await gh(`/repos/${owner}/${repo}/contents/${MEDIA_DIR}/${file}`, {
     method: "DELETE",
-    body: JSON.stringify({ message: `görsel silindi: ${id}`, sha, branch }),
+    body: JSON.stringify({ message, sha, branch }),
   });
   if (!res.ok) {
     const detail = await res.text();
     throw new Error(`Görsel silinemedi (${res.status}): ${detail.slice(0, 200)}`);
   }
+}
+
+/**
+ * Kaydı ve görsel dosyasını siler. Kayıtta yoksa hiçbir şey yapmaz (false döner).
+ *
+ * Önce DOSYA, sonra kayıt. Ters sıra kurtarılamaz bir duruma düşürüyordu: kayıt
+ * silinip dosya silme hata alırsa görsel yayında kalır ama panelde kaydı
+ * olmadığı için "Kaldır" düğmesi bir daha hiç görünmezdi. Bu sırada ise arada
+ * hata çıkarsa kayıt duruyor demektir; kullanıcı tekrar basar, dosya zaten
+ * gitmiş olduğu için ikinci deneme temiz kapanır.
+ */
+export async function removeMedia(id: string): Promise<boolean> {
+  const { manifest } = await getMediaManifest();
+  const entry = manifest[id];
+  if (!entry) return false;
+
+  await deleteMediaFile(entry.file, `görsel silindi: ${id}`);
+  await updateManifest((m) => {
+    delete m[id];
+  }, `görsel kaydı silindi: ${id}`);
+  return true;
 }

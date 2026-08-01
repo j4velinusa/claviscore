@@ -37,6 +37,7 @@ export function ProductCard({
             alt=""
             fill
             sizes="(min-width: 1024px) 348px, (min-width: 640px) 50vw, 100vw"
+            quality={90}
             className="object-cover"
           />
         ) : (
@@ -47,7 +48,13 @@ export function ProductCard({
             <div className="size-[34px] rounded-full border-[1.5px] border-ink/[0.16]" />
           </div>
         )}
-        <span className="absolute top-4 left-[18px] font-mono text-[11px] tracking-[0.04em] text-bronze-2">
+        {/* Fotoğraf üstünde kontrast garantisi kalmıyor (keyfi renkte bir görsel
+            gelebilir), o yüzden krem perde. Yer tutucu üstünde gerek yok. */}
+        <span
+          className={`absolute top-4 left-[18px] font-mono text-[11px] tracking-[0.04em] text-bronze-2 ${
+            imageSrc ? "bg-cream/85 rounded-full px-2 py-0.5" : ""
+          }`}
+        >
           {product.sku}
         </span>
         {product.badge && (
