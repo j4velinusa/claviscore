@@ -5,6 +5,7 @@ export const tr = {
   nav: {
     products: "Ürünler",
     collection: "Koleksiyon",
+    publications: "Yayınlar",
     certificates: "Sertifikalar",
     export: "İhracat",
     blog: "Bilgi Merkezi",
@@ -250,6 +251,48 @@ export const tr = {
     ctaQuote: "Teklif iste",
     ctaDistributor: "Distribütör başvurusu",
   },
+  yayinlar: {
+    kicker: "Yayınlar",
+    title: { pre: "Katalog, dergi ve", em: "basılı", post: "her şey." },
+    subtitle:
+      "Ürün katalogları ve proje seçkileri. Ekranda okuyun, PDF indirin ya da basılı nüsha isteyin.",
+    groups: {
+      all: "Tümü",
+      katalog: "Katalog",
+      dergi: "Dergi",
+      secki: "Proje seçkisi",
+      teknik: "Teknik doküman",
+    },
+    countSuffix: "yayın",
+    empty: "Bu kategoride yayın yok.",
+    readCta: "Ekranda oku",
+    downloadCta: "PDF indir",
+    // Yayının PDF'i panele henüz yüklenmemişken indirme yerine bu görünür.
+    soonLabel: "Yakında",
+    featuredKicker: "ÖNE ÇIKAN",
+    metaPages: "SAYFA",
+    metaFormat: "ÖLÇÜ",
+    metaLangs: "DİL",
+    items: {
+      katalog: {
+        kind: "KATALOG",
+        title: "Claviscor Ürün Kataloğu",
+        desc: "Tüm ürün aileleri, teknik künyeler ve kaplama kartelası. Kilit donanımından tavan sistemlerine kadar ana referans katalog.",
+      },
+    },
+    print: {
+      kicker: "BASILI NÜSHA",
+      title: "Ofisinize kargolayalım.",
+      body: "Kataloğumuzu basılı olarak da gönderiyoruz. Mimarlık ofisleri ve distribütörler için kaplama kartelasıyla birlikte.",
+      cta: "Nüsha isteyin",
+      secondaryCta: "Numune süreci",
+      notes: [
+        { k: "01", d: "Firma adı, teslimat adresi ve kaç nüsha istediğinizi yazın." },
+        { k: "02", d: "Yurt içi gönderim bize ait; yurt dışında kargo kendi hesabınızdan." },
+        { k: "03", d: "Basılı nüsha bittiğinde PDF sürümü aynı gün e-postayla gider." },
+      ],
+    },
+  },
   certificatesPage: {
     kicker: "Sertifika & standart",
     title: { pre: "Belge,", em: "iddianın", post: "kanıtıdır." },
@@ -453,6 +496,11 @@ export const tr = {
       title: "İletişim — CLAVISCOR",
       description:
         "Teklif, numune ve teknik sorularınız için Claviscor ihracat ekibi. Çerkezköy / Tekirdağ merkez, 4 saat içinde dönüş.",
+    },
+    yayinlar: {
+      title: "Yayınlar — CLAVISCOR",
+      description:
+        "Claviscor ürün katalogları ve proje seçkileri. Ekranda okuyun, PDF indirin ya da basılı nüsha isteyin.",
     },
     koleksiyon: {
       title: "Koleksiyon — CLAVISCOR",

@@ -15,6 +15,7 @@ export function SiteNav({ dict, locale }: { dict: Dictionary; locale: Locale }) 
   const links = [
     { label: dict.nav.products, href: `${home}#urunler` },
     { label: dict.nav.collection, href: localePath(locale, "/koleksiyon") },
+    { label: dict.nav.publications, href: localePath(locale, "/yayinlar") },
     { label: dict.nav.certificates, href: localePath(locale, "/sertifikalar") },
     { label: dict.nav.export, href: localePath(locale, "/ihracat") },
     { label: dict.nav.blog, href: localePath(locale, "/blog") },

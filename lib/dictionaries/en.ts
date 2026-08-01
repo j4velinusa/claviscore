@@ -5,6 +5,7 @@ export const en: Dictionary = {
   nav: {
     products: "Products",
     collection: "Collection",
+    publications: "Publications",
     certificates: "Certificates",
     export: "Export",
     blog: "Knowledge Center",
@@ -247,6 +248,47 @@ export const en: Dictionary = {
     ctaQuote: "Request a quote",
     ctaDistributor: "Become a distributor",
   },
+  yayinlar: {
+    kicker: "Publications",
+    title: { pre: "Catalogs, and everything", em: "in print", post: "." },
+    subtitle:
+      "Product catalogs and project selections. Read on screen, download the PDF or request a printed copy.",
+    groups: {
+      all: "All",
+      katalog: "Catalog",
+      dergi: "Magazine",
+      secki: "Project selection",
+      teknik: "Technical document",
+    },
+    countSuffix: "publications",
+    empty: "No publications in this category yet.",
+    readCta: "Read on screen",
+    downloadCta: "Download PDF",
+    soonLabel: "Coming soon",
+    featuredKicker: "FEATURED",
+    metaPages: "PAGES",
+    metaFormat: "FORMAT",
+    metaLangs: "LANGUAGE",
+    items: {
+      katalog: {
+        kind: "CATALOG",
+        title: "Claviscor Product Catalog",
+        desc: "All product families, technical specifications and the finish swatch. The main reference catalog, from lock hardware to ceiling systems.",
+      },
+    },
+    print: {
+      kicker: "PRINTED COPY",
+      title: "We'll ship it to your office.",
+      body: "We also send our catalog in print. For architecture offices and distributors, together with the finish swatch.",
+      cta: "Request a copy",
+      secondaryCta: "Sampling process",
+      notes: [
+        { k: "01", d: "Write your company name, delivery address and how many copies you need." },
+        { k: "02", d: "Domestic shipping is on us; international shipping on your courier account." },
+        { k: "03", d: "If print stock runs out, the PDF version is emailed the same day." },
+      ],
+    },
+  },
   certificatesPage: {
     kicker: "Certification & standards",
     title: { pre: "A certificate is the", em: "proof", post: "behind the claim." },
@@ -448,6 +490,11 @@ export const en: Dictionary = {
       title: "Contact — CLAVISCOR",
       description:
         "The Claviscor export team for quotes, samples and technical questions. Head office in Çerkezköy / Tekirdağ, reply within 4 hours.",
+    },
+    yayinlar: {
+      title: "Publications — CLAVISCOR",
+      description:
+        "Claviscor product catalogs and project selections. Read on screen, download the PDF or request a printed copy.",
     },
     koleksiyon: {
       title: "Collection — CLAVISCOR",

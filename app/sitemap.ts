@@ -8,7 +8,7 @@ const abs = (path: string) => new URL(localePath("tr", path), base).toString();
 const absEn = (path: string) => new URL(localePath("en", path), base).toString();
 
 // Yalnızca indekslenebilir sayfalar.
-const staticPaths = ["/", "/hakkimizda", "/uretim", "/katalog", "/blog", "/koleksiyon", "/sertifikalar", "/ihracat", "/iletisim"];
+const staticPaths = ["/", "/hakkimizda", "/uretim", "/katalog", "/blog", "/koleksiyon", "/yayinlar", "/sertifikalar", "/ihracat", "/iletisim"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Yazılar iki dilde ayrı dosyalar; yalnız her iki dilde de yayında olanlar

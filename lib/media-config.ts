@@ -4,6 +4,7 @@
 // istemci bileşeninden içe aktarılamaz, panel ise bu tipleri kullanmak zorunda.
 
 import { products } from "@/lib/products";
+import { publications, publicationSlotKey } from "@/lib/publications";
 
 /** Yüklenen görsellerin servis edildiği kök. Dosyalar public/gorseller/ altında. */
 export const MEDIA_URL_BASE = "/gorseller";
@@ -133,30 +134,26 @@ export const PRODUCT_SLOTS: readonly MediaSlot[] = products.map((p) => ({
 }));
 
 /**
- * Belgeler. "Kataloğu indir" düğmeleri bunlara bağlı; yüklenmemişse düğme
- * eskisi gibi katalog sayfasına gidiyor, ölü bir indirme linki oluşmuyor.
+ * Belgeler — yayın kayıt defterinden TÜRETİLİYOR (lib/publications.ts).
+ * Yayın eklenince yuvası kendiliğinden oluşuyor, burada elle liste tutulmuyor.
  *
- * TR ve EN ayrı: ihracat sitesinde iki dilde ayrı katalog olağan. Yalnız biri
- * yüklüyse diğer dil de ona düşüyor (bkz. catalogHref).
+ * Her yayının dil başına bir yuvası var: ihracat sitesinde TR ve EN nüshalar
+ * ayrı dosyalar. Yalnız biri yüklüyse diğer dil de ona düşüyor (bkz. docHref).
+ *
+ * Anahtar biçimi "<yayın>-<dil>" — katalog için "katalog-tr" / "katalog-en".
+ * Bu adlar bilinçle korundu: yuvalar yayın defterine taşınmadan önce de aynıydı,
+ * değiştirilseydi panelden yüklenmiş PDF'ler sahipsiz kalırdı.
  */
-export const DOC_SLOTS: readonly MediaSlot[] = [
-  {
-    key: "katalog-tr",
-    group: "dok",
-    label: "Ürün kataloğu — Türkçe (PDF)",
-    note: "Ana sayfadaki \"Kataloğu indir\" düğmesi bunu indirir. En fazla 100 MB.",
-    aspect: "1 / 1",
-    kind: "pdf",
-  },
-  {
-    key: "katalog-en",
-    group: "dok",
-    label: "Ürün kataloğu — İngilizce (PDF)",
-    note: "İngilizce sayfalardaki indirme düğmesi bunu kullanır. En fazla 100 MB.",
-    aspect: "1 / 1",
-    kind: "pdf",
-  },
-];
+export const DOC_SLOTS: readonly MediaSlot[] = publications.flatMap((pub) =>
+  (["tr", "en"] as const).map((lang) => ({
+    key: publicationSlotKey(pub.id, lang),
+    group: "dok" as const,
+    label: `${pub.cover.tag} — ${lang === "tr" ? "Türkçe" : "İngilizce"} (PDF)`,
+    note: `${lang === "tr" ? "Türkçe" : "İngilizce"} nüsha. En fazla 100 MB.`,
+    aspect: "3 / 4",
+    kind: "pdf" as const,
+  })),
+);
 
 export const ALL_SLOTS: readonly MediaSlot[] = [...SITE_SLOTS, ...PRODUCT_SLOTS, ...DOC_SLOTS];
 
@@ -230,13 +227,18 @@ export function toMediaMap(manifest: MediaManifest): MediaMap {
 }
 
 /**
- * Dile göre katalog indirme adresi. Yalnız bir dilde katalog varsa diğer dil de
- * onu indirir — tek katalogla çalışan bir firma iki yuva doldurmak zorunda kalmasın.
+ * Bir yayının dile göre indirme adresi. Yalnız bir dilde nüsha varsa diğer dil de
+ * onu indirir — tek dilde basılan yayın için iki yuva doldurmak gerekmesin.
  */
-export function catalogHref(media: MediaMap, locale: string): string | undefined {
-  const own = media[slotId("dok", locale === "en" ? "katalog-en" : "katalog-tr")];
-  const other = media[slotId("dok", locale === "en" ? "katalog-tr" : "katalog-en")];
+export function docHref(media: MediaMap, id: string, locale: string): string | undefined {
+  const own = media[slotId("dok", publicationSlotKey(id, locale === "en" ? "en" : "tr"))];
+  const other = media[slotId("dok", publicationSlotKey(id, locale === "en" ? "tr" : "en"))];
   return own ?? other;
+}
+
+/** Ana sayfadaki "Kataloğu indir" düğmesi — ürün kataloğu yayınına bağlı. */
+export function catalogHref(media: MediaMap, locale: string): string | undefined {
+  return docHref(media, "katalog", locale);
 }
 
 /**
