@@ -7,7 +7,10 @@ const nextConfig: NextConfig = {
     // bir kez kayıplı WebP'ye çevriliyor, optimizasyon ikinci kayıplı geçiş —
     // varsayılan 75 üst üste binince detay eriyor, o yüzden 90 kullanılıyor.
     // 75 listede kalıyor: ileride kalitenin önemsiz olduğu bir yer çıkarsa.
-    qualities: [75, 90],
+    // 100: hero ve mühendislik görselleri için. Panel artık uygun içerikte
+    // KAYIPSIZ WebP üretiyor; optimizasyonun varsayılan 75'i o kazancı geri
+    // yakardı. Bu ikisi büyük gösterildiği ve sayıca az olduğu için pahalı değil.
+    qualities: [75, 90, 100],
   },
 };
 

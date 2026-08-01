@@ -16,7 +16,7 @@ export function Engineering({ dict, imageSrc }: { dict: Dictionary; imageSrc?: s
                 alt=""
                 fill
                 sizes="(min-width: 1024px) 480px, 100vw"
-                quality={90}
+                quality={100}
                 className="object-cover"
               />
             ) : (

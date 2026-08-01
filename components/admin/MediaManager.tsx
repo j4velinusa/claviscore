@@ -19,9 +19,21 @@ const NAMES = tr.katalog.products;
 
 // API 2 MB'ı reddediyor; base64 şişmesi öncesi hedef biraz altında tutuluyor.
 const TARGET_BYTES = 1.7 * 1024 * 1024;
-// Kaliteden aşağı doğru inen merdiven: ilk sığan kazanır. Sabit bir kalite yerine
-// merdiven, hem detaylı hem sade fotoğrafta mümkün olan en iyi sonucu veriyor.
-const QUALITY_LADDER = [0.92, 0.88, 0.82, 0.75, 0.68];
+
+/**
+ * Kalite merdiveni — ilk sığan kazanır.
+ *
+ * İLK BASAMAK 1 VE BU KAYIPSIZ DEMEK: tarayıcı canvas.toBlob(..., "image/webp", 1)
+ * çağrısında kayıplı VP8 yerine kayıpsız VP8L üretiyor. Ürün render'ı, çizim,
+ * üzerinde yazı olan görsel gibi keskin kenarlı ve düz renkli içerikte kayıplı
+ * WebP gözle görülür "pixel pixel" bozulma bırakıyordu; kayıpsız hem bunu tamamen
+ * ortadan kaldırıyor hem de bu tür içerikte DAHA KÜÇÜK dosya veriyor
+ * (ölçüm: 400×300 çizgi deseni → kayıplı 0,92'de 3.528 b, kayıpsızda 1.656 b).
+ *
+ * Fotoğrafta kayıpsız birkaç MB'a çıkar, boyut sınırına takılır ve merdiven
+ * kayıplı basamaklara düşer — yani seçim içeriğe göre kendiliğinden yapılıyor.
+ */
+const QUALITY_LADDER = [1, 0.95, 0.92, 0.88, 0.82, 0.75, 0.68];
 
 function draw(source: CanvasImageSource, w: number, h: number): HTMLCanvasElement {
   const canvas = document.createElement("canvas");
@@ -49,7 +61,17 @@ function draw(source: CanvasImageSource, w: number, h: number): HTMLCanvasElemen
  * filtrede bile detay atlatır. Yarılayarak inip son adımı tam ölçüye çekmek
  * (klasik "mipmap" yaklaşımı) belirgin biçimde daha temiz sonuç veriyor.
  */
-async function toWebp(file: File, maxEdge: number): Promise<{ base64: string; blob: Blob }> {
+type Encoded = {
+  base64: string;
+  blob: Blob;
+  /** Kaynağın ve çıktının ölçüleri — panel bunları kullanıcıya gösteriyor. */
+  sourceEdge: number;
+  width: number;
+  height: number;
+  lossless: boolean;
+};
+
+async function toWebp(file: File, maxEdge: number): Promise<Encoded> {
   let bitmap: ImageBitmap;
   try {
     bitmap = await createImageBitmap(file);
@@ -59,7 +81,8 @@ async function toWebp(file: File, maxEdge: number): Promise<{ base64: string; bl
     throw new Error("Bu görsel biçimi okunamadı. JPEG veya PNG olarak kaydedip tekrar deneyin.");
   }
 
-  const scale = Math.min(1, maxEdge / Math.max(bitmap.width, bitmap.height));
+  const sourceEdge = Math.max(bitmap.width, bitmap.height);
+  const scale = Math.min(1, maxEdge / sourceEdge);
   const targetW = Math.max(1, Math.round(bitmap.width * scale));
   const targetH = Math.max(1, Math.round(bitmap.height * scale));
 
@@ -77,12 +100,14 @@ async function toWebp(file: File, maxEdge: number): Promise<{ base64: string; bl
   bitmap.close();
 
   let blob: Blob | null = null;
+  let used = QUALITY_LADDER[QUALITY_LADDER.length - 1];
   for (const quality of QUALITY_LADDER) {
     blob = await new Promise<Blob | null>((resolve) =>
       canvas.toBlob(resolve, "image/webp", quality),
     );
     if (!blob) throw new Error("Görsel WebP'ye çevrilemedi");
     if (blob.type !== "image/webp") throw new Error("Tarayıcı WebP üretemedi");
+    used = quality;
     if (blob.size <= TARGET_BYTES) break;
   }
   if (!blob) throw new Error("Görsel WebP'ye çevrilemedi");
@@ -94,7 +119,7 @@ async function toWebp(file: File, maxEdge: number): Promise<{ base64: string; bl
   for (let i = 0; i < bytes.length; i += 8192) {
     binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
   }
-  return { base64: btoa(binary), blob };
+  return { base64: btoa(binary), blob, sourceEdge, width: targetW, height: targetH, lossless: used === 1 };
 }
 
 function slotTitle(slot: MediaSlot): string {
@@ -111,6 +136,10 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
   // Yüklenen görselin URL'i commit sonrası deploy bitene kadar 404 döner; o aralıkta
   // kartta yerel önizleme gösteriliyor.
   const [preview, setPreview] = useState<Record<string, string>>({});
+  // Yükleme sonucu: kartın altında gösterilen ölçü/boyut/kodlama bilgisi.
+  const [info, setInfo] = useState<
+    Record<string, { text: string; dusukKaynak: boolean; sourceEdge: number; maxEdge: number }>
+  >({});
   const inputs = useRef<Record<string, HTMLInputElement | null>>({});
 
   // Blob URL'leri yalnız (a) yerini yeni bir önizleme aldığında ve (b) bileşen
@@ -129,7 +158,7 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
     setNote(null);
     setBusyId(id);
     try {
-      const { base64, blob } = await toWebp(file, maxEdge);
+      const { base64, blob, sourceEdge, width, height, lossless } = await toWebp(file, maxEdge);
       const res = await fetch("/api/admin/media", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -148,7 +177,25 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
         if (p[id]) URL.revokeObjectURL(p[id]);
         return { ...p, [id]: url };
       });
-      setNote("Yüklendi. Sitede görünmesi için dağıtımın bitmesi gerekiyor (~1 dk).");
+      // Ne yüklendiğini rakamla söyle. "Kalite düşüyor" şikâyetinin sebebi çoğu
+      // zaman kaynağın küçük gelmesi oluyor ve panel bunu göstermediği sürece
+      // kullanıcı sebebi göremiyor.
+      const kb = Math.round(blob.size / 1024);
+      const kod = lossless ? "kayıpsız" : "kayıplı";
+      setInfo((prev) => ({
+        ...prev,
+        [id]: {
+          text: `${width}×${height} · ${kb} KB · ${kod}`,
+          dusukKaynak: sourceEdge < maxEdge,
+          sourceEdge,
+          maxEdge,
+        },
+      }));
+      setNote(
+        sourceEdge < maxEdge
+          ? `Yüklendi ama kaynak küçük: en uzun kenar ${sourceEdge} px geldi, bu yuva ${maxEdge} px'e kadar kullanabiliyor. Daha büyük bir dosya yüklersen görsel daha net olur.`
+          : "Yüklendi. Sitede görünmesi için dağıtımın bitmesi gerekiyor (~1 dk).",
+      );
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -215,7 +262,22 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
 
         <div className="px-4 py-3.5 flex flex-col gap-2 flex-1">
           <div className="text-sm font-semibold leading-tight">{slotTitle(slot)}</div>
-          <p className="text-[12px] leading-[1.45] text-muted">{slot.note}</p>
+          {info[id] ? (
+            <p
+              className={`font-mono text-[11px] leading-[1.5] ${
+                info[id].dusukKaynak ? "text-[#a33]" : "text-bronze-2"
+              }`}
+            >
+              {info[id].text}
+              {info[id].dusukKaynak && (
+                <span className="block font-sans text-[11.5px] mt-0.5">
+                  Kaynak {info[id].sourceEdge} px — {info[id].maxEdge} px önerilir
+                </span>
+              )}
+            </p>
+          ) : (
+            <p className="text-[12px] leading-[1.45] text-muted">{slot.note}</p>
+          )}
           <input
             ref={(el) => {
               inputs.current[id] = el;
