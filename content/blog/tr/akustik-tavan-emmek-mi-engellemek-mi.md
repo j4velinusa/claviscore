@@ -6,7 +6,7 @@ excerpt: >-
   fazla (yankı, gürültü birikmesi), yoksa odalar arasında mı sızıyor
   (mahremiyet)? Doğru panel bu ayrımdan sonra seçilir.
 category: teknik
-status: draft
+status: live
 date: '2026-07-29'
 readingMinutes: 5
 ---
