@@ -5,7 +5,15 @@ import { site } from "@/lib/site";
 import { type Locale, localePath } from "@/lib/i18n";
 import type { Dictionary } from "@/lib/dictionaries/tr";
 
-export function ExportPanel({ dict, locale }: { dict: Dictionary; locale: Locale }) {
+export function ExportPanel({
+  dict,
+  locale,
+  catalogUrl,
+}: {
+  dict: Dictionary;
+  locale: Locale;
+  catalogUrl?: string;
+}) {
   const t = dict.exportPanel;
   return (
     <section id="ihracat" className="mx-auto max-w-[1120px] px-5 sm:px-8 py-8 scroll-mt-20">
@@ -19,12 +27,22 @@ export function ExportPanel({ dict, locale }: { dict: Dictionary; locale: Locale
               </h2>
               <p className="text-[17px] leading-[1.6] text-[#B7AFA2] max-w-[400px] mt-6">{t.body}</p>
               <div className="flex flex-wrap items-center gap-x-[26px] gap-y-4 mt-9">
-                <Link
-                  href={localePath(locale, "/katalog")}
-                  className="text-[15px] font-semibold text-ink bg-brass px-7 py-3.5 rounded-full transition duration-[250ms] hover:-translate-y-0.5 hover:brightness-[1.06]"
-                >
-                  {t.ctaCatalog}
-                </Link>
+                {catalogUrl ? (
+                  <a
+                    href={catalogUrl}
+                    download
+                    className="text-[15px] font-semibold text-ink bg-brass px-7 py-3.5 rounded-full transition duration-[250ms] hover:-translate-y-0.5 hover:brightness-[1.06]"
+                  >
+                    {t.ctaCatalog}
+                  </a>
+                ) : (
+                  <Link
+                    href={localePath(locale, "/katalog")}
+                    className="text-[15px] font-semibold text-ink bg-brass px-7 py-3.5 rounded-full transition duration-[250ms] hover:-translate-y-0.5 hover:brightness-[1.06]"
+                  >
+                    {t.ctaCatalog}
+                  </Link>
+                )}
                 <a
                   href={`mailto:${site.email}?subject=${encodeURIComponent(dict.mailSubject.distributor)}`}
                   className="text-[15px] font-semibold text-[#D8CDBB] transition-opacity duration-[250ms] hover:opacity-65"

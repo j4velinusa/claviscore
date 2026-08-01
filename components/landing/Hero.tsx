@@ -10,11 +10,14 @@ export function Hero({
   dict,
   locale,
   imageSrc,
+  catalogUrl,
 }: {
   dict: Dictionary;
   locale: Locale;
   /** Panelden yüklenen "site:hero" görseli. Yoksa tasarımdaki animasyonlu yer tutucu kalır. */
   imageSrc?: string;
+  /** Panelden yüklenen katalog PDF'i. Yoksa düğme katalog sayfasına gider. */
+  catalogUrl?: string;
 }) {
   const t = dict.hero;
   return (
@@ -35,12 +38,24 @@ export function Hero({
         </Reveal>
         <Reveal delay={350}>
           <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-4 mt-[38px]">
-            <Link
-              href={localePath(locale, "/katalog")}
-              className="text-[15px] font-semibold text-cream bg-ink px-[30px] py-3.5 rounded-full transition duration-[250ms] hover:bg-[#33291f] hover:-translate-y-0.5"
-            >
-              {t.ctaCatalog}
-            </Link>
+            {/* PDF yüklüyse indirir; yüklü değilse katalog sayfasına gider —
+                ölü bir indirme linki bırakmamak için. */}
+            {catalogUrl ? (
+              <a
+                href={catalogUrl}
+                download
+                className="text-[15px] font-semibold text-cream bg-ink px-[30px] py-3.5 rounded-full transition duration-[250ms] hover:bg-[#33291f] hover:-translate-y-0.5"
+              >
+                {t.ctaCatalog}
+              </a>
+            ) : (
+              <Link
+                href={localePath(locale, "/katalog")}
+                className="text-[15px] font-semibold text-cream bg-ink px-[30px] py-3.5 rounded-full transition duration-[250ms] hover:bg-[#33291f] hover:-translate-y-0.5"
+              >
+                {t.ctaCatalog}
+              </Link>
+            )}
             <a
               href={`mailto:${site.email}`}
               className="text-base font-semibold text-bronze-2 transition-opacity duration-[250ms] hover:opacity-65"

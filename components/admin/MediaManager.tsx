@@ -4,10 +4,13 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
+  DOC_SLOTS,
+  DOC_URL_BASE,
   MEDIA_URL_BASE,
   PRODUCT_SLOTS,
   SITE_SLOTS,
   slotId,
+  slotKind,
   type MediaManifest,
   type MediaSlot,
 } from "@/lib/media-config";
@@ -122,6 +125,16 @@ async function toWebp(file: File, maxEdge: number): Promise<Encoded> {
   return { base64: btoa(binary), blob, sourceEdge, width: targetW, height: targetH, lossless: used === 1 };
 }
 
+/** Dosyayı olduğu gibi base64'e çevirir — PDF dönüştürülmüyor. */
+async function rawBase64(file: File): Promise<string> {
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  let binary = "";
+  for (let i = 0; i < bytes.length; i += 8192) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
+  }
+  return btoa(binary);
+}
+
 function slotTitle(slot: MediaSlot): string {
   if (slot.group !== "urun") return slot.label;
   return NAMES[slot.key as keyof typeof NAMES]?.name ?? slot.key;
@@ -153,12 +166,15 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
     return () => Object.values(previewRef.current).forEach((u) => URL.revokeObjectURL(u));
   }, []);
 
-  async function upload(id: string, file: File, maxEdge: number) {
+  async function upload(slot: MediaSlot, file: File) {
+    const id = slotId(slot.group, slot.key);
+    const isPdf = slotKind(slot) === "pdf";
     setError(null);
     setNote(null);
     setBusyId(id);
     try {
-      const { base64, blob, sourceEdge, width, height, lossless } = await toWebp(file, maxEdge);
+      const enc = isPdf ? null : await toWebp(file, slot.maxEdge ?? 1600);
+      const base64 = enc ? enc.base64 : await rawBase64(file);
       const res = await fetch("/api/admin/media", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -170,30 +186,35 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
       if (!res.ok) throw new Error(data.error || `Yükleme başarısız (${res.status})`);
 
       setManifest((m) => ({ ...m, [id]: { file: data.file!, updatedAt: new Date().toISOString() } }));
-      // Önizleme ham dosyadan değil, commit edilen blob'dan: ekranda görünen
-      // ile repoya giden aynı olsun; ham dosya da bellekte tutulmasın.
-      const url = URL.createObjectURL(blob);
-      setPreview((p) => {
-        if (p[id]) URL.revokeObjectURL(p[id]);
-        return { ...p, [id]: url };
-      });
+      if (enc) {
+        // Önizleme ham dosyadan değil, commit edilen blob'dan: ekranda görünen
+        // ile repoya giden aynı olsun; ham dosya da bellekte tutulmasın.
+        const url = URL.createObjectURL(enc.blob);
+        setPreview((p) => {
+          if (p[id]) URL.revokeObjectURL(p[id]);
+          return { ...p, [id]: url };
+        });
+      }
       // Ne yüklendiğini rakamla söyle. "Kalite düşüyor" şikâyetinin sebebi çoğu
       // zaman kaynağın küçük gelmesi oluyor ve panel bunu göstermediği sürece
       // kullanıcı sebebi göremiyor.
-      const kb = Math.round(blob.size / 1024);
-      const kod = lossless ? "kayıpsız" : "kayıplı";
+      const maxEdge = slot.maxEdge ?? 1600;
+      const kb = Math.round((enc ? enc.blob.size : file.size) / 1024);
+      const dusukKaynak = !!enc && enc.sourceEdge < maxEdge;
       setInfo((prev) => ({
         ...prev,
         [id]: {
-          text: `${width}×${height} · ${kb} KB · ${kod}`,
-          dusukKaynak: sourceEdge < maxEdge,
-          sourceEdge,
+          text: enc
+            ? `${enc.width}×${enc.height} · ${kb} KB · ${enc.lossless ? "kayıpsız" : "kayıplı"}`
+            : `${file.name} · ${kb} KB`,
+          dusukKaynak,
+          sourceEdge: enc ? enc.sourceEdge : 0,
           maxEdge,
         },
       }));
       setNote(
-        sourceEdge < maxEdge
-          ? `Yüklendi ama kaynak küçük: en uzun kenar ${sourceEdge} px geldi, bu yuva ${maxEdge} px'e kadar kullanabiliyor. Daha büyük bir dosya yüklersen görsel daha net olur.`
+        dusukKaynak && enc
+          ? `Yüklendi ama kaynak küçük: en uzun kenar ${enc.sourceEdge} px geldi, bu yuva ${maxEdge} px'e kadar kullanabiliyor. Daha büyük bir dosya yüklersen görsel daha net olur.`
           : "Yüklendi. Sitede görünmesi için dağıtımın bitmesi gerekiyor (~1 dk).",
       );
     } catch (err) {
@@ -233,7 +254,8 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
   function Card({ slot }: { slot: MediaSlot }) {
     const id = slotId(slot.group, slot.key);
     const entry = manifest[id];
-    const src = preview[id] ?? (entry ? `${MEDIA_URL_BASE}/${entry.file}` : null);
+    const isPdf = slotKind(slot) === "pdf";
+    const src = isPdf ? null : preview[id] ?? (entry ? `${MEDIA_URL_BASE}/${entry.file}` : null);
     // Kilit panel geneli: farklı yuvalara paralel yükleme, kayıt dosyasında
     // eşzamanlı yazma yarışı üretiyordu.
     const busy = busyId !== null;
@@ -250,8 +272,23 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
             // yanıltıcı olabiliyor, ayrıca panelde boyut kritik değil.
             // eslint-disable-next-line @next/next/no-img-element
             <img src={src} alt="" className="absolute inset-0 size-full object-cover" />
+          ) : isPdf && entry ? (
+            // PDF'in önizlemesi yok; yüklü olduğunu ve açılabildiğini göster.
+            <a
+              href={`${DOC_URL_BASE}/${entry.file}`}
+              target="_blank"
+              rel="noopener"
+              className="flex flex-col items-center gap-1.5 text-bronze-2 hover:opacity-70 transition-opacity"
+            >
+              <span aria-hidden className="text-[28px] leading-none">
+                ⎙
+              </span>
+              <span className="font-mono text-[10.5px]">PDF yüklü — aç</span>
+            </a>
           ) : (
-            <span className="font-mono text-[11px] text-label">görsel yok</span>
+            <span className="font-mono text-[11px] text-label">
+              {isPdf ? "PDF yok" : "görsel yok"}
+            </span>
           )}
           {slot.group === "urun" && (
             <span className="absolute top-3 left-3 font-mono text-[10px] text-bronze-2 bg-cream/85 rounded-full px-2 py-0.5">
@@ -283,12 +320,12 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
               inputs.current[id] = el;
             }}
             type="file"
-            accept="image/*"
+            accept={isPdf ? "application/pdf" : "image/*"}
             className="hidden"
             onChange={(e) => {
               const file = e.target.files?.[0];
               e.target.value = "";
-              if (file) void upload(id, file, slot.maxEdge);
+              if (file) void upload(slot, file);
             }}
           />
           <div className="flex items-center gap-2 mt-auto pt-1">
@@ -298,7 +335,7 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
               onClick={() => inputs.current[id]?.click()}
               className="text-[13px] font-semibold text-cream bg-ink px-3.5 py-2 rounded-full disabled:opacity-50 transition-opacity"
             >
-              {busyHere ? "Yükleniyor…" : entry ? "Değiştir" : "Görsel yükle"}
+              {busyHere ? "Yükleniyor…" : entry ? "Değiştir" : isPdf ? "PDF yükle" : "Görsel yükle"}
             </button>
             {entry && (
               <button
@@ -317,7 +354,7 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
   }
 
   const filled = Object.keys(manifest).length;
-  const total = SITE_SLOTS.length + PRODUCT_SLOTS.length;
+  const total = SITE_SLOTS.length + PRODUCT_SLOTS.length + DOC_SLOTS.length;
 
   return (
     <div className="flex min-h-dvh">
@@ -405,6 +442,15 @@ export function MediaManager({ initial }: { initial: MediaManifest }) {
         </h2>
         <div className="grid sm:grid-cols-2 gap-4 mt-5 max-w-[720px]">
           {SITE_SLOTS.map((s) => (
+            <Card key={slotId(s.group, s.key)} slot={s} />
+          ))}
+        </div>
+
+        <h2 className="font-mono text-[11px] tracking-[0.14em] text-label mt-10 pb-3 border-b border-ink/10">
+          BELGELER
+        </h2>
+        <div className="grid sm:grid-cols-2 gap-4 mt-5 max-w-[720px]">
+          {DOC_SLOTS.map((s) => (
             <Card key={slotId(s.group, s.key)} slot={s} />
           ))}
         </div>

@@ -13,7 +13,7 @@ import { ExportPanel } from "@/components/landing/ExportPanel";
 import { Certificates } from "@/components/landing/Certificates";
 import { ClosingCta } from "@/components/landing/ClosingCta";
 import { mediaMap } from "@/lib/media";
-import { slotId } from "@/lib/media-config";
+import { catalogHref, slotId } from "@/lib/media-config";
 
 export async function generateMetadata({
   params,
@@ -38,17 +38,18 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   // Görsel eşlemesi build anında dosyadan okunuyor; bileşenler istemciye de
   // gidebildiği için fs'e kendileri erişemez.
   const media = mediaMap();
+  const catalogUrl = catalogHref(media, locale);
 
   return (
     <div className="overflow-x-clip">
       <SiteNav dict={dict} locale={locale} />
       <main>
-        <Hero dict={dict} locale={locale} imageSrc={media[slotId("site", "hero")]} />
+        <Hero dict={dict} locale={locale} imageSrc={media[slotId("site", "hero")]} catalogUrl={catalogUrl} />
         <Stats dict={dict} locale={locale} />
         <ProductFamilies dict={dict} locale={locale} media={media} />
         <CeilingSystems dict={dict} media={media} />
         <Engineering dict={dict} imageSrc={media[slotId("site", "muhendislik")]} />
-        <ExportPanel dict={dict} locale={locale} />
+        <ExportPanel dict={dict} locale={locale} catalogUrl={catalogUrl} />
         <Certificates dict={dict} />
         <ClosingCta dict={dict} />
       </main>

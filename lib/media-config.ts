@@ -7,8 +7,13 @@ import { products } from "@/lib/products";
 
 /** Yüklenen görsellerin servis edildiği kök. Dosyalar public/gorseller/ altında. */
 export const MEDIA_URL_BASE = "/gorseller";
+/** Belgeler (PDF) ayrı kökte — "gorseller" altında PDF durması yanıltıcı olurdu. */
+export const DOC_URL_BASE = "/belgeler";
 
-export type MediaGroup = "site" | "urun";
+export type MediaGroup = "site" | "urun" | "dok";
+
+/** Yuvanın ne tuttuğu. Doğrulama, dönüşüm ve dizin buna göre değişiyor. */
+export type MediaKind = "image" | "pdf";
 
 export type MediaSlot = {
   /** Grup içinde benzersiz. Ürünlerde SKU, sitede sabit ad. */
@@ -20,16 +25,23 @@ export type MediaSlot = {
   note: string;
   /** Panel önizlemesinin oranı; sitedeki alana yakın seçildi. */
   aspect: string;
+  /** Görsel mi belge mi. Belirtilmezse görsel. */
+  kind?: MediaKind;
   /**
-   * Yüklemeden önce inilecek en uzun kenar (px).
+   * Yüklemeden önce inilecek en uzun kenar (px). Yalnız görsel yuvalarında.
    *
    * Alanın CSS genişliğinin ~2 katı seçiliyor: retina ekranda 1 CSS pikseli
    * 2 cihaz pikseli demek, kaynak bunun altında kalırsa görsel yumuşak çıkar.
    * Hero 1056 CSS px'te gösteriliyor → 2560; ürün kartı ~348 px → 1800 fazlasıyla
    * yeter ama kırpma payı bırakıyor.
    */
-  maxEdge: number;
+  maxEdge?: number;
 };
+
+/** Yuvanın tipi — belirtilmemişse görsel. */
+export function slotKind(slot: MediaSlot): MediaKind {
+  return slot.kind ?? "image";
+}
 
 /**
  * Yuva kimliği. Grup öneki bilinçli: SKU'lar ile site yuvalarının adları bugün
@@ -53,8 +65,19 @@ export function versionStamp(iso: string): string {
  * CDN ve tarayıcı için anahtar da değişiyor — değiştirilen fotoğrafın eski
  * hâli servis edilemiyor. Eski dosya yükleme sonunda siliniyor.
  */
-export function slotFile(group: MediaGroup, key: string, version: string): string {
-  return `${group}-${key.toLowerCase()}-${version}.webp`;
+export function slotFile(
+  group: MediaGroup,
+  key: string,
+  version: string,
+  kind: MediaKind = "image",
+): string {
+  const ext = kind === "pdf" ? "pdf" : "webp";
+  return `${group}-${key.toLowerCase()}-${version}.${ext}`;
+}
+
+/** Yuvanın dosyalarının durduğu repo dizini. */
+export function mediaDir(kind: MediaKind): string {
+  return kind === "pdf" ? "public/belgeler" : "public/gorseller";
 }
 
 /** Ana sayfadaki iki büyük görsel alanı. Tasarımda yer tutucu olarak duruyorlardı. */
@@ -109,7 +132,33 @@ export const PRODUCT_SLOTS: readonly MediaSlot[] = products.map((p) => ({
   maxEdge: 1800,
 }));
 
-export const ALL_SLOTS: readonly MediaSlot[] = [...SITE_SLOTS, ...PRODUCT_SLOTS];
+/**
+ * Belgeler. "Kataloğu indir" düğmeleri bunlara bağlı; yüklenmemişse düğme
+ * eskisi gibi katalog sayfasına gidiyor, ölü bir indirme linki oluşmuyor.
+ *
+ * TR ve EN ayrı: ihracat sitesinde iki dilde ayrı katalog olağan. Yalnız biri
+ * yüklüyse diğer dil de ona düşüyor (bkz. catalogHref).
+ */
+export const DOC_SLOTS: readonly MediaSlot[] = [
+  {
+    key: "katalog-tr",
+    group: "dok",
+    label: "Ürün kataloğu — Türkçe (PDF)",
+    note: "Ana sayfadaki \"Kataloğu indir\" düğmesi bunu indirir. En fazla 3 MB.",
+    aspect: "1 / 1",
+    kind: "pdf",
+  },
+  {
+    key: "katalog-en",
+    group: "dok",
+    label: "Ürün kataloğu — İngilizce (PDF)",
+    note: "İngilizce sayfalardaki indirme düğmesi bunu kullanır. En fazla 3 MB.",
+    aspect: "1 / 1",
+    kind: "pdf",
+  },
+];
+
+export const ALL_SLOTS: readonly MediaSlot[] = [...SITE_SLOTS, ...PRODUCT_SLOTS, ...DOC_SLOTS];
 
 /** API katmanı gelen kimliği buna karşı doğrular — serbest metin dosya adına dönüşmesin. */
 export const VALID_SLOT_IDS: ReadonlySet<string> = new Set(
@@ -126,9 +175,24 @@ export type MediaMap = Record<string, string>;
 export function toMediaMap(manifest: MediaManifest): MediaMap {
   const out: MediaMap = {};
   for (const [id, entry] of Object.entries(manifest)) {
-    if (entry?.file) out[id] = `${MEDIA_URL_BASE}/${entry.file}`;
+    if (!entry?.file) continue;
+    // Kök yuvanın tipine göre: belgeler /belgeler, görseller /gorseller.
+    // Kayıtlı olmayan bir kimlik kalmışsa (yuva silinmiş) görsel varsayılır.
+    const slot = ALL_SLOTS.find((sl) => slotId(sl.group, sl.key) === id);
+    const base = slot && slotKind(slot) === "pdf" ? DOC_URL_BASE : MEDIA_URL_BASE;
+    out[id] = `${base}/${entry.file}`;
   }
   return out;
+}
+
+/**
+ * Dile göre katalog indirme adresi. Yalnız bir dilde katalog varsa diğer dil de
+ * onu indirir — tek katalogla çalışan bir firma iki yuva doldurmak zorunda kalmasın.
+ */
+export function catalogHref(media: MediaMap, locale: string): string | undefined {
+  const own = media[slotId("dok", locale === "en" ? "katalog-en" : "katalog-tr")];
+  const other = media[slotId("dok", locale === "en" ? "katalog-tr" : "katalog-en")];
+  return own ?? other;
 }
 
 /**

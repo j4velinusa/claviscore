@@ -2,7 +2,14 @@ import "server-only";
 import matter from "gray-matter";
 import type { Locale } from "@/lib/i18n";
 import type { PostFrontmatter } from "@/lib/blog-config";
-import { slotFile, versionStamp, type MediaGroup, type MediaManifest } from "@/lib/media-config";
+import {
+  mediaDir,
+  slotFile,
+  versionStamp,
+  type MediaGroup,
+  type MediaKind,
+  type MediaManifest,
+} from "@/lib/media-config";
 
 // Admin panelin içerik katmanı: GitHub Contents API. Public site içeriği build anında
 // dosyadan okur (lib/blog.ts); admin ise repo'nun ANLIK halini görsün diye doğrudan
@@ -300,7 +307,6 @@ export async function putProforma(
 // oluşmuyor — aynı yuvaya ikinci yükleme aynı yolu ezer.
 // ---------------------------------------------------------------------------
 
-const MEDIA_DIR = "public/gorseller";
 const MEDIA_MANIFEST = "content/media.json";
 
 /**
@@ -388,9 +394,11 @@ export async function putMedia(input: {
   id: string;
   group: MediaGroup;
   key: string;
+  kind: MediaKind;
   base64: string;
 }): Promise<{ file: string; commitUrl: string }> {
   const { owner, repo, branch } = config();
+  const dir = mediaDir(input.kind);
 
   // Önceki dosya adı sonda silinecek; okuma en başta, henüz hiçbir şey
   // commit'lenmemişken yapılıyor ki hata durumunda yetim dosya kalmasın.
@@ -398,8 +406,8 @@ export async function putMedia(input: {
   const previousFile = manifest[input.id]?.file;
 
   const updatedAt = new Date().toISOString();
-  const file = slotFile(input.group, input.key, versionStamp(updatedAt));
-  const path = `${MEDIA_DIR}/${file}`;
+  const file = slotFile(input.group, input.key, versionStamp(updatedAt), input.kind);
+  const path = `${dir}/${file}`;
 
   const res = await gh(`/repos/${owner}/${repo}/contents/${path}`, {
     method: "PUT",
@@ -423,7 +431,7 @@ export async function putMedia(input: {
   // kullanılmayan bir dosya kalır — yüklemeyi başarısız saymaya değmez.
   if (previousFile && previousFile !== file) {
     try {
-      await deleteMediaFile(previousFile, `eski görsel silindi: ${input.id}`);
+      await deleteMediaFile(dir, previousFile, `eski dosya silindi: ${input.id}`);
     } catch {
       // yut: kullanıcının işlemi başarıyla tamamlandı
     }
@@ -432,11 +440,11 @@ export async function putMedia(input: {
   return { file, commitUrl: out.commit.html_url };
 }
 
-async function deleteMediaFile(file: string, message: string): Promise<void> {
+async function deleteMediaFile(dir: string, file: string, message: string): Promise<void> {
   const { owner, repo, branch } = config();
-  const sha = await fileSha(MEDIA_DIR, file);
+  const sha = await fileSha(dir, file);
   if (!sha) return;
-  const res = await gh(`/repos/${owner}/${repo}/contents/${MEDIA_DIR}/${file}`, {
+  const res = await gh(`/repos/${owner}/${repo}/contents/${dir}/${file}`, {
     method: "DELETE",
     body: JSON.stringify({ message, sha, branch }),
   });
@@ -455,12 +463,12 @@ async function deleteMediaFile(file: string, message: string): Promise<void> {
  * hata çıkarsa kayıt duruyor demektir; kullanıcı tekrar basar, dosya zaten
  * gitmiş olduğu için ikinci deneme temiz kapanır.
  */
-export async function removeMedia(id: string): Promise<boolean> {
+export async function removeMedia(id: string, kind: MediaKind): Promise<boolean> {
   const { manifest } = await getMediaManifest();
   const entry = manifest[id];
   if (!entry) return false;
 
-  await deleteMediaFile(entry.file, `görsel silindi: ${id}`);
+  await deleteMediaFile(mediaDir(kind), entry.file, `dosya silindi: ${id}`);
   await updateManifest((m) => {
     delete m[id];
   }, `görsel kaydı silindi: ${id}`);
