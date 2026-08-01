@@ -6,7 +6,7 @@ excerpt: >-
   alma kararının en ucuz aşamasıdır. Bir konteyner sipariş etmeden önce elde
   tutulan üç barel, aylar sonra çıkacak bir uyuşmazlığı baştan önler.
 category: teknik
-status: draft
+status: live
 date: '2026-07-29'
 readingMinutes: 5
 ---
