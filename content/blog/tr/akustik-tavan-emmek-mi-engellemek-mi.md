@@ -7,7 +7,7 @@ excerpt: >-
   (mahremiyet)? Doğru panel bu ayrımdan sonra seçilir.
 category: teknik
 status: live
-date: '2026-07-29'
+date: '2026-07-28'
 readingMinutes: 5
 ---
 Akustik tavan: emmek mi, engellemek mi?
