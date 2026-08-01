@@ -11,15 +11,15 @@ import {
   slotKind,
 } from "@/lib/media-config";
 
-// Büyük belgeler (katalog, dergi) için doğrudan yükleme uç noktası.
+// Görseller ve belgeler için doğrudan yükleme uç noktası.
 //
-// Neden ayrı bir yol: /api/admin/media dosyayı base64 olarak İSTEK GÖVDESİNDE
-// taşıyor ve Vercel'in sunucusuz fonksiyonlarında gövde sınırı 4,5 MB — base64
-// şişmesiyle pratik tavan ~3 MB. 60 MB'lık bir katalog oradan geçemez.
+// Dosya fonksiyondan HİÇ geçmiyor: tarayıcı doğrudan blob deposuna yüklüyor,
+// bu uç nokta yalnız kısa ömürlü bir yükleme jetonu üretiyor. Depoya yazma
+// yetkisi (BLOB_READ_WRITE_TOKEN) sunucuda kalıyor.
 //
-// Burada dosya fonksiyondan HİÇ geçmiyor: tarayıcı doğrudan blob deposuna
-// yüklüyor, bu uç nokta yalnız kısa ömürlü bir yükleme jetonu üretiyor.
-// Depoya yazma yetkisi (BLOB_READ_WRITE_TOKEN) sunucuda kalıyor.
+// İki sebep: (1) 60 MB'lık katalog sunucusuz fonksiyonun 4,5 MB'lık istek
+// gövdesinden geçemiyor; (2) dosyayı repoya commit'lemek her yüklemede bir
+// dağıtım harcıyordu ve günlük kota doluyordu.
 
 export async function POST(request: Request): Promise<NextResponse> {
   // Jeton üretmeden ÖNCE oturum kontrolü: aksi hâlde herkes depoya yazabilirdi.
@@ -41,13 +41,13 @@ export async function POST(request: Request): Promise<NextResponse> {
           : isDocSlotId(id)
             ? docSlot(id)
             : ALL_SLOTS.find((s) => slotId(s.group, s.key) === id);
-        if (!slot || slotKind(slot) !== "pdf") {
-          throw new Error("Bu yuvaya belge yüklenemez");
-        }
+        if (!slot) throw new Error("Bilinmeyen yuva");
+        const isPdf = slotKind(slot) === "pdf";
         return {
-          allowedContentTypes: ["application/pdf"],
-          // 100 MB: 60 MB'lık katalog rahat sığsın, sınırsız da olmasın.
-          maximumSizeInBytes: 100 * 1024 * 1024,
+          allowedContentTypes: isPdf ? ["application/pdf"] : ["image/webp"],
+          // Belgede 100 MB (60 MB'lık katalog rahat sığsın), görselde 8 MB —
+          // panel zaten 1,7 MB hedefiyle kodluyor, bu üst savunma.
+          maximumSizeInBytes: isPdf ? 100 * 1024 * 1024 : 8 * 1024 * 1024,
           addRandomSuffix: true,
         };
       },

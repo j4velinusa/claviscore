@@ -27,11 +27,6 @@ function slotTitle(slot: MediaSlot): string {
   return NAMES[slot.key as keyof typeof NAMES]?.name ?? slot.key;
 }
 
-/** Kimlik bir belge yuvasına mı ait — silmede hangi uç noktaya gidileceğini belirler. */
-function isPdfId(id: string): boolean {
-  return DOC_SLOTS.some((s) => slotId(s.group, s.key) === id);
-}
-
 export function MediaManager({
   initial,
   blobReady = true,
@@ -73,43 +68,22 @@ export function MediaManager({
     setNote(null);
     setBusyId(id);
     try {
-      let savedFile: string;
       // Görsel yolunda kodlama sonucu; belge yolunda yok (dönüşüm yapılmıyor).
       let enc: Awaited<ReturnType<typeof toWebp>> | null = null;
 
-      if (isPdf) {
-        // Dosya sunucusuz fonksiyondan GEÇMİYOR: tarayıcı doğrudan blob deposuna
-        // yüklüyor, uç nokta yalnız kısa ömürlü jeton üretiyor. Vercel'in 4,5 MB'lık
-        // istek gövdesi sınırı böylece devre dışı kalıyor — 60 MB katalog geçebiliyor.
-        const blob = await uploadToBlob(`${id}/${file.name}`, file, {
-          access: "public",
-          handleUploadUrl: "/api/admin/blob-upload",
-          contentType: "application/pdf",
-        });
-        const res = await fetch("/api/admin/media-url", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id, url: blob.url, pathname: blob.pathname, size: file.size }),
-        });
-        const data = (await res.json().catch(() => ({}))) as { error?: string };
-        if (!res.ok) throw new Error(data.error || `Kayıt yazılamadı (${res.status})`);
-        savedFile = blob.pathname;
-        setDocUrl((d) => ({ ...d, [id]: blob.url }));
-      } else {
+      // Dosya sunucusuz fonksiyondan GEÇMİYOR: tarayıcı doğrudan blob deposuna
+      // yüklüyor, uç nokta yalnız kısa ömürlü jeton üretiyor. İki kazanç:
+      // 60 MB katalog 4,5 MB'lık istek gövdesine takılmıyor VE dosya repoya
+      // girmediği için yükleme başına bir dağıtım harcanmıyor.
+      let payload: Blob = file;
+      let name = file.name;
+      if (!isPdf) {
         enc = await toWebp(file, slot.maxEdge ?? 1600);
-        const res = await fetch("/api/admin/media", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id, base64: enc.base64 }),
-        });
-        // res.ok ÖNCE: JSON olmayan bir hata yanıtında (proxy/timeout sayfası)
-        // ayrıştırma istisnası gerçek durum kodunu gizliyordu.
-        const data = (await res.json().catch(() => ({}))) as { error?: string; file?: string };
-        if (!res.ok) throw new Error(data.error || `Yükleme başarısız (${res.status})`);
-        savedFile = data.file!;
+        payload = enc.blob;
+        name = `${slot.key}.webp`;
 
-        // Önizleme ham dosyadan değil, commit edilen blob'dan: ekranda görünen
-        // ile repoya giden aynı olsun; ham dosya da bellekte tutulmasın.
+        // Önizleme ham dosyadan değil, yüklenen blob'dan: ekranda görünen ile
+        // depoya giden aynı olsun; ham dosya da bellekte tutulmasın.
         const objectUrl = URL.createObjectURL(enc.blob);
         setPreview((prev) => {
           if (prev[id]) URL.revokeObjectURL(prev[id]);
@@ -117,7 +91,23 @@ export function MediaManager({
         });
       }
 
-      setManifest((m) => ({ ...m, [id]: { file: savedFile, updatedAt: new Date().toISOString() } }));
+      const blob = await uploadToBlob(`${id}/${name}`, payload, {
+        access: "public",
+        handleUploadUrl: "/api/admin/blob-upload",
+        contentType: isPdf ? "application/pdf" : "image/webp",
+      });
+      const res = await fetch("/api/admin/media-url", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, url: blob.url, pathname: blob.pathname, size: payload.size }),
+      });
+      // res.ok ÖNCE: JSON olmayan bir hata yanıtında (proxy/timeout sayfası)
+      // ayrıştırma istisnası gerçek durum kodunu gizliyordu.
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) throw new Error(data.error || `Kayıt yazılamadı (${res.status})`);
+      if (isPdf) setDocUrl((d) => ({ ...d, [id]: blob.url }));
+
+      setManifest((m) => ({ ...m, [id]: { file: blob.pathname, url: blob.url, updatedAt: new Date().toISOString() } }));
 
       // Ne yüklendiğini rakamla söyle. "Kalite düşüyor" şikâyetinin sebebi çoğu
       // zaman kaynağın küçük gelmesi oluyor ve panel bunu göstermediği sürece
@@ -155,8 +145,9 @@ export function MediaManager({
     setNote(null);
     setBusyId(id);
     try {
-      const endpoint = isPdfId(id) ? "/api/admin/media-url" : "/api/admin/media";
-      const res = await fetch(`${endpoint}?id=${encodeURIComponent(id)}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/media-url?id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+      });
       const data = (await res.json()) as { error?: string };
       if (!res.ok) throw new Error(data.error || `Silinemedi (${res.status})`);
       setManifest((m) => {

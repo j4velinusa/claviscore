@@ -3,7 +3,7 @@ import { hasSession } from "@/lib/admin/auth";
 import { getMediaManifest, getPost, putPost, slugifyTitle } from "@/lib/admin/github";
 import { blogCategories, type BlogCategory, type PostStatus } from "@/lib/blog-config";
 import { isLocale, type Locale } from "@/lib/i18n";
-import { blogSlotId } from "@/lib/media-config";
+import { blogSlotId, toMediaMap } from "@/lib/media-config";
 
 const STATUSES: PostStatus[] = ["live", "scheduled", "draft"];
 
@@ -45,8 +45,8 @@ export async function GET(request: Request) {
     // Kapak görseli yazının içinde değil, görsel kaydında duruyor — editör
     // mevcut kapağı gösterebilsin diye birlikte dönüyor.
     const { manifest } = await getMediaManifest();
-    const cover = manifest[blogSlotId(locale, slug)]?.file;
-    return NextResponse.json({ post, cover });
+    const coverUrl = toMediaMap(manifest)[blogSlotId(locale, slug)];
+    return NextResponse.json({ post, coverUrl });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 502 });
   }

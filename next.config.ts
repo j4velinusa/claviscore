@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
     // KAYIPSIZ WebP üretiyor; optimizasyonun varsayılan 75'i o kazancı geri
     // yakardı. Bu ikisi büyük gösterildiği ve sayıca az olduğu için pahalı değil.
     qualities: [75, 90, 100],
+    // Görseller artık blob deposunda: her yükleme repoya iki commit atıyordu ve
+    // her commit bir dağıtım demekti — günlük dağıtım kotası bu yüzden doluyordu.
+    // next/image uzak adresi beyaz listede değilse reddediyor.
+    remotePatterns: [
+      { protocol: "https", hostname: "**.public.blob.vercel-storage.com", pathname: "/**" },
+    ],
   },
 };
 

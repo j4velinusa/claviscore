@@ -1,18 +1,28 @@
 import { del } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { hasSession } from "@/lib/admin/auth";
-import { putMediaUrl, removeMediaRecord } from "@/lib/admin/github";
-import { ALL_SLOTS, docSlot, isDocSlotId, slotId, slotKind } from "@/lib/media-config";
+import { deleteRepoMediaFile, putMediaUrl, removeMediaRecord } from "@/lib/admin/github";
+import {
+  ALL_SLOTS,
+  blogCoverSlot,
+  docSlot,
+  isBlogSlotId,
+  isDocSlotId,
+  mediaDir,
+  slotId,
+  slotKind,
+  type MediaSlot,
+} from "@/lib/media-config";
 
 // Blob deposuna yüklenen belgenin KAYDINI tutar. Dosyanın kendisi buradan
 // geçmiyor (bkz. /api/admin/blob-upload); bu uç nokta yalnız content/media.json'a
 // adresi işliyor ve yerini alan eski dosyayı depodan siliyor.
 
-function pdfSlot(id: string) {
-  // Yayın belgeleri dinamik: kimlik desene uyuyorsa yuva türetiliyor.
+/** Kayıtlı yuva — blog kapakları ve yayın belgeleri desenden türetiliyor. */
+function slotFor(id: string): MediaSlot | undefined {
+  if (isBlogSlotId(id)) return blogCoverSlot(id);
   if (isDocSlotId(id)) return docSlot(id);
-  const slot = ALL_SLOTS.find((s) => slotId(s.group, s.key) === id);
-  return slot && slotKind(slot) === "pdf" ? slot : undefined;
+  return ALL_SLOTS.find((s) => slotId(s.group, s.key) === id);
 }
 
 /** Blob'daki dosyayı siler; başarısız olursa yüklemeyi bozmuyor, sadece iz kalıyor. */
@@ -39,8 +49,9 @@ export async function POST(request: Request) {
   }
 
   const id = typeof body.id === "string" ? body.id : "";
-  if (!pdfSlot(id)) {
-    return NextResponse.json({ error: "Bilinmeyen belge yuvası" }, { status: 400 });
+  const slot = slotFor(id);
+  if (!slot) {
+    return NextResponse.json({ error: "Bilinmeyen yuva" }, { status: 400 });
   }
 
   const url = typeof body.url === "string" ? body.url : "";
@@ -69,15 +80,19 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: "Oturum yok" }, { status: 401 });
   }
   const id = new URL(request.url).searchParams.get("id") ?? "";
-  if (!pdfSlot(id)) {
-    return NextResponse.json({ error: "Bilinmeyen belge yuvası" }, { status: 400 });
+  const slot = slotFor(id);
+  if (!slot) {
+    return NextResponse.json({ error: "Bilinmeyen yuva" }, { status: 400 });
   }
   try {
     const removed = await removeMediaRecord(id);
     if (!removed) {
-      return NextResponse.json({ error: "Bu yuvada belge yok" }, { status: 404 });
+      return NextResponse.json({ error: "Bu yuvada dosya yok" }, { status: 404 });
     }
-    await dropBlob(removed.url);
+    // Yeni kayıtlar blob'da (url dolu); blob'a taşınmadan önce yüklenmiş eski
+    // görseller hâlâ repoda — ikisi de temizlenebilsin.
+    if (removed.url) await dropBlob(removed.url);
+    else await deleteRepoMediaFile(mediaDir(slotKind(slot)), removed.file, `dosya silindi: ${id}`);
     return NextResponse.json({ ok: true, id });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 502 });

@@ -432,7 +432,7 @@ export async function putMedia(input: {
   // kullanılmayan bir dosya kalır — yüklemeyi başarısız saymaya değmez.
   if (previousFile && previousFile !== file) {
     try {
-      await deleteMediaFile(dir, previousFile, `eski dosya silindi: ${input.id}`);
+      await deleteRepoMediaFile(dir, previousFile, `eski dosya silindi: ${input.id}`);
     } catch {
       // yut: kullanıcının işlemi başarıyla tamamlandı
     }
@@ -477,7 +477,11 @@ export async function removeMediaRecord(
   return { file: entry.file, url: entry.url };
 }
 
-async function deleteMediaFile(dir: string, file: string, message: string): Promise<void> {
+export async function deleteRepoMediaFile(
+  dir: string,
+  file: string,
+  message: string,
+): Promise<void> {
   const { owner, repo, branch } = config();
   const sha = await fileSha(dir, file);
   if (!sha) return;
@@ -505,7 +509,7 @@ export async function removeMedia(id: string, kind: MediaKind): Promise<boolean>
   const entry = manifest[id];
   if (!entry) return false;
 
-  await deleteMediaFile(mediaDir(kind), entry.file, `dosya silindi: ${id}`);
+  await deleteRepoMediaFile(mediaDir(kind), entry.file, `dosya silindi: ${id}`);
   await updateManifest((m) => {
     delete m[id];
   }, `görsel kaydı silindi: ${id}`);

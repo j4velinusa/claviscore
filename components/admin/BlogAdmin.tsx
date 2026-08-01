@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 import { blogCategories, type BlogCategory, type PostStatus } from "@/lib/blog-config";
 import { locales, type Locale } from "@/lib/i18n";
-import { blogSlotId, MEDIA_URL_BASE } from "@/lib/media-config";
+import { blogSlotId } from "@/lib/media-config";
+import { upload as uploadToBlob } from "@vercel/blob/client";
 import { toWebp } from "@/lib/image-encode";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 
@@ -117,18 +118,31 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
     setError("");
     setCoverBusy(true);
     try {
-      const { base64 } = await toWebp(file, 1800);
-      const res = await fetch("/api/admin/media", {
+      const id = blogSlotId(draft.locale, draft.slug);
+      const { blob } = await toWebp(file, 1800);
+      // Kapak da blob deposuna: repoya commit'lemek yükleme başına bir dağıtım
+      // harcıyordu ve günlük kota doluyordu.
+      const uploaded = await uploadToBlob(`${id}/kapak.webp`, blob, {
+        access: "public",
+        handleUploadUrl: "/api/admin/blob-upload",
+        contentType: "image/webp",
+      });
+      const res = await fetch("/api/admin/media-url", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: blogSlotId(draft.locale, draft.slug), base64 }),
+        body: JSON.stringify({
+          id,
+          url: uploaded.url,
+          pathname: uploaded.pathname,
+          size: blob.size,
+        }),
       });
-      const data = (await res.json().catch(() => ({}))) as { error?: string; file?: string };
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
       if (!res.ok) {
         setError(data.error ?? `Kapak yüklenemedi (${res.status})`);
         return;
       }
-      setCoverUrl(`${MEDIA_URL_BASE}/${data.file}`);
+      setCoverUrl(uploaded.url);
       setToast("Kapak yüklendi — yayına girmesi için deploy'u bekleyin");
       setTimeout(() => setToast(""), 4000);
     } catch (err) {
@@ -149,7 +163,7 @@ export function BlogAdmin({ rows, today }: { rows: AdminRow[]; today: string }) 
         return;
       }
       const p = data.post;
-      setCoverUrl(data.cover ? `${MEDIA_URL_BASE}/${data.cover}` : null);
+      setCoverUrl(data.coverUrl ?? null);
       setDraft({
         locale: row.locale,
         slug: p.slug,
