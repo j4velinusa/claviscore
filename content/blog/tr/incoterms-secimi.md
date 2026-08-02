@@ -1,15 +1,19 @@
 ---
-title: "FOB, CIF, EXW: hangisi sizin için doğru?"
-titleAccent: "doğru?"
-excerpt: "Donanım sevkiyatında teslim şekli seçimi navlun, sigorta ve risk devrini birlikte belirler. Üç yaygın Incoterm'in gerçek maliyet etkisi."
+title: 'FOB, CIF, EXW: hangisi sizin için doğru?'
+titleAccent: doğru?
+excerpt: >-
+  Donanım sevkiyatında teslim şekli seçimi navlun, sigorta ve risk devrini
+  birlikte belirler. Üç yaygın Incoterm'in gerçek maliyet etkisi.
 category: ihracat
 status: live
-date: "2026-07-02"
+date: '2026-07-02'
 readingMinutes: 8
-tags: ["Incoterms"]
-coverCaption: "Teslim şekli, malın fiziksel yolculuğunu değil, sorumluluğun nerede el değiştirdiğini tanımlar."
+tags:
+  - Incoterms
+coverCaption: >-
+  Teslim şekli, malın fiziksel yolculuğunu değil, sorumluluğun nerede el
+  değiştirdiğini tanımlar.
 ---
-
 Teklif karşılaştırırken en sık yapılan hata, iki fiyatı aynı teslim şekliymiş gibi yan yana koymaktır. EXW fiyatı FOB fiyatından düşük görünür — çünkü içinde limana kadar olan hiçbir masraf yoktur.
 
 ## Üçünü ayıran nedir?
