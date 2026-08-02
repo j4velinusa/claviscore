@@ -51,6 +51,14 @@ export default async function YayinlarPage({ params }: { params: Promise<{ local
   const featured = featuredPublication(publications);
   const featuredCopy = featured ? publicationCopy(featured, locale) : undefined;
   const featuredHref = featured ? docs[featured.id] : undefined;
+  // PDF varsa "oku" okuma sayfasına, yoksa yayının site içi hedefine gider.
+  const featuredRead = featured
+    ? featuredHref
+      ? localePath(locale, `/yayinlar/${featured.id}`)
+      : featured.readPath
+        ? localePath(locale, featured.readPath)
+        : undefined
+    : undefined;
   const printHref = `mailto:${site.email}?subject=${encodeURIComponent(dict.mailSubject.catalog)}`;
 
   return (
@@ -109,9 +117,9 @@ export default async function YayinlarPage({ params }: { params: Promise<{ local
                   </dl>
 
                   <div className="flex items-center gap-3 flex-wrap mt-[30px]">
-                    {featured.readPath && (
+                    {featuredRead && (
                       <Link
-                        href={localePath(locale, featured.readPath)}
+                        href={featuredRead}
                         className="text-sm font-semibold text-night bg-brass px-[26px] py-3.5 rounded-full whitespace-nowrap transition duration-[250ms] hover:bg-[#D4B47D] hover:-translate-y-px"
                       >
                         {t.readCta}&nbsp;›

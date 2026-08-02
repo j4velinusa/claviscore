@@ -273,6 +273,15 @@ export const tr = {
     metaPages: "SAYFA",
     metaFormat: "ÖLÇÜ",
     metaLangs: "DİL",
+    viewer: {
+      back: "Tüm yayınlar",
+      openNewTab: "Yeni sekmede aç",
+      download: "PDF indir",
+      // Tarayıcı gömülü PDF görüntüleyici sunmuyorsa (çoğu mobil tarayıcı)
+      // çerçeve boş kalır; bu metin altında her zaman duruyor.
+      fallback: "PDF görüntüleyici açılmadıysa yukarıdaki düğmelerden açabilir ya da indirebilirsiniz.",
+      missing: "Bu yayının PDF'i henüz yüklenmedi.",
+    },
     print: {
       kicker: "BASILI NÜSHA",
       title: "Ofisinize kargolayalım.",

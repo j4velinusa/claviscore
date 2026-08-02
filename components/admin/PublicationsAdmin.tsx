@@ -320,7 +320,7 @@ export function PublicationsAdmin({
                 </div>
                 <div>
                   <label className={label} htmlFor="p-read">
-                    OKUMA YOLU (site içi)
+                    OKUMA YOLU (PDF yoksa)
                   </label>
                   <input
                     id="p-read"

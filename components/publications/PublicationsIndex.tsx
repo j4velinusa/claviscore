@@ -100,6 +100,11 @@ function PublicationCard({
 }) {
   const t = dict.yayinlar;
   const copy = publicationCopy(pub, locale);
+  const readHref = href
+    ? localePath(locale, `/yayinlar/${pub.id}`)
+    : pub.readPath
+      ? localePath(locale, pub.readPath)
+      : undefined;
   // Sayfa sayısı bilinmiyorsa meta satırına yazılmıyor — uydurma sayı basmıyoruz.
   const meta = [pub.pages ? `${pub.pages} ${t.metaPages.toLocaleLowerCase("tr")}` : null, pub.format, pub.langs]
     .filter(Boolean)
@@ -123,9 +128,11 @@ function PublicationCard({
         </h3>
         <p className="text-sm leading-[1.6] text-muted text-pretty">{copy.desc}</p>
         <div className="flex items-center gap-3.5 mt-auto pt-2">
-          {pub.readPath && (
+          {/* PDF varsa "oku" okuma sayfasını açar; yoksa yayının işaret ettiği
+              site içi sayfaya düşer (ör. katalog listesi). */}
+          {readHref && (
             <Link
-              href={localePath(locale, pub.readPath)}
+              href={readHref}
               className="text-[13.5px] font-semibold text-bronze-2 hover:opacity-70 transition-opacity"
             >
               {t.readCta}&nbsp;›

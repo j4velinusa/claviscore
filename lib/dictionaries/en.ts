@@ -269,6 +269,13 @@ export const en: Dictionary = {
     metaPages: "PAGES",
     metaFormat: "FORMAT",
     metaLangs: "LANGUAGE",
+    viewer: {
+      back: "All publications",
+      openNewTab: "Open in new tab",
+      download: "Download PDF",
+      fallback: "If the viewer did not load, use the buttons above to open or download the PDF.",
+      missing: "The PDF for this publication has not been uploaded yet.",
+    },
     print: {
       kicker: "PRINTED COPY",
       title: "We'll ship it to your office.",
