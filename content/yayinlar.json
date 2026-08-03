@@ -5,14 +5,14 @@
     "featured": true,
     "format": "A4",
     "langs": "TR / EN",
-    "readPath": "/katalog",
+    "readPath": "/swan",
     "cover": {
       "theme": "lacivert",
       "font": "sans",
-      "tag": "Katalog",
+      "tag": "Claviscor",
       "title": "SWAN",
       "sub": "Claviscor ve Estetik",
-      "foot": "Claviscor"
+      "foot": "Directed by doganaykac.com"
     },
     "tr": {
       "kind": "KATALOG",
