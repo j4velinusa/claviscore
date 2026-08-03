@@ -28,8 +28,9 @@
   {
     "id": "riviera",
     "group": "dergi",
+    "pages": 32,
     "langs": "TR",
-    "readPath": "/katalog",
+    "readPath": "/riviera",
     "cover": {
       "theme": "krem",
       "font": "serif",
