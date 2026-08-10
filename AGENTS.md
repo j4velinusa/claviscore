@@ -34,12 +34,17 @@ Türk kapı kilidi/donanımı ihracatçısı Claviscor'un sitesi: public vitrin 
 - `npm run build` ve `npm run lint` temiz kalmalı; `design/` lint'ten hariç.
 
 ## Dağıtım (Vercel)
-- **Commit mesajlarına `Co-Authored-By:` trailer'ı EKLEME.** Proje Vercel Hobby'de ve
-  özel repo'da; Hobby, commit'in *bütün* author'larının projeye erişimi olmasını şart
-  koşuyor. Co-author adresi (ör. `noreply@anthropic.com`) hiçbir Vercel hesabına
-  karşılık gelmediği için deploy `Deployment Blocked — the commit author did not have
-  contributing access` diye reddediliyor. Build hiç başlamıyor, yani yerelde temiz
-  build bunu yakalamaz. 10.08.2026'da `53abd9c`/`35ed042` bu yüzden yayına çıkamadı.
-- Deploy durumunu siteyi çekerek değil GitHub'dan doğrula — bot koruması ara ara
-  `403 Vercel Security Checkpoint` döndürüyor ve boş içerik "yeni sürüm indi" sanılıyor:
+- **AÇIK SORUN (10.08.2026'dan beri):** deploy'lar `Deployment Blocked — the commit
+  author did not have contributing access to the project on Vercel / The Hobby Plan
+  does not support collaboration for private repositories` ile reddediliyor. Build
+  hiç başlamıyor; bu yüzden yerelde temiz `npm run build` bunu yakalamaz. Son yayına
+  çıkan sürüm `7996531` (03.08.2026).
+- Elenen nedenler — tekrar araştırmadan önce oku: commit author/committer e-postası
+  (`doganaykac3169@gmail.com`), çözümlenen GitHub hesabı ve push actor'ı, 3 Ağustos'ta
+  **başarılı** olan deploy'larla birebir aynı (`j4velinusa`, repo sahibi). Günlük
+  deployment kotası dolu değil. `Co-Authored-By:` trailer'ı olan ve olmayan commit'ler
+  aynı şekilde engellendi, yani trailer sebep değil. Neden GitHub tarafında değil,
+  Vercel hesabının GitHub bağlantısında aranmalı.
+- Deploy durumunu siteyi çekerek doğrulama: bot koruması ara ara `403 Vercel Security
+  Checkpoint` döndürüyor ve boş içerik "yeni sürüm indi" sanılabiliyor. Bunun yerine:
   `gh api repos/j4velinusa/claviscore/commits/<sha>/status`
