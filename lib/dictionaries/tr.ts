@@ -31,7 +31,7 @@ export const tr = {
   },
   families: {
     kicker: "Ürün aileleri",
-    title: { pre: "Tek dilden,", em: "dört", post: "aile." },
+    title: { pre: "Tek dilden,", em: "üç", post: "aile." },
     items: {
       hinge: { title: "Menteşeler", desc: "Rulmanlı, gizli & ayarlanabilir tipler" },
       handle: { title: "Kapı Kolları", desc: "Rozet & aynalı, mat/parlak kaplama" },

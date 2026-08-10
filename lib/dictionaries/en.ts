@@ -31,7 +31,7 @@ export const en: Dictionary = {
   },
   families: {
     kicker: "Product families",
-    title: { pre: "One language,", em: "four", post: "families." },
+    title: { pre: "One language,", em: "three", post: "families." },
     items: {
       hinge: { title: "Hinges", desc: "Ball-bearing, concealed & adjustable types" },
       handle: { title: "Door Handles", desc: "Rose & backplate, matte/polished finish" },
