@@ -32,3 +32,14 @@ Türk kapı kilidi/donanımı ihracatçısı Claviscor'un sitesi: public vitrin 
 ## Komutlar
 - Dev server: Browser pane `web` launch config'i (npm run dev, autoPort).
 - `npm run build` ve `npm run lint` temiz kalmalı; `design/` lint'ten hariç.
+
+## Dağıtım (Vercel)
+- **Commit mesajlarına `Co-Authored-By:` trailer'ı EKLEME.** Proje Vercel Hobby'de ve
+  özel repo'da; Hobby, commit'in *bütün* author'larının projeye erişimi olmasını şart
+  koşuyor. Co-author adresi (ör. `noreply@anthropic.com`) hiçbir Vercel hesabına
+  karşılık gelmediği için deploy `Deployment Blocked — the commit author did not have
+  contributing access` diye reddediliyor. Build hiç başlamıyor, yani yerelde temiz
+  build bunu yakalamaz. 10.08.2026'da `53abd9c`/`35ed042` bu yüzden yayına çıkamadı.
+- Deploy durumunu siteyi çekerek değil GitHub'dan doğrula — bot koruması ara ara
+  `403 Vercel Security Checkpoint` döndürüyor ve boş içerik "yeni sürüm indi" sanılıyor:
+  `gh api repos/j4velinusa/claviscore/commits/<sha>/status`
