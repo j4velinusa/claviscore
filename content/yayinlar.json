@@ -17,12 +17,12 @@
     "tr": {
       "kind": "KATALOG",
       "title": "Claviscor Ürün Kataloğu",
-      "desc": "Tüm ürün aileleri, teknik künyeler ve kaplama kartelası. Kilit donanımından tavan sistemlerine kadar ana referans katalog."
+      "desc": "Tüm ürün aileleri, teknik künyeler ve kaplama kartelası. Kapı donanımından tavan sistemlerine kadar ana referans katalog."
     },
     "en": {
       "kind": "CATALOG",
       "title": "Claviscor Product Catalog",
-      "desc": "All product families, technical specifications and the finish swatch. The main reference catalog, from lock hardware to ceiling systems."
+      "desc": "All product families, technical specifications and the finish swatch. The main reference catalog, from door hardware to ceiling systems."
     }
   },
   {
