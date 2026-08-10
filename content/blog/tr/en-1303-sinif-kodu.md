@@ -5,7 +5,7 @@ excerpt: >-
   Sekiz haneli kodun her basamağı ne söyler? Anahtar kombinasyonu, aşınma,
   korozyon ve saldırı direncini katalog karşılaştırmasında doğru okumak.
 category: standart
-status: live
+status: draft
 date: '2026-07-09'
 readingMinutes: 6
 tags:

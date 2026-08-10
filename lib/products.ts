@@ -5,8 +5,6 @@
 /** Filtre sekmeleri — "all" bir ürün kategorisi değil, "hepsini göster" durumudur. */
 export const catalogTabs = [
   "all",
-  "barrel",
-  "padlock",
   "hinge",
   "handle",
   "hotel",
@@ -43,11 +41,6 @@ export const FINISH: Record<FinishKey, string> = {
 };
 
 export const products: readonly Product[] = [
-  { sku: "BRL-110", category: "barrel", finishes: [FINISH.brass, FINISH.nickel, FINISH.black], badge: "bestseller" },
-  { sku: "BRL-120", category: "barrel", finishes: [FINISH.brass, FINISH.nickel] },
-  { sku: "BRL-130", category: "barrel", finishes: [FINISH.brass, FINISH.nickel] },
-  { sku: "PAD-210", category: "padlock", finishes: [FINISH.brass, FINISH.black] },
-  { sku: "PAD-220", category: "padlock", finishes: [FINISH.nickel, FINISH.black], badge: "new" },
   { sku: "HNG-310", category: "hinge", finishes: [FINISH.satin, FINISH.black] },
   { sku: "HNG-320", category: "hinge", finishes: [FINISH.satin] },
   { sku: "HDL-410", category: "handle", finishes: [FINISH.brass, FINISH.nickel, FINISH.black] },

@@ -104,8 +104,6 @@ export const SITE_SLOTS: readonly MediaSlot[] = [
   // bunun üzerinden yapıyor, ayrı bir tablo tutulmuyor.
   ...(
     [
-      ["aile-cylinder", "Ürün ailesi — Silindir Bareller"],
-      ["aile-padlock", "Ürün ailesi — Asma Kilitler"],
       ["aile-hinge", "Ürün ailesi — Menteşeler"],
       ["aile-handle", "Ürün ailesi — Kapı Kolları"],
       ["aile-hotel", "Ürün ailesi — Otel Kilit Sistemleri"],

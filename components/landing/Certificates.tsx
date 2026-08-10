@@ -2,7 +2,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import type { Dictionary } from "@/lib/dictionaries/tr";
 
 // Sertifika rozetleri dilden bağımsızdır.
-const certificates = ["CE", "TSE", "ISO 9001", "EN 1303", "Anti-Snap ★"];
+const certificates = ["CE", "TSE", "ISO 9001", "EN 1935", "EN 1906"];
 
 export function Certificates({ dict }: { dict: Dictionary }) {
   return (

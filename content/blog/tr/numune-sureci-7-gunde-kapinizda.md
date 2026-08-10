@@ -1,10 +1,10 @@
 ---
 title: 'Numune süreci: 7 günde kapınızda'
 excerpt: >-
-  Katalog fotoğrafı bir barelin tornalama kalitesini göstermez. Kaplama tonu,
-  anahtar hissi, menteşe rulmanının sesi — hepsi elde anlaşılır. Numune, satın
+  Katalog fotoğrafı bir kolun tornalama kalitesini göstermez. Kaplama tonu, kolun
+  eldeki ağırlığı, menteşe rulmanının sesi — hepsi elde anlaşılır. Numune, satın
   alma kararının en ucuz aşamasıdır. Bir konteyner sipariş etmeden önce elde
-  tutulan üç barel, aylar sonra çıkacak bir uyuşmazlığı baştan önler.
+  tutulan üç kalem, aylar sonra çıkacak bir uyuşmazlığı baştan önler.
 category: teknik
 status: live
 date: '2026-07-29'
@@ -12,11 +12,11 @@ readingMinutes: 5
 ---
 Numune süreci: yedi günde kapınızda
 
-Katalog fotoğrafı bir barelin tornalama kalitesini göstermez. Kaplama tonu, anahtar hissi, menteşe rulmanının sesi — hepsi elde anlaşılır. Numune, satın alma kararının en ucuz aşamasıdır. Bir konteyner sipariş etmeden önce elde tutulan üç barel, aylar sonra çıkacak bir uyuşmazlığı baştan önler.
+Katalog fotoğrafı bir kolun tornalama kalitesini göstermez. Kaplama tonu, kolun eldeki ağırlığı, menteşe rulmanının sesi — hepsi elde anlaşılır. Numune, satın alma kararının en ucuz aşamasıdır. Bir konteyner sipariş etmeden önce elde tutulan üç kalem, aylar sonra çıkacak bir uyuşmazlığı baştan önler.
 
 1. NE ÜCRETSİZ, NE DEĞİL
 
-- Standart katalog numunesi (3 kaleme kadar) — Ücretsiz — Barel, menteşe, kol veya asma kilit
+- Standart katalog numunesi (3 kaleme kadar) — Ücretsiz — Menteşe, kapı kolu veya aksesuar
 - Kaplama kartelası & teknik föy — Ücretsiz — Her numune kutusunda yer alır
 - Kargo bedeli — Alıcıya ait — Kendi kurye hesabınızı da kullanabilirsiniz
 - Özel üretim / logolu numune — Ücretli — Kalıp ve işçilik bedeli; ilk siparişte iade edilir
@@ -40,8 +40,8 @@ Kutuya her zaman kalem bazlı içerik listesi, HS kodları ve teknik föy koyar�
 
 4. TALEP EDERKEN BUNLARI YAZIN
 
-1) İlgilendiğiniz SKU kodları (ör. BRL-100, HNG-300) — bilmiyorsanız kullanım yerini yazın.
+1) İlgilendiğiniz SKU kodları (ör. HNG-310, HDL-410) — bilmiyorsanız kullanım yerini yazın.
 2) Kaplama tercihi: mat nikel, parlak pirinç, siyah — ya da kartela isteyin.
 3) Proje tipi ve tahmini yıllık adet — doğru seriyi önerebilmemiz için.
 4) Teslim adresi, vergi numarası ve kurye hesabınız (varsa).
-5) Test edilecek özellik: anti-snap, tuz püskürtme, yangın sınıfı — ilgili raporu ekleriz.
+5) Test edilecek özellik: yük/çevrim, tuz püskürtme, yangın sınıfı — ilgili raporu ekleriz.

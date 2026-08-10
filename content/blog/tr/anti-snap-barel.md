@@ -6,7 +6,7 @@ excerpt: >-
   sertleştirilmiş pim ve gövde geometrisi birlikte çalışır — katalogdaki hangi
   rakam gerçekten anlam taşır?
 category: teknik
-status: live
+status: draft
 featured: true
 date: '2026-07-14'
 readingMinutes: 7

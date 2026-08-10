@@ -3,7 +3,7 @@ title: "What does an anti-snap cylinder actually stop?"
 titleAccent: "actually stop?"
 excerpt: "A snapping attack targets the cylinder's weakest cross-section. The controlled break-off channel, hardened pins and body geometry work together — which catalog figure actually means something?"
 category: teknik
-status: live
+status: draft
 featured: true
 date: "2026-07-14"
 readingMinutes: 7

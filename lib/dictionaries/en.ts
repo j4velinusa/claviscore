@@ -17,11 +17,11 @@ export const en: Dictionary = {
     kicker: "Door hardware & ceiling systems · 40+ countries",
     title: { pre: "The", em: "flawless", post: "language of the mechanism." },
     subtitle:
-      "From door security hardware to ceiling systems — cylinders, hinges, handles and suspended/plaster ceiling solutions. Millimetric tolerance, certified durability.",
+      "From door hardware to ceiling systems — hinges, handles, hotel systems and suspended/plaster ceiling solutions. Millimetric tolerance, certified durability.",
     ctaCatalog: "Download catalog",
     ctaTeam: "Talk to the export team",
-    imageCaption: "[ PRODUCT IMAGE — cylinder barrel ]",
-    specLines: ["Ø17 mm", "brass body", "5 pins · 15 combinations"],
+    imageCaption: "[ PRODUCT IMAGE — door handle set ]",
+    specLines: ["rosette set", "brass body", "3 finish options"],
   },
   stats: {
     countries: "countries served",
@@ -31,17 +31,15 @@ export const en: Dictionary = {
   },
   families: {
     kicker: "Product families",
-    title: { pre: "One language,", em: "six", post: "families." },
+    title: { pre: "One language,", em: "four", post: "families." },
     items: {
-      cylinder: { title: "Cylinder Barrels", desc: "Single/double, anti-snap, master key systems" },
-      padlock: { title: "Padlocks", desc: "Brass & laminated body, 20–80 mm" },
       hinge: { title: "Hinges", desc: "Ball-bearing, concealed & adjustable types" },
       handle: { title: "Door Handles", desc: "Rose & backplate, matte/polished finish" },
       hotel: { title: "Hotel Lock Systems", desc: "RFID & keypad, management software included" },
     },
     accent: {
       title: "Accessories & Spares",
-      desc: "Key blanks, door stops, mounting kits",
+      desc: "Door stops, mounting kits, spare rosettes and screws",
       cta: "See the whole family",
     },
   },
@@ -59,13 +57,13 @@ export const en: Dictionary = {
   engineering: {
     kicker: "Engineering",
     title: { pre: "Trust begins within the", em: "millimeter.", post: "" },
-    body: "Every barrel is machined on our own lathes; every pin, every spring to the same tolerance discipline. From salt-spray testing to cycle life, it passes through the lab.",
+    body: "Every body is machined on our own lathes; every bearing, every spring to the same tolerance discipline. From salt-spray testing to cycle life, it passes through the lab.",
     stats: [
       { value: "100%", label: "domestic production" },
       { value: "14 days", label: "sample delivery" },
       { value: "OEM", label: "custom manufacturing" },
     ],
-    imageCaption: "[ SECTION VIEW — pin & spring ]",
+    imageCaption: "[ SECTION VIEW — bearing & spring ]",
     specLines: ["tol. ±0.02 mm", "nickel plating", "200,000 cycles"],
   },
   exportPanel: {
@@ -96,7 +94,7 @@ export const en: Dictionary = {
     products: "Products",
     corporate: "Company",
     contact: "Contact",
-    productLinks: ["Cylinder Barrels", "Padlocks", "Hinges", "Door Handles", "Hotel Systems", "Ceiling Systems"],
+    productLinks: ["Hinges", "Door Handles", "Hotel Systems", "Ceiling Systems"],
     corporateLinks: ["About", "Manufacturing", "Certificates", "Export", "Contact"],
     rights: "CE · TSE · ISO 9001",
     credit: "Designed and coded by",
@@ -105,23 +103,23 @@ export const en: Dictionary = {
     kicker: "Manufacturing",
     title: { pre: "We do not sell a process we cannot", em: "control.", post: "" },
     subtitle:
-      "From the cylinder body to the ceiling panel, production is in our own facility. Every step has a measured value and every batch a recorded result.",
+      "From the hinge body to the ceiling panel, production is in our own facility. Every step has a measured value and every batch a recorded result.",
     linesLabel: "PRODUCTION LINES",
-    stepsLabel: "LOCKS & HARDWARE FLOW",
+    stepsLabel: "DOOR HARDWARE FLOW",
     qcLabel: "WHAT WE MEASURE",
     qcColumns: { name: "MEASUREMENT", value: "VALUE", method: "METHOD" },
     planCaption: "6,400 m² · SITE PLAN (SCHEMATIC)",
     lines: [
       {
-        name: "Locks & Hardware",
-        desc: "Cylinders, padlocks, hinges, handles and hotel systems.",
+        name: "Door Hardware",
+        desc: "Hinges, door handles, hotel lock systems and accessories.",
         caption: "CNC → HEAT TREATMENT → PLATING → ASSEMBLY",
         machines: [
           { name: "CNC lathe (bar-fed)", qty: "12", note: "Ø4–32 mm bar, body in a single operation" },
-          { name: "CNC machining center", qty: "6", note: "Cam slot and pin chambers, hinge body" },
-          { name: "Heat treatment furnace", qty: "2", note: "Pin and spring steel" },
+          { name: "CNC machining center", qty: "6", note: "Hinge body, handle rosette and pin bore" },
+          { name: "Heat treatment furnace", qty: "2", note: "Hinge pin and spring steel" },
           { name: "Plating line (nickel / brass / black)", qty: "3", note: "XRF-controlled thickness" },
-          { name: "Assembly & keying bench", qty: "14", note: "Including master key hierarchy" },
+          { name: "Assembly & keying bench", qty: "14", note: "Including hotel system card encoding" },
         ],
       },
       {
@@ -136,16 +134,16 @@ export const en: Dictionary = {
     ],
     steps: [
       { step: "01", title: "Raw material intake", desc: "Batches of brass bar, zinc alloy and aluminium profile arrive with their certificates; they do not enter production without alloy analysis and hardness measurement.", spec: "MATERIAL CERTIFICATE · HARDNESS HRB" },
-      { step: "02", title: "CNC turning & machining", desc: "The cylinder body, pin chambers and cam slot are machined in a single operation. Tool wear is monitored by sampling within the shift.", spec: "TOLERANCE ± 0.05 mm" },
-      { step: "03", title: "Heat treatment", desc: "Hardened anti-drill pins and spring steels go through heat treatment; the hardness value is measured per batch.", spec: "PIN HARDNESS ≥ 58 HRC" },
+      { step: "02", title: "CNC turning & machining", desc: "The hinge body, handle rosette and pin bore are machined in a single operation. Tool wear is monitored by sampling within the shift.", spec: "TOLERANCE ± 0.05 mm" },
+      { step: "03", title: "Heat treatment", desc: "Hardened hinge pins and spring steels go through heat treatment; the hardness value is measured per batch.", spec: "PIN HARDNESS ≥ 58 HRC" },
       { step: "04", title: "Plating", desc: "Nickel, brass and black plating lines. Thickness is measured by XRF; colour is checked against the swatch in a light booth.", spec: "PLATING 8–12 µm" },
-      { step: "05", title: "Assembly", desc: "Pin and spring sets are arranged according to the combination plan; the master key hierarchy is applied on the assembly line.", spec: "5 PINS · 15,000 COMBINATIONS" },
-      { step: "06", title: "Function test & packaging", desc: "Every product is operated with its key; the number of keys in the box and the accessories are confirmed by barcode.", spec: "100% FUNCTION TEST" },
+      { step: "05", title: "Assembly", desc: "Bearing, spring and rosette sets are arranged according to the assembly plan; card encoding for hotel systems is done on the line.", spec: "ASSEMBLY TORQUE RECORDED" },
+      { step: "06", title: "Function test & packaging", desc: "Every product is operated through its moving parts; the screw set in the box and the accessories are confirmed by barcode.", spec: "100% FUNCTION TEST" },
     ],
     qc: [
-      { name: "Breaking torque (anti-snap)", value: "≥ 25 Nm", method: "Torque bench referenced to EN 1303" },
+      { name: "Handle torque strength", value: "≥ 120 Nm", method: "Torque bench referenced to EN 1906" },
       { name: "Salt spray (corrosion)", value: "240 hours", method: "ISO 9227 NSS · chamber test" },
-      { name: "Key cycle life", value: "100,000 cycles", method: "Automatic cycle bench" },
+      { name: "Handle cycle life", value: "200,000 cycles", method: "Cycle bench referenced to EN 1906" },
       { name: "Hinge load & cycle", value: "80 kg / 200,000", method: "Load frame referenced to EN 1935" },
       { name: "Plating thickness", value: "8–12 µm", method: "XRF measurement, 5 points" },
       { name: "Critical dimensions", value: "± 0.05 mm", method: "Caliper / dial gauge, per-shift sampling" },
@@ -297,7 +295,7 @@ export const en: Dictionary = {
     columns: { standard: "STANDARD", issuer: "ISSUING BODY", documentNo: "DOCUMENT NO", valid: "VALID UNTIL" },
     requestCta: "Request document",
     requestNote: "Document numbers and validity are shared on request together with the current copy.",
-    groups: { system: "System & Corporate", hardware: "Locks & Hardware", ceiling: "Ceiling Systems" },
+    groups: { system: "System & Corporate", hardware: "Door Hardware", ceiling: "Ceiling Systems" },
     items: {
       iso9001: { title: "Quality Management System", desc: "Quality management system certificate covering design, production and sales processes." },
       tse: { title: "Turkish Standard Conformity", desc: "TSE conformity certificate required for domestic sales and public tenders." },
@@ -334,7 +332,7 @@ export const en: Dictionary = {
       partner: { label: "Distribution", tag: "DISTRIBUTOR", hint: "Share your territory, current product groups and expected annual volume." },
     },
     lines: {
-      lock: "Locks & Cylinders",
+      accessory: "Accessories & Spares",
       hinge: "Hinges",
       handle: "Door Handles",
       hotel: "Hotel Systems",
@@ -397,8 +395,6 @@ export const en: Dictionary = {
     empty: "No products to show in this category.",
     categories: {
       all: "All",
-      barrel: "Cylinders",
-      padlock: "Padlocks",
       hinge: "Hinges",
       handle: "Handles",
       hotel: "Hotel",
@@ -414,11 +410,6 @@ export const en: Dictionary = {
       cta: "Sample request form",
     },
     products: {
-      "BRL-110": { name: "Anti-Snap Cylinder", desc: "6 pins, anti-snap steel reinforcement", spec: "60–100 mm" },
-      "BRL-120": { name: "Master Key Cylinder", desc: "System keying, master key hierarchy", spec: "60–110 mm" },
-      "BRL-130": { name: "Half Cylinder", desc: "Single-sided, cabinet and panel applications", spec: "30–50 mm" },
-      "PAD-210": { name: "Brass Padlock", desc: "Solid brass body, weatherproof option", spec: "20–60 mm" },
-      "PAD-220": { name: "Laminated Padlock", desc: "Hardened shackle, outdoor durability", spec: "30–70 mm" },
       "HNG-310": { name: "Ball-Bearing Hinge", desc: "2BB stainless, heavy door load", spec: "100–120 mm" },
       "HNG-320": { name: "Concealed Hinge", desc: "3D adjustable, invisible installation", spec: "Ø14 mm" },
       "HDL-410": { name: "Backplate Handle Set", desc: "Rose set — WC, keyed, passage", spec: "Set" },
@@ -454,12 +445,12 @@ export const en: Dictionary = {
     home: {
       title: "CLAVISCOR — Door Hardware & Ceiling Systems",
       description:
-        "From door security hardware to ceiling systems — cylinders, hinges, handles and suspended/plaster ceiling solutions. Millimetric tolerance, certified durability, exporting to 40+ countries.",
+        "From door hardware to ceiling systems — hinges, handles, hotel systems and suspended/plaster ceiling solutions. Millimetric tolerance, certified durability, exporting to 40+ countries.",
     },
     katalog: {
       title: "Product Catalog — CLAVISCOR",
       description:
-        "The Claviscor product catalog — cylinders, padlocks, hinges, door handles, hotel lock systems and ceiling solutions. Write to our export team for samples and quotes.",
+        "The Claviscor product catalog — hinges, door handles, hotel lock systems, accessories and ceiling solutions. Write to our export team for samples and quotes.",
     },
     blog: {
       title: "Knowledge Center — CLAVISCOR",
@@ -469,7 +460,7 @@ export const en: Dictionary = {
     uretim: {
       title: "Manufacturing — CLAVISCOR",
       description:
-        "In-house production of locks, hardware and ceiling systems. CNC machining, heat treatment, plating lines and batch-level measurement.",
+        "In-house production of door hardware and ceiling systems. CNC machining, heat treatment, plating lines and batch-level measurement.",
     },
     hakkimizda: {
       title: "About — CLAVISCOR",

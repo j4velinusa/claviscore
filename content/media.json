@@ -3,29 +3,9 @@
     "file": "urun-clg-710-20260801111858.webp",
     "updatedAt": "2026-08-01T11:18:58.248Z"
   },
-  "urun:BRL-110": {
-    "file": "urun-brl-110-20260801110201.webp",
-    "updatedAt": "2026-08-01T11:02:01.135Z"
-  },
   "urun:CLG-720": {
     "file": "urun-clg-720-20260801102744.webp",
     "updatedAt": "2026-08-01T10:27:44.994Z"
-  },
-  "urun:BRL-120": {
-    "file": "urun-brl-120-20260801111826.webp",
-    "updatedAt": "2026-08-01T11:18:26.637Z"
-  },
-  "urun:BRL-130": {
-    "file": "urun-brl-130-20260801114217.webp",
-    "updatedAt": "2026-08-01T11:42:17.973Z"
-  },
-  "urun:PAD-210": {
-    "file": "urun-pad-210-20260801111942.webp",
-    "updatedAt": "2026-08-01T11:19:42.990Z"
-  },
-  "urun:PAD-220": {
-    "file": "urun-pad-220.webp",
-    "updatedAt": "2026-08-01T09:57:06.573Z"
   },
   "site:hero": {
     "file": "site-hero-20260801100731.webp",
@@ -70,14 +50,6 @@
   "urun:GYP-760": {
     "file": "urun-gyp-760-20260801104936.webp",
     "updatedAt": "2026-08-01T10:49:36.024Z"
-  },
-  "site:aile-cylinder": {
-    "file": "site-aile-cylinder-20260801135550.webp",
-    "updatedAt": "2026-08-01T13:55:50.320Z"
-  },
-  "site:aile-padlock": {
-    "file": "site-aile-padlock-20260801135609.webp",
-    "updatedAt": "2026-08-01T13:56:09.228Z"
   },
   "site:aile-hinge": {
     "file": "site-aile-hinge-20260801140050.webp",

@@ -17,11 +17,11 @@ export const tr = {
     kicker: "Kapı donanımı & tavan sistemleri · 40+ ülke",
     title: { pre: "Mekanizmanın", em: "kusursuz", post: "dili." },
     subtitle:
-      "Kapı güvenlik donanımından tavan sistemlerine — kilit, menteşe, kol ve asma/alçı tavan çözümleri. Milimetrik tolerans, sertifikalı dayanım.",
+      "Kapı donanımından tavan sistemlerine — menteşe, kol, otel sistemleri ve asma/alçı tavan çözümleri. Milimetrik tolerans, sertifikalı dayanım.",
     ctaCatalog: "Kataloğu indir",
     ctaTeam: "İhracat ekibiyle görüş",
-    imageCaption: "[ ÜRÜN GÖRSELİ — silindir barel ]",
-    specLines: ["Ø17 mm", "pirinç gövde", "5 pim · 15 kombinasyon"],
+    imageCaption: "[ ÜRÜN GÖRSELİ — kapı kolu takımı ]",
+    specLines: ["rozetli set", "pirinç gövde", "3 kaplama seçeneği"],
   },
   stats: {
     countries: "ülkeye ihracat",
@@ -31,17 +31,15 @@ export const tr = {
   },
   families: {
     kicker: "Ürün aileleri",
-    title: { pre: "Tek dilden,", em: "altı", post: "aile." },
+    title: { pre: "Tek dilden,", em: "dört", post: "aile." },
     items: {
-      cylinder: { title: "Silindir Bareller", desc: "Tek/çift taraf, anti-snap, master key sistemleri" },
-      padlock: { title: "Asma Kilitler", desc: "Pirinç & lamine gövde, 20–80 mm" },
       hinge: { title: "Menteşeler", desc: "Rulmanlı, gizli & ayarlanabilir tipler" },
       handle: { title: "Kapı Kolları", desc: "Rozet & aynalı, mat/parlak kaplama" },
       hotel: { title: "Otel Kilit Sistemleri", desc: "RFID & şifreli, yönetim yazılımı dahil" },
     },
     accent: {
       title: "Aksesuar & Yedek",
-      desc: "Anahtar kütükleri, kapı stoperleri, montaj kitleri",
+      desc: "Kapı stoperleri, montaj kitleri, yedek rozet ve vidalar",
       cta: "Tüm aileyi gör",
     },
   },
@@ -59,13 +57,13 @@ export const tr = {
   engineering: {
     kicker: "Mühendislik",
     title: { pre: "Güven,", em: "milimetrenin", post: "içinde başlar." },
-    body: "Her barel kendi tezgâhımızda işlenir; her pim, her yay aynı tolerans disipliniyle. Tuzlu sis testinden çevrim ömrüne kadar laboratuvardan geçer.",
+    body: "Her gövde kendi tezgâhımızda işlenir; her rulman, her yay aynı tolerans disipliniyle. Tuzlu sis testinden çevrim ömrüne kadar laboratuvardan geçer.",
     stats: [
       { value: "%100", label: "yerli üretim" },
       { value: "14 gün", label: "numune teslim" },
       { value: "OEM", label: "özel üretim" },
     ],
-    imageCaption: "[ KESİT GÖRSELİ — pim & yay ]",
+    imageCaption: "[ KESİT GÖRSELİ — rulman & yay ]",
     specLines: ["tol. ±0,02 mm", "nikel kaplama", "200.000 çevrim"],
   },
   exportPanel: {
@@ -96,7 +94,7 @@ export const tr = {
     products: "Ürünler",
     corporate: "Kurumsal",
     contact: "İletişim",
-    productLinks: ["Silindir Bareller", "Asma Kilitler", "Menteşeler", "Kapı Kolları", "Otel Sistemleri", "Tavan Sistemleri"],
+    productLinks: ["Menteşeler", "Kapı Kolları", "Otel Sistemleri", "Tavan Sistemleri"],
     corporateLinks: ["Hakkımızda", "Üretim", "Sertifikalar", "İhracat", "İletişim"],
     rights: "CE · TSE · ISO 9001",
     // Yapımcı künyesi. Alan adı çevrilmez, SiteFooter'da link olarak eklenir.
@@ -106,23 +104,23 @@ export const tr = {
     kicker: "Üretim",
     title: { pre: "Kontrol edemediğimiz süreci", em: "satmayız.", post: "" },
     subtitle:
-      "Barel gövdesinden tavan paneline kadar üretim kendi tesisimizde. Her adımda ölçülen bir değer, her partide kayda geçen bir sonuç var.",
+      "Menteşe gövdesinden tavan paneline kadar üretim kendi tesisimizde. Her adımda ölçülen bir değer, her partide kayda geçen bir sonuç var.",
     linesLabel: "ÜRETİM HATLARI",
-    stepsLabel: "KİLİT & DONANIM AKIŞI",
+    stepsLabel: "KAPI DONANIMI AKIŞI",
     qcLabel: "ÖLÇTÜĞÜMÜZ DEĞERLER",
     qcColumns: { name: "ÖLÇÜM", value: "DEĞER", method: "YÖNTEM" },
     planCaption: "6.400 m² · VAZİYET PLANI (ŞEMATİK)",
     lines: [
       {
-        name: "Kilit & Donanım",
-        desc: "Silindir barel, asma kilit, menteşe, kol ve otel sistemleri.",
+        name: "Kapı Donanımı",
+        desc: "Menteşe, kapı kolu, otel kilit sistemleri ve aksesuar.",
         caption: "CNC → ISIL İŞLEM → KAPLAMA → MONTAJ",
         machines: [
           { name: "CNC torna (çubuk beslemeli)", qty: "12", note: "Ø4–32 mm çubuk, tek operasyonda gövde" },
-          { name: "CNC işleme merkezi", qty: "6", note: "Kam ve pim yuvası, menteşe gövdesi" },
-          { name: "Isıl işlem fırını", qty: "2", note: "Pim ve yay çeliği" },
+          { name: "CNC işleme merkezi", qty: "6", note: "Menteşe gövdesi, kol rozeti ve mil yuvası" },
+          { name: "Isıl işlem fırını", qty: "2", note: "Menteşe mili ve yay çeliği" },
           { name: "Kaplama hattı (nikel / pirinç / siyah)", qty: "3", note: "XRF kontrollü kalınlık" },
-          { name: "Montaj & kodlama masası", qty: "14", note: "Master key hiyerarşisi dâhil" },
+          { name: "Montaj & kodlama masası", qty: "14", note: "Otel sistemi kart kodlaması dâhil" },
         ],
       },
       {
@@ -137,16 +135,16 @@ export const tr = {
     ],
     steps: [
       { step: "01", title: "Hammadde kabulü", desc: "Pirinç çubuk, çinko alaşımı ve alüminyum profil partileri sertifikasıyla gelir; alaşım analizi ve sertlik ölçümü yapılmadan üretime girmez.", spec: "MALZEME SERTİFİKASI · SERTLİK HRB" },
-      { step: "02", title: "CNC tornalama & işleme", desc: "Barel gövdesi, pim yuvaları ve kam yuvası tek operasyonda işlenir. Takım aşınması vardiya içinde örneklenerek izlenir.", spec: "TOLERANS ± 0,05 mm" },
-      { step: "03", title: "Isıl işlem", desc: "Sertleştirilmiş delme pimleri ve yay çelikleri ısıl işlemden geçer; sertlik değeri parti bazında ölçülür.", spec: "PİM SERTLİĞİ ≥ 58 HRC" },
+      { step: "02", title: "CNC tornalama & işleme", desc: "Menteşe gövdesi, kol rozeti ve mil yuvası tek operasyonda işlenir. Takım aşınması vardiya içinde örneklenerek izlenir.", spec: "TOLERANS ± 0,05 mm" },
+      { step: "03", title: "Isıl işlem", desc: "Sertleştirilmiş menteşe milleri ve yay çelikleri ısıl işlemden geçer; sertlik değeri parti bazında ölçülür.", spec: "MİL SERTLİĞİ ≥ 58 HRC" },
       { step: "04", title: "Kaplama", desc: "Nikel, pirinç ve siyah kaplama hatları. Kalınlık XRF ile ölçülür; renk kartelaya karşı ışık kabininde kontrol edilir.", spec: "KAPLAMA 8–12 µm" },
-      { step: "05", title: "Montaj", desc: "Pim ve yay setleri kombinasyon planına göre dizilir; master key hiyerarşisi montaj hattında uygulanır.", spec: "5 PİM · 15.000 KOMBİNASYON" },
-      { step: "06", title: "İşlev testi & paketleme", desc: "Her ürün anahtarla çalıştırılır; kutu içi anahtar sayısı ve aksesuar barkodla teyit edilir.", spec: "%100 İŞLEV TESTİ" },
+      { step: "05", title: "Montaj", desc: "Rulman, yay ve rozet setleri montaj planına göre dizilir; otel sistemlerinde kart kodlaması montaj hattında yapılır.", spec: "MONTAJ TORKU KAYIT ALTINDA" },
+      { step: "06", title: "İşlev testi & paketleme", desc: "Her ürün hareketli parçalarıyla çalıştırılır; kutu içi vida seti ve aksesuar barkodla teyit edilir.", spec: "%100 İŞLEV TESTİ" },
     ],
     qc: [
-      { name: "Kopma torku (anti-snap)", value: "≥ 25 Nm", method: "EN 1303 referanslı tork tezgâhı" },
+      { name: "Kol tork dayanımı", value: "≥ 120 Nm", method: "EN 1906 referanslı tork tezgâhı" },
       { name: "Tuz püskürtme (korozyon)", value: "240 saat", method: "ISO 9227 NSS · kabin testi" },
-      { name: "Anahtar çevrim ömrü", value: "100.000 çevrim", method: "Otomatik çevrim tezgâhı" },
+      { name: "Kol çevrim ömrü", value: "200.000 çevrim", method: "EN 1906 referanslı çevrim tezgâhı" },
       { name: "Menteşe yük & çevrim", value: "80 kg / 200.000", method: "EN 1935 referanslı yük çerçevesi" },
       { name: "Kaplama kalınlığı", value: "8–12 µm", method: "XRF ölçüm, 5 nokta" },
       { name: "Kritik ölçüler", value: "± 0,05 mm", method: "Kumpas / komparatör, vardiya örneklemesi" },
@@ -238,7 +236,7 @@ export const tr = {
     packagingTitle: "Paketleme zinciri",
     transportCaption: "PALETLEME → KONTEYNER → LİMAN",
     packaging: [
-      { title: "Birim kutu", desc: "Ürün, anahtar ve montaj vidası bir arada; kutu üzerinde barkod ve SKU etiketi." },
+      { title: "Birim kutu", desc: "Ürün, montaj vidası ve aksesuarı bir arada; kutu üzerinde barkod ve SKU etiketi." },
       { title: "Koli", desc: "Nem bariyerli oluklu mukavva; koli içi adet ve brüt ağırlık dış yüzeyde yazılı." },
       { title: "Palet", desc: "ISPM 15 damgalı ahşap palet, streç ve köşebent; 1200 × 800 mm standart ölçü." },
       { title: "Konteyner", desc: "Ağırlık dağılımı dengelenir, yük kayışla sabitlenir; mühür numarası dosyaya işlenir." },
@@ -303,7 +301,7 @@ export const tr = {
     columns: { standard: "STANDART", issuer: "VEREN KURULUŞ", documentNo: "BELGE NO", valid: "GEÇERLİLİK" },
     requestCta: "Belgeyi iste",
     requestNote: "Belge numarası ve geçerlilik bilgisi talep üzerine güncel kopyayla paylaşılır.",
-    groups: { system: "Sistem & Kurumsal", hardware: "Kilit & Donanım", ceiling: "Tavan Sistemleri" },
+    groups: { system: "Sistem & Kurumsal", hardware: "Kapı Donanımı", ceiling: "Tavan Sistemleri" },
     items: {
       iso9001: { title: "Kalite Yönetim Sistemi", desc: "Tasarım, üretim ve satış süreçlerini kapsayan kalite yönetim sistemi belgesi." },
       tse: { title: "Türk Standardına Uygunluk", desc: "Yurt içi satış ve kamu ihalelerinde talep edilen TSE uygunluk belgesi." },
@@ -340,7 +338,7 @@ export const tr = {
       partner: { label: "Distribütörlük", tag: "DİSTRİBÜTÖR", hint: "Faaliyet bölgeniz, mevcut ürün gruplarınız ve yıllık hacim beklentinizi paylaşın." },
     },
     lines: {
-      lock: "Kilit & Barel",
+      accessory: "Aksesuar & Yedek",
       hinge: "Menteşe",
       handle: "Kapı Kolu",
       hotel: "Otel Sistemleri",
@@ -405,8 +403,6 @@ export const tr = {
     empty: "Bu kategoride gösterilecek ürün yok.",
     categories: {
       all: "Tümü",
-      barrel: "Bareller",
-      padlock: "Asma Kilit",
       hinge: "Menteşe",
       handle: "Kol",
       hotel: "Otel",
@@ -422,11 +418,6 @@ export const tr = {
       cta: "Numune talep formu",
     },
     products: {
-      "BRL-110": { name: "Anti-Snap Barel", desc: "6 pim, kırılma korumalı çelik takviye", spec: "60–100 mm" },
-      "BRL-120": { name: "Master Key Barel", desc: "Sistem anahtarlama, ana anahtar hiyerarşisi", spec: "60–110 mm" },
-      "BRL-130": { name: "Yarım Silindir", desc: "Tek taraflı, dolap ve panel uygulamaları", spec: "30–50 mm" },
-      "PAD-210": { name: "Pirinç Asma Kilit", desc: "Massif pirinç gövde, su geçirmez seçenek", spec: "20–60 mm" },
-      "PAD-220": { name: "Lamine Asma Kilit", desc: "Sertleştirilmiş kanca, dış mekân dayanımı", spec: "30–70 mm" },
       "HNG-310": { name: "Rulmanlı Menteşe", desc: "2BB paslanmaz, ağır kapı taşıma", spec: "100–120 mm" },
       "HNG-320": { name: "Gizli Menteşe", desc: "Ayarlanabilir 3D, görünmez montaj", spec: "Ø14 mm" },
       "HDL-410": { name: "Aynalı Kol Takımı", desc: "Rozetli set — WC, anahtarlı, dilsiz", spec: "Set" },
@@ -462,12 +453,12 @@ export const tr = {
     home: {
       title: "CLAVISCOR — Kapı Donanımı & Tavan Sistemleri",
       description:
-        "Kapı güvenlik donanımından tavan sistemlerine — kilit, menteşe, kol ve asma/alçı tavan çözümleri. Milimetrik tolerans, sertifikalı dayanım, 40+ ülkeye ihracat.",
+        "Kapı donanımından tavan sistemlerine — menteşe, kol, otel sistemleri ve asma/alçı tavan çözümleri. Milimetrik tolerans, sertifikalı dayanım, 40+ ülkeye ihracat.",
     },
     katalog: {
       title: "Ürün Kataloğu — CLAVISCOR",
       description:
-        "Silindir barel, asma kilit, menteşe, kapı kolu, otel kilit sistemleri ve tavan çözümleriyle Claviscor ürün kataloğu. Numune ve teklif için ihracat ekibimize yazın.",
+        "Menteşe, kapı kolu, otel kilit sistemleri, aksesuar ve tavan çözümleriyle Claviscor ürün kataloğu. Numune ve teklif için ihracat ekibimize yazın.",
     },
     blog: {
       title: "Bilgi Merkezi — CLAVISCOR",
@@ -477,7 +468,7 @@ export const tr = {
     uretim: {
       title: "Üretim — CLAVISCOR",
       description:
-        "Kilit, donanım ve tavan sistemlerinde kendi tesisimizde üretim. CNC işleme, ısıl işlem, kaplama hatları ve parti bazında ölçüm.",
+        "Kapı donanımı ve tavan sistemlerinde kendi tesisimizde üretim. CNC işleme, ısıl işlem, kaplama hatları ve parti bazında ölçüm.",
     },
     hakkimizda: {
       title: "Hakkımızda — CLAVISCOR",

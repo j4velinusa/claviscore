@@ -3,7 +3,7 @@ title: "Reading the EN 1303 classification code"
 titleAccent: "classification code"
 excerpt: "What does each digit of the eight-digit code tell you? Reading key differs, wear, corrosion and attack resistance correctly when comparing catalogs."
 category: standart
-status: live
+status: draft
 date: "2026-07-09"
 readingMinutes: 6
 tags: ["EN 1303"]

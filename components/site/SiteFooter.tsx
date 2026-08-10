@@ -12,9 +12,9 @@ const credit = { href: "https://doganaykac.com", label: "doganaykac.com" } as co
 const corporatePaths = ["/hakkimizda", "/uretim", "/sertifikalar", "/ihracat", "/iletisim"];
 
 // Ürün kolonunun katalog kategorileri. Sıra sözlükteki footer.productLinks sırasını izler:
-// Silindir Bareller · Asma Kilitler · Menteşeler · Kapı Kolları · Otel Sistemleri · Tavan Sistemleri.
+// Menteşeler · Kapı Kolları · Otel Sistemleri · Tavan Sistemleri.
 // Değerler lib/products.ts'teki catalogTabs anahtarları; Catalog bunu ?kategori= ile okuyor.
-const productCategories = ["barrel", "padlock", "hinge", "handle", "hotel", "ceiling"];
+const productCategories = ["hinge", "handle", "hotel", "ceiling"];
 
 export function SiteFooter({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   return (

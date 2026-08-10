@@ -7,7 +7,7 @@ import type { Dictionary } from "@/lib/dictionaries/tr";
 const topicKeys = ["quote", "sample", "tech", "partner"] as const;
 type TopicKey = (typeof topicKeys)[number];
 
-const lineKeys = ["lock", "hinge", "handle", "hotel", "ceiling", "other"] as const;
+const lineKeys = ["hinge", "handle", "hotel", "accessory", "ceiling", "other"] as const;
 type LineKey = (typeof lineKeys)[number];
 
 const chip =

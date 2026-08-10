@@ -2,9 +2,9 @@
 title: 'HS kodu: gümrükteki gerçek ürün adınız'
 excerpt: >-
   Gümrük sizin ürün adınızı okumaz; tarife pozisyonunu okur. Aynı kutuda giden
-  bir asma kilit ile bir silindir barel farklı alt pozisyonlara girer ve farklı
-  vergi oranlarıyla karşılaşır. Bu yüzden HS kodu bir formalite değil, teklifin
-  fiyat bileşenidir.
+  bir menteşe ile bir kapı kolu farklı alt pozisyonlara girer ve farklı vergi
+  oranlarıyla karşılaşır. Bu yüzden HS kodu bir formalite değil, teklifin fiyat
+  bileşenidir.
 category: teknik
 status: live
 date: '2026-07-29'
@@ -12,7 +12,7 @@ readingMinutes: 5
 ---
 HS kodu: gümrükteki gerçek ürün adınız
 
-Gümrük sizin ürün adınızı okumaz; tarife pozisyonunu okur. Aynı kutuda giden bir asma kilit ile bir silindir barel farklı alt pozisyonlara girer ve farklı vergi oranlarıyla karşılaşır. Bu yüzden HS kodu bir formalite değil, teklifin fiyat bileşenidir.
+Gümrük sizin ürün adınızı okumaz; tarife pozisyonunu okur. Aynı kutuda giden bir menteşe ile bir kapı kolu farklı alt pozisyonlara girer ve farklı vergi oranlarıyla karşılaşır. Bu yüzden HS kodu bir formalite değil, teklifin fiyat bileşenidir.
 
 1. KODUN ANATOMİSİ: 6 + 4
 
@@ -22,11 +22,9 @@ Pratikte en sık yapılan hata, tüm sevkiyatı tek koda toplamaktır. Karma bir
 
 2. ÜRÜN AİLELERİNE GÖRE POZİSYONLAR
 
-- Asma kilitler — 8301.10 — Pirinç ve lamine gövde, anahtarlı/şifreli
-- Silindir bareller & kapı kilitleri — 8301.40 — Diğer kilitler (mobilya ve taşıt kilitleri hariç)
-- Anahtarlar & kilit parçaları — 8301.60 / 8301.70 — Kütükler, kam, pim setleri ayrı beyan edilir
 - Menteşeler — 8302.10 — Rulmanlı, gizli ve ayarlanabilir tipler dâhil
-- Kapı kolları & rozetler — 8302.41 — Binalara mahsus diğer donanım
+- Kapı kolları, rozetler & stoperler — 8302.41 — Binalara mahsus diğer donanım
+- Otel kilit sistemleri (elektronik) — 8301.40 — RFID/kart okuyuculu kapı kilitleri; kart ve okuyucu ayrı beyan edilebilir
 - Tavan taşıyıcı profil (alüminyum) — 7610.90 — T-profil, askı ve baffle taşıyıcıları
 - Alçı tavan plakası — 6809.11 — Kâğıt/karton kaplı alçı esaslı plakalar
 - Lineer LED armatür — 9405.11 / 9405.40 — LED ışık kaynaklı armatürler; sürücü ayrı olabilir
