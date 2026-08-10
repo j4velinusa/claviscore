@@ -34,17 +34,16 @@ Türk kapı kilidi/donanımı ihracatçısı Claviscor'un sitesi: public vitrin 
 - `npm run build` ve `npm run lint` temiz kalmalı; `design/` lint'ten hariç.
 
 ## Dağıtım (Vercel)
-- **AÇIK SORUN (10.08.2026'dan beri):** deploy'lar `Deployment Blocked — the commit
+- **Repo public kalmalı.** 10.08.2026'da deploy'lar `Deployment Blocked — the commit
   author did not have contributing access to the project on Vercel / The Hobby Plan
-  does not support collaboration for private repositories` ile reddediliyor. Build
-  hiç başlamıyor; bu yüzden yerelde temiz `npm run build` bunu yakalamaz. Son yayına
-  çıkan sürüm `7996531` (03.08.2026).
-- Elenen nedenler — tekrar araştırmadan önce oku: commit author/committer e-postası
-  (`doganaykac3169@gmail.com`), çözümlenen GitHub hesabı ve push actor'ı, 3 Ağustos'ta
-  **başarılı** olan deploy'larla birebir aynı (`j4velinusa`, repo sahibi). Günlük
-  deployment kotası dolu değil. `Co-Authored-By:` trailer'ı olan ve olmayan commit'ler
-  aynı şekilde engellendi, yani trailer sebep değil. Neden GitHub tarafında değil,
-  Vercel hesabının GitHub bağlantısında aranmalı.
+  does not support collaboration for private repositories` ile reddedildi. Repo public
+  yapılınca çözüldü. Tekrar private'a alınırsa aynı duvara çarpılır; o durumda tek
+  çıkış Pro'ya geçmek.
+- Bu blokajda build hiç başlamıyor, yani yerelde temiz `npm run build` bunu yakalamaz.
+  Elenen nedenler (tekrar araştırma): commit author/committer e-postası, çözümlenen
+  GitHub hesabı ve push actor'ı başarılı deploy'larla birebir aynıydı; günlük
+  deployment kotası dolu değildi; `Co-Authored-By:` trailer'ı olan ve olmayan
+  commit'ler aynı şekilde engellendi.
 - Deploy durumunu siteyi çekerek doğrulama: bot koruması ara ara `403 Vercel Security
   Checkpoint` döndürüyor ve boş içerik "yeni sürüm indi" sanılabiliyor. Bunun yerine:
   `gh api repos/j4velinusa/claviscore/commits/<sha>/status`
