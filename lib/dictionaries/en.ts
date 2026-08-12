@@ -30,10 +30,14 @@ export const en: Dictionary = {
   },
   families: {
     kicker: "Door collections",
-    title: { pre: "From the entrance", em: "to the interior,", post: "two focused ranges." },
+    title: { pre: "From the entrance", em: "to every room,", post: "a range for each project." },
     items: {
       steelDoor: { title: "Steel Doors", desc: "Twenty models for apartment, villa and residential entrances" },
+      premiumLacquer: { title: "Premium Lacquer", desc: "Twenty classic models with deep profiles and glazed options" },
+      deluxeLacquer: { title: "Deluxe Lacquer", desc: "Twenty lacquered models with a cleaner classic line" },
+      classicLacquer: { title: "Classic Lacquer", desc: "Twenty contemporary models built around line and geometry" },
       pvcSeries: { title: "PVC Series", desc: "Twenty interior models for homes, offices and hotels" },
+      melamineSeries: { title: "Melamine Series", desc: "Twenty models ranging from white to natural wood tones" },
     },
   },
   doorCollections: {
@@ -51,10 +55,30 @@ export const en: Dictionary = {
         intro: "We made this range for apartment, villa and residential entrances. Every model can be produced with different surface and hardware options.",
         productLabel: "Steel door model",
       },
+      premiumLacquer: {
+        kicker: "Premium Lacquer Collection",
+        intro: "Twenty models for projects drawn to deep profiles, balanced proportions and glazed alternatives. We match the RAL color and dimensions to the space.",
+        productLabel: "Premium lacquered door",
+      },
+      deluxeLacquer: {
+        kicker: "Deluxe Lacquer Collection",
+        intro: "Twenty models that give the classic panel door a cleaner look. We coordinate the color, glazing and hardware with the rest of the project.",
+        productLabel: "Deluxe lacquered door",
+      },
+      classicLacquer: {
+        kicker: "Classic Lacquer Collection",
+        intro: "Twenty models for contemporary interiors, shaped by clean lines and geometric details. Each one is available in RAL colors and glazed alternatives.",
+        productLabel: "Classic lacquered door",
+      },
       pvcSeries: {
         kicker: "Interior Door Collection",
         intro: "Twenty PVC door models for projects that want the warmth of wood indoors. We choose the color, texture, glazing and dimensions with you.",
         productLabel: "PVC interior door",
+      },
+      melamineSeries: {
+        kicker: "Melamine Door Collection",
+        intro: "Twenty straightforward, durable interior models ranging from white to natural wood tones. We confirm the texture and dimensions with a physical sample.",
+        productLabel: "Melamine interior door",
       },
     },
   },
@@ -471,9 +495,25 @@ export const en: Dictionary = {
         title: "Steel Door Collection — CLAVISCOR",
         description: "Explore 20 architectural entrance door models from the Claviscor 2026 steel door collection.",
       },
+      premiumLacquer: {
+        title: "Premium Lacquered Doors — CLAVISCOR",
+        description: "Explore 20 Premium lacquered door models and glazed alternatives from the Claviscor 2026 interior collection.",
+      },
+      deluxeLacquer: {
+        title: "Deluxe Lacquered Doors — CLAVISCOR",
+        description: "Explore 20 Deluxe lacquered door models and color options from the Claviscor 2026 interior collection.",
+      },
+      classicLacquer: {
+        title: "Classic Lacquered Doors — CLAVISCOR",
+        description: "Explore 20 contemporary Classic lacquered door models from the Claviscor 2026 interior collection.",
+      },
       pvcSeries: {
         title: "PVC Interior Doors — CLAVISCOR",
         description: "Explore 20 PVC door models and surface options from the Claviscor 2026 interior collection.",
+      },
+      melamineSeries: {
+        title: "Melamine Interior Doors — CLAVISCOR",
+        description: "Explore 20 melamine door models and wood texture options from the Claviscor 2026 interior collection.",
       },
     },
     blog: {

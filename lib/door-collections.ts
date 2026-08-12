@@ -1,7 +1,20 @@
-export const doorCollectionSlugs = ["celik-kapi", "pvc-serisi"] as const;
+export const doorCollectionSlugs = [
+  "celik-kapi",
+  "premium-lake",
+  "deluxe-lake",
+  "classic-lake",
+  "pvc-serisi",
+  "melamin-serisi",
+] as const;
 
 export type DoorCollectionSlug = (typeof doorCollectionSlugs)[number];
-export type DoorCollectionCopyKey = "steelDoor" | "pvcSeries";
+export type DoorCollectionCopyKey =
+  | "steelDoor"
+  | "premiumLacquer"
+  | "deluxeLacquer"
+  | "classicLacquer"
+  | "pvcSeries"
+  | "melamineSeries";
 
 export type DoorModel = {
   code: string;
@@ -39,6 +52,75 @@ const steelDoorModels: readonly DoorModel[] = [
   { code: "KD-171", image: "/catalog/celik-kapi/kd-171.webp" },
 ];
 
+const premiumLacquerModels: readonly DoorModel[] = [
+  { code: "VEGA I", image: "/catalog/premium-lake/vega-i.webp" },
+  { code: "VEGA II", image: "/catalog/premium-lake/vega-ii.webp" },
+  { code: "VEGA I-C", image: "/catalog/premium-lake/vega-i-c.webp" },
+  { code: "VEGA II-C", image: "/catalog/premium-lake/vega-ii-c.webp" },
+  { code: "PERA I", image: "/catalog/premium-lake/pera-i.webp" },
+  { code: "PERA II", image: "/catalog/premium-lake/pera-ii.webp" },
+  { code: "PERA I-C", image: "/catalog/premium-lake/pera-i-c.webp" },
+  { code: "PERA II-C", image: "/catalog/premium-lake/pera-ii-c.webp" },
+  { code: "RIGEL I", image: "/catalog/premium-lake/rigel-i.webp" },
+  { code: "RIGEL II", image: "/catalog/premium-lake/rigel-ii.webp" },
+  { code: "RIGEL I-C", image: "/catalog/premium-lake/rigel-i-c.webp" },
+  { code: "RIGEL II-C", image: "/catalog/premium-lake/rigel-ii-c.webp" },
+  { code: "DIAMOND", image: "/catalog/premium-lake/diamond.webp" },
+  { code: "DIAMOND-C", image: "/catalog/premium-lake/diamond-c.webp" },
+  { code: "EMERALD", image: "/catalog/premium-lake/emerald.webp" },
+  { code: "EMERALD-C", image: "/catalog/premium-lake/emerald-c.webp" },
+  { code: "STAR I", image: "/catalog/premium-lake/star-i.webp" },
+  { code: "STAR II", image: "/catalog/premium-lake/star-ii.webp" },
+  { code: "STAR I-C", image: "/catalog/premium-lake/star-i-c.webp" },
+  { code: "STAR II-C", image: "/catalog/premium-lake/star-ii-c.webp" },
+];
+
+const deluxeLacquerModels: readonly DoorModel[] = [
+  { code: "ALASKA", image: "/catalog/deluxe-lake/alaska.webp" },
+  { code: "ATLAS", image: "/catalog/deluxe-lake/atlas.webp" },
+  { code: "BENFICA I", image: "/catalog/deluxe-lake/benfica-i.webp" },
+  { code: "BYWOOD II", image: "/catalog/deluxe-lake/bywood-ii.webp" },
+  { code: "DOĞA II", image: "/catalog/deluxe-lake/doga-ii.webp" },
+  { code: "YENİ ROSA II", image: "/catalog/deluxe-lake/yeni-rosa-ii.webp" },
+  { code: "İNCİ", image: "/catalog/deluxe-lake/inci.webp" },
+  { code: "KARAT", image: "/catalog/deluxe-lake/karat.webp" },
+  { code: "PORTO I", image: "/catalog/deluxe-lake/porto-i.webp" },
+  { code: "SOLID II", image: "/catalog/deluxe-lake/solid-ii.webp" },
+  { code: "TİNA", image: "/catalog/deluxe-lake/tina.webp" },
+  { code: "TRIO", image: "/catalog/deluxe-lake/trio.webp" },
+  { code: "VALENCIA I", image: "/catalog/deluxe-lake/valencia-i.webp" },
+  { code: "VARNA", image: "/catalog/deluxe-lake/varna.webp" },
+  { code: "VESKA I", image: "/catalog/deluxe-lake/veska-i.webp" },
+  { code: "VIANA", image: "/catalog/deluxe-lake/viana.webp" },
+  { code: "BYWOOD II-C", image: "/catalog/deluxe-lake/bywood-ii-c.webp" },
+  { code: "YENİ ROSA II-C", image: "/catalog/deluxe-lake/yeni-rosa-ii-c.webp" },
+  { code: "TRIO-C", image: "/catalog/deluxe-lake/trio-c.webp" },
+  { code: "VARNA-C", image: "/catalog/deluxe-lake/varna-c.webp" },
+];
+
+const classicLacquerModels: readonly DoorModel[] = [
+  { code: "LF 001", image: "/catalog/classic-lake/lf-001.webp" },
+  { code: "LF 002", image: "/catalog/classic-lake/lf-002.webp" },
+  { code: "LF 003", image: "/catalog/classic-lake/lf-003.webp" },
+  { code: "LF 006", image: "/catalog/classic-lake/lf-006.webp" },
+  { code: "LF 007", image: "/catalog/classic-lake/lf-007.webp" },
+  { code: "LF 010", image: "/catalog/classic-lake/lf-010.webp" },
+  { code: "LF 011", image: "/catalog/classic-lake/lf-011.webp" },
+  { code: "LF 012", image: "/catalog/classic-lake/lf-012.webp" },
+  { code: "LF 013", image: "/catalog/classic-lake/lf-013.webp" },
+  { code: "LF 014", image: "/catalog/classic-lake/lf-014.webp" },
+  { code: "LF 015", image: "/catalog/classic-lake/lf-015.webp" },
+  { code: "LF 023", image: "/catalog/classic-lake/lf-023.webp" },
+  { code: "LF 030", image: "/catalog/classic-lake/lf-030.webp" },
+  { code: "LF 048", image: "/catalog/classic-lake/lf-048.webp" },
+  { code: "LF 054", image: "/catalog/classic-lake/lf-054.webp" },
+  { code: "LF 055", image: "/catalog/classic-lake/lf-055.webp" },
+  { code: "LF 003-C", image: "/catalog/classic-lake/lf-003-c.webp" },
+  { code: "LF 029-C", image: "/catalog/classic-lake/lf-029-c.webp" },
+  { code: "LF 034-C", image: "/catalog/classic-lake/lf-034-c.webp" },
+  { code: "LF 040-C", image: "/catalog/classic-lake/lf-040-c.webp" },
+];
+
 const pvcSeriesModels: readonly DoorModel[] = [
   { code: "PF 030_Y. MEŞE", image: "/catalog/pvc-serisi/pf-030-y-mese.webp" },
   { code: "PF 006_G. CEVİZ", image: "/catalog/pvc-serisi/pf-006-g-ceviz.webp" },
@@ -62,6 +144,29 @@ const pvcSeriesModels: readonly DoorModel[] = [
   { code: "P_RIVER-C_BEYAZ", image: "/catalog/pvc-serisi/p-river-c-beyaz.webp" },
 ];
 
+const melamineSeriesModels: readonly DoorModel[] = [
+  { code: "ML 001-BEYAZ", image: "/catalog/melamin-serisi/ml-001-beyaz.webp" },
+  { code: "ML 002-BEYAZ", image: "/catalog/melamin-serisi/ml-002-beyaz.webp" },
+  { code: "ML 003-BEYAZ", image: "/catalog/melamin-serisi/ml-003-beyaz.webp" },
+  { code: "ML 101-BEYAZ", image: "/catalog/melamin-serisi/ml-101-beyaz.webp" },
+  { code: "ML 201-BEYAZ", image: "/catalog/melamin-serisi/ml-201-beyaz.webp" },
+  { code: "ML 301-BEYAZ", image: "/catalog/melamin-serisi/ml-301-beyaz.webp" },
+  { code: "ML 401-BEYAZ", image: "/catalog/melamin-serisi/ml-401-beyaz.webp" },
+  { code: "ML 701-BEYAZ", image: "/catalog/melamin-serisi/ml-701-beyaz.webp" },
+  { code: "ML 001-B. CEVİZ", image: "/catalog/melamin-serisi/ml-001-b-ceviz.webp" },
+  { code: "ML 001-B. ANTİK", image: "/catalog/melamin-serisi/ml-001-b-antik.webp" },
+  { code: "ML 001-AKMEŞE", image: "/catalog/melamin-serisi/ml-001-akmese.webp" },
+  { code: "ML 001-BAŞAK", image: "/catalog/melamin-serisi/ml-001-basak.webp" },
+  { code: "MB 001-CEVİZ", image: "/catalog/melamin-serisi/mb-001-ceviz.webp" },
+  { code: "MB 001-BAMBU", image: "/catalog/melamin-serisi/mb-001-bambu.webp" },
+  { code: "MB 001-TEAK", image: "/catalog/melamin-serisi/mb-001-teak.webp" },
+  { code: "MB 001-BUZ MEŞE", image: "/catalog/melamin-serisi/mb-001-buz-mese.webp" },
+  { code: "ML 001-CEVİZ", image: "/catalog/melamin-serisi/ml-001-ceviz.webp" },
+  { code: "ML 001-ANTİK", image: "/catalog/melamin-serisi/ml-001-antik.webp" },
+  { code: "ML 001-İBERYA", image: "/catalog/melamin-serisi/ml-001-iberya.webp" },
+  { code: "MB 002-BUZ MEŞE", image: "/catalog/melamin-serisi/mb-002-buz-mese.webp" },
+];
+
 export const doorCollections: Record<DoorCollectionSlug, DoorCollection> = {
   "celik-kapi": {
     slug: "celik-kapi",
@@ -70,12 +175,40 @@ export const doorCollections: Record<DoorCollectionSlug, DoorCollection> = {
     mediaSlot: "aile-celik-kapi",
     models: steelDoorModels,
   },
+  "premium-lake": {
+    slug: "premium-lake",
+    copyKey: "premiumLacquer",
+    cardImage: "/catalog/premium-lake/vega-i.webp",
+    mediaSlot: "aile-premium-lake",
+    models: premiumLacquerModels,
+  },
+  "deluxe-lake": {
+    slug: "deluxe-lake",
+    copyKey: "deluxeLacquer",
+    cardImage: "/catalog/deluxe-lake/alaska.webp",
+    mediaSlot: "aile-deluxe-lake",
+    models: deluxeLacquerModels,
+  },
+  "classic-lake": {
+    slug: "classic-lake",
+    copyKey: "classicLacquer",
+    cardImage: "/catalog/classic-lake/lf-011.webp",
+    mediaSlot: "aile-classic-lake",
+    models: classicLacquerModels,
+  },
   "pvc-serisi": {
     slug: "pvc-serisi",
     copyKey: "pvcSeries",
     cardImage: "/catalog/pvc-serisi/pf-005-bal-teak.webp",
     mediaSlot: "aile-pvc-serisi",
     models: pvcSeriesModels,
+  },
+  "melamin-serisi": {
+    slug: "melamin-serisi",
+    copyKey: "melamineSeries",
+    cardImage: "/catalog/melamin-serisi/ml-001-basak.webp",
+    mediaSlot: "aile-melamin-serisi",
+    models: melamineSeriesModels,
   },
 };
 

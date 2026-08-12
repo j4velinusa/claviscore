@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { siteUrl } from "@/lib/site-url";
 import { localePath } from "@/lib/i18n";
 import { getPostSlugs } from "@/lib/blog";
+import { doorCollectionSlugs } from "@/lib/door-collections";
 
 const base = siteUrl();
 const abs = (path: string) => new URL(localePath("tr", path), base).toString();
@@ -13,8 +14,7 @@ const staticPaths = [
   "/hakkimizda",
   "/uretim",
   "/katalog",
-  "/katalog/celik-kapi",
-  "/katalog/pvc-serisi",
+  ...doorCollectionSlugs.map((slug) => `/katalog/${slug}`),
   "/blog",
   "/koleksiyon",
   "/yayinlar",

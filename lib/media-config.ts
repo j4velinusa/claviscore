@@ -81,7 +81,7 @@ export function mediaDir(kind: MediaKind): string {
   return kind === "pdf" ? "public/belgeler" : "public/gorseller";
 }
 
-/** Ana sayfadaki iki büyük görsel alanı. Tasarımda yer tutucu olarak duruyorlardı. */
+/** Ana sayfadaki görsel alanları. Tasarımda yer tutucu olarak duruyorlardı. */
 export const SITE_SLOTS: readonly MediaSlot[] = [
   {
     key: "hero",
@@ -103,7 +103,11 @@ export const SITE_SLOTS: readonly MediaSlot[] = [
   ...(
     [
       ["aile-celik-kapi", "Kapı koleksiyonu — Çelik Kapı"],
+      ["aile-premium-lake", "Kapı koleksiyonu — Premium Lake"],
+      ["aile-deluxe-lake", "Kapı koleksiyonu — Deluxe Lake"],
+      ["aile-classic-lake", "Kapı koleksiyonu — Classic Lake"],
       ["aile-pvc-serisi", "Kapı koleksiyonu — PVC Serisi"],
+      ["aile-melamin-serisi", "Kapı koleksiyonu — Melamin Serisi"],
       ["tavan-suspended", "Tavan — Asma Tavan"],
       ["tavan-lighting", "Tavan — Tavan Aydınlatma"],
       ["tavan-gypsum", "Tavan — Alçı Tavan"],

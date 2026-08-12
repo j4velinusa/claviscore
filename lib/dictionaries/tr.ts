@@ -30,10 +30,14 @@ export const tr = {
   },
   families: {
     kicker: "Kapı koleksiyonları",
-    title: { pre: "Dış kapıdan", em: "iç mekâna,", post: "iki ayrı seri." },
+    title: { pre: "Dış kapıdan", em: "iç mekâna,", post: "her proje için bir seri." },
     items: {
       steelDoor: { title: "Çelik Kapı", desc: "Apartman, villa ve müstakil ev girişleri için 20 model" },
+      premiumLacquer: { title: "Premium Lake", desc: "Derin profiller ve camlı seçeneklerle 20 klasik model" },
+      deluxeLacquer: { title: "Deluxe Lake", desc: "Yalınlaştırılmış klasik çizgilerle 20 lake model" },
+      classicLacquer: { title: "Classic Lake", desc: "Geometri ve sade yüzeylerle 20 çağdaş model" },
       pvcSeries: { title: "PVC Serisi", desc: "Ev, ofis ve otel projeleri için 20 iç mekân modeli" },
+      melamineSeries: { title: "Melamin Serisi", desc: "Beyazdan doğal ahşap tonlarına uzanan 20 model" },
     },
   },
   doorCollections: {
@@ -51,10 +55,30 @@ export const tr = {
         intro: "Bu seriyi apartman, villa ve müstakil ev girişleri için hazırladık. Her modeli farklı yüzey ve donanım seçenekleriyle üretebiliriz.",
         productLabel: "Çelik kapı modeli",
       },
+      premiumLacquer: {
+        kicker: "Premium Lake Koleksiyonu",
+        intro: "Derin profilleri, dengeli oranları ve camlı alternatifleri seven projeler için 20 model. Lake rengini RAL koduna, ölçüyü de mekâna göre birlikte belirliyoruz.",
+        productLabel: "Premium lake kapı modeli",
+      },
+      deluxeLacquer: {
+        kicker: "Deluxe Lake Koleksiyonu",
+        intro: "Klasik panel çizgisini daha sade bir görünümle isteyen projeler için 20 model. Renk, cam ve donanım seçeneklerini projenin bütünüyle eşleştiriyoruz.",
+        productLabel: "Deluxe lake kapı modeli",
+      },
+      classicLacquer: {
+        kicker: "Classic Lake Koleksiyonu",
+        intro: "Temiz çizgiler ve geometrik detaylarla çağdaş iç mekânlara uyum sağlayan 20 model. Her model RAL renkleri ve camlı alternatiflerle hazırlanabilir.",
+        productLabel: "Classic lake kapı modeli",
+      },
       pvcSeries: {
         kicker: "İç Mekân Kapı Koleksiyonu",
         intro: "İç mekânda sıcak bir ahşap görünümü isteyen projeler için 20 PVC kapı modeli. Renk, doku, cam ve ölçü seçeneklerini birlikte belirliyoruz.",
         productLabel: "PVC iç mekân kapısı",
+      },
+      melamineSeries: {
+        kicker: "Melamin Kapı Koleksiyonu",
+        intro: "Beyazdan doğal ahşap tonlarına uzanan 20 model; sade, dayanıklı ve kolay eşleşen bir iç mekân serisi. Doku ve ölçüyü fiziksel numuneyle netleştiriyoruz.",
+        productLabel: "Melamin iç mekân kapısı",
       },
     },
   },
@@ -479,9 +503,25 @@ export const tr = {
         title: "Çelik Kapı Koleksiyonu — CLAVISCOR",
         description: "Claviscor 2026 çelik kapı koleksiyonundaki 20 mimari giriş kapısı modelini inceleyin.",
       },
+      premiumLacquer: {
+        title: "Premium Lake Kapılar — CLAVISCOR",
+        description: "Claviscor 2026 iç mekân koleksiyonundaki 20 Premium Lake kapı modelini ve camlı alternatifleri inceleyin.",
+      },
+      deluxeLacquer: {
+        title: "Deluxe Lake Kapılar — CLAVISCOR",
+        description: "Claviscor 2026 iç mekân koleksiyonundaki 20 Deluxe Lake kapı modelini ve renk seçeneklerini inceleyin.",
+      },
+      classicLacquer: {
+        title: "Classic Lake Kapılar — CLAVISCOR",
+        description: "Claviscor 2026 iç mekân koleksiyonundaki 20 çağdaş Classic Lake kapı modelini inceleyin.",
+      },
       pvcSeries: {
         title: "PVC İç Mekân Kapıları — CLAVISCOR",
         description: "Claviscor 2026 iç mekân koleksiyonundaki 20 PVC kapı modelini ve yüzey seçeneğini inceleyin.",
+      },
+      melamineSeries: {
+        title: "Melamin İç Mekân Kapıları — CLAVISCOR",
+        description: "Claviscor 2026 iç mekân koleksiyonundaki 20 melamin kapı modelini ve ahşap doku seçeneklerini inceleyin.",
       },
     },
     blog: {
