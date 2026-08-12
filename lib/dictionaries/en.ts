@@ -32,20 +32,23 @@ export const en: Dictionary = {
     kicker: "Door collections",
     title: { pre: "From the entrance", em: "to every room,", post: "a range for each project." },
     items: {
-      steelDoor: { title: "Steel Doors", desc: "Twenty models for apartment, villa and residential entrances" },
-      premiumLacquer: { title: "Premium Lacquer", desc: "Twenty classic models with deep profiles and glazed options" },
-      deluxeLacquer: { title: "Deluxe Lacquer", desc: "Twenty lacquered models with a cleaner classic line" },
-      classicLacquer: { title: "Classic Lacquer", desc: "Twenty contemporary models built around line and geometry" },
-      pvcSeries: { title: "PVC Series", desc: "Twenty interior models for homes, offices and hotels" },
-      melamineSeries: { title: "Melamine Series", desc: "Twenty models ranging from white to natural wood tones" },
+      steelDoor: { title: "Steel Doors", desc: "Strong surface options for apartment, villa and residential entrances", count: "20 models" },
+      flushEntrance: { title: "Flush Entrance", desc: "An entrance system that aligns the door leaf with its outer trim", count: "13 models" },
+      aluminumEntrance: { title: "Aluminum Entrance", desc: "Modern profiles paired with wood and stone-effect surfaces", count: "4 models + 2 architectural references" },
+      emergencyExit: { title: "Emergency Exit", desc: "Panic-bar doors designed for quick, controlled evacuation", count: "2 models" },
+      premiumLacquer: { title: "Premium Lacquer", desc: "A confident classic look with deep profiles and glazed options", count: "20 models" },
+      deluxeLacquer: { title: "Deluxe Lacquer", desc: "Classic panel lines with a cleaner, quieter appearance", count: "20 models" },
+      classicLacquer: { title: "Classic Lacquer", desc: "Geometric details and simple surfaces for contemporary interiors", count: "20 models" },
+      pvcSeries: { title: "PVC Series", desc: "A broad choice of textures for homes, offices and hotels", count: "20 models" },
+      melamineSeries: { title: "Melamine Series", desc: "Simple surfaces ranging from white to natural wood tones", count: "20 models" },
     },
   },
   doorCollections: {
     breadcrumbHome: "Home",
     breadcrumbCatalog: "Door Collections",
-    modelCount: "20 models",
     collectionYear: "2026 collection",
     modelLabel: "Models",
+    referenceLabel: "Architectural reference",
     quoteTitle: "Let's turn the door you have in mind into a clear specification.",
     quoteBody: "Send us the model codes you like, the quantity and door dimensions. We'll prepare a quote with suitable finish and hardware options.",
     quoteCta: "Talk through the project",
@@ -54,6 +57,21 @@ export const en: Dictionary = {
         kicker: "Steel Door Collection",
         intro: "We made this range for apartment, villa and residential entrances. Every model can be produced with different surface and hardware options.",
         productLabel: "Steel door model",
+      },
+      flushEntrance: {
+        kicker: "Flush Entrance Collection",
+        intro: "Thirteen entrance models that align the door leaf with its outer trim. We coordinate the finish, dimensions and hardware with the facade details.",
+        productLabel: "Flush entrance door",
+      },
+      aluminumEntrance: {
+        kicker: "Aluminum Entrance Systems",
+        intro: "Four coded models and two architectural references that demonstrate the material approach. We define the profile, panel, glazing and lock around the opening and climate conditions.",
+        productLabel: "Aluminum entrance door",
+      },
+      emergencyExit: {
+        kicker: "Emergency Exit Doors",
+        intro: "Two panic-bar door models for evacuation routes. We review the opening direction, hardware and fire performance against the project's certification scope.",
+        productLabel: "Emergency exit door",
       },
       premiumLacquer: {
         kicker: "Premium Lacquer Collection",
@@ -494,6 +512,18 @@ export const en: Dictionary = {
       steelDoor: {
         title: "Steel Door Collection — CLAVISCOR",
         description: "Explore 20 architectural entrance door models from the Claviscor 2026 steel door collection.",
+      },
+      flushEntrance: {
+        title: "Flush Entrance Doors — CLAVISCOR",
+        description: "Explore 13 flush entrance door models designed to integrate with the wall in the Claviscor 2026 collection.",
+      },
+      aluminumEntrance: {
+        title: "Aluminum Entrance Doors — CLAVISCOR",
+        description: "Explore 4 aluminum entrance door models and 2 architectural references from the Claviscor 2026 collection.",
+      },
+      emergencyExit: {
+        title: "Emergency Exit Doors — CLAVISCOR",
+        description: "Explore the Claviscor Y-003 and Y-011 panic-bar emergency exit door models.",
       },
       premiumLacquer: {
         title: "Premium Lacquered Doors — CLAVISCOR",

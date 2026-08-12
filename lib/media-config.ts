@@ -103,6 +103,9 @@ export const SITE_SLOTS: readonly MediaSlot[] = [
   ...(
     [
       ["aile-celik-kapi", "Kapı koleksiyonu — Çelik Kapı"],
+      ["aile-hemyuz", "Kapı koleksiyonu — Hemyüz"],
+      ["aile-aluminyum-giris", "Kapı koleksiyonu — Alüminyum Giriş"],
+      ["aile-acil-cikis", "Kapı koleksiyonu — Acil Çıkış"],
       ["aile-premium-lake", "Kapı koleksiyonu — Premium Lake"],
       ["aile-deluxe-lake", "Kapı koleksiyonu — Deluxe Lake"],
       ["aile-classic-lake", "Kapı koleksiyonu — Classic Lake"],

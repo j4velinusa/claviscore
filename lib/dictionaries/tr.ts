@@ -32,20 +32,23 @@ export const tr = {
     kicker: "Kapı koleksiyonları",
     title: { pre: "Dış kapıdan", em: "iç mekâna,", post: "her proje için bir seri." },
     items: {
-      steelDoor: { title: "Çelik Kapı", desc: "Apartman, villa ve müstakil ev girişleri için 20 model" },
-      premiumLacquer: { title: "Premium Lake", desc: "Derin profiller ve camlı seçeneklerle 20 klasik model" },
-      deluxeLacquer: { title: "Deluxe Lake", desc: "Yalınlaştırılmış klasik çizgilerle 20 lake model" },
-      classicLacquer: { title: "Classic Lake", desc: "Geometri ve sade yüzeylerle 20 çağdaş model" },
-      pvcSeries: { title: "PVC Serisi", desc: "Ev, ofis ve otel projeleri için 20 iç mekân modeli" },
-      melamineSeries: { title: "Melamin Serisi", desc: "Beyazdan doğal ahşap tonlarına uzanan 20 model" },
+      steelDoor: { title: "Çelik Kapı", desc: "Apartman, villa ve müstakil ev girişleri için güçlü yüzey seçenekleri", count: "20 model" },
+      flushEntrance: { title: "Hemyüz", desc: "Kanat ve dış pervazı aynı düzlemde buluşturan giriş sistemi", count: "13 model" },
+      aluminumEntrance: { title: "Alüminyum Giriş", desc: "Modern profil yapısı, ahşap ve taş etkili yüzeylerle bir arada", count: "4 model + 2 mimari referans" },
+      emergencyExit: { title: "Acil Çıkış", desc: "Panik barlı, hızlı tahliyeye uygun kapı çözümleri", count: "2 model" },
+      premiumLacquer: { title: "Premium Lake", desc: "Derin profiller ve camlı seçeneklerle güçlü bir klasik yorum", count: "20 model" },
+      deluxeLacquer: { title: "Deluxe Lake", desc: "Klasik panel çizgisini daha yalın bir görünümle buluşturur", count: "20 model" },
+      classicLacquer: { title: "Classic Lake", desc: "Geometri ve sade yüzeylerle çağdaş iç mekânlara uyum sağlar", count: "20 model" },
+      pvcSeries: { title: "PVC Serisi", desc: "Ev, ofis ve otel projeleri için zengin doku seçenekleri", count: "20 model" },
+      melamineSeries: { title: "Melamin Serisi", desc: "Beyazdan doğal ahşap tonlarına uzanan yalın yüzeyler", count: "20 model" },
     },
   },
   doorCollections: {
     breadcrumbHome: "Ana Sayfa",
     breadcrumbCatalog: "Kapı Koleksiyonları",
-    modelCount: "20 model",
     collectionYear: "2026 koleksiyonu",
     modelLabel: "Modeller",
+    referenceLabel: "Mimari referans",
     quoteTitle: "Aklınızdaki kapıyı birlikte netleştirelim.",
     quoteBody: "Beğendiğiniz model kodlarını, adedi ve kapı ölçülerini gönderin. Yüzey ve donanım seçenekleriyle size uygun bir teklif hazırlayalım.",
     quoteCta: "Projeyi konuşalım",
@@ -54,6 +57,21 @@ export const tr = {
         kicker: "Çelik Kapı Koleksiyonu",
         intro: "Bu seriyi apartman, villa ve müstakil ev girişleri için hazırladık. Her modeli farklı yüzey ve donanım seçenekleriyle üretebiliriz.",
         productLabel: "Çelik kapı modeli",
+      },
+      flushEntrance: {
+        kicker: "Hemyüz Koleksiyonu",
+        intro: "Kanadı ve dış pervazı aynı düzlemde buluşturan 13 giriş modeli. Yüzeyi, ölçüyü ve donanımı cephenin detaylarına göre birlikte belirliyoruz.",
+        productLabel: "Hemyüz giriş kapısı",
+      },
+      aluminumEntrance: {
+        kicker: "Alüminyum Giriş Sistemleri",
+        intro: "Dört kodlu model ve malzeme yaklaşımını gösteren iki mimari referans. Profil, panel, cam ve kilit seçeneklerini açıklığa ve iklim koşullarına göre netleştiriyoruz.",
+        productLabel: "Alüminyum giriş kapısı",
+      },
+      emergencyExit: {
+        kicker: "Acil Çıkış Kapıları",
+        intro: "Tahliye güzergâhları için panik barlı iki kapı modeli. Açılım yönünü, donanımı ve yangın performansını projenin belge kapsamıyla birlikte değerlendiriyoruz.",
+        productLabel: "Acil çıkış kapısı",
       },
       premiumLacquer: {
         kicker: "Premium Lake Koleksiyonu",
@@ -502,6 +520,18 @@ export const tr = {
       steelDoor: {
         title: "Çelik Kapı Koleksiyonu — CLAVISCOR",
         description: "Claviscor 2026 çelik kapı koleksiyonundaki 20 mimari giriş kapısı modelini inceleyin.",
+      },
+      flushEntrance: {
+        title: "Hemyüz Giriş Kapıları — CLAVISCOR",
+        description: "Claviscor 2026 koleksiyonundaki duvarla bütünleşen 13 Hemyüz giriş kapısı modelini inceleyin.",
+      },
+      aluminumEntrance: {
+        title: "Alüminyum Giriş Kapıları — CLAVISCOR",
+        description: "Claviscor 2026 koleksiyonundaki 4 alüminyum giriş kapısı modelini ve 2 mimari referansı inceleyin.",
+      },
+      emergencyExit: {
+        title: "Acil Çıkış Kapıları — CLAVISCOR",
+        description: "Claviscor panik barlı Y-003 ve Y-011 acil çıkış kapısı modellerini inceleyin.",
       },
       premiumLacquer: {
         title: "Premium Lake Kapılar — CLAVISCOR",

@@ -1,5 +1,8 @@
 export const doorCollectionSlugs = [
   "celik-kapi",
+  "hemyuz",
+  "aluminyum-giris",
+  "acil-cikis",
   "premium-lake",
   "deluxe-lake",
   "classic-lake",
@@ -10,6 +13,9 @@ export const doorCollectionSlugs = [
 export type DoorCollectionSlug = (typeof doorCollectionSlugs)[number];
 export type DoorCollectionCopyKey =
   | "steelDoor"
+  | "flushEntrance"
+  | "aluminumEntrance"
+  | "emergencyExit"
   | "premiumLacquer"
   | "deluxeLacquer"
   | "classicLacquer"
@@ -19,6 +25,7 @@ export type DoorCollectionCopyKey =
 export type DoorModel = {
   code: string;
   image: string;
+  kind?: "model" | "reference";
 };
 
 export type DoorCollection = {
@@ -50,6 +57,44 @@ const steelDoorModels: readonly DoorModel[] = [
   { code: "KD-169", image: "/catalog/celik-kapi/kd-169.webp" },
   { code: "KD-170", image: "/catalog/celik-kapi/kd-170.webp" },
   { code: "KD-171", image: "/catalog/celik-kapi/kd-171.webp" },
+];
+
+const flushEntranceModels: readonly DoorModel[] = [
+  { code: "HM-101", image: "/catalog/hemyuz/hm-101.webp" },
+  { code: "HM-102", image: "/catalog/hemyuz/hm-102.webp" },
+  { code: "HM-103", image: "/catalog/hemyuz/hm-103.webp" },
+  { code: "HM-104", image: "/catalog/hemyuz/hm-104.webp" },
+  { code: "HM-105", image: "/catalog/hemyuz/hm-105.webp" },
+  { code: "HM-106", image: "/catalog/hemyuz/hm-106.webp" },
+  { code: "HM-107", image: "/catalog/hemyuz/hm-107.webp" },
+  { code: "HM-108", image: "/catalog/hemyuz/hm-108.webp" },
+  { code: "HM-109", image: "/catalog/hemyuz/hm-109.webp" },
+  { code: "HM-110", image: "/catalog/hemyuz/hm-110.webp" },
+  { code: "HM-111", image: "/catalog/hemyuz/hm-111.webp" },
+  { code: "HM-112", image: "/catalog/hemyuz/hm-112.webp" },
+  { code: "HM-113", image: "/catalog/hemyuz/hm-113.webp" },
+];
+
+const aluminumEntranceModels: readonly DoorModel[] = [
+  { code: "ALP-523", image: "/catalog/aluminyum-giris/alp-523.webp" },
+  { code: "ALP-513", image: "/catalog/aluminyum-giris/alp-513.webp" },
+  { code: "ALP-511", image: "/catalog/aluminyum-giris/alp-511.webp" },
+  { code: "ALP-504", image: "/catalog/aluminyum-giris/alp-504.webp" },
+  {
+    code: "DİKEY AHŞAP RİTİM",
+    image: "/catalog/aluminyum-giris/dikey-ahsap-ritim.webp",
+    kind: "reference",
+  },
+  {
+    code: "DOĞAL TAŞ ETKİSİ",
+    image: "/catalog/aluminyum-giris/dogal-tas-etkisi.webp",
+    kind: "reference",
+  },
+];
+
+const emergencyExitModels: readonly DoorModel[] = [
+  { code: "Y-003", image: "/catalog/acil-cikis/y-003.webp" },
+  { code: "Y-011", image: "/catalog/acil-cikis/y-011.webp" },
 ];
 
 const premiumLacquerModels: readonly DoorModel[] = [
@@ -174,6 +219,27 @@ export const doorCollections: Record<DoorCollectionSlug, DoorCollection> = {
     cardImage: "/catalog/celik-kapi/kt-501.webp",
     mediaSlot: "aile-celik-kapi",
     models: steelDoorModels,
+  },
+  hemyuz: {
+    slug: "hemyuz",
+    copyKey: "flushEntrance",
+    cardImage: "/catalog/hemyuz/hm-101.webp",
+    mediaSlot: "aile-hemyuz",
+    models: flushEntranceModels,
+  },
+  "aluminyum-giris": {
+    slug: "aluminyum-giris",
+    copyKey: "aluminumEntrance",
+    cardImage: "/catalog/aluminyum-giris/alp-523.webp",
+    mediaSlot: "aile-aluminyum-giris",
+    models: aluminumEntranceModels,
+  },
+  "acil-cikis": {
+    slug: "acil-cikis",
+    copyKey: "emergencyExit",
+    cardImage: "/catalog/acil-cikis/y-003.webp",
+    mediaSlot: "aile-acil-cikis",
+    models: emergencyExitModels,
   },
   "premium-lake": {
     slug: "premium-lake",

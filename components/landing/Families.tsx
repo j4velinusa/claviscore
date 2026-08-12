@@ -59,7 +59,7 @@ function FamilyCard({
   href,
   title,
   desc,
-  modelCount,
+  countLabel,
   imageSrc,
   number,
   delay,
@@ -67,13 +67,13 @@ function FamilyCard({
   href: string;
   title: string;
   desc: string;
-  modelCount: string;
+  countLabel: string;
   imageSrc: string;
   number: string;
   delay: number;
 }) {
   return (
-    <Reveal delay={delay}>
+    <Reveal delay={delay} className="h-full">
       <Link href={href} className={`${cardClass} group block`}>
         <div className="relative aspect-[16/10] overflow-hidden bg-[#E9E3D8]">
           <div
@@ -90,7 +90,7 @@ function FamilyCard({
             src={imageSrc}
             alt=""
             fill
-            sizes="(min-width: 1120px) 518px, (min-width: 640px) 50vw, 100vw"
+            sizes="(min-width: 1120px) 348px, (min-width: 640px) 50vw, 100vw"
             quality={92}
             className="object-contain object-center p-5 sm:p-7 transition-transform duration-[600ms] ease-swift group-hover:scale-[1.035]"
           />
@@ -104,7 +104,7 @@ function FamilyCard({
           </div>
           <div className="text-[15px] text-muted mt-1.5 leading-[1.5]">{desc}</div>
           <div className="font-mono text-[11px] tracking-[0.06em] uppercase text-bronze-2 mt-5">
-            {modelCount}
+            {countLabel}
           </div>
         </div>
       </Link>
@@ -165,7 +165,7 @@ export function ProductFamilies({
         </Reveal>
       </section>
       <div className="mx-auto max-w-[1120px] px-5 sm:px-8 pt-6">
-        <div className="grid sm:grid-cols-2 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {collections.map((collection, i) => {
             const copy = t.items[collection.copyKey];
             return (
@@ -174,9 +174,9 @@ export function ProductFamilies({
                 href={localePath(locale, `/katalog/${collection.slug}`)}
                 title={copy.title}
                 desc={copy.desc}
-                modelCount={dict.doorCollections.modelCount}
+                countLabel={copy.count}
                 imageSrc={media[slotId("site", collection.mediaSlot)] ?? collection.cardImage}
-                number={`0${i + 1}`}
+                number={String(i + 1).padStart(2, "0")}
                 delay={i * 90}
               />
             );

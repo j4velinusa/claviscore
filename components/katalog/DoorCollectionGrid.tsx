@@ -42,7 +42,7 @@ export function DoorCollectionGrid({
               </h1>
               <p className="mt-6 max-w-[620px] text-[17px] sm:text-[19px] leading-[1.65] text-[#C9C1B4]">{copy.intro}</p>
               <div className="mt-8 flex flex-wrap gap-2.5 font-mono text-[10px] tracking-[0.07em] uppercase">
-                <span className="rounded-full border border-white/15 px-3.5 py-2">{common.modelCount}</span>
+                <span className="rounded-full border border-white/15 px-3.5 py-2">{family.count}</span>
                 <span className="rounded-full border border-white/15 px-3.5 py-2">{common.collectionYear}</span>
               </div>
             </Reveal>
@@ -57,7 +57,7 @@ export function DoorCollectionGrid({
               aria-hidden
               className="absolute right-1/2 bottom-6 translate-x-1/2 font-mono text-[180px] sm:text-[240px] leading-none text-white/[0.035]"
             >
-              20
+              {String(collection.models.length).padStart(2, "0")}
             </span>
             <Image
               src={collection.cardImage}
@@ -78,7 +78,7 @@ export function DoorCollectionGrid({
             <p className="text-[12px] font-semibold tracking-[0.12em] uppercase text-bronze-2">{copy.kicker}</p>
             <h2 className="mt-2 text-[30px] sm:text-[36px] font-bold tracking-[-0.03em]">{common.modelLabel}</h2>
           </div>
-          <span className="font-mono text-[11px] text-muted whitespace-nowrap">{common.modelCount}</span>
+          <span className="font-mono text-[11px] text-muted whitespace-nowrap">{family.count}</span>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5">
@@ -104,7 +104,9 @@ export function DoorCollectionGrid({
                 <h3 className="font-mono text-[11px] sm:text-[12px] leading-[1.45] font-medium tracking-[0.02em] break-words">
                   {model.code}
                 </h3>
-                <p className="mt-1.5 text-xs text-muted">{copy.productLabel}</p>
+                <p className="mt-1.5 text-xs text-muted">
+                  {model.kind === "reference" ? common.referenceLabel : copy.productLabel}
+                </p>
               </div>
             </article>
           ))}
