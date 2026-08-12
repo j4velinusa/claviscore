@@ -25,15 +25,6 @@ export function Engineering({ dict, imageSrc }: { dict: Dictionary; imageSrc?: s
                 {t.imageCaption}
               </div>
             )}
-            <div
-              className={`absolute top-6 left-6 font-mono text-[11px] text-bronze-2 leading-[1.9] ${
-                imageSrc ? "bg-cream/85 rounded-xl px-3.5 py-2" : ""
-              }`}
-            >
-              {t.specLines.map((line) => (
-                <div key={line}>{line}</div>
-              ))}
-            </div>
           </div>
           <div className="px-8 py-10 sm:px-14 sm:py-16 flex flex-col justify-center">
             <p className="text-[13px] font-semibold tracking-[0.12em] uppercase text-bronze-2 mb-5">{t.kicker}</p>

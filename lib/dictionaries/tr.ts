@@ -21,7 +21,6 @@ export const tr = {
     ctaCatalog: "Kataloğu indir",
     ctaTeam: "İhracat ekibiyle görüş",
     imageCaption: "[ ÜRÜN GÖRSELİ — kapı kolu takımı ]",
-    specLines: ["rozetli set", "pirinç gövde", "3 kaplama seçeneği"],
   },
   stats: {
     countries: "ülkeye ihracat",
@@ -64,7 +63,6 @@ export const tr = {
       { value: "OEM", label: "özel üretim" },
     ],
     imageCaption: "[ KESİT GÖRSELİ — rulman & yay ]",
-    specLines: ["tol. ±0,02 mm", "nikel kaplama", "200.000 çevrim"],
   },
   exportPanel: {
     kicker: "İhracat",

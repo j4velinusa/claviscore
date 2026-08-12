@@ -95,17 +95,6 @@ export function Hero({
                 </div>
               </>
             )}
-            {/* Fotoğrafın üstünde okunabilirlik için krem zemin; yer tutucu üzerinde
-                zemine gerek yok, tasarımdaki gibi çıplak duruyor. */}
-            <div
-              className={`absolute top-8 right-8 font-mono text-[11px] text-bronze-2 text-right leading-[1.9] ${
-                imageSrc ? "bg-cream/85 rounded-xl px-3.5 py-2" : ""
-              }`}
-            >
-              {t.specLines.map((line) => (
-                <div key={line}>{line}</div>
-              ))}
-            </div>
           </div>
         </Reveal>
       </section>

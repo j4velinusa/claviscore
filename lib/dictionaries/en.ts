@@ -21,7 +21,6 @@ export const en: Dictionary = {
     ctaCatalog: "Download catalog",
     ctaTeam: "Talk to the export team",
     imageCaption: "[ PRODUCT IMAGE — door handle set ]",
-    specLines: ["rosette set", "brass body", "3 finish options"],
   },
   stats: {
     countries: "countries served",
@@ -64,7 +63,6 @@ export const en: Dictionary = {
       { value: "OEM", label: "custom manufacturing" },
     ],
     imageCaption: "[ SECTION VIEW — bearing & spring ]",
-    specLines: ["tol. ±0.02 mm", "nickel plating", "200,000 cycles"],
   },
   exportPanel: {
     kicker: "Export",
