@@ -2,7 +2,6 @@
   {
     "id": "katalog",
     "group": "katalog",
-    "featured": true,
     "format": "A4",
     "langs": "TR / EN",
     "readPath": "/swan",
@@ -48,6 +47,32 @@
       "kind": "Magazine",
       "title": "Riviera Aesthetic by Claviscor",
       "desc": "MEKÂNIN SESSİZ RİTMİ\n\nBazı mekânlar yalnızca görülmez; hatırlanır.\n\nÖğle güneşinin beyaz bir duvara bıraktığı keskin gölge, turkuaz bir havuzun tavana vuran titreşimi, denizi ikiye ayıran ahşap bir teknenin ardında kalan iz… Riviera estetiği tam da bu anlardan doğar. Gösterişli olmadan güçlü, nostaljik olmadan zamansızdır.\n\n1980’lerin Akdeniz hayali; terrakota zeminler, kobalt mavisi gökyüzü, ince metal çizgiler ve geniş açıklıklarla kurulan bir özgürlük fikriydi. Mimari burada hayatı sınırlandırmaz; ona akış verir. Kapılar içerisiyle dışarısı arasındaki mesafeyi yumuşatır, tavan ışığı yönlendirir, yüzeyler gün boyunca değişen renkleri taşır.\n\nİyi tasarımın etkisi önce hissedilir, sonra fark edilir.\n\nClaviscor bu görünmeyen etkiyi mekanizmanın diliyle kurar. Bir kapı kolunun avuçta bıraktığı ağırlık, sessizce hareket eden bir menteşe, güven veren bir kilit, mekânın çizgisini bozmadan ona karışan bir tavan sistemi… Her ayrıntı, yaşamın ritmine eşlik etmek için vardır.\n\nÇünkü gerçek lüks, bir nesnenin kendini sürekli göstermesi değil; yıllar boyunca kusursuz biçimde görevini yapmasıdır.\n\nBu seçkide suyun hareketi plağın oluklarına, yüzücünün çizgisi mimarinin geometrisine, teknenin rotası bir kapının açılışına dönüşüyor. Görseller farklı dünyalardan geliyormuş gibi görünse de aynı hissi taşıyor: ferahlık, özgürlük ve ölçülü bir zarafet.\n\nRiviera Estetik by Claviscor, geçmişe dönmek için değil; zamansız olanı yeniden hatırlamak için hazırlandı.\n\nGüneşin altında sadeleşen, suyun yanında yavaşlayan ve her ayrıntısı düşünülmüş bir hayat için.\n\nMekân değişir. Hissi kalır."
+    }
+  },
+  {
+    "id": "celik-kapi",
+    "group": "katalog",
+    "featured": true,
+    "format": "A4",
+    "langs": "TR",
+    "readPath": "/celikkapi",
+    "cover": {
+      "theme": "krem",
+      "font": "serif",
+      "tag": "claviscor",
+      "title": "Alparslan",
+      "sub": "Hard as rock",
+      "foot": ""
+    },
+    "tr": {
+      "kind": "Katalog",
+      "title": "Alparslan Çelik Kapı",
+      "desc": ""
+    },
+    "en": {
+      "kind": "Katalog",
+      "title": "Alparslan Çelik Kapı",
+      "desc": ""
     }
   }
 ]
