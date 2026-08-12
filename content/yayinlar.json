@@ -74,5 +74,30 @@
       "title": "Alparslan Çelik Kapı",
       "desc": ""
     }
+  },
+  {
+    "id": "icmekan",
+    "group": "katalog",
+    "format": "A4",
+    "langs": "TR",
+    "readPath": "/icmekan",
+    "cover": {
+      "theme": "koyu",
+      "font": "sans",
+      "tag": "claviscor",
+      "title": "İLKE",
+      "sub": "Creation",
+      "foot": "desıgnbydoganaykac"
+    },
+    "tr": {
+      "kind": "Katalog",
+      "title": "İLKE İÇ MEKAN",
+      "desc": ""
+    },
+    "en": {
+      "kind": "Katalog",
+      "title": "İLKE İÇ MEKAN",
+      "desc": ""
+    }
   }
 ]
