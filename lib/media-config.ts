@@ -99,14 +99,11 @@ export const SITE_SLOTS: readonly MediaSlot[] = [
     aspect: "4 / 5",
     maxEdge: 1800,
   },
-  // Ana sayfadaki ürün ailesi ve tavan kartları. Anahtarlar sözlükteki
-  // families.items / ceiling.items anahtarlarını izliyor — bileşen eşleştirmeyi
-  // bunun üzerinden yapıyor, ayrı bir tablo tutulmuyor.
+  // Ana sayfadaki kapı koleksiyonu ve tavan kartları.
   ...(
     [
-      ["aile-hinge", "Ürün ailesi — Menteşeler"],
-      ["aile-handle", "Ürün ailesi — Kapı Kolları"],
-      ["aile-hotel", "Ürün ailesi — Otel Kilit Sistemleri"],
+      ["aile-celik-kapi", "Kapı koleksiyonu — Çelik Kapı"],
+      ["aile-pvc-serisi", "Kapı koleksiyonu — PVC Serisi"],
       ["tavan-suspended", "Tavan — Asma Tavan"],
       ["tavan-lighting", "Tavan — Tavan Aydınlatma"],
       ["tavan-gypsum", "Tavan — Alçı Tavan"],

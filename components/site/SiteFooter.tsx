@@ -11,10 +11,9 @@ const credit = { href: "https://doganaykac.com", label: "doganaykac.com" } as co
 // Hakkımızda · Üretim · Sertifikalar · İhracat · İletişim.
 const corporatePaths = ["/hakkimizda", "/uretim", "/sertifikalar", "/ihracat", "/iletisim"];
 
-// Ürün kolonunun katalog kategorileri. Sıra sözlükteki footer.productLinks sırasını izler:
-// Menteşeler · Kapı Kolları · Otel Sistemleri · Tavan Sistemleri.
-// Değerler lib/products.ts'teki catalogTabs anahtarları; Catalog bunu ?kategori= ile okuyor.
-const productCategories = ["hinge", "handle", "hotel", "ceiling"];
+// Ürün kolonunun hedefleri. Sıra sözlükteki footer.productLinks sırasını izler:
+// Çelik Kapı · PVC Serisi · Tavan Sistemleri.
+const productPaths = ["/katalog/celik-kapi", "/katalog/pvc-serisi"];
 
 export function SiteFooter({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   return (
@@ -33,12 +32,14 @@ export function SiteFooter({ dict, locale }: { dict: Dictionary; locale: Locale 
           </div>
           <div className="flex flex-col gap-[11px] text-sm text-ink-3">
             {dict.footer.productLinks.map((label, i) => {
-              const category = productCategories[i];
-              const katalog = localePath(locale, "/katalog");
+              const path = productPaths[i];
+              const href = path
+                ? localePath(locale, path)
+                : `${localePath(locale, "/")}#tavan-sistemleri`;
               return (
                 <Link
                   key={label}
-                  href={category ? `${katalog}?kategori=${category}` : katalog}
+                  href={href}
                   className="hover:text-bronze-2 transition-colors"
                 >
                   {label}

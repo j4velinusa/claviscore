@@ -29,17 +29,33 @@ export const en: Dictionary = {
     founded: "founded",
   },
   families: {
-    kicker: "Product families",
-    title: { pre: "One language,", em: "three", post: "families." },
+    kicker: "Door collections",
+    title: { pre: "Two series,", em: "one", post: "design language." },
     items: {
-      hinge: { title: "Hinges", desc: "Ball-bearing, concealed & adjustable types" },
-      handle: { title: "Door Handles", desc: "Rose & backplate, matte/polished finish" },
-      hotel: { title: "Hotel Lock Systems", desc: "RFID & keypad, management software included" },
+      steelDoor: { title: "Steel Doors", desc: "Strong construction, refined surfaces and 20 architectural models" },
+      pvcSeries: { title: "PVC Series", desc: "Natural textures and neutral tones across 20 interior models" },
     },
-    accent: {
-      title: "Accessories & Spares",
-      desc: "Door stops, mounting kits, spare rosettes and screws",
-      cta: "See the whole family",
+  },
+  doorCollections: {
+    breadcrumbHome: "Home",
+    breadcrumbCatalog: "Door Collections",
+    modelCount: "20 models",
+    collectionYear: "2026 collection",
+    modelLabel: "Model selection",
+    quoteTitle: "Let's choose the right door for your project.",
+    quoteBody: "Share the model codes, quantities and dimensions; our project team will reply with suitable surface and hardware options.",
+    quoteCta: "Request a quote for this series",
+    categories: {
+      steelDoor: {
+        kicker: "Steel Door Collection",
+        intro: "Twenty models combining strong steel construction with wood, stone, metallic and monochrome surfaces for residential and villa entrances.",
+        productLabel: "Steel door model",
+      },
+      pvcSeries: {
+        kicker: "Interior Door Collection",
+        intro: "Twenty interior models pairing natural wood textures and neutral colors with the practical surface of PVC finishing.",
+        productLabel: "PVC interior door",
+      },
     },
   },
   ceiling: {
@@ -92,7 +108,7 @@ export const en: Dictionary = {
     products: "Products",
     corporate: "Company",
     contact: "Contact",
-    productLinks: ["Hinges", "Door Handles", "Hotel Systems", "Ceiling Systems"],
+    productLinks: ["Steel Doors", "PVC Series", "Ceiling Systems"],
     corporateLinks: ["About", "Manufacturing", "Certificates", "Export", "Contact"],
     rights: "CE · TSE · ISO 9001",
     credit: "Designed and coded by",
@@ -449,6 +465,16 @@ export const en: Dictionary = {
       title: "Product Catalog — CLAVISCOR",
       description:
         "The Claviscor product catalog — hinges, door handles, hotel lock systems, accessories and ceiling solutions. Write to our export team for samples and quotes.",
+    },
+    doorCollections: {
+      steelDoor: {
+        title: "Steel Door Collection — CLAVISCOR",
+        description: "Explore 20 architectural entrance door models from the Claviscor 2026 steel door collection.",
+      },
+      pvcSeries: {
+        title: "PVC Interior Doors — CLAVISCOR",
+        description: "Explore 20 PVC door models and surface options from the Claviscor 2026 interior collection.",
+      },
     },
     blog: {
       title: "Knowledge Center — CLAVISCOR",

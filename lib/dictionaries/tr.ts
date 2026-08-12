@@ -29,17 +29,33 @@ export const tr = {
     founded: "kuruluş yılı",
   },
   families: {
-    kicker: "Ürün aileleri",
-    title: { pre: "Tek dilden,", em: "üç", post: "aile." },
+    kicker: "Kapı koleksiyonları",
+    title: { pre: "İki seri,", em: "tek", post: "tasarım dili." },
     items: {
-      hinge: { title: "Menteşeler", desc: "Rulmanlı, gizli & ayarlanabilir tipler" },
-      handle: { title: "Kapı Kolları", desc: "Rozet & aynalı, mat/parlak kaplama" },
-      hotel: { title: "Otel Kilit Sistemleri", desc: "RFID & şifreli, yönetim yazılımı dahil" },
+      steelDoor: { title: "Çelik Kapı", desc: "Güçlü gövde, rafine yüzey ve 20 mimari model" },
+      pvcSeries: { title: "PVC Serisi", desc: "Doğal dokular ve nötr tonlarla 20 iç mekân modeli" },
     },
-    accent: {
-      title: "Aksesuar & Yedek",
-      desc: "Kapı stoperleri, montaj kitleri, yedek rozet ve vidalar",
-      cta: "Tüm aileyi gör",
+  },
+  doorCollections: {
+    breadcrumbHome: "Ana Sayfa",
+    breadcrumbCatalog: "Kapı Koleksiyonları",
+    modelCount: "20 model",
+    collectionYear: "2026 koleksiyonu",
+    modelLabel: "Model seçkisi",
+    quoteTitle: "Projeniz için doğru kapıyı birlikte seçelim.",
+    quoteBody: "Model kodlarını, adetleri ve ölçüleri paylaşın; proje ekibimiz uygun yüzey ve donanım seçenekleriyle dönsün.",
+    quoteCta: "Bu seri için teklif iste",
+    categories: {
+      steelDoor: {
+        kicker: "Çelik Kapı Koleksiyonu",
+        intro: "Konut ve villa girişleri için güçlü çelik gövdeyi ahşap, taş, metalik ve monokrom yüzeylerle buluşturan 20 model.",
+        productLabel: "Çelik kapı modeli",
+      },
+      pvcSeries: {
+        kicker: "İç Mekân Kapı Koleksiyonu",
+        intro: "Doğal ahşap dokularını ve nötr renkleri PVC kaplamanın pratik yüzeyiyle birleştiren 20 iç mekân modeli.",
+        productLabel: "PVC iç mekân kapısı",
+      },
     },
   },
   ceiling: {
@@ -92,7 +108,7 @@ export const tr = {
     products: "Ürünler",
     corporate: "Kurumsal",
     contact: "İletişim",
-    productLinks: ["Menteşeler", "Kapı Kolları", "Otel Sistemleri", "Tavan Sistemleri"],
+    productLinks: ["Çelik Kapı", "PVC Serisi", "Tavan Sistemleri"],
     corporateLinks: ["Hakkımızda", "Üretim", "Sertifikalar", "İhracat", "İletişim"],
     rights: "CE · TSE · ISO 9001",
     // Yapımcı künyesi. Alan adı çevrilmez, SiteFooter'da link olarak eklenir.
@@ -457,6 +473,16 @@ export const tr = {
       title: "Ürün Kataloğu — CLAVISCOR",
       description:
         "Menteşe, kapı kolu, otel kilit sistemleri, aksesuar ve tavan çözümleriyle Claviscor ürün kataloğu. Numune ve teklif için ihracat ekibimize yazın.",
+    },
+    doorCollections: {
+      steelDoor: {
+        title: "Çelik Kapı Koleksiyonu — CLAVISCOR",
+        description: "Claviscor 2026 çelik kapı koleksiyonundaki 20 mimari giriş kapısı modelini inceleyin.",
+      },
+      pvcSeries: {
+        title: "PVC İç Mekân Kapıları — CLAVISCOR",
+        description: "Claviscor 2026 iç mekân koleksiyonundaki 20 PVC kapı modelini ve yüzey seçeneğini inceleyin.",
+      },
     },
     blog: {
       title: "Bilgi Merkezi — CLAVISCOR",
