@@ -75,15 +75,16 @@ export function FinishExplorer({
           <div className="grid sm:grid-cols-2 gap-4 mt-5">
             {shown.map((p) => {
               const c = dict.katalog.products[p.sku as keyof typeof dict.katalog.products];
+              const image = images[p.sku] ?? p.image;
               return (
                 <div
                   key={p.sku}
                   className="bg-white border border-ink/[0.08] rounded-[18px] overflow-hidden"
                 >
-                  {images[p.sku] && (
+                  {image && (
                     <div className="relative aspect-[5/4] bg-linen">
                       <Image
-                        src={images[p.sku]}
+                        src={image}
                         alt=""
                         fill
                         sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"

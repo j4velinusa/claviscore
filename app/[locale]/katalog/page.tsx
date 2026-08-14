@@ -35,7 +35,7 @@ export default async function KatalogPage({ params }: { params: Promise<{ locale
       <main className="flex-1">
         {/* Görsel eşlemesi build anında dosyadan okunuyor; Catalog istemci
             bileşeni olduğu için fs'e kendisi erişemez. */}
-        <Catalog dict={dict} images={productImages(mediaMap())} />
+        <Catalog dict={dict} locale={locale} images={productImages(mediaMap())} />
       </main>
       <SiteFooter dict={dict} locale={locale} />
     </div>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { type Locale, localePath } from "@/lib/i18n";
 import { site } from "@/lib/site";
 import type { Product } from "@/lib/products";
 import type { Dictionary } from "@/lib/dictionaries/tr";
@@ -7,33 +8,36 @@ const cardClass =
   "h-full bg-white rounded-[22px] overflow-hidden flex flex-col [box-shadow:0_1px_2px_rgba(0,0,0,.04),0_16px_40px_-26px_rgba(0,0,0,.22)] transition-[transform,box-shadow] duration-[450ms] ease-swift hover:-translate-y-1.5 hover:[box-shadow:0_1px_2px_rgba(0,0,0,.04),0_28px_56px_-24px_rgba(0,0,0,.32)]";
 
 /**
- * Katalog ürün kartı. Mockup kartı `cursor:pointer` + › ile ürün detayına gidişi ima
- * ediyor ama detay sayfasının tasarımı yok (bkz. docs/design-analysis.md §1.3). Ölü bir
- * ok bırakmamak için kart, SKU'su konuya yazılmış teklif e-postası açıyor — sitenin
- * geri kalanındaki mailto CTA modeliyle aynı. Detay sayfası gelince href oraya döner.
+ * Ayrıntı sayfası olan ürün aileleri kendi sayfasına gider. Tekil donanım ürünleri
+ * için kart, SKU'su konuya yazılmış teklif e-postası açar.
  */
 export function ProductCard({
   product,
   dict,
+  locale,
   imageSrc,
 }: {
   product: Product;
   dict: Dictionary;
-  /** Panelden yüklenmiş görselin yolu. Yoksa mockup'taki soyut yer tutucu kalır. */
+  locale: Locale;
+  /** Panelden yüklenmiş görselin yolu. Yoksa ürünün katalog görseli kullanılır. */
   imageSrc?: string;
 }) {
   const t = dict.katalog;
   const copy = t.products[product.sku as keyof typeof t.products];
-  const href = `mailto:${site.email}?subject=${encodeURIComponent(`${dict.mailSubject.quote} — ${product.sku}`)}`;
+  const image = imageSrc ?? product.image;
+  const href = product.href
+    ? localePath(locale, product.href)
+    : `mailto:${site.email}?subject=${encodeURIComponent(`${dict.mailSubject.quote} — ${product.sku}`)}`;
 
   return (
     <a href={href} className={cardClass}>
       <div className="relative aspect-[5/4] [background:linear-gradient(160deg,#F1ECE2,#E6DFD1)] flex items-center justify-center">
-        {imageSrc ? (
+        {image ? (
           // alt="" bilinçli: görselin taşıdığı bilgi zaten kartta yazıyor (ad, SKU,
           // açıklama). Ürün adını burada tekrar etmek ekran okuyucuda çift okuma yapar.
           <Image
-            src={imageSrc}
+            src={image}
             alt=""
             fill
             sizes="(min-width: 1024px) 348px, (min-width: 640px) 50vw, 100vw"
@@ -52,10 +56,10 @@ export function ProductCard({
             gelebilir), o yüzden krem perde. Yer tutucu üstünde gerek yok. */}
         <span
           className={`absolute top-4 left-[18px] font-mono text-[11px] tracking-[0.04em] text-bronze-2 ${
-            imageSrc ? "bg-cream/85 rounded-full px-2 py-0.5" : ""
+            image ? "bg-cream/85 rounded-full px-2 py-0.5" : ""
           }`}
         >
-          {product.sku}
+          {product.category === "ceiling" ? t.ceilingSystemLabel : product.sku}
         </span>
         {product.badge && (
           <span className="absolute top-3.5 right-4 text-[10px] font-bold tracking-[0.08em] text-ink bg-brass px-2.5 py-1 rounded-full">

@@ -6,6 +6,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Emphasis } from "@/components/site/Emphasis";
 import { ProductCard } from "@/components/katalog/ProductCard";
 import { site } from "@/lib/site";
+import type { Locale } from "@/lib/i18n";
 import { catalogTabs, filterProducts, type CatalogTab } from "@/lib/products";
 import type { Dictionary } from "@/lib/dictionaries/tr";
 
@@ -60,9 +61,11 @@ function Showing({ template, count, total }: { template: string; count: number; 
 
 export function Catalog({
   dict,
+  locale,
   images = {},
 }: {
   dict: Dictionary;
+  locale: Locale;
   /** SKU → görsel yolu. Sunucuda lib/product-images.ts'ten üretilip geçiliyor. */
   images?: Record<string, string>;
 }) {
@@ -132,7 +135,7 @@ export function Catalog({
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {list.map((p, i) => (
               <Reveal key={p.sku} delay={(i % 3) * 70} className="h-full">
-                <ProductCard product={p} dict={dict} imageSrc={images[p.sku]} />
+                <ProductCard product={p} dict={dict} locale={locale} imageSrc={images[p.sku]} />
               </Reveal>
             ))}
           </div>

@@ -111,9 +111,15 @@ export const SITE_SLOTS: readonly MediaSlot[] = [
       ["aile-classic-lake", "Kapı koleksiyonu — Classic Lake"],
       ["aile-pvc-serisi", "Kapı koleksiyonu — PVC Serisi"],
       ["aile-melamin-serisi", "Kapı koleksiyonu — Melamin Serisi"],
-      ["tavan-suspended", "Tavan — Asma Tavan"],
-      ["tavan-lighting", "Tavan — Tavan Aydınlatma"],
-      ["tavan-gypsum", "Tavan — Alçı Tavan"],
+      ["tavan-lay-on", "Tavan — Lay-On"],
+      ["tavan-lay-in", "Tavan — Lay-In"],
+      ["tavan-clip-in", "Tavan — Clip-In"],
+      ["tavan-open-cell", "Tavan — Open Cell"],
+      ["tavan-mesh", "Tavan — Mesh"],
+      ["tavan-hook-on", "Tavan — Hook-On"],
+      ["tavan-baffle-vektorel", "Tavan — Baffle & Vektörel"],
+      ["tavan-t15-t24", "Tavan — T15 / T24"],
+      ["tavan-akustik", "Tavan — Akustik Tavanlar"],
     ] as const
   ).map(([key, label]) => ({
     key,
@@ -125,7 +131,7 @@ export const SITE_SLOTS: readonly MediaSlot[] = [
   })),
 ];
 
-/** Katalogdaki 16 ürünün yuvaları — ürün listesinden türetiliyor, elle tutulmuyor. */
+/** Katalog ürünlerinin yuvaları — ürün listesinden türetiliyor, elle tutulmuyor. */
 export const PRODUCT_SLOTS: readonly MediaSlot[] = products.map((p) => ({
   key: p.sku,
   group: "urun" as const,

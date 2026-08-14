@@ -14,6 +14,7 @@ const staticPaths = [
   "/hakkimizda",
   "/uretim",
   "/katalog",
+  "/katalog/asma-tavan",
   ...doorCollectionSlugs.map((slug) => `/katalog/${slug}`),
   "/blog",
   "/koleksiyon",
